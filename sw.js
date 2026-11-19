@@ -18,7 +18,8 @@ self.addEventListener("fetch", (e) => {
   if (!/^https?:$/.test(url.protocol) || url.hostname.endsWith("supabase.co")) return;
   const isPage = req.mode === "navigate" || (url.origin === location.origin && /\/(index\.html)?$/.test(url.pathname));
   if (isPage) {
-    e.respondWith(fetch(req).then((r) => { const cp = r.clone(); caches.open(CACHE).then((c) => c.put(req, cp)); return r; })
+    /* "no-cache": sempre confere com o servidor se ha versao nova (nao usa a copia do navegador) */
+    e.respondWith(fetch(url.href, { cache: "no-cache", credentials: "same-origin" }).then((r) => { if (r && r.ok) { const cp = r.clone(); caches.open(CACHE).then((c) => c.put(req, cp)); } return r; })
       .catch(() => caches.match(req).then((m) => m || caches.match("index.html"))));
     return;
   }

@@ -407,6 +407,51 @@
   .neo-btn.k-ghost:not(:disabled):hover{ background:rgba(63,209,206,.1) !important; border-color:rgba(63,209,206,.55) !important; }
   .neo-btn.k-danger:not(:disabled):hover{ background:rgba(255,107,107,.1) !important; }
   @media (prefers-reduced-motion: reduce){ .neo-ov,.neo-modal{ animation:none !important; } }
+
+  /* ===== v4.49 Orcamentos ===== */
+  .neo-qtop{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr)) minmax(260px,1.6fr);gap:12px;margin-bottom:14px;}
+  .neo-qtop .neo-k{cursor:pointer;}
+  .neo-funnel .bar{display:flex;height:14px;border-radius:7px;overflow:hidden;margin:10px 0 8px;background:rgba(127,154,155,.12);}
+  .neo-funnel .bar i{display:block;height:100%;transition:width 1s;}
+  .neo-funnel .bar .a{background:linear-gradient(90deg,#14B8B2,#3FD1CE);} .neo-funnel .bar .p{background:#6FA0EA;} .neo-funnel .bar .r{background:#FF6B6B;} .neo-funnel .bar .e{background:#5E7A7B;}
+  .neo-funnel .leg{display:flex;gap:12px;flex-wrap:wrap;font:600 11px Inter,sans-serif;color:#7F9A9B;}
+  .neo-funnel .leg span:before{content:"";display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+  .neo-funnel .leg .a:before{background:#3FD1CE;} .neo-funnel .leg .p:before{background:#6FA0EA;} .neo-funnel .leg .r:before{background:#FF6B6B;} .neo-funnel .leg .e:before{background:#5E7A7B;}
+  .neo-qrow{position:relative;display:grid;grid-template-columns:5px minmax(0,1fr);border-radius:14px;background:rgba(12,26,28,.72);border:1px solid rgba(63,209,206,.14);margin-bottom:9px;backdrop-filter:blur(10px);}
+  .neo-qrow:hover{border-color:rgba(63,209,206,.3);}
+  .neo-qrow.bad{border-color:rgba(255,107,107,.25);}
+  .neo-qstripe{background:var(--qc);border-radius:14px 0 0 14px;box-shadow:0 0 10px var(--qc);}
+  .neo-qbody{min-width:0;}
+  .neo-qline{display:grid;grid-template-columns:150px minmax(0,1.2fr) minmax(0,1.4fr) 120px 150px auto;gap:14px;align-items:center;padding:12px 16px;cursor:pointer;}
+  .neo-qcode{font:700 12.5px 'JetBrains Mono',monospace;color:#E6F1F1;white-space:nowrap;} .neo-qcode small{display:block;font:500 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;margin-top:2px;}
+  .neo-qcli{display:flex;align-items:center;gap:10px;min-width:0;}
+  .neo-qcli .av{width:32px;height:32px;flex-shrink:0;border-radius:9px;display:grid;place-items:center;font:700 13px 'Space Grotesk',sans-serif;color:#061314;background:linear-gradient(135deg,#3FD1CE,#14B8B2);}
+  .neo-qcli b{display:block;font:600 13.5px Inter,sans-serif;color:#F3F6F6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;} .neo-qcli small{font:400 11.5px Inter,sans-serif;color:#7F9A9B;}
+  .neo-qitems{display:flex;flex-direction:column;gap:3px;font:400 12px Inter,sans-serif;color:#C9DADA;min-width:0;}
+  .neo-qitems span{display:flex;align-items:center;gap:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-qitems i{width:8px;height:8px;flex-shrink:0;border-radius:50%;border:1px solid rgba(255,255,255,.2);}
+  .neo-qitems em{font-style:normal;color:#7F9A9B;} .neo-qitems .more{color:#7F9A9B;font-size:11.5px;}
+  .neo-qtot{text-align:right;font:700 16px 'Space Grotesk',sans-serif;color:#3FD1CE;white-space:nowrap;} .neo-qtot small{display:block;font:500 10.5px 'JetBrains Mono',monospace;color:#FFAA5C;}
+  .neo-qpill{display:inline-block;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:6px;padding:1px 6px;margin-bottom:3px;}
+  .neo-qval b{display:block;font:700 12.5px Inter,sans-serif;} .neo-qval b.mut{color:#7F9A9B;} .neo-qval small{font:600 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-bg2.ic{width:32px;height:32px;justify-content:center;padding:0;}
+  .neo-bg2.on{background:rgba(63,209,206,.15);border-color:#3FD1CE;}
+  .neo-oacts{position:relative;}
+  .neo-qmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:30;width:200px;background:rgba(8,18,19,.98);border:1px solid rgba(63,209,206,.3);border-radius:12px;box-shadow:0 18px 40px rgba(0,0,0,.55),0 0 20px rgba(20,184,178,.1);padding:6px;animation:neoPop .18s ease both;}
+  .neo-qmenu button,.neo-qmenu label{display:flex;align-items:center;gap:8px;width:100%;border:0;background:none;text-align:left;font:500 12.5px Inter,sans-serif;color:#C9DADA;padding:8px 10px;border-radius:8px;cursor:pointer;}
+  .neo-qmenu button:hover,.neo-qmenu label:hover{background:rgba(63,209,206,.1);color:#fff;}
+  .neo-qmenu .r{color:#FF8A8A;} .neo-qmenu .r:hover{background:rgba(255,107,107,.1);color:#FF8A8A;}
+  .neo-qmenu hr{border:0;border-top:1px solid rgba(63,209,206,.1);margin:4px 0;}
+  .neo-qexp{border-top:1px solid rgba(63,209,206,.1);margin:0 16px;padding:14px 0;display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:22px;}
+  .neo-qtbl > div{display:grid;grid-template-columns:minmax(0,1fr) 60px 90px 90px;gap:10px;font:400 12.5px Inter,sans-serif;color:#C9DADA;padding:6px 0;border-bottom:1px dashed rgba(63,209,206,.1);}
+  .neo-qtbl > div span:nth-child(n+2){text-align:right;font-family:'JetBrains Mono',monospace;}
+  .neo-qtbl em{font-style:normal;color:#7F9A9B;} .neo-qtbl .o{color:#FFAA5C;}
+  .neo-qtbl .hd{font:600 10px Inter,sans-serif;color:#7F9A9B;letter-spacing:.1em;text-transform:uppercase;}
+  .neo-qtbl .tt{border:0;font-weight:700;color:#fff;} .neo-qtbl .tt span:last-child{color:#3FD1CE;}
+  .neo-qnote{font:400 12px Inter,sans-serif;color:#7F9A9B;margin-top:8px;}
+  .neo-tline .print-row.fut:before{background:transparent;border:2px dashed rgba(245,130,31,.7);box-shadow:none;width:6px;height:6px;}
+  @media (max-width: 1100px){ .neo-qtop{grid-template-columns:repeat(2,1fr);} .neo-qtop .neo-funnel{grid-column:1 / -1;} .neo-qline{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;} .neo-qitems{grid-column:1 / -1;order:5;} .neo-qexp{grid-template-columns:1fr;} }
+  @media (max-width: 620px){ .neo-qline{grid-template-columns:1fr;} .neo-qtot{text-align:left;} .neo-oacts{justify-content:flex-start;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -549,7 +594,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.48";
+const APP_VERSION = "4.49";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -2794,12 +2839,12 @@ function App() {
           for (let k = 0; rest > 0; k = (k + 1) % order.length, rest--) share[order[k]] += 1;
           newOrders.forEach((o, i) => { o.price = ((cents[i] - share[i]) / 100).toFixed(2); if (share[i] > 0) o.discount = (share[i] / 100).toFixed(2); });
         }
-        return { ...d, products, orders: [...d.orders, ...newOrders], quotes: d.quotes.map((q) => q.id === quote.id ? { ...q, status } : q) };
+        return { ...d, products, orders: [...d.orders, ...newOrders], quotes: d.quotes.map((q) => q.id === quote.id ? { ...q, status, events: [...(q.events || []), { d: todayISO(), t: "approved" }] } : q) };
       });
       const reservedCount = (quote.items || []).filter((it) => it.fromStock).length;
       notify(`Orçamento aprovado — pedido(s) criado(s)${reservedCount > 0 ? " · itens de pronta entrega já saíram do estoque" : ""}`);
     } else {
-      setData((d) => ({ ...d, quotes: d.quotes.map((q) => q.id === quote.id ? { ...q, status } : q) }));
+      setData((d) => ({ ...d, quotes: d.quotes.map((q) => q.id === quote.id ? { ...q, status, ...(status === "Recusado" ? { events: [...(q.events || []), { d: todayISO(), t: "refused" }] } : null) } : q) }));
       if (status === "Recusado") notify("Orçamento recusado — reservas de estoque liberadas");
     }
   };
@@ -6941,79 +6986,191 @@ Ficou com alguma dúvida? É só responder aqui! 😉
 Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     return `https://wa.me/${digits ? "55" + digits : ""}?text=${encodeURIComponent(msg)}`;
   };
+  /* ---------- v4.49: apoio da aba Orçamentos ---------- */
+  const quoteState = (q) => (q.status === "Pendente" && q.validUntil && q.validUntil < todayISO() ? "Expirado" : q.status);
+  /* eventos da linha do tempo: gravados sem virar "ação" no histórico */
+  const quoteEvent = (q, t) => setDataQuiet((d) => ({ ...d, quotes: (d.quotes || []).map((x) => (x.id === q.id ? { ...x, events: [...(x.events || []), { d: todayISO(), t }] } : x)) }));
+  const remindMsg = (q) => {
+    const c = cliMap[q.clientId];
+    const si = data.storeInfo || {};
+    return `Oi, ${firstName(c && c.name)}! Tudo bem? 😊\nPassando para saber se ficou alguma dúvida no orçamento ${q.code} (${fmt(quoteTotal(q))}).${q.validUntil ? `\nEle vale até ${fmtDate(q.validUntil)}.` : ""}\nSe quiser, posso ajustar quantidade, cores ou prazo. É só me chamar!${si.name ? `\n— ${si.name}` : ""}`;
+  };
+  const Q_EVENT_TXT = { created: "Orçamento criado", pdf: "PDF gerado", wa: "Enviado no WhatsApp", pix: "Arte do PIX gerada", reminder: "Lembrete enviado no WhatsApp", renewed: "Validade renovada", approved: "Aprovado — virou pedido", refused: "Recusado" };
+  const Q_UI = { st: "Todos", q: "", month: "", open: null };
+  const Q_TONE = { Pendente: "#6FA0EA", Aprovado: "#3FD1CE", Recusado: "#FF6B6B", Expirado: "#FF8A8A" };
+
   function Quotes() {
-    const [qq, setQq] = useState("");
-    const [qStatus, setQStatus] = useState("Todos");
-    const [qMonth, setQMonth] = useState("");
+    const [qq, setQqS] = useState(Q_UI.q);
+    const setQq = (v) => { Q_UI.q = v; setQqS(v); setQPage(1); };
+    const [qStatus, setQStatusS] = useState(Q_UI.st);
+    const setQStatus = (v) => { Q_UI.st = v; setQStatusS(v); setQPage(1); };
+    const [qMonth, setQMonthS] = useState(Q_UI.month);
+    const setQMonth = (v) => { Q_UI.month = v; setQMonthS(v); setQPage(1); };
     const [qPage, setQPage] = useState(1);
-    const sQRaw = useSort("orcamentos");
-    const sQ = { sort: sQRaw.sort, toggle: (c) => { sQRaw.toggle(c); setQPage(1); } };
-    const list = [...(data.quotes || [])].sort((a, b) => ((a.date || "") < (b.date || "") ? 1 : -1)).filter((q) => {
+    const [open, setOpenS] = useState(Q_UI.open);
+    const setOpen = (v) => { Q_UI.open = v; setOpenS(v); };
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
+    const today = todayISO();
+    const all = [...(data.quotes || [])].sort((a, b) => ((a.date || "") < (b.date || "") ? 1 : -1));
+    const base = all.filter((q) => {
       const c = cliMap[q.clientId]; const cn = (c ? c.name : (q.clientName || "")).toLowerCase();
       if (qq) { const t = qq.toLowerCase(); if (!(cn.includes(t) || (q.code || "").toLowerCase().includes(t))) return false; }
-      if (qStatus !== "Todos") { const expired = q.status === "Pendente" && q.validUntil && q.validUntil < todayISO(); const st = expired ? "Expirado" : q.status; if (st !== qStatus) return false; }
       if (qMonth && monthKey(q.date) !== qMonth) return false;
       return true;
     });
+    const cnt = (st) => base.filter((q) => quoteState(q) === st).length;
+    const list = qStatus === "Todos" ? base : base.filter((q) => quoteState(q) === qStatus);
     const PER = 25;
     const pageCount = Math.max(1, Math.ceil(list.length / PER));
     const curPage = Math.min(qPage, pageCount);
-    const QSTATUS_ORDER = ["Pendente", "Aprovado", "Recusado", "Expirado"];
-    const sortedList = sortRows(list, sQ, {
-      code: (q) => q.code, client: (q) => (cliMap[q.clientId] ? cliMap[q.clientId].name : (q.clientName || null)),
-      items: (q) => (q.items || []).length, total: (q) => quoteTotal(q), valid: (q) => q.validUntil || null,
-      status: (q) => { const s = q.status === "Pendente" && q.validUntil && q.validUntil < todayISO() ? "Expirado" : q.status; const i = QSTATUS_ORDER.indexOf(s); return i < 0 ? 9 : i; },
-    });
-    const pageList = sortedList.slice((curPage - 1) * PER, curPage * PER);
+    const pageList = list.slice((curPage - 1) * PER, curPage * PER);
+    /* numeros do topo */
+    const openQ = all.filter((q) => quoteState(q) === "Pendente");
+    const openSum = openQ.reduce((s, q) => s + quoteTotal(q), 0);
+    const from90 = addDays(today, -89);
+    const q90 = all.filter((q) => q.date && q.date >= from90);
+    const by90 = { Aprovado: 0, Pendente: 0, Recusado: 0, Expirado: 0 };
+    q90.forEach((q) => { const s = quoteState(q); if (by90[s] != null) by90[s]++; });
+    const rate = q90.length ? (by90.Aprovado / q90.length) * 100 : null;
+    const expiring = openQ.filter((q) => q.validUntil && q.validUntil <= addDays(today, 3));
+    const apDate = (q) => { const e = (q.events || []).filter((x) => x.t === "approved").pop(); return e ? e.d : q.date; };
+    const apSum = (from, to) => all.filter((q) => q.status === "Aprovado" && apDate(q) >= from && apDate(q) <= to).reduce((s, q) => s + quoteTotal(q), 0);
+    const apMonth = apSum(thisMonth + "-01", today);
+    const prevM = (() => { const d = new Date(thisMonth + "-01T12:00:00"); d.setMonth(d.getMonth() - 1); const ps = d.toISOString().slice(0, 7) + "-01"; const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); return [ps, ps.slice(0, 8) + String(Math.min(+today.slice(8, 10), last)).padStart(2, "0"), d.toLocaleDateString("pt-BR", { month: "short" }).replace(".", "")]; })();
+    const apPrev = apSum(prevM[0], prevM[1]);
+    const apDelta = apPrev > 0 ? ((apMonth - apPrev) / apPrev) * 100 : null;
+    const renew = (q) => {
+      const vu = addDays(today, Math.max(1, num(data.settings.quoteValidityDays) || 7));
+      logAs(`Renovou o orçamento ${q.code} até ${fmtDate(vu)}`);
+      setData((d) => ({ ...d, quotes: d.quotes.map((x) => (x.id === q.id ? { ...x, validUntil: vu, events: [...(x.events || []), { d: today, t: "renewed" }] } : x)) }));
+      notify(`${q.code} renovado até ${fmtDate(vu)}`);
+    };
+    const valBox = (q, st) => {
+      if (st === "Aprovado") { const n = data.orders.filter((o) => o.quoteCode === q.code).length; return <div className="neo-qval"><b style={{ color: "#3FD1CE" }}>{n ? `virou ${n} pedido${n > 1 ? "s" : ""}` : "aprovado"}</b><small>{fmtDate(apDate(q)).slice(0, 5)}</small></div>; }
+      if (st === "Recusado") return <div className="neo-qval"><b style={{ color: "#FF8A8A" }}>recusado</b><small>{q.validUntil ? `validade ${fmtDate(q.validUntil).slice(0, 5)}` : ""}</small></div>;
+      if (!q.validUntil) return <div className="neo-qval"><b className="mut">sem validade</b></div>;
+      const d = daysUntil(q.validUntil);
+      if (d < 0) return <div className="neo-qval"><b style={{ color: "#FF8A8A" }}>expirou há {-d} dia{-d > 1 ? "s" : ""}</b><small>era {fmtDate(q.validUntil)}</small></div>;
+      return <div className="neo-qval"><b style={{ color: d <= 3 ? "#FFAA5C" : "#E6F1F1" }}>{d === 0 ? "vence hoje" : d === 1 ? "vence amanhã" : `vence em ${d} dias`}</b><small>até {fmtDate(q.validUntil)}</small></div>;
+    };
+    const itemsPreview = (q) => {
+      const its = q.items || [];
+      return (
+        <div className="neo-qitems">
+          {its.slice(0, 2).map((it) => { const p = projMap[it.projectId]; const cs = p ? itemColors(p, it.filChoices) : []; return (
+            <span key={it.id}><i style={{ background: cs[0] && cs[0].fil ? (cs[0].fil.colorHex || "#4A5257") : "#4A5257" }} />{fmtN(it.qty)}× {it.desc || (p ? p.name : "Item")}{cs.length ? <em>{cs.length > 1 ? `${cs.length} cores` : colorName(cs[0].fil)}</em> : null}</span>
+          ); })}
+          {its.length > 2 && <span className="more">+{its.length - 2} ite{its.length - 2 > 1 ? "ns" : "m"}</span>}
+          {its.length === 0 && <span className="more">sem itens</span>}
+        </div>
+      );
+    };
+    const timeline = (q, st) => {
+      const ev = [{ d: q.date, t: "created" }, ...(q.events || [])];
+      return (
+        <div className="neo-tline">
+          {ev.map((e, i) => <div key={i} className="print-row"><span className="d">{fmtDate(e.d).slice(0, 5)}</span><span>{Q_EVENT_TXT[e.t] || e.t}</span></div>)}
+          {st === "Pendente" && q.validUntil && <div className="print-row fut"><span className="d">{fmtDate(q.validUntil).slice(0, 5)}</span><span>Vence se não for aprovado</span></div>}
+        </div>
+      );
+    };
+    const filters = [["Todos", base.length], ["Pendente", cnt("Pendente")], ["Aprovado", cnt("Aprovado")], ["Recusado", cnt("Recusado")], ["Expirado", cnt("Expirado")]];
+    const plural = { Todos: "Todos", Pendente: "Pendentes", Aprovado: "Aprovados", Recusado: "Recusados", Expirado: "Expirados" };
+
     return (
-      <div>
-        <SectionHead title="Orçamentos" count={list.length}>
-          <Btn onClick={() => setModal({ type: "quote" })}><Plus size={16} />Novo orçamento</Btn>
-        </SectionHead>
-        <Card style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 14, padding: 14 }}>
-          <div style={{ flex: 1, minWidth: 180 }}><L>Buscar</L><In placeholder="Cliente ou código…" value={qq} onChange={(e) => { setQq(e.target.value); setQPage(1); }} /></div>
-          <div><L>Status</L><Sel value={qStatus} onChange={(e) => { setQStatus(e.target.value); setQPage(1); }} style={{ width: 150 }}><option>Todos</option><option>Pendente</option><option>Aprovado</option><option>Recusado</option><option>Expirado</option></Sel></div>
-          <div><L>Mês</L><In type="month" value={qMonth} onChange={(e) => { setQMonth(e.target.value); setQPage(1); }} style={{ width: 160 }} /></div>
-        </Card>
-        {list.length === 0
-          ? <Card><Empty icon={ReceiptIc} text="Nenhum orçamento criado" hint="Monte um orçamento profissional em PDF e envie pelo WhatsApp para o seu cliente." /></Card>
-          : <Card style={{ padding: 0 }}>
-              <table>
-                <thead><tr><Th s={sQ} col="code">Código</Th><Th s={sQ} col="client">Cliente</Th><Th s={sQ} col="items">Itens</Th><Th s={sQ} col="total" style={{ textAlign: "right" }}>Total</Th><Th s={sQ} col="valid">Validade</Th><Th s={sQ} col="status">Status</Th><th style={{ textAlign: "right" }}>Ações</th></tr></thead>
-                <tbody>
-                  {pageList.map((q) => {
-                    const c = cliMap[q.clientId];
-                    const expired = q.status === "Pendente" && q.validUntil && q.validUntil < todayISO();
-                    const status = expired ? "Expirado" : q.status;
-                    const st = QUOTE_STYLE[status] || {};
-                    return (
-                      <tr key={q.id}>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, whiteSpace: "nowrap" }}>{q.code}</td>
-                        <td style={{ fontWeight: 600 }}>{c ? c.name : (q.clientName || "—")}</td>
-                        <td>{(q.items || []).length} item(ns)</td>
-                        <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, color: "#3FD1CE" }}>{fmt(quoteTotal(q))}</td>
-                        <td>{fmtDate(q.validUntil)}</td>
-                        <td><span style={{ background: st.bg, color: st.fg, borderRadius: 999, padding: "3px 11px", font: "600 11.5px Inter,sans-serif" }}>{status}</span></td>
-                        <td>
-                          <div style={{ display: "flex", gap: 5, justifyContent: "flex-end", flexWrap: "wrap" }}>
-                            <label className="quote-pix" title="Marcado: o PDF do orçamento sai com o QR e a chave PIX" style={{ display: "inline-flex", alignItems: "center", gap: 5, font: "600 11.5px Inter,sans-serif", color: q.pix ? "#3FD1CE" : "#8FA3A3", cursor: "pointer", border: "1px solid " + (q.pix ? "#14A6A4" : "#3A4147"), borderRadius: 8, padding: "0 8px", height: 30 }}>
-                              <input type="checkbox" checked={!!q.pix} onChange={(e) => { if (e.target.checked && !pixReady(storePix())) { notify("Cadastre o PIX em Configurações → Dados da empresa."); return; } saveItem("quotes", { ...q, pix: e.target.checked }); }} style={{ width: 14, height: 14, accentColor: "#14A6A4" }} />PIX
-                            </label>
-                            <Btn small kind="ghost" onClick={() => setModal({ type: "printQuote", quote: q })} title="Gerar PDF"><PrintIc size={13} />PDF</Btn>
-                            <Btn small kind="ghost" title="Imagem com QR e chave PIX para mandar no WhatsApp" onClick={() => openPix(q.code, q.clientId)}>PIX</Btn>
-                            <Btn small kind="ghost" style={{ color: "#34C77A", borderColor: "#16261C" }} onClick={() => window.open(waLink(q), "_blank")}><WhatsIc size={13} /></Btn>
-                            {q.status === "Pendente" && <Btn small onClick={() => { if (confirm("Aprovar este orçamento e criar os pedidos correspondentes?")) setQuoteStatus(q, "Aprovado"); }}><CheckCircle2 size={13} /></Btn>}
-                            {q.status === "Pendente" && <Btn small kind="ghost" onClick={() => setQuoteStatus(q, "Recusado")}><XIc size={13} /></Btn>}
-                            <Btn small kind="ghost" onClick={() => setModal({ type: "quote", item: q })}><Pencil size={13} /></Btn>
-                            <Btn small kind="danger" onClick={() => { if (confirm(`Excluir o orçamento ${q.code}?`)) delItem("quotes", q.id); }}><Trash2 size={13} /></Btn>
-                          </div>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-            </Card>}
+      <div className="neo-quotes">
+        <div className="neo-pagehead">
+          <span className="neo-code">ORÇAMENTOS</span><h2>Propostas</h2>
+          <button className="neo-b1" style={{ marginLeft: "auto" }} onClick={() => setModal({ type: "quote" })}><Plus size={15} />Novo orçamento</button>
+        </div>
+        <div className="neo-qtop">
+          <Reveal className="neo-hud neo-k or" delay={0} onClick={() => setQStatus("Pendente")}><div className="l">Em aberto</div><div className="v"><CountUp value={openSum} format={fmt} /></div><span className="neo-kd">{openQ.length} orçamento{openQ.length === 1 ? "" : "s"} pendente{openQ.length === 1 ? "" : "s"}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={60}><div className="l">Aprovação</div><div className="v" style={{ color: "#3FD1CE" }}>{rate == null ? "—" : <CountUp value={rate} format={(v) => fmtN(v, 0) + "%"} />}</div><span className="neo-kd">últimos 90 dias · {by90.Aprovado} de {q90.length}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={120} onClick={() => setQStatus("Pendente")}><div className="l">Vencendo</div><div className="v" style={{ color: expiring.length ? "#FFAA5C" : undefined }}><CountUp value={expiring.length} /></div><span className="neo-kd">nos próximos 3 dias</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={180}><div className="l">Aprovado no mês</div><div className="v"><CountUp value={apMonth} format={fmt} /></div>{apDelta == null ? <span className="neo-kd">sem base para comparar</span> : <span className={"neo-kd " + (apDelta >= 0 ? "up" : "dn")}>{apDelta >= 0 ? "▲" : "▼"} {fmtN(Math.abs(apDelta), 0)}% vs {prevM[2]}</span>}</Reveal>
+          <Reveal className="neo-hud neo-funnel" delay={240}>
+            <span className="neo-code">FUNIL · 90 DIAS</span>
+            <div className="bar">{q90.length ? [["Aprovado", "a"], ["Pendente", "p"], ["Recusado", "r"], ["Expirado", "e"]].map(([k, c]) => by90[k] > 0 && <i key={k} className={c} style={{ width: (by90[k] / q90.length * 100) + "%" }} title={`${plural[k]}: ${by90[k]}`} />) : <i className="e" style={{ width: "100%", opacity: .3 }} />}</div>
+            <div className="leg"><span className="a">Aprovados {by90.Aprovado}</span><span className="p">Pendentes {by90.Pendente}</span><span className="r">Recusados {by90.Recusado}</span><span className="e">Expirados {by90.Expirado}</span></div>
+          </Reveal>
+        </div>
+        <div className="neo-penbar">
+          <div className="neo-fchips">{filters.map(([k, n]) => <button key={k} className={"neo-fchip q-filter" + (qStatus === k ? " on" : "") + (k === "Recusado" && n ? " r" : "")} data-st={k} onClick={() => setQStatus(k)}>{plural[k]} {n}</button>)}</div>
+          <In type="month" value={qMonth} onChange={(e) => setQMonth(e.target.value)} style={{ width: 170, marginLeft: "auto", height: 36, padding: "6px 10px" }} title="Filtrar por mês" />
+          <div className="neo-search" style={{ marginLeft: 0 }}><SearchIc size={14} /><input value={qq} onChange={(e) => setQq(e.target.value)} placeholder="Cliente ou código…" />{qq && <button onClick={() => setQq("")}>×</button>}</div>
+        </div>
+        {all.length === 0 ? <Card><Empty icon={ReceiptIc} text="Nenhum orçamento criado" hint="Monte um orçamento profissional em PDF e envie pelo WhatsApp para o seu cliente." /></Card>
+          : list.length === 0 ? <div className="neo-hud neo-empty">Nenhum orçamento neste filtro. <a onClick={() => { setQStatus("Todos"); setQq(""); setQMonth(""); }}>Ver todos</a></div>
+          : pageList.map((q, idx) => {
+            const c = cliMap[q.clientId];
+            const st = quoteState(q);
+            const isOpen = open === q.id;
+            const disc = num(q.discount);
+            const nOrders = st === "Aprovado" ? data.orders.filter((o) => o.quoteCode === q.code) : [];
+            return (
+              <Reveal key={q.id} className={"neo-qrow" + (isOpen ? " open" : "") + (st === "Expirado" || st === "Recusado" ? " bad" : "")} delay={Math.min(idx, 8) * 35} style={{ "--qc": Q_TONE[st] || "#7F9A9B" }}>
+                <div className="neo-qstripe" />
+                <div className="neo-qbody" data-code={q.code}>
+                  <div className="neo-qline" onClick={() => setOpen(isOpen ? null : q.id)}>
+                    <div className="neo-qcode">{q.code}<small>{fmtDate(q.date)}</small></div>
+                    <div className="neo-qcli"><span className="av">{(c ? c.name : (q.clientName || "?")).trim().charAt(0).toUpperCase()}</span><div><b>{c ? c.name : (q.clientName || "—")}</b><small>{c && c.phone ? c.phone : "sem telefone"}</small></div></div>
+                    {itemsPreview(q)}
+                    <div className="neo-qtot">{fmt(quoteTotal(q))}{disc > 0 && <small>−{fmt(disc)} desc.</small>}</div>
+                    <div><span className="neo-qpill" style={{ color: Q_TONE[st] }}>{st}</span>{valBox(q, st)}</div>
+                    <div className="neo-oacts" onClick={(e) => e.stopPropagation()}>
+                      {st === "Pendente" && <button className="neo-bp q-approve" title="Aprovar e criar os pedidos" onClick={() => { if (confirm("Aprovar este orçamento e criar os pedidos correspondentes?")) setQuoteStatus(q, "Aprovado"); }}><CheckCircle2 size={13} />Aprovar</button>}
+                      {st === "Expirado" && <button className="neo-bg2 q-renew" title={`Reabrir com validade de ${num(data.settings.quoteValidityDays) || 7} dias`} onClick={() => renew(q)}>↻ Renovar</button>}
+                      {st === "Aprovado" && <button className="neo-bg2" onClick={() => setTab(nOrders.some((o) => !isDone(o)) ? "pen" : "ped")}>Ver pedido →</button>}
+                      <button className="neo-bg2 ic" title="Gerar PDF" onClick={() => { quoteEvent(q, "pdf"); setModal({ type: "printQuote", quote: q }); }}><PrintIc size={14} /></button>
+                      <button className="neo-bg2" title="Imagem com QR e chave PIX para mandar no WhatsApp" onClick={() => { quoteEvent(q, "pix"); openPix(q.code, q.clientId); }}>PIX</button>
+                      <button className="neo-bg2 ic wa" title="Enviar o orçamento no WhatsApp" onClick={() => { quoteEvent(q, "wa"); window.open(waLink(q), "_blank"); }}><WhatsIc size={14} /></button>
+                      <button className={"neo-bg2 ic neo-qmore" + (menu === q.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === q.id ? null : q.id)}>⋯</button>
+                      {menu === q.id && (
+                        <div className="neo-qmenu">
+                          <button onClick={() => { setMenu(null); setModal({ type: "quote", item: q }); }}><Pencil size={13} />Editar</button>
+                          <label className="quote-pix" title="Marcado: o PDF do orçamento sai com o QR e a chave PIX">
+                            <input type="checkbox" checked={!!q.pix} onChange={(e) => { if (e.target.checked && !pixReady(storePix())) { notify("Cadastre o PIX em Configurações → Dados da empresa."); return; } saveItem("quotes", { ...q, pix: e.target.checked }); }} />PIX no PDF
+                          </label>
+                          {st === "Pendente" && <><hr /><button className="q-refuse" onClick={() => { setMenu(null); setQuoteStatus(q, "Recusado"); }}><XIc size={13} />Recusar</button></>}
+                          <hr />
+                          <button className="r q-delete" onClick={() => { setMenu(null); if (confirm(`Excluir o orçamento ${q.code}?`)) delItem("quotes", q.id); }}><Trash2 size={13} />Excluir</button>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  {isOpen && (
+                    <div className="neo-qexp">
+                      <div>
+                        <div className="neo-mini">ITENS</div>
+                        <div className="neo-qtbl">
+                          <div className="hd"><span>Produto</span><span>Qtd</span><span>Unit.</span><span>Total</span></div>
+                          {(q.items || []).map((it) => { const p = projMap[it.projectId]; return (
+                            <div key={it.id}><span>{it.desc || (p ? p.name : "Item")}{p && itemColors(p, it.filChoices).length ? <em> · {itemColorsText(p, it.filChoices)}</em> : null}{it.fromStock ? <em> · pronta entrega</em> : null}</span><span>{fmtN(it.qty)}</span><span>{fmtN(num(it.unitPrice), 2)}</span><span>{fmtN(num(it.qty) * num(it.unitPrice), 2)}</span></div>
+                          ); })}
+                          {disc > 0 && <div><span>Desconto</span><span /><span /><span className="o">−{fmtN(disc, 2)}</span></div>}
+                          <div className="tt"><span>Total</span><span /><span /><span>{fmtN(quoteTotal(q), 2)}</span></div>
+                        </div>
+                        {(q.notes || q.deadline) && <div className="neo-qnote">{q.notes ? <>Obs.: {q.notes}</> : null}{q.notes && q.deadline ? " · " : ""}{q.deadline ? <>Prazo de entrega: {fmtDate(q.deadline)}</> : null}</div>}
+                      </div>
+                      <div>
+                        <div className="neo-mini">LINHA DO TEMPO</div>
+                        {timeline(q, st)}
+                        {st === "Pendente" && <div className="neo-oacts left">
+                          <button className="neo-bg2 wa" disabled={!(c && c.phone)} title={c && c.phone ? "Mensagem de acompanhamento pronta no WhatsApp" : "Cadastre o telefone do cliente para usar"} onClick={() => { if (waOpen(c.phone, remindMsg(q))) quoteEvent(q, "reminder"); }}><WaIc size={13} />Lembrar cliente</button>
+                        </div>}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Reveal>
+            );
+          })}
         <Pager total={list.length} page={curPage} per={PER} setPage={setQPage} />
       </div>
     );
@@ -7109,10 +7266,10 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
                 const avail = availableQty(p.id, f.id);
                 const enough = num(it.qty) <= avail;
                 return (
-                  <div style={{ gridColumn: "1 / -1", background: it.fromStock ? "#2E2413" : "#1B2022", border: `1px dashed ${it.fromStock ? "#F0B27E" : "#5FA3A3"}`, borderRadius: 9, padding: "7px 10px", marginTop: -2 }}>
+                  <div style={{ gridColumn: "1 / -1", background: it.fromStock ? "rgba(245,130,31,.1)" : "rgba(5,12,12,.6)", border: `1px dashed ${it.fromStock ? "rgba(245,130,31,.55)" : "rgba(63,209,206,.35)"}`, borderRadius: 10, padding: "8px 11px", marginTop: -2 }}>
                     <label style={{ display: "flex", gap: 8, alignItems: "center", cursor: enough ? "pointer" : "default", opacity: enough || it.fromStock ? 1 : .75 }}>
-                      <input type="checkbox" checked={!!it.fromStock} disabled={!enough && !it.fromStock} onChange={(e) => setItem(i, { fromStock: e.target.checked })} style={{ width: 15, height: 15, accentColor: "#F47A20" }} />
-                      <span style={{ font: "400 12px Inter,sans-serif", color: "#2A4A4A" }}>
+                      <input type="checkbox" checked={!!it.fromStock} disabled={!enough && !it.fromStock} onChange={(e) => setItem(i, { fromStock: e.target.checked })} />
+                      <span style={{ font: "400 12px Inter,sans-serif", color: "#C9DADA" }}>
                         ✔ Você tem <b>{fmtN(prodQty(p.id))} un em estoque</b>{reservedQty(p.id, f.id) > 0 ? ` (${fmtN(avail)} disponível — o restante já está reservado em outros orçamentos)` : ""}. <b style={{ color: "#FFB067" }}>Reservar do estoque (pronta entrega)?</b>
                         {!enough && <span style={{ color: "#F0605F" }}> — quantidade maior que o disponível</span>}
                       </span>

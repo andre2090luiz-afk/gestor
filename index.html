@@ -160,6 +160,105 @@
   @media (max-width: 1000px){ .neo-mid{grid-template-columns:1fr;} }
   @media (max-width: 820px){ .app-aside{position:relative !important;z-index:3 !important;} .neo-acts{margin-left:0;flex-direction:row;} .neo-tl{grid-template-columns:80px minmax(0,1fr);} .neo-greet{font-size:20px;} }
   @media (prefers-reduced-motion: reduce){ .neo-scan,.neo-noz,.neo-glow,.neo-a.anim rect,.neo-orb:before,.neo-orb:after,.neo-dash .g-card{animation:none !important;} }
+
+  /* ===== v4.46 numeros do negocio ===== */
+  .neo-rv{opacity:0;transform:translateY(14px);transition:opacity .55s ease,transform .55s cubic-bezier(.2,.8,.2,1),border-color .15s,box-shadow .15s;}
+  .neo-rv.in{opacity:1;transform:none;}
+  .neo-rv.in[class*="neo-k"]:hover,.neo-rv.in.neo-champ:hover{transform:translateY(-3px);border-color:rgba(63,209,206,.35);box-shadow:0 12px 30px rgba(20,184,178,.12);}
+  .neo-sec2{display:flex;align-items:center;gap:12px;margin:6px 0 14px;flex-wrap:wrap;}
+  .neo-sec2 span{font:600 11px 'JetBrains Mono',monospace;color:#7F9A9B;letter-spacing:.14em;text-transform:uppercase;}
+  .neo-sec2:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,rgba(63,209,206,.3),transparent);order:3;min-width:40px;}
+  .neo-chips{display:flex;gap:4px;background:rgba(12,26,28,.8);border:1px solid rgba(63,209,206,.14);border-radius:10px;padding:3px;}
+  .neo-chips button{border:0;background:none;font:600 12px Inter,sans-serif;color:#7F9A9B;padding:5px 12px;border-radius:7px;cursor:pointer;transition:all .15s;}
+  .neo-chips button:hover{color:#D6F2F1;}
+  .neo-chips button.on{background:linear-gradient(135deg,#14B8B2,#0A6E6D);color:#fff;box-shadow:0 0 14px rgba(20,184,178,.35);}
+  .neo-chips.sm button{padding:3px 9px;font-size:11px;}
+  .neo-kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:14px;}
+  .neo-k{min-height:96px;cursor:default;}
+  .neo-k .l{font:600 10px Inter,sans-serif;letter-spacing:.12em;color:#7F9A9B;text-transform:uppercase;}
+  .neo-k .v{font:700 23px 'Space Grotesk',sans-serif;margin-top:5px;letter-spacing:-.4px;color:#F3F6F6;white-space:nowrap;}
+  .neo-k.or .v{color:#F5821F;}
+  .neo-kd{display:block;font:600 11.5px Inter,sans-serif;color:#7F9A9B;margin-top:2px;}
+  .neo-kd.up{color:#3FD1CE;} .neo-kd.dn{color:#FF7A7E;} .neo-kd.o{color:#FFAA5C;}
+  .neo-spark{position:absolute;right:12px;bottom:12px;width:66px;height:24px;opacity:.9;}
+  .neo-g2{display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:14px;margin-bottom:14px;}
+  .neo-chartcard{display:flex;flex-direction:column;}
+  .neo-chartbox{flex:1;min-height:300px;position:relative;}
+  .neo-chartbox > div{position:absolute !important;inset:0;}
+  .neo-col{display:flex;flex-direction:column;gap:14px;}
+  .neo-leg{display:flex;gap:16px;justify-content:center;font:600 11px Inter,sans-serif;color:#7F9A9B;margin-top:4px;}
+  .neo-leg i{display:inline-block;width:12px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px;}
+  .neo-ctip{background:rgba(5,14,15,.95);border:1px solid rgba(63,209,206,.45);border-radius:10px;padding:9px 12px;box-shadow:0 10px 30px rgba(0,0,0,.5),0 0 18px rgba(63,209,206,.12);}
+  .neo-ctip .m{font:600 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-ctip .a{font:700 12.5px Inter,sans-serif;color:#E6F1F1;margin-top:3px;}
+  .neo-ctip .b{font:600 12px Inter,sans-serif;color:#5CE0D4;margin-top:2px;} .neo-ctip .b.neg{color:#FF8A8A;}
+  .neo-gwrap{text-align:center;margin-top:-4px;}
+  .neo-gauge{width:220px;max-width:100%;display:block;margin:0 auto;}
+  .neo-gscore{font:700 28px 'Space Grotesk',sans-serif;margin-top:-10px;}
+  .neo-gscore span{font:600 13px Inter,sans-serif;color:#7F9A9B;margin-left:2px;}
+  .neo-tip{font:400 12px/1.4 Inter,sans-serif;color:#C9DADA;padding:7px 10px;border-radius:9px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.1);margin-top:6px;}
+  .neo-alerts{margin-top:8px;font:400 12px Inter,sans-serif;color:#FFB067;}
+  .neo-alerts summary{cursor:pointer;font-weight:600;}
+  .neo-alerts div{display:flex;gap:7px;align-items:center;padding:3px 0;color:#D9B98A;}
+  .neo-goalrow{display:flex;gap:16px;align-items:center;}
+  .neo-goal .big{font:700 22px 'Space Grotesk',sans-serif;color:#F3F6F6;}
+  .neo-goal .sub{font:500 12px Inter,sans-serif;color:#7F9A9B;margin-top:2px;}
+  .neo-goal .sub2{font:600 11.5px Inter,sans-serif;color:#FFAA5C;margin-top:4px;}
+  .neo-ring{position:relative;flex-shrink:0;}
+  .neo-ring svg{display:block;}
+  .neo-ring-c{position:absolute;inset:0;display:grid;place-items:center;font:700 11px 'JetBrains Mono',monospace;color:#E6F1F1;}
+  .neo-ring-c b{font:700 inherit;}
+  .neo-goal .neo-ring-c{font-size:16px;}
+  .neo-champs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-bottom:14px;}
+  .neo-champ{display:flex;gap:12px;align-items:center;cursor:pointer;}
+  .neo-champ .ic{width:42px;height:42px;flex-shrink:0;border-radius:12px;display:grid;place-items:center;font-size:19px;background:rgba(63,209,206,.1);box-shadow:inset 0 0 0 1px rgba(63,209,206,.3),0 0 18px rgba(63,209,206,.12);}
+  .neo-champ .ic.o{background:rgba(245,130,31,.1);box-shadow:inset 0 0 0 1px rgba(245,130,31,.35),0 0 18px rgba(245,130,31,.12);}
+  .neo-champ .l{font:600 10px Inter,sans-serif;letter-spacing:.1em;color:#7F9A9B;text-transform:uppercase;}
+  .neo-champ b{display:block;font:700 15px 'Space Grotesk',sans-serif;margin-top:2px;color:#F3F6F6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-champ small{font:600 11px 'JetBrains Mono',monospace;color:#3FD1CE;}
+  .neo-g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-bottom:14px;}
+  .neo-spools{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:8px;max-height:330px;overflow:auto;}
+  .neo-spool{text-align:center;padding:9px 4px;border-radius:12px;background:rgba(5,12,12,.5);border:1px solid rgba(63,209,206,.08);cursor:pointer;transition:border-color .15s,transform .15s;}
+  .neo-spool:hover{border-color:rgba(63,209,206,.35);transform:translateY(-2px);}
+  .neo-spool .neo-ring{margin:0 auto;}
+  .neo-spool .hub{width:16px;height:16px;border-radius:50%;background:#050C0D;border:1px solid rgba(127,154,155,.4);}
+  .neo-spool b{display:block;font:600 11.5px Inter,sans-serif;margin-top:5px;color:#E6F1F1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-spool small{font:600 11px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-spool.low{border-color:rgba(255,107,107,.45);animation:neoLow 1.8s ease-in-out infinite;} .neo-spool.low small{color:#FF7A7E;}
+  @keyframes neoLow{50%{box-shadow:0 0 18px rgba(255,107,107,.25)}}
+  .neo-mach{display:flex;gap:12px;align-items:center;padding:6px 0;}
+  .neo-mach b{font:600 13px Inter,sans-serif;color:#E6F1F1;} .neo-mach small{display:block;font:500 11px 'JetBrains Mono',monospace;color:#7F9A9B;margin-top:2px;}
+  .neo-cap{margin-top:10px;font:500 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;letter-spacing:.04em;}
+  .neo-cap .bar{height:6px;border-radius:4px;background:rgba(127,154,155,.15);margin:5px 0 4px;overflow:hidden;}
+  .neo-cap .bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#F5821F,#FFB066);box-shadow:0 0 10px rgba(245,130,31,.5);transition:width 1.2s;}
+  .neo-lb{display:grid;grid-template-columns:24px minmax(0,1fr) auto;gap:10px;align-items:center;padding:6px 0;}
+  .neo-lb .av{width:24px;height:24px;border-radius:7px;display:grid;place-items:center;font:700 11px 'Space Grotesk',sans-serif;color:#061314;background:linear-gradient(135deg,#3FD1CE,#14B8B2);}
+  .neo-lb .av.o{background:linear-gradient(135deg,#FFB066,#F5821F);}
+  .neo-lb .n{font:600 12.5px Inter,sans-serif;color:#E6F1F1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-lb .bar{height:4px;border-radius:3px;background:rgba(127,154,155,.15);margin-top:4px;overflow:hidden;}
+  .neo-lb .bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,#14B8B2,#3FD1CE);box-shadow:0 0 8px rgba(63,209,206,.5);}
+  .neo-lb .bar.o i{background:linear-gradient(90deg,#F5821F,#FFB066);box-shadow:0 0 8px rgba(245,130,31,.5);}
+  .neo-lb .v{font:600 12px 'JetBrains Mono',monospace;color:#3FD1CE;} .neo-lb .v.o{color:#FFAA5C;}
+  .neo-g2b{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px;margin-bottom:14px;}
+  .neo-donut{display:grid;grid-template-columns:180px minmax(0,1fr);gap:18px;align-items:center;}
+  .neo-donut svg{width:180px;height:180px;}
+  .neo-donut-l{font:600 9.5px 'JetBrains Mono',monospace;fill:#7F9A9B;letter-spacing:.08em;}
+  .neo-donut-v{font:700 15px 'Space Grotesk',sans-serif;fill:#F3F6F6;}
+  .neo-spin-slow{animation:neoSpin 18s linear infinite;}
+  .neo-donut-leg{display:flex;flex-direction:column;gap:4px;min-width:0;}
+  .neo-dl{display:grid;grid-template-columns:12px minmax(0,1fr) auto 38px;gap:8px;align-items:center;padding:5px 8px;border-radius:9px;border:1px solid transparent;transition:all .15s;cursor:default;}
+  .neo-dl.on{border-color:rgba(63,209,206,.3);background:rgba(63,209,206,.06);}
+  .neo-dl i{width:10px;height:10px;border-radius:50%;}
+  .neo-dl .n{font:600 12.5px Inter,sans-serif;color:#E6F1F1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-dl .v{font:500 11.5px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-dl .p{font:700 11.5px 'JetBrains Mono',monospace;color:#3FD1CE;text-align:right;}
+  .neo-dl .bar{grid-column:2 / 5;height:3px;border-radius:2px;background:rgba(127,154,155,.12);overflow:hidden;}
+  .neo-dl .bar b{display:block;height:100%;border-radius:2px;transition:width 1s cubic-bezier(.2,.8,.2,1);opacity:.85;}
+  .neo-foot{font:400 10.5px Inter,sans-serif;color:#6E8A8B;margin-top:8px;}
+  .neo-nav-btn.bk .neo-dot{width:8px;height:8px;border-radius:50%;background:#F5821F;box-shadow:0 0 8px #F5821F;animation:neoBlink 1.4s infinite;}
+  @media (max-width: 1000px){ .neo-g2{grid-template-columns:1fr;} }
+  @media (max-width: 520px){ .neo-donut{grid-template-columns:1fr;justify-items:center;} .neo-g2b{grid-template-columns:1fr;} .neo-g3{grid-template-columns:1fr;} }
+  @media (prefers-reduced-motion: reduce){ .neo-rv{opacity:1 !important;transform:none !important;transition:none !important;} .neo-spin-slow,.neo-spool.low{animation:none !important;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -186,7 +285,7 @@ var qrcode=function(){var t=function(t,r){var e=t,n=g[r],o=null,i=0,a=null,u=[],
 <script type="text/babel" data-presets="react">
 const { useState, useEffect, useMemo, useRef } = React;
 const { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid,
-        PieChart, Pie, Cell, Legend, LineChart, Line } = Recharts;
+        PieChart, Pie, Cell, Legend, LineChart, Line, AreaChart, Area } = Recharts;
 
 /* ------------------- ordenacao de tabelas (v4.33) ------------------- */
 /* Clique no titulo da coluna: 1x crescente, 2x decrescente, 3x volta a ordem original.
@@ -300,7 +399,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.45";
+const APP_VERSION = "4.46";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -639,7 +738,7 @@ const DEFAULTS = {
     kwhPrice: 0.95, laborRate: 25, failureRate: 8, defaultMargin: 100,
     lowStockG: 200, printerLifeH: 6000, maintEveryH: 300,
     prodHoursPerDay: 8, quoteValidityDays: 7,
-    ownerName: "",
+    ownerName: "", monthlyGoal: "",
     maintMarginPct: 5,
     resaleMultiplier: 3, finalMultiplier: 5,
     shopeeFeePct: 20, mlClassicFeePct: 17, mlPremiumFeePct: 22, tiktokFeePct: 13,
@@ -818,6 +917,7 @@ const hexShade = (hex, amt) => {
   const o = c.map((v) => Math.round(amt < 0 ? v * (1 + amt) : v + (255 - v) * amt));
   return "#" + o.map((v) => Math.max(0, Math.min(255, v)).toString(16).padStart(2, "0")).join("");
 };
+const isDarkHex = (hex) => { const x = hexShade(hex, 0).slice(1); return Math.max(parseInt(x.slice(0, 2), 16), parseInt(x.slice(2, 4), 16), parseInt(x.slice(4, 6), 16)) < 70; };
 const hexLum = (hex) => { const x = hexShade(hex, 0).slice(1); const c = [0, 2, 4].map((i) => parseInt(x.slice(i, i + 2), 16) / 255); return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2]; };
 
 /* o "A" da logo em 7 camadas; fill = fracao preenchida de baixo para cima; animate = camadas "imprimindo" */
@@ -863,7 +963,7 @@ const IsoPrinter = ({ job }) => {
   let noz = null;
   if (job && job.pieces > 0) {
     const base = job.color || "#14B8B2";
-    const dark = hexLum(base) < 0.12;
+    const dark = isDarkHex(base);
     const top = dark ? hexShade(base, 0.22) : base, alt = dark ? hexShade(base, 0.32) : hexShade(base, 0.18);
     const side1 = hexShade(base, dark ? 0.08 : -0.3), side2 = hexShade(base, dark ? 0.02 : -0.45);
     const edge = dark ? "rgba(255,255,255,.22)" : null;
@@ -905,6 +1005,129 @@ const IsoPrinter = ({ job }) => {
     });
   }
   return <svg viewBox="0 0 260 290" className="neo-iso" aria-hidden="true">{els}{noz}</svg>;
+};
+
+/* ===================== v4.46: NUMEROS DO NEGOCIO (pecas animadas) ===================== */
+const reduceMotion = () => { try { return window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch (e) { return false; } };
+/* numero que "conta" ate o valor */
+const CountUp = ({ value, format, ms = 700 }) => {
+  const v = Number(value) || 0;
+  const [shown, setShown] = useState(reduceMotion() ? v : 0);
+  const fromRef = useRef(reduceMotion() ? v : 0);
+  useEffect(() => {
+    if (reduceMotion() || typeof requestAnimationFrame !== "function") { setShown(v); fromRef.current = v; return; }
+    const now = () => (typeof performance !== "undefined" && performance.now ? performance.now() : Date.now());
+    const from = fromRef.current, t0 = now(); let raf;
+    const step = () => {
+      const k = Math.min(1, (now() - t0) / ms), e = 1 - Math.pow(1 - k, 3);
+      const cur = from + (v - from) * e; setShown(k >= 1 ? v : cur); fromRef.current = k >= 1 ? v : cur;
+      if (k < 1) raf = requestAnimationFrame(step);
+    };
+    raf = requestAnimationFrame(step);
+    return () => cancelAnimationFrame(raf);
+  }, [v]);
+  return <span className="neo-num">{format ? format(shown) : Math.round(shown)}</span>;
+};
+/* cartao que aparece ao rolar a pagina */
+const Reveal = ({ children, className, style, delay = 0, onClick, title }) => {
+  const ref = useRef(null);
+  const [on, setOn] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || typeof IntersectionObserver === "undefined" || reduceMotion()) { setOn(true); return; }
+    const io = new IntersectionObserver((es) => { if (es.some((x) => x.isIntersecting)) { setOn(true); io.disconnect(); } }, { threshold: 0.12 });
+    io.observe(el);
+    const safety = setTimeout(() => setOn(true), 2500);
+    return () => { io.disconnect(); clearTimeout(safety); };
+  }, []);
+  return <div ref={ref} onClick={onClick} title={title} className={"neo-rv" + (on ? " in" : "") + (className ? " " + className : "")} style={{ transitionDelay: delay + "ms", ...style }}>{children}</div>;
+};
+/* anel de progresso que enche ao aparecer */
+const Ring = ({ pct, size = 52, stroke = 6, color = "#3FD1CE", track = "rgba(127,154,155,.15)", children }) => {
+  const [on, setOn] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setOn(true), 60); return () => clearTimeout(t); }, []);
+  const r = (size - stroke) / 2, C = 2 * Math.PI * r, p = Math.max(0, Math.min(100, Number(pct) || 0));
+  return (
+    <div className="neo-ring" style={{ width: size, height: size }}>
+      <svg viewBox={`0 0 ${size} ${size}`} width={size} height={size}>
+        <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={track} strokeWidth={stroke} />
+        {p > 0 && <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke={color} strokeWidth={stroke} strokeLinecap="round"
+          strokeDasharray={C} strokeDashoffset={on ? C * (1 - p / 100) : C} transform={`rotate(-90 ${size / 2} ${size / 2})`} style={{ transition: "stroke-dashoffset 1.1s cubic-bezier(.2,.8,.2,1)", filter: `drop-shadow(0 0 4px ${color}88)` }} />}
+      </svg>
+      <div className="neo-ring-c">{children}</div>
+    </div>
+  );
+};
+/* velocimetro da saude financeira */
+const Gauge = ({ score }) => {
+  const [on, setOn] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setOn(true), 80); return () => clearTimeout(t); }, []);
+  const s = Math.max(0, Math.min(100, score)), L = Math.PI * 90;
+  const ang = -90 + (on ? s : 0) * 1.8;
+  return (
+    <svg viewBox="0 0 220 128" className="neo-gauge" aria-hidden="true">
+      <defs><linearGradient id="neoGg"><stop offset="0" stopColor="#FF6B6B" /><stop offset=".5" stopColor="#F5821F" /><stop offset="1" stopColor="#3FD1CE" /></linearGradient></defs>
+      <path d="M20 115 A90 90 0 0 1 200 115" fill="none" stroke="rgba(127,154,155,.15)" strokeWidth="14" strokeLinecap="round" />
+      <path d="M20 115 A90 90 0 0 1 200 115" fill="none" stroke="url(#neoGg)" strokeWidth="14" strokeLinecap="round" strokeDasharray={L} strokeDashoffset={on ? L * (1 - s / 100) : L} style={{ transition: "stroke-dashoffset 1.2s cubic-bezier(.2,.8,.2,1)" }} />
+      {[0, 25, 50, 75, 100].map((t) => { const a = Math.PI * (1 - t / 100); return <line key={t} x1={110 + 70 * Math.cos(a)} y1={115 - 70 * Math.sin(a)} x2={110 + 64 * Math.cos(a)} y2={115 - 64 * Math.sin(a)} stroke="rgba(230,241,241,.35)" strokeWidth="2" />; })}
+      <g style={{ transform: `rotate(${ang}deg)`, transformOrigin: "110px 115px", transition: "transform 1.2s cubic-bezier(.2,.8,.2,1)" }}>
+        <line x1="110" y1="115" x2="110" y2="42" stroke="#E6F1F1" strokeWidth="3" strokeLinecap="round" />
+      </g>
+      <circle cx="110" cy="115" r="7" fill="#E6F1F1" /><circle cx="110" cy="115" r="12" fill="none" stroke="rgba(63,209,206,.4)" />
+    </svg>
+  );
+};
+/* rosca "holografica": fatias com brilho, anel externo girando, centro mostra a fatia em foco */
+const HoloDonut = ({ items, unit, totalLabel, gid = "hd" }) => {
+  const [hi, setHi] = useState(-1);
+  const [on, setOn] = useState(false);
+  useEffect(() => { const t = setTimeout(() => setOn(true), 80); return () => clearTimeout(t); }, []);
+  const total = items.reduce((s, x) => s + x.value, 0) || 1;
+  const R = 62, C = 2 * Math.PI * R, gap = items.length > 1 ? 3 : 0;
+  let acc = 0;
+  const focus = hi >= 0 ? items[hi] : null;
+  return (
+    <div className="neo-donut">
+      <svg viewBox="0 0 180 180" aria-hidden="true">
+        <circle cx="90" cy="90" r="84" fill="none" stroke="rgba(63,209,206,.25)" strokeWidth="1" strokeDasharray="2 6" className="neo-spin-slow" style={{ transformOrigin: "90px 90px" }} />
+        <circle cx="90" cy="90" r="74" fill="none" stroke="rgba(63,209,206,.08)" strokeWidth="1" />
+        <circle cx="90" cy="90" r={R} fill="none" stroke="rgba(127,154,155,.10)" strokeWidth="16" />
+        {items.map((x, i) => {
+          const len = Math.max(0, (x.value / total) * C - gap);
+          const el = (
+            <circle key={i} cx="90" cy="90" r={R} fill="none" stroke={x.color} strokeWidth={hi === i ? 20 : 16}
+              strokeDasharray={`${on ? len : 0} ${C}`} strokeDashoffset={-acc} transform="rotate(-90 90 90)"
+              style={{ transition: "stroke-dasharray 1s cubic-bezier(.2,.8,.2,1), stroke-width .15s", filter: `drop-shadow(0 0 ${hi === i ? 8 : 4}px ${x.glow || x.color}aa)`, cursor: "pointer" }}
+              onMouseEnter={() => setHi(i)} onMouseLeave={() => setHi(-1)} />
+          );
+          acc += (x.value / total) * C;
+          return el;
+        })}
+        <circle cx="90" cy="90" r="44" fill="rgba(5,14,15,.9)" stroke="rgba(63,209,206,.2)" />
+        <text x="90" y="84" textAnchor="middle" className="neo-donut-l">{focus ? (focus.name.length > 14 ? focus.name.slice(0, 13) + "…" : focus.name) : totalLabel}</text>
+        <text x="90" y="104" textAnchor="middle" className="neo-donut-v">{focus ? `${fmtN(focus.value / total * 100, 0)}%` : unit(total)}</text>
+      </svg>
+      <div className="neo-donut-leg">
+        {items.slice(0, 6).map((x, i) => (
+          <div key={i} className={"neo-dl" + (hi === i ? " on" : "")} onMouseEnter={() => setHi(i)} onMouseLeave={() => setHi(-1)}>
+            <i style={{ background: x.color, boxShadow: `0 0 8px ${x.glow || x.color}` }} />
+            <span className="n">{x.name}</span>
+            <span className="v">{unit(x.value)}</span>
+            <span className="p">{fmtN(x.value / total * 100, 0)}%</span>
+            <div className="bar"><b style={{ width: on ? (x.value / total * 100) + "%" : 0, background: x.color }} /></div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+/* linha de tendencia pequena */
+const Spark = ({ values, color = "#3FD1CE" }) => {
+  const v = (values || []).map((x) => Number(x) || 0);
+  if (v.length < 2 || v.every((x) => x === 0)) return null;
+  const mx = Math.max(...v), mn = Math.min(...v), rg = mx - mn || 1;
+  const pts = v.map((x, i) => `${(i / (v.length - 1)) * 70},${24 - ((x - mn) / rg) * 20}`).join(" ");
+  return <svg viewBox="0 0 70 26" className="neo-spark" aria-hidden="true"><polyline points={pts} fill="none" stroke={color} strokeWidth="2" strokeLinejoin="round" strokeLinecap="round" /></svg>;
 };
 
 const Stat = ({ label, value, sub, icon: Icon, accent = "#14A6A4" }) => (
@@ -2441,6 +2664,7 @@ function App() {
     { group: "Sistema", items: [
       { id: "acoes", label: "Ações", icon: ClockIc },
       { id: "cfg", label: "Configurações", icon: SettingsIc },
+      { id: "backup", label: "Backup", icon: DownloadIc, action: () => exportBackup(), dot: needBackup, hint: needBackup ? "Faz mais de 7 dias (ou nunca) que você não exporta um backup — clique para baixar" : "Baixar uma cópia de todos os dados" },
     ]},
   ];
 
@@ -2589,62 +2813,77 @@ function App() {
   /* ============================== DASHBOARD ============================== */
   function Dash() {
     const [iaP, setIaP] = useState("mes");
-    const iaRange = iaP === "mes" ? [thisMonth + "-01", todayISO()] : iaP === "90d" ? [addDays(todayISO(), -89), todayISO()] : iaP === "ano" ? [todayISO().slice(0, 4) + "-01-01", todayISO()] : ["0001-01-01", "9999-12-31"];
-    const iaFrom = iaRange[0], iaTo = iaRange[1];
-    const iaIn = (d) => d && d >= iaFrom && d <= iaTo;
-    const iaDone = data.orders.filter((o) => isDone(o) && iaIn(o.date));
-    const iaSales = iaDone.filter(isSale);
-    const iaProduced = iaDone.filter((o) => !o.fromStock);
-    const iaRev = iaSales.reduce((s, o) => s + num(o.price), 0);
-    const iaCost = iaSales.reduce((s, o) => s + num(o.cost), 0);
-    const iaExp = data.expenses.filter((e) => iaIn(e.date)).reduce((s, e) => s + num(e.value), 0);
-    const iaProfit = iaRev - iaCost - iaExp;
-    const iaMargin = iaRev > 0 ? (iaProfit / iaRev) * 100 : null;
-    const iaTicket = iaSales.length ? iaRev / iaSales.length : 0;
-    const iaReceber = data.orders.filter((o) => isDone(o) && isSale(o) && !o.paid).reduce((s, o) => s + num(o.price), 0);
-    const iaProdRank = (() => { const m = {}; iaSales.forEach((o) => { const k = o.projectId; if (!m[k]) m[k] = { name: projMap[k] ? projMap[k].name : "—", v: 0, q: 0 }; m[k].v += num(o.price) - num(o.cost); m[k].q += num(o.qty); }); return Object.values(m).sort((a, b) => b.v - a.v); })();
-    const iaTopProd = iaProdRank[0];
-    const iaTopCli = (() => { const m = {}; iaSales.forEach((o) => { if (!o.clientId) return; if (!m[o.clientId]) m[o.clientId] = { name: cliMap[o.clientId] ? cliMap[o.clientId].name : "—", v: 0 }; m[o.clientId].v += num(o.price); }); return Object.values(m).sort((a, b) => b.v - a.v)[0]; })();
-    const iaTopNiche = (() => { const m = {}; iaSales.forEach((o) => { const p = projMap[o.projectId]; const n = (p && p.niche) || "Sem nicho"; m[n] = (m[n] || 0) + num(o.price); }); const a = Object.entries(m).sort((x, y) => y[1] - x[1])[0]; return a ? { name: a[0], v: a[1] } : null; })();
-    const iaTopFil = (() => { const m = {}; iaSales.forEach((o) => { const p = projMap[o.projectId]; if (!p) return; const fils = projFilaments(p); if (!fils.length) return; const main = fils.slice().sort((a, b) => num(b.grams) - num(a.grams))[0]; const fid = p.mainFilamentId || main.filamentId; if (!m[fid]) m[fid] = { name: filMap[fid] ? filMap[fid].name : "—", v: 0 }; m[fid].v += num(o.price) - num(o.cost); }); return Object.values(m).sort((a, b) => b.v - a.v)[0]; })();
+    const today = todayISO();
+    const rangeOf = (k) => {
+      if (k === "mes") return [thisMonth + "-01", today];
+      if (k === "90d") return [addDays(today, -89), today];
+      if (k === "ano") return [today.slice(0, 4) + "-01-01", today];
+      return ["0001-01-01", "9999-12-31"];
+    };
+    /* periodo anterior equivalente, para comparar */
+    const prevRangeOf = (k) => {
+      if (k === "mes") { const d = new Date(thisMonth + "-01T12:00:00"); d.setMonth(d.getMonth() - 1); const ps = d.toISOString().slice(0, 7) + "-01"; const last = new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); const day = Math.min(+today.slice(8, 10), last); return [ps, ps.slice(0, 8) + String(day).padStart(2, "0")]; }
+      if (k === "90d") return [addDays(today, -179), addDays(today, -90)];
+      if (k === "ano") { const y = +today.slice(0, 4) - 1; return [y + "-01-01", y + today.slice(4)]; }
+      return null;
+    };
+    const statsFor = (from, to) => {
+      const inR = (d) => d && d >= from && d <= to;
+      const done = data.orders.filter((o) => isDone(o) && inR(o.date));
+      const sales = done.filter(isSale);
+      const produced = done.filter((o) => !o.fromStock);
+      const rev = sales.reduce((s, o) => s + num(o.price), 0);
+      const cost = sales.reduce((s, o) => s + num(o.cost), 0);
+      const exp = data.expenses.filter((e) => inR(e.date)).reduce((s, e) => s + num(e.value), 0);
+      const profit = rev - cost - exp;
+      return { sales, produced, rev, cost, exp, profit, margin: rev > 0 ? (profit / rev) * 100 : null, ticket: sales.length ? rev / sales.length : 0,
+        pieces: produced.reduce((s, o) => s + num(o.qty), 0), hours: produced.reduce((s, o) => s + num(projMap[o.projectId] ? projMap[o.projectId].hours : 0) * num(o.qty), 0) };
+    };
+    const [iaFrom, iaTo] = rangeOf(iaP);
+    const cur = statsFor(iaFrom, iaTo);
+    const pr = prevRangeOf(iaP);
+    const prev = pr ? statsFor(pr[0], pr[1]) : null;
+    const prevName = iaP === "mes" ? (() => { const d = new Date(thisMonth + "-01T12:00:00"); d.setMonth(d.getMonth() - 1); return d.toLocaleDateString("pt-BR", { month: "short" }).replace(".", ""); })() : iaP === "90d" ? "90 dias antes" : iaP === "ano" ? "ano passado" : "";
+    const delta = (a, b) => (!prev || !(b > 0) ? null : ((a - b) / Math.abs(b)) * 100);
+    const Delta = ({ a, b, pp, extra }) => {
+      if (!prev) return <span className="neo-kd">{extra || "desde o início"}</span>;
+      const d = pp ? (a == null || b == null ? null : a - b) : delta(a, b);
+      if (d == null || !isFinite(d)) return <span className="neo-kd">{extra || "sem base para comparar"}</span>;
+      const up = d >= 0;
+      return <span className={"neo-kd " + (up ? "up" : "dn")}>{up ? "▲" : "▼"} {fmtN(Math.abs(d), pp ? 1 : 0)}{pp ? " p.p." : "%"} vs {prevName}</span>;
+    };
+    const iaReceber = unpaidSales.reduce((s, o) => s + num(o.price), 0);
+    const iaReceberCli = new Set(unpaidSales.map((o) => o.clientId || "_")).size;
+    const rank = (keyFn, valFn, nameFn) => { const m = {}; cur.sales.forEach((o) => { const k = keyFn(o); if (k == null) return; if (!m[k]) m[k] = { k, name: nameFn(k, o), v: 0, q: 0 }; m[k].v += valFn(o); m[k].q += num(o.qty); }); return Object.values(m).filter((x) => x.v > 0).sort((a, b) => b.v - a.v); };
+    const iaProdRank = rank((o) => o.projectId, (o) => num(o.price) - num(o.cost), (k, o) => projName(o));
+    const iaCliRank = rank((o) => o.clientId || null, (o) => num(o.price), (k) => (cliMap[k] ? cliMap[k].name : "—"));
+    const iaNicheRank = rank((o) => { const p = projMap[o.projectId]; return (p && (projNiches(p)[0] || p.niche)) || "Sem nicho"; }, (o) => num(o.price), (k) => k);
+    const iaFilRank = (() => { const m = {}; cur.sales.forEach((o) => { const p = projMap[o.projectId]; if (!p) return; const fils = projFilaments(p); if (!fils.length) return; const main = fils.slice().sort((a, b) => num(b.grams) - num(a.grams))[0]; const fid = ((o.filChoices || {}).main) || main.filamentId; const k = fid; if (!m[k]) m[k] = { k, name: filMap[k] ? filMap[k].name : "Filamento removido", v: 0 }; m[k].v += num(o.price) - num(o.cost); }); return Object.values(m).filter((x) => x.v > 0).sort((a, b) => b.v - a.v); })();
     const iaPrinters = data.printers.map((p) => { const deprH = num(p.lifeH) > 0 ? num(p.price) / num(p.lifeH) : 0; const energyH = (num(p.watts) / 1000) * num(data.settings.kwhPrice); const maintTotal = (p.maintLog || []).reduce((s, mm) => s + num(mm.cost), 0); const maintH = num(p.hoursUsed) > 0 ? maintTotal / num(p.hoursUsed) : 0; const custoHora = deprH + energyH + maintH; const recuperado = Math.min(num(p.price), num(p.hoursUsed) * deprH); const paybackPct = num(p.price) > 0 ? Math.min(100, (recuperado / num(p.price)) * 100) : 0; const falta = Math.max(0, num(p.price) - recuperado); return { p, custoHora, paybackPct, falta }; });
     const iaDaysMonth = new Date(+thisMonth.slice(0, 4), +thisMonth.slice(5, 7), 0).getDate();
     const iaCap = num(data.settings.prodHoursPerDay) * iaDaysMonth * Math.max(1, data.printers.length);
-    const iaIdle = Math.max(0, iaCap - monthHours);
     const iaUsePct = iaCap > 0 ? Math.min(100, (monthHours / iaCap) * 100) : 0;
-    const iaKpi = (lab, val, color) => <div style={{ background: "rgba(255,255,255,.06)", borderRadius: 12, padding: "10px 12px" }}><div style={{ font: "600 10px Inter,sans-serif", color: "#5FA3A3", textTransform: "uppercase", letterSpacing: ".05em" }}>{lab}</div><div style={{ font: "700 18px 'Space Grotesk',sans-serif", color: color, marginTop: 3 }}>{val}</div></div>;
-    const iaChamp = (title, name, sub, tab) => <div onClick={tab ? (() => setTab(tab)) : undefined} style={{ background: "rgba(255,255,255,.06)", borderRadius: 12, padding: "11px 13px", cursor: tab ? "pointer" : "default" }}><div style={{ font: "600 10px Inter,sans-serif", color: "#5FA3A3", textTransform: "uppercase", letterSpacing: ".04em" }}>{title}</div><div style={{ font: "700 15px 'Space Grotesk',sans-serif", color: "#fff", marginTop: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{name}</div><div style={{ font: "600 12px 'JetBrains Mono',monospace", color: "#5CD6C7", marginTop: 2 }}>{sub}</div></div>;
-    const pending = data.orders.filter((o) => !isDone(o)).length;
     const alerts = [
-      ...lowStock.map((f) => ({ icon: Layers, msg: `Estoque baixo (filamento): ${f.name} — ${fmtN(f.stockG)}g restantes` })),
-      ...lowMaterials.map((m) => ({ icon: Package, msg: `Estoque baixo (material): ${m.name} — ${fmtN(m.stock)} un (mínimo ${fmtN(m.minStock)})` })),
+      ...lowStock.map((f) => ({ icon: Layers, msg: `Filamento baixo: ${f.name} — ${fmtN(f.stockG)} g` })),
+      ...lowMaterials.map((m) => ({ icon: Package, msg: `Material baixo: ${m.name} — ${fmtN(m.stock)} un (mín. ${fmtN(m.minStock)})` })),
       ...maintDue.map((p) => ({ icon: PrinterIc, msg: `Manutenção recomendada: ${p.name} (${fmtN(num(p.hoursUsed) - num(p.lastMaintH || 0))}h desde a última)` })),
-      ...lateOrders.map((o) => ({ icon: ClockIc, msg: `Pedido atrasado: ${projName(o)} · previsto ${fmtDate(o.dueDate)}` })),
+      ...lateOrders.map((o) => ({ icon: ClockIc, msg: `Atrasado: ${projName(o)} · previsto ${fmtDate(o.dueDate)}` })),
     ];
-    const topClients = data.clients.map((c) => ({
-      c, total: clientOrders(c.id).filter((o) => isDone(o) && isSale(o)).reduce((s, o) => s + num(o.price), 0),
-    })).filter((x) => x.total > 0).sort((a, b) => b.total - a.total).slice(0, 5);
 
     /* filamentos mais usados */
     const [filView, setFilView] = useState("proj");
     const filUsage = (() => {
       const per = {};
-      if (filView === "proj") {
-        activeProjects.forEach((p) => projFilaments(p).forEach((x) => { per[x.filamentId] = (per[x.filamentId] || 0) + num(x.grams); }));
-      } else {
-        data.orders.filter((o) => isDone(o) && !o.fromStock).forEach((o) => {
-          const p = projMap[o.projectId];
-          if (p) projFilaments(p).forEach((x) => { per[x.filamentId] = (per[x.filamentId] || 0) + num(x.grams) * num(o.qty); });
-        });
-      }
-      return Object.entries(per)
-        .map(([id, g]) => ({ id, name: filMap[id] ? filMap[id].name : "Filamento removido", value: +g.toFixed(1), color: filMap[id] ? filMap[id].colorHex : null }))
+      if (filView === "proj") activeProjects.forEach((p) => projFilaments(p).forEach((x) => { per[x.filamentId] = (per[x.filamentId] || 0) + num(x.grams); }));
+      else data.orders.filter((o) => isDone(o) && !o.fromStock).forEach((o) => { const p = projMap[o.projectId]; if (p) projFilaments(p).forEach((x) => { per[x.filamentId] = (per[x.filamentId] || 0) + num(x.grams) * num(o.qty); }); });
+      return Object.entries(per).map(([id, g]) => ({ id, name: filMap[id] ? filMap[id].name : "Filamento removido", value: +g.toFixed(1), color: filMap[id] ? filMap[id].colorHex : null }))
         .filter((x) => x.value > 0).sort((a, b) => b.value - a.value);
     })();
-    const filUsageTotal = Math.max(1, filUsage.reduce((s, x) => s + x.value, 0));
     const hasFilCard = activeProjects.some((p) => projFilaments(p).length > 0);
+    /* cor visivel no escuro: preto vira cinza com brilho */
+    const visColor = (hex, i) => { if (!hex) return CHART_COLORS[i % CHART_COLORS.length]; return isDarkHex(hex) ? "#6B7A7D" : hexShade(hex, 0); };
 
-    /* saúde financeira do mês */
+    /* saude financeira do mes */
     const marginPct = monthRevenue > 0 ? (monthProfit / monthRevenue) * 100 : null;
     const tips = [];
     let score = 100;
@@ -2656,217 +2895,171 @@ function App() {
     if (lowStock.length + lowMaterials.length > 0) { score -= 10; tips.push("Itens com estoque baixo podem travar a produção — planeje a reposição."); }
     if (monthFixedTotal > 0 && monthRevenue > 0 && monthRevenue < monthFixedTotal) { score -= 10; tips.push("O faturamento do mês ainda não cobre os custos fixos."); }
     score = Math.max(5, Math.min(100, score));
-    const health = score >= 75 ? { label: "Saudável", color: "#14A6A4" } : score >= 45 ? { label: "Atenção", color: "#F47A20" } : { label: "Crítico", color: "#F0605F" };
+    const health = score >= 75 ? { label: "Saudável", color: "#3FD1CE" } : score >= 45 ? { label: "Atenção", color: "#F5821F" } : { label: "Crítico", color: "#FF6B6B" };
+
+    /* meta do mes */
+    const goal = num(data.settings.monthlyGoal);
+    const goalPct = goal > 0 ? (monthRevenue / goal) * 100 : 0;
+    const daysLeft = iaDaysMonth - +today.slice(8, 10);
+    const perDay = goal > monthRevenue && daysLeft > 0 ? (goal - monthRevenue) / daysLeft : 0;
+
+    const periods = [["mes", "Mês"], ["90d", "90 dias"], ["ano", "Ano"], ["tudo", "Tudo"]];
+    const ChartTip = ({ active, payload, label }) => {
+      if (!active || !payload || !payload.length) return null;
+      const g = (k) => (payload.find((x) => x.dataKey === k) || {}).value || 0;
+      const f = g("Faturamento"), l = g("Lucro");
+      return (
+        <div className="neo-ctip">
+          <div className="m">{String(label).toUpperCase()}</div>
+          <div className="a">Faturou {fmt(f)} · gastou {fmt(g("Gastos"))}</div>
+          <div className={"b" + (l < 0 ? " neg" : "")}>Lucro {fmt(l)}{f > 0 ? ` (${fmtN((l / f) * 100, 0)}%)` : ""}</div>
+        </div>
+      );
+    };
+    const kpi = (i, label, value, format, extra, opts) => (
+      <Reveal key={label} className={"neo-hud neo-k" + (opts && opts.cls ? " " + opts.cls : "")} delay={i * 60} onClick={opts && opts.tab ? () => setTab(opts.tab) : undefined}>
+        <div className="l">{label}</div>
+        <div className="v" style={opts && opts.color ? { color: opts.color } : undefined}>{value == null ? "—" : <CountUp value={value} format={format} />}</div>
+        {extra}
+        {opts && opts.spark && <Spark values={opts.spark} color={opts.sparkColor} />}
+      </Reveal>
+    );
+    const champ = (i, label, icon, tone, x, sub, tab) => (
+      <Reveal key={label} className="neo-hud neo-champ" delay={i * 70} onClick={tab && x ? () => setTab(tab) : undefined}>
+        <div className={"ic " + tone}>{icon}</div>
+        <div style={{ minWidth: 0 }}><div className="l">{label}</div><b>{x ? x.name : "—"}</b><small>{x ? sub(x) : "sem vendas no período"}</small></div>
+      </Reveal>
+    );
+    const board = (title, code, rows, tone, valFmt) => (
+      <div className="neo-board">
+        <div className="neo-ttl"><span className="neo-code">{code}</span><b>{title}</b></div>
+        {rows.length === 0 ? <div className="neo-empty" style={{ padding: "8px 0" }}>Sem vendas no período.</div> : rows.slice(0, 5).map((x, i) => (
+          <div key={x.k} className="neo-lb">
+            <span className={"av " + tone}>{tone === "o" ? i + 1 : String(x.name || "?").trim().charAt(0).toUpperCase()}</span>
+            <div style={{ minWidth: 0 }}><div className="n">{x.name}</div><div className={"bar " + tone}><i style={{ width: (x.v / rows[0].v * 100) + "%" }} /></div></div>
+            <span className={"v " + tone}>{valFmt(x)}</span>
+          </div>
+        ))}
+      </div>
+    );
 
     return (
       <div className="neo-dash">
         <CommandCenter />
-        <Card style={{ marginBottom: 16, background: "#202124", border: "none", color: "#fff" }}>
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10, marginBottom: 14 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 8, font: "700 16px 'Space Grotesk',sans-serif" }}><TrendingUp size={18} color="#F47A20" />Inteligência do negócio</div>
-            <div style={{ display: "flex", gap: 6, background: "rgba(255,255,255,.08)", padding: 4, borderRadius: 10 }}>
-              {[["mes", "Mês"], ["90d", "90 dias"], ["ano", "Ano"], ["tudo", "Tudo"]].map((o) => (
-                <button key={o[0]} onClick={() => setIaP(o[0])} style={{ border: "none", cursor: "pointer", borderRadius: 7, padding: "5px 12px", font: "600 12.5px Inter,sans-serif", background: iaP === o[0] ? "#14A6A4" : "transparent", color: iaP === o[0] ? "#fff" : "#5FA3A3" }}>{o[1]}</button>
-              ))}
-            </div>
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(140px,1fr))", gap: 12, marginBottom: 14 }}>
-            {iaKpi("Lucro líquido", fmt(iaProfit), iaProfit >= 0 ? "#5CD6C7" : "#FF9B9B")}
-            {iaKpi("Faturamento", fmt(iaRev), "#fff")}
-            {iaKpi("Margem", iaMargin == null ? "—" : fmtN(iaMargin, 1) + "%", "#fff")}
-            {iaKpi("Ticket médio", fmt(iaTicket), "#fff")}
-            {iaKpi("A receber (em aberto)", fmt(iaReceber), "#FFC97A")}
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(175px,1fr))", gap: 12, marginBottom: 14 }}>
-            {iaChamp("Produto que mais lucra", iaTopProd ? iaTopProd.name : "—", iaTopProd ? fmt(iaTopProd.v) + " de lucro" : "sem vendas", "prod")}
-            {iaChamp("Cliente que mais compra", iaTopCli ? iaTopCli.name : "—", iaTopCli ? fmt(iaTopCli.v) : "sem vendas", "cli")}
-            {iaChamp("Nicho que mais vende", iaTopNiche ? iaTopNiche.name : "—", iaTopNiche ? fmt(iaTopNiche.v) : "sem vendas", null)}
-            {iaChamp("Filamento com mais retorno", iaTopFil ? iaTopFil.name : "—", iaTopFil ? fmt(iaTopFil.v) + " de lucro" : "sem vendas", "stk")}
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(280px,1fr))", gap: 14 }}>
-            <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 12 }}>
-              <div style={{ font: "600 12px Inter,sans-serif", color: "#5FA3A3", marginBottom: 8 }}>Top produtos por lucro</div>
-              {iaProdRank.length === 0 ? <div style={{ color: "#5FA3A3", font: "400 12.5px Inter,sans-serif", padding: "14px 0" }}>Sem vendas no período.</div> : (
-                <ResponsiveContainer width="100%" height={Math.max(110, iaProdRank.slice(0, 6).length * 34)}>
-                  <BarChart layout="vertical" data={iaProdRank.slice(0, 6)} margin={{ left: 0, right: 14, top: 0, bottom: 0 }}>
-                    <XAxis type="number" hide /><YAxis type="category" dataKey="name" width={92} tick={{ fill: "#8FA3A3", fontSize: 11 }} />
-                    <Tooltip formatter={(v) => fmt(v)} contentStyle={{ fontSize: 12, borderRadius: 8 }} />
-                    <Bar dataKey="v" fill="#14A6A4" radius={[0, 4, 4, 0]} />
-                  </BarChart>
-                </ResponsiveContainer>
-              )}
-            </div>
-            <div style={{ background: "rgba(255,255,255,.05)", borderRadius: 12, padding: 12 }}>
-              <div style={{ font: "600 12px Inter,sans-serif", color: "#5FA3A3", marginBottom: 8 }}>Impressoras — custo/hora e quanto falta pagar</div>
-              {iaPrinters.length === 0 ? <div style={{ color: "#5FA3A3", font: "400 12.5px Inter,sans-serif", padding: "8px 0" }}>Nenhuma impressora cadastrada.</div> : iaPrinters.map((it) => (
-                <div key={it.p.id} style={{ marginBottom: 10 }}>
-                  <div style={{ display: "flex", justifyContent: "space-between", font: "600 12.5px Inter,sans-serif", marginBottom: 3 }}><span>{it.p.name}</span><span style={{ color: "#2E4A4A" }}>{fmt(it.custoHora)}/h</span></div>
-                  <div style={{ height: 7, background: "rgba(255,255,255,.12)", borderRadius: 99 }}><div style={{ height: 7, width: it.paybackPct + "%", background: "linear-gradient(90deg,#F47A20,#14A6A4)", borderRadius: 99 }} /></div>
-                  <div style={{ font: "400 11px Inter,sans-serif", color: "#5FA3A3", marginTop: 3 }}>{fmtN(it.paybackPct, 0)}% pago · falta {fmt(it.falta)}</div>
-                </div>
-              ))}
-              {data.printers.length > 0 && <div style={{ borderTop: "1px solid rgba(255,255,255,.1)", marginTop: 6, paddingTop: 8, font: "400 11.5px Inter,sans-serif", color: "#5FA3A3" }}>Ociosidade (mês): ~{fmtN(iaIdle, 0)}h livres de {fmtN(iaCap, 0)}h · uso {fmtN(iaUsePct, 0)}%</div>}
-            </div>
-          </div>
-        </Card>
-        <Card style={{ marginBottom: 16, display: "flex", gap: 22, alignItems: "center", flexWrap: "wrap" }}>
-          <div style={{ display: "flex", gap: 14, alignItems: "center", minWidth: 230 }}>
-            <div style={{ background: health.color + "18", color: health.color, borderRadius: 12, padding: 12 }}><GaugeIc size={26} /></div>
-            <div>
-              <div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase", letterSpacing: ".05em" }}>Saúde financeira do mês</div>
-              <div style={{ font: "700 24px 'Space Grotesk',sans-serif", color: health.color }}>{health.label} <span style={{ font: "600 14px 'JetBrains Mono',monospace", color: "#93A6A6" }}>{score}/100</span></div>
-            </div>
-          </div>
-          <div style={{ flex: 1, minWidth: 220 }}>
-            <div style={{ height: 10, background: "#1B2022", borderRadius: 99, position: "relative" }}>
-              <div style={{ height: 10, width: `${score}%`, background: `linear-gradient(90deg,#F0605F,#F47A20 45%,#14A6A4 80%)`, borderRadius: 99 }} />
-            </div>
-            {tips.length > 0
-              ? <div style={{ marginTop: 8 }}>{tips.slice(0, 3).map((t, i) => <div key={i} style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", padding: "1.5px 0" }}>• {t}</div>)}</div>
-              : <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", marginTop: 8 }}>Tudo em ordem: vendas no azul, produção em dia e recebimentos sob controle. 🎉</div>}
-          </div>
-        </Card>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 14, marginBottom: 16 }}>
-          <Stat label="Faturamento no mês" value={fmt(monthRevenue)} sub={`${monthPrints} peças produzidas`} icon={CircleDollarSign} />
-          <Stat label="Gastos no mês" value={fmt(monthExpenses + monthCost)} sub={`${fmt(monthExpenses)} compras · ${fmt(monthCost)} custo das vendas`} icon={Wallet} accent="#F47A20" />
-          <Stat label="Lucro no mês" value={fmt(monthProfit)} sub={monthRevenue > 0 ? `margem ${fmtN((monthProfit / monthRevenue) * 100, 1)}%` : "sem vendas ainda"} icon={TrendingUp} accent={monthProfit >= 0 ? "#14A6A4" : "#F0605F"} />
-          <Stat label="Horas de impressão" value={`${fmtN(monthHours, 1)}h`} sub={`${pending} pedidos em aberto`} icon={ClockIc} accent="#6FA0EA" />
-          <Stat label="Produtos prontos" value={`${fmtN(productsTotal)} un`} sub="no estoque, prontos para vender" icon={BoxSellIc} accent="#F47A20" />
-          <Stat label="Clientes" value={fmtN(data.clients.length)} sub={`${data.projects.length} projetos cadastrados`} icon={UsersIc} accent="#5CD6C7" />
+        <div className="neo-sec2">
+          <span>Números do negócio</span>
+          <div className="neo-chips">{periods.map(([k, lb]) => <button key={k} className={iaP === k ? "on" : ""} onClick={() => setIaP(k)}>{lb}</button>)}</div>
         </div>
 
-        {alerts.length > 0 && (
-          <Card style={{ marginBottom: 16, borderColor: "#2E2413", background: "#2E2413" }}>
-            <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#FFB067", display: "flex", gap: 7, alignItems: "center", marginBottom: 8 }}>
-              <AlertTriangle size={15} /> Atenção ({alerts.length})
-            </div>
-            {alerts.map((a, i) => (
-              <div key={i} style={{ display: "flex", gap: 8, alignItems: "center", font: "400 13px Inter,sans-serif", color: "#C9A876", padding: "3px 0" }}>
-                <a.icon size={14} />{a.msg}
-              </div>
-            ))}
-          </Card>
-        )}
+        <div className="neo-kpis">
+          {kpi(0, "Faturamento", cur.rev, fmt, <Delta a={cur.rev} b={prev && prev.rev} />, { spark: last6.map((x) => x.Faturamento), tab: "fin" })}
+          {kpi(1, "Lucro líquido", cur.profit, fmt, <Delta a={cur.profit} b={prev && prev.profit} />, { color: cur.profit >= 0 ? "#5CE0D4" : "#FF8A8A", spark: last6.map((x) => x.Lucro), sparkColor: "#9AF3EC" })}
+          {kpi(2, "Margem", cur.margin, (v) => fmtN(v, 1) + "%", <Delta a={cur.margin} b={prev && prev.margin} pp />)}
+          {kpi(3, "Ticket médio", cur.ticket, fmt, <span className="neo-kd">{fmtN(cur.sales.length)} venda{cur.sales.length === 1 ? "" : "s"}</span>)}
+          {kpi(4, "Peças produzidas", cur.pieces, (v) => fmtN(Math.round(v)), <span className="neo-kd">{fmtN(cur.hours, 1)} h de máquina</span>, { tab: "ped" })}
+          {kpi(5, "A receber", iaReceber, fmt, <span className="neo-kd o">{iaReceberCli ? `${iaReceberCli} cliente${iaReceberCli > 1 ? "s" : ""} · em aberto` : "nada em aberto"}</span>, { cls: "or", tab: "pen" })}
+        </div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 14 }}>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 6 }}>Estoque de filamentos</div>
-            <div style={{ font: "400 11.5px Inter,sans-serif", color: "#93A6A6", marginBottom: 10 }}>Cor, modelo e quantidade de cada bobina</div>
-            {data.filaments.length === 0 ? (
-              <div style={{ font: "400 13px Inter,sans-serif", color: "#93A6A6" }}>Lance a compra de filamento na aba Investimentos e ele aparece aqui.</div>
-            ) : data.filaments.map((x) => {
-              const low = num(x.stockG) < num(data.settings.lowStockG);
-              const pct = Math.min(100, (num(x.stockG) / Math.max(1, num(x.qtyG))) * 100);
-              return (
-                <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 10, padding: "7px 0", borderBottom: "1px solid #232829" }}>
-                  <span style={{ width: 16, height: 16, borderRadius: 5, background: x.colorHex || "#4A5257", border: "1px solid #0002", flexShrink: 0 }} />
-                  <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ font: "600 13px Inter,sans-serif", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                      {x.name} <span style={{ font: "500 11px Inter,sans-serif", color: "#93A6A6" }}>{x.type} · {x.color}</span>
-                    </div>
-                    <div style={{ height: 5, background: "#1B2022", borderRadius: 99, marginTop: 4 }}>
-                      <div style={{ height: 5, width: `${pct}%`, background: low ? "#F0605F" : "#14A6A4", borderRadius: 99 }} />
-                    </div>
-                  </div>
-                  <div style={{ font: "600 12.5px 'JetBrains Mono',monospace", color: low ? "#F0605F" : "#F3F6F6", flexShrink: 0 }}>{fmtN(x.stockG)}g{low ? " ⚠" : ""}</div>
+        <div className="neo-g2">
+          <Reveal className="neo-hud neo-chartcard">
+            <div className="neo-ttl"><span className="neo-code">CAIXA</span><b>Faturamento × gastos × lucro</b><small>últimos 6 meses</small></div>
+            <div className="neo-chartbox"><ResponsiveContainer width="100%" height="100%">
+              <AreaChart data={last6} margin={{ top: 10, right: 8, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="neoFa" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#14B8B2" stopOpacity={0.45} /><stop offset="1" stopColor="#14B8B2" stopOpacity={0} /></linearGradient>
+                  <linearGradient id="neoFb" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stopColor="#F5821F" stopOpacity={0.25} /><stop offset="1" stopColor="#F5821F" stopOpacity={0} /></linearGradient>
+                </defs>
+                <CartesianGrid stroke="rgba(63,209,206,.07)" vertical={false} />
+                <XAxis dataKey="mes" tick={{ fontSize: 11, fill: "#5E7A7B", fontFamily: "JetBrains Mono" }} axisLine={false} tickLine={false} />
+                <YAxis tick={{ fontSize: 10.5, fill: "#5E7A7B", fontFamily: "JetBrains Mono" }} width={52} axisLine={false} tickLine={false} />
+                <Tooltip content={<ChartTip />} cursor={{ stroke: "rgba(63,209,206,.45)", strokeDasharray: "3 3" }} />
+                <Area type="monotone" dataKey="Faturamento" stroke="#3FD1CE" strokeWidth={2.5} fill="url(#neoFa)" animationDuration={1200} activeDot={{ r: 5, stroke: "#050C0D", strokeWidth: 2 }} />
+                <Area type="monotone" dataKey="Gastos" stroke="#F5821F" strokeWidth={2} strokeDasharray="5 4" fill="url(#neoFb)" animationDuration={1200} />
+                <Area type="monotone" dataKey="Lucro" stroke="#9AF3EC" strokeWidth={1.6} fill="none" animationDuration={1400} />
+              </AreaChart>
+            </ResponsiveContainer></div>
+            <div className="neo-leg"><span><i style={{ background: "#3FD1CE" }} />Faturamento</span><span><i style={{ background: "#F5821F" }} />Gastos</span><span><i style={{ background: "#9AF3EC" }} />Lucro</span></div>
+          </Reveal>
+          <div className="neo-col">
+            <Reveal className="neo-hud neo-health" delay={80}>
+              <div className="neo-ttl"><span className="neo-code">SAÚDE</span><b>Saúde financeira</b><small>{new Date(today + "T12:00:00").toLocaleDateString("pt-BR", { month: "long" })}</small></div>
+              <div className="neo-gwrap"><Gauge score={score} /><div className="neo-gscore" style={{ color: health.color }}><CountUp value={score} /><span>/100 · {health.label}</span></div></div>
+              {tips.length > 0 ? tips.slice(0, 3).map((t, i) => <div key={i} className="neo-tip">{t}</div>) : <div className="neo-tip">Tudo em ordem: vendas no azul, produção em dia e recebimentos sob controle. 🎉</div>}
+              {alerts.length > 0 && <details className="neo-alerts"><summary>Ver avisos ({alerts.length})</summary>{alerts.map((a, i) => <div key={i}><a.icon size={13} />{a.msg}</div>)}</details>}
+            </Reveal>
+            <Reveal className="neo-hud neo-goal" delay={140}>
+              <div className="neo-ttl"><span className="neo-code">META</span><b>Meta do mês</b></div>
+              {goal > 0 ? (
+                <div className="neo-goalrow">
+                  <Ring pct={goalPct} size={86} stroke={9} color={goalPct >= 100 ? "#5CE0D4" : "#F5821F"}><b>{fmtN(Math.min(999, goalPct), 0)}%</b></Ring>
+                  <div><div className="big"><CountUp value={monthRevenue} format={fmt} /></div><div className="sub">de {fmt(goal)} · {daysLeft > 0 ? `faltam ${daysLeft} dia${daysLeft > 1 ? "s" : ""}` : "último dia"}</div>
+                    <div className="sub2">{goalPct >= 100 ? "Meta batida! 🎉" : perDay > 0 ? `≈ ${fmt(perDay)} por dia para chegar lá` : ""}</div></div>
                 </div>
-              );
-            })}
-            {data.filaments.length > 0 && (
-              <div style={{ display: "flex", justifyContent: "space-between", font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", paddingTop: 8 }}>
-                <span>Total disponível</span><span style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(stockTotal / 1000, 2)} kg</span>
+              ) : <div className="neo-empty" style={{ padding: "6px 0" }}>Defina quanto quer faturar por mês em <a onClick={() => setTab("cfg")}>Configurações → Central de Comando</a>.</div>}
+            </Reveal>
+          </div>
+        </div>
+
+        <div className="neo-champs">
+          {champ(0, "Produto que mais lucra", "🏆", "", iaProdRank[0], (x) => fmt(x.v) + " de lucro", "proj")}
+          {champ(1, "Cliente que mais compra", "👑", "o", iaCliRank[0], (x) => fmt(x.v), "cli")}
+          {champ(2, "Nicho que mais vende", "🎯", "", iaNicheRank[0], (x) => fmt(x.v), null)}
+          {champ(3, "Filamento com mais retorno", "🧵", "o", iaFilRank[0], (x) => fmt(x.v) + " de lucro", "stk")}
+        </div>
+
+        <div className="neo-g3">
+          <Reveal className="neo-hud">
+            <div className="neo-ttl"><span className="neo-code">MATERIAL</span><b>Carretéis</b><small>{fmtN(stockTotal / 1000, 2)} kg disponível</small></div>
+            {data.filaments.length === 0 ? <div className="neo-empty">Lance a compra de filamento na aba Investimentos e ele aparece aqui.</div> : (
+              <div className="neo-spools">
+                {data.filaments.map((x) => {
+                  const low = num(x.stockG) < num(data.settings.lowStockG);
+                  const pct = Math.min(100, (num(x.stockG) / Math.max(1, num(x.qtyG))) * 100);
+                  const c = x.colorHex || "#4A5257";
+                  return (
+                    <div key={x.id} className={"neo-spool" + (low ? " low" : "")} title={`${x.name} · ${x.type || ""} ${x.color || ""} · ${fmtN(x.stockG)} g de ${fmtN(x.qtyG)} g`} onClick={() => setTab("stk")}>
+                      <Ring pct={pct} size={62} stroke={9} color={isDarkHex(c) ? "#6B7A7D" : hexShade(c, 0)} track="rgba(127,154,155,.12)"><span className="hub" /></Ring>
+                      <b>{x.name}</b><small>{fmtN(x.stockG)} g{low ? " ⚠" : ""}</small>
+                    </div>
+                  );
+                })}
               </div>
             )}
-          </Card>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 12 }}>Faturamento × Gastos (últimos 6 meses)</div>
-            <ResponsiveContainer width="100%" height={230}>
-              <BarChart data={last6}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2C3237" />
-                <XAxis dataKey="mes" tick={{ fontSize: 12, fill: "#8FA3A3" }} />
-                <YAxis tick={{ fontSize: 11, fill: "#8FA3A3" }} width={58} />
-                <Tooltip formatter={(v) => fmt(v)} />
-                <Legend wrapperStyle={{ fontSize: 12 }} />
-                <Bar dataKey="Faturamento" fill="#14A6A4" radius={[4, 4, 0, 0]} />
-                <Bar dataKey="Gastos" fill="#F47A20" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </Card>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 12 }}>Lucro mensal</div>
-            <ResponsiveContainer width="100%" height={230}>
-              <LineChart data={last6}>
-                <CartesianGrid strokeDasharray="3 3" stroke="#2C3237" />
-                <XAxis dataKey="mes" tick={{ fontSize: 12, fill: "#8FA3A3" }} />
-                <YAxis tick={{ fontSize: 11, fill: "#8FA3A3" }} width={58} />
-                <Tooltip formatter={(v) => fmt(v)} />
-                <Line type="monotone" dataKey="Lucro" stroke="#6FA0EA" strokeWidth={2.5} dot={{ r: 4 }} />
-              </LineChart>
-            </ResponsiveContainer>
-          </Card>
-          {revenueByNiche.length > 0 && (
-            <Card>
-              <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 12 }}>Vendas por nicho</div>
-              <ResponsiveContainer width="100%" height={230}>
-                <PieChart>
-                  <Pie data={revenueByNiche} dataKey="value" nameKey="name" innerRadius={45} outerRadius={78}>
-                    {revenueByNiche.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
-                  </Pie>
-                  <Tooltip formatter={(v) => fmt(v)} />
-                  <Legend wrapperStyle={{ fontSize: 11.5 }} />
-                </PieChart>
-              </ResponsiveContainer>
-            </Card>
-          )}
+          </Reveal>
+          <Reveal className="neo-hud" delay={80}>
+            <div className="neo-ttl"><span className="neo-code">MÁQUINAS</span><b>Impressoras se pagando</b></div>
+            {iaPrinters.length === 0 ? <div className="neo-empty">Nenhuma impressora cadastrada.</div> : iaPrinters.map((it, i) => (
+              <div key={it.p.id} className="neo-mach">
+                <Ring pct={it.paybackPct} color={i % 2 ? "#F5821F" : "#3FD1CE"}><b>{fmtN(it.paybackPct, 0)}%</b></Ring>
+                <div><b>{it.p.name}</b><small>{fmt(it.custoHora)}/h · {it.falta > 0 ? `falta ${fmt(it.falta)}` : "já se pagou ✓"}</small></div>
+              </div>
+            ))}
+            {data.printers.length > 0 && <div className="neo-cap">USO DA CAPACIDADE NO MÊS · {fmtN(iaUsePct, 0)}%<div className="bar"><i style={{ width: iaUsePct + "%" }} /></div><small>~{fmtN(Math.max(0, iaCap - monthHours), 0)} h livres de {fmtN(iaCap, 0)} h</small></div>}
+          </Reveal>
+          <Reveal className="neo-hud" delay={160}>
+            {board("Top clientes", "RANKING", iaCliRank, "t", (x) => fmt(x.v))}
+            <div style={{ height: 12 }} />
+            {board("Top produtos por lucro", "PRODUTOS", iaProdRank, "o", (x) => fmt(x.v))}
+          </Reveal>
+        </div>
+
+        <div className="neo-g2b">
+          <Reveal className="neo-hud">
+            <div className="neo-ttl"><span className="neo-code">NICHOS</span><b>Vendas por nicho</b><small>{periods.find((x) => x[0] === iaP)[1].toLowerCase()}</small></div>
+            {iaNicheRank.length === 0 ? <div className="neo-empty">Sem vendas no período.</div> : (
+              <HoloDonut gid="nic" totalLabel="TOTAL" unit={(v) => fmt(v)} items={iaNicheRank.map((x, i) => ({ name: x.name, value: x.v, color: ["#3FD1CE", "#F5821F", "#6FA0EA", "#A88AF0", "#FF6B6B", "#9AF3EC", "#FFB066", "#8FA0AC"][i % 8] }))} />
+            )}
+          </Reveal>
           {hasFilCard && (
-            <Card>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10, flexWrap: "wrap", gap: 6 }}>
-                <div style={{ font: "600 14px 'Space Grotesk',sans-serif" }}>Filamentos mais usados</div>
-                <div style={{ display: "flex", gap: 4 }}>
-                  {[["proj", "Projetos ativos"], ["real", "Consumo real"]].map(([v, lb]) => (
-                    <button key={v} onClick={() => setFilView(v)} style={{ padding: "4px 10px", borderRadius: 999, border: "1px solid " + (filView === v ? "#14A6A4" : "#3A4147"), background: filView === v ? "#16302F" : "#1C2023", color: filView === v ? "#3FD1CE" : "#93A6A6", font: "600 11px Inter,sans-serif", cursor: "pointer" }}>{lb}</button>
-                  ))}
-                </div>
+            <Reveal className="neo-hud" delay={80}>
+              <div className="neo-ttl"><span className="neo-code">CONSUMO</span><b>Filamentos mais usados</b>
+                <div className="neo-chips sm" style={{ marginLeft: "auto" }}>{[["proj", "Projetos ativos"], ["real", "Consumo real"]].map(([v, lb]) => <button key={v} className={filView === v ? "on" : ""} onClick={() => setFilView(v)}>{lb}</button>)}</div>
               </div>
-              {filUsage.length === 0 ? (
-                <div style={{ font: "400 12.5px Inter,sans-serif", color: "#93A6A6", padding: "38px 8px", textAlign: "center" }}>
-                  Nenhum pedido produzido ainda — conclua pedidos de produção para ver o consumo real.
-                </div>
-              ) : (
-              <ResponsiveContainer width="100%" height={168}>
-                <PieChart>
-                  <Pie data={filUsage} dataKey="value" nameKey="name" innerRadius={38} outerRadius={66}>
-                    {filUsage.map((x, i) => <Cell key={i} fill={x.color || CHART_COLORS[i % CHART_COLORS.length]} stroke="#223838" strokeWidth={1} />)}
-                  </Pie>
-                  <Tooltip formatter={(v) => `${fmtN(v)}g`} />
-                </PieChart>
-              </ResponsiveContainer>
+              {filUsage.length === 0 ? <div className="neo-empty">Nenhum pedido produzido ainda — conclua pedidos de produção para ver o consumo real.</div> : (
+                <HoloDonut gid="fil" totalLabel="GRAMAS" unit={(v) => fmtN(v) + " g"} items={filUsage.map((x, i) => ({ name: x.name, value: x.value, color: visColor(x.color, i), glow: x.color && isDarkHex(x.color) ? "#99AABB" : null }))} />
               )}
-              <div style={{ marginTop: 4 }}>
-                {filUsage.slice(0, 5).map((x, i) => (
-                  <div key={x.id} style={{ display: "flex", alignItems: "center", gap: 8, padding: "4px 0", font: "400 12.5px Inter,sans-serif", borderBottom: i < Math.min(filUsage.length, 5) - 1 ? "1px solid #232829" : "none" }}>
-                    <span style={{ width: 11, height: 11, borderRadius: "50%", background: x.color || CHART_COLORS[i % CHART_COLORS.length], border: "1px solid #3A4147", flexShrink: 0 }} />
-                    <span style={{ flex: 1, fontWeight: 600 }}>{x.name}</span>
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#93A6A6" }}>{fmtN(x.value)}g</span>
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: "#3FD1CE", width: 52, textAlign: "right" }}>{fmtN(x.value / filUsageTotal * 100, 1)}%</span>
-                  </div>
-                ))}
-                <div style={{ font: "400 10.5px Inter,sans-serif", color: "#7E9191", marginTop: 6 }}>
-                  {filView === "proj" ? "Gramas por peça (filamento total) somadas nos projetos ativos — mostra de quais carretéis seu catálogo depende." : "Gramas efetivamente baixadas nos pedidos produzidos — mostra o que você realmente mais gasta."}
-                </div>
-              </div>
-            </Card>
-          )}
-          {topClients.length > 0 && (
-            <Card>
-              <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 12 }}>Top clientes</div>
-              {topClients.map((x, i) => (
-                <div key={x.c.id} style={{ display: "flex", justifyContent: "space-between", padding: "7px 0", borderBottom: i < topClients.length - 1 ? "1px solid #232829" : "none", font: "400 13.5px Inter,sans-serif" }}>
-                  <span style={{ fontWeight: 600 }}>{i + 1}. {x.c.name}</span>
-                  <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#3FD1CE", fontWeight: 600 }}>{fmt(x.total)}</span>
-                </div>
-              ))}
-            </Card>
+              <div className="neo-foot">{filView === "proj" ? "Gramas por peça somadas nos projetos ativos — de quais carretéis seu catálogo depende." : "Gramas baixadas nos pedidos produzidos — o que você realmente mais gasta."}</div>
+            </Reveal>
           )}
         </div>
       </div>
@@ -6126,7 +6319,6 @@ function App() {
             </div>
           )}
         </div>
-        <div className="neo-sec">Números do negócio</div>
       </div>
     );
   }
@@ -8040,7 +8232,7 @@ SC,
               <In value={s.ownerName || ""} onChange={set("ownerName")} onBlur={commitS} placeholder="ex: André" />
               <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>Aparece em "Bom dia, …" no topo da tela inicial.</div>
             </div>
-            <div />
+            {F({ label: "Meta de faturamento do mês (R$)", k: "monthlyGoal", step: "50", hint: "Mostra o anel \"Meta do mês\" nos números do negócio. Deixe vazio para não usar." })}
           </Row>
           <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Energia e produção</div>
           <Row>
@@ -8329,12 +8521,13 @@ SC,
             <div key={g.group} style={{ marginBottom: 10 }}>
               <div style={{ font: "700 9.5px Inter,sans-serif", color: "#6FA3A3", textTransform: "uppercase", letterSpacing: ".12em", padding: "8px 10px 5px" }}>{g.group}</div>
               {g.items.map((t) => (
-                <button key={t.id} className={"neo-nav-btn" + (tab === t.id ? " on" : "")} onClick={() => setTab(t.id)} style={{
+                <button key={t.id} title={t.hint} className={"neo-nav-btn" + (tab === t.id ? " on" : "") + (t.action ? " bk" : "")} onClick={() => (t.action ? t.action() : setTab(t.id))} style={{
                   display: "flex", alignItems: "center", gap: 9, width: "100%", padding: "8.5px 10px", cursor: "pointer",
                   background: "none", border: "none", borderRadius: 9, textAlign: "left",
                   font: "500 13px Inter,sans-serif", color: "#A9BDBD", marginBottom: 2,
                 }}>
                   <t.icon size={15} /><span style={{ flex: 1 }}>{t.label}</span>
+                  {t.dot && <span className="neo-dot" />}
                   {!!t.badge && <span style={{ background: "#F47A20", color: "#fff", borderRadius: 999, padding: "1px 7px", font: "700 10.5px Inter,sans-serif" }}>{t.badge}</span>}
                 </button>
               ))}
@@ -8369,12 +8562,6 @@ SC,
         {saveState.ok && saveState.photoWarn && (
           <div className="no-print" style={{ display: "flex", alignItems: "center", gap: 10, background: "#2E2413", border: "1px solid #F3D08A", borderRadius: 10, padding: "10px 14px", marginBottom: 16, font: "500 13px Inter,sans-serif", color: "#FFB067" }}>
             <span style={{ flex: 1 }}>⚠ As fotos não estão sendo gravadas neste navegador (os dados estão salvos normalmente). Imagens novas podem sumir ao recarregar — tente outro navegador ou libere espaço.</span>
-          </div>
-        )}
-        {needBackup && (
-          <div className="no-print" style={{ display: "flex", alignItems: "center", gap: 10, background: "#2E2413", border: "1px solid #F3D08A", borderRadius: 10, padding: "10px 14px", marginBottom: 16, font: "500 13px Inter,sans-serif", color: "#FFB067" }}>
-            <span style={{ flex: 1 }}>Faz mais de 7 dias (ou nunca) que voce nao exporta um backup. Guarde uma copia fora do navegador para nao perder nada.</span>
-            <Btn kind="ghost" onClick={exportBackup}><DownloadIc size={15} />Fazer backup agora</Btn>
           </div>
         )}
         {tab === "dash" && <Dash />}

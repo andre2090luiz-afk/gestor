@@ -618,6 +618,46 @@
   .neo-pcard .neo-bg2.ic{width:30px;height:30px;}
   .neo-qmenu.up{top:auto;bottom:calc(100% + 6px);}
   .neo-ccard,.neo-qrow{z-index:auto;}
+
+  /* ===== v4.55 Estoque de material ===== */
+  .neo-sect{font:600 15px 'Space Grotesk',sans-serif;color:#F3F6F6;}
+  .neo-fgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:8px;}
+  .neo-fcell{position:relative;}
+  .neo-ftile{width:100%;background:rgba(12,26,28,.72);border:1px solid rgba(63,209,206,.1);border-radius:12px;padding:9px 4px 8px;text-align:center;cursor:pointer;transition:border-color .15s,transform .15s,box-shadow .15s;color:inherit;}
+  .neo-ftile:hover{border-color:rgba(63,209,206,.4);transform:translateY(-2px);}
+  .neo-ftile.on{border-color:#3FD1CE;box-shadow:0 0 18px rgba(63,209,206,.25);}
+  .neo-ftile .neo-ring{margin:0 auto;}
+  .neo-ftile .hub{width:16px;height:16px;border-radius:50%;background:#050C0D;border:1px solid rgba(127,154,155,.4);}
+  .neo-ftile b{display:block;font:600 10.5px Inter,sans-serif;color:#E6F1F1;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 4px;}
+  .neo-ftile small{font:600 10px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-ftile.low{border-color:rgba(255,107,107,.5);animation:neoLow 1.8s ease-in-out infinite;} .neo-ftile.low small{color:#FF8A8A;}
+  .neo-ftile.need{border-color:rgba(245,130,31,.5);} .neo-ftile.need small{color:#FFAA5C;}
+  .neo-fpop{position:absolute;top:calc(100% + 6px);z-index:40;width:250px;animation:neoPop .18s ease both;filter:drop-shadow(0 20px 40px rgba(0,0,0,.65));}
+  .neo-fpop.a-l{left:0;} .neo-fpop.a-r{right:0;} .neo-fpop.a-c{left:50%;margin-left:-125px;}
+  .neo-fpop.up{top:auto;bottom:calc(100% + 6px);}
+  .neo-fcard{position:relative;background:rgba(8,18,19,.98);border:1px solid rgba(63,209,206,.5);border-radius:16px;padding:16px 14px 14px;text-align:center;}
+  .neo-fcard.low{border-color:rgba(255,107,107,.6);} .neo-fcard.need{border-color:rgba(245,130,31,.55);}
+  .neo-fcard .neo-mx.sm{position:absolute;top:8px;right:8px;width:26px;height:26px;}
+  .neo-fcard .neo-ring{margin:0 auto;}
+  .neo-fcard .rc{text-align:center;} .neo-fcard .rc b{font:700 15px 'JetBrains Mono',monospace;color:#E6F1F1;display:block;} .neo-fcard .rc small{font:500 9px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-fcard .nm{font:700 13px Inter,sans-serif;color:#F3F6F6;margin-top:8px;}
+  .neo-fcard .ty{display:inline-block;font:700 9px 'JetBrains Mono',monospace;letter-spacing:.06em;color:#3FD1CE;border:1px solid rgba(63,209,206,.35);border-radius:5px;padding:1px 5px;margin-top:4px;text-transform:uppercase;}
+  .neo-fcard .g{font:600 12px 'JetBrains Mono',monospace;color:#C9DADA;margin-top:6px;} .neo-fcard .g span{color:#7F9A9B;}
+  .neo-fcard .info{font:500 11px/1.5 Inter,sans-serif;color:#7F9A9B;margin-top:6px;}
+  .neo-fcard .info .w{color:#FFAA5C;font-weight:600;} .neo-fcard .info .r{color:#FF8A8A;font-weight:600;} .neo-fcard .info .ok{color:#3FD1CE;}
+  .neo-mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
+  .neo-mcard{position:relative;background:rgba(12,26,28,.72);border:1px solid rgba(63,209,206,.12);border-radius:14px;padding:12px 14px;}
+  .neo-mcard.low{border-color:rgba(255,107,107,.45);}
+  .neo-mcard .top{display:flex;align-items:center;gap:10px;}
+  .neo-mcard .ic{width:36px;height:36px;flex-shrink:0;border-radius:10px;display:grid;place-items:center;background:rgba(63,209,206,.1);border:1px solid rgba(63,209,206,.3);font-size:16px;}
+  .neo-mcard b{font:600 13.5px Inter,sans-serif;color:#F3F6F6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;} .neo-mcard small{display:block;font:400 11px Inter,sans-serif;color:#7F9A9B;}
+  .neo-mcard .st{margin-left:auto;font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.06em;border:1px solid currentColor;border-radius:6px;padding:2px 7px;color:#3FD1CE;} .neo-mcard .st.r{color:#FF8A8A;}
+  .neo-mcard .bar{height:8px;border-radius:5px;background:rgba(127,154,155,.15);margin:10px 0 5px;position:relative;}
+  .neo-mcard .bar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,#14B8B2,#3FD1CE);box-shadow:0 0 8px rgba(63,209,206,.5);}
+  .neo-mcard.low .bar i{background:linear-gradient(90deg,#FF6B6B,#FF8A8A);box-shadow:0 0 8px rgba(255,107,107,.5);}
+  .neo-mcard .bar em{position:absolute;top:-3px;bottom:-3px;width:2px;background:#FFAA5C;box-shadow:0 0 6px #F5821F;}
+  .neo-mcard .row{display:flex;justify-content:space-between;gap:6px;font:500 11px 'JetBrains Mono',monospace;color:#7F9A9B;} .neo-mcard .row b{display:inline;font:600 11.5px 'JetBrains Mono',monospace;color:#E6F1F1;}
+  .neo-mcard .neo-oacts.left{margin-top:10px;}
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -760,7 +800,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.54";
+const APP_VERSION = "4.55";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -4101,141 +4141,240 @@ function App() {
   }
 
   /* ================================ ESTOQUE =============================== */
+  const STK_UI = { view: "spools", type: "Todos", sort: "menos", mcat: "Todos", help: false };
   function Stock() {
+    const today = todayISO();
+    const [view, setViewS] = useState(STK_UI.view);
+    const setView = (v) => { STK_UI.view = v; setViewS(v); };
+    const [typeF, setTypeS] = useState(STK_UI.type);
+    const setTypeF = (v) => { STK_UI.type = v; setTypeS(v); };
+    const [sortBy, setSortS] = useState(STK_UI.sort);
+    const setSortBy = (v) => { STK_UI.sort = v; setSortS(v); };
+    const [mcat, setMcatS] = useState(STK_UI.mcat);
+    const setMcat = (v) => { STK_UI.mcat = v; setMcatS(v); };
+    const [help, setHelp] = useState(false);
+    const [pop, setPop] = useState(null);
+    const [showMov, setShowMov] = useState(false);
     const [viewMov, setViewMov] = useState(null);
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!pop && !menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-fpop, .neo-ftile, .neo-qmenu, .neo-qmore"))) { setPop(null); setMenu(null); } };
+      const esc = (e) => { if (e.key === "Escape") { setPop(null); setMenu(null); } };
+      document.addEventListener("mousedown", close); document.addEventListener("keydown", esc);
+      return () => { document.removeEventListener("mousedown", close); document.removeEventListener("keydown", esc); };
+    }, [pop, menu]);
     const sFil = useSort("filamentos");
     const sMat = useSort("materiais");
     const matValue = data.materials.reduce((s, m) => s + num(m.stock) * num(m.unitCost), 0);
     const filValue = data.filaments.reduce((s, f) => s + (num(f.stockG) / Math.max(1, num(f.qtyG))) * num(f.price), 0);
     const allMovements = data.materials.flatMap((m) => (m.movements || []).map((mv) => ({ ...mv, matName: m.name })))
-      .sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0)).slice(0, 12);
+      .sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0)).slice(0, 15);
+    /* quanto a fila (pedidos em aberto) ainda vai gastar de cada filamento */
+    const need = {};
+    const addNeed = (fid, g) => { if (fid && g > 0) need[fid] = (need[fid] || 0) + g; };
+    pendingOrdersList.filter((o) => !o.fromStock).forEach((o) => {
+      const p = projMap[o.projectId]; if (!p) return;
+      const qty = num(o.qty);
+      if (isPartsProj(p)) p.parts.forEach((pt) => { const left = Math.max(0, qty - partPrinted(o, pt.id)); partFils(p, o, pt).forEach((x) => addNeed(x.filamentId, x.grams * left)); });
+      else { const left = Math.max(0, qty - printedOf(o)); orderFilaments(p, o).forEach((x) => addNeed(x.filamentId, num(x.grams) * left)); }
+    });
+    /* ritmo de uso: impressoes (e pedidos concluidos sem registro) dos ultimos 30 dias */
+    const used30 = {};
+    const from30 = addDays(today, -29);
+    data.orders.filter((o) => !o.fromStock).forEach((o) => {
+      const p = projMap[o.projectId]; if (!p) return;
+      const prints = (o.prints || []).filter((x) => x.date && x.date >= from30);
+      if (prints.length) {
+        prints.forEach((pr) => {
+          if (isPartsProj(p)) p.parts.filter((pt) => !pr.partId || pr.partId === pt.id).forEach((pt) => partFils(p, o, pt).forEach((x) => { used30[x.filamentId] = (used30[x.filamentId] || 0) + x.grams * num(pr.qty); }));
+          else orderFilaments(p, o).forEach((x) => { used30[x.filamentId] = (used30[x.filamentId] || 0) + num(x.grams) * num(pr.qty); });
+        });
+      } else if (isDone(o) && o.processed && o.date >= from30 && !(o.prints || []).length) {
+        orderFilaments(p, o).forEach((x) => { used30[x.filamentId] = (used30[x.filamentId] || 0) + num(x.grams) * num(o.qty); });
+      }
+    });
+    const totalNeed = Object.values(need).reduce((s, g) => s + g, 0);
+    const shortIds = Object.keys(need).filter((fid) => filMap[fid] && need[fid] > num(filMap[fid].stockG) + 0.01);
+    const totalUse30 = Object.values(used30).reduce((s, g) => s + g, 0);
+    const daysLeftAll = totalUse30 > 0 ? (stockTotal / (totalUse30 / 30)) : null;
+    const durTxt = (days) => (days == null ? null : days < 14 ? `~${Math.max(1, Math.round(days))} dia${Math.round(days) > 1 ? "s" : ""}` : days < 60 ? `~${Math.round(days / 7)} semanas` : `~${Math.round(days / 30)} meses`);
+    const types = [...new Set(data.filaments.map((f) => String(f.type || "").trim()).filter(Boolean))].sort();
+    const lowIds = new Set(lowStock.map((f) => f.id));
+    let fils = data.filaments.filter((f) => typeF === "Todos" || (typeF === "__low" ? lowIds.has(f.id) || shortIds.includes(f.id) : String(f.type || "").trim() === typeF));
+    fils = fils.slice().sort((a, b) => sortBy === "nome" ? (a.name || "").localeCompare(b.name || "", "pt-BR") : sortBy === "tipo" ? (String(a.type).localeCompare(String(b.type)) || (a.name || "").localeCompare(b.name || "")) : sortBy === "mais" ? num(b.stockG) - num(a.stockG) : (num(a.stockG) / Math.max(1, num(a.qtyG))) - (num(b.stockG) / Math.max(1, num(b.qtyG))));
+    const ringColor = (f) => { const c = f.colorHex || "#4A5257"; return isDarkHex(c) ? "#6B7A7D" : hexShade(c, 0); };
+    const fcard = (f) => {
+      const pct = Math.min(100, (num(f.stockG) / Math.max(1, num(f.qtyG))) * 100);
+      const low = lowIds.has(f.id);
+      const nd = need[f.id] || 0;
+      const short = nd > num(f.stockG) + 0.01;
+      const perWeek = (used30[f.id] || 0) / 30 * 7;
+      const days = perWeek > 0 ? num(f.stockG) / (perWeek / 7) : null;
+      const perKg = (num(f.price) / Math.max(1, num(f.qtyG))) * 1000;
+      return (
+        <div className={"neo-fcard" + (low ? " low" : short ? " need" : "")}>
+          <button className="neo-mx sm" title="Fechar" onClick={() => setPop(null)}><XIc size={14} /></button>
+          <Ring pct={pct} size={96} stroke={12} color={ringColor(f)} track="rgba(127,154,155,.12)"><div className="rc"><b style={low ? { color: "#FF8A8A" } : undefined}>{fmtN(pct, 0)}%</b><small>restante</small></div></Ring>
+          <div className="nm">{f.name}</div>
+          {f.type && <span className="ty">{f.type}</span>}
+          <div className="g">{fmtN(f.stockG)} g <span>de {fmtN(f.qtyG)} g</span></div>
+          <div className="info">
+            {low && <><span className="r">⚠ abaixo do mínimo ({fmtN(data.settings.lowStockG)} g)</span><br /></>}
+            fila precisa: {nd > 0 ? (short ? <span className="w">{fmtN(nd)} g · falta {fmtN(nd - num(f.stockG))} g</span> : <span className="ok">{fmtN(nd)} g ✓</span>) : <span className="ok">0 g</span>}<br />
+            {perWeek > 0 ? <>uso ~{fmtN(perWeek)} g/semana · <span className={days < 21 ? "w" : ""}>dura {durTxt(days)}</span></> : "sem uso nos últimos 30 dias"}<br />
+            {fmt(perKg)}/kg
+          </div>
+          <div className="neo-oacts" style={{ justifyContent: "center", marginTop: 10 }}>
+            <button className={(low || short ? "neo-bp" : "neo-bg2") + " stk-restock"} onClick={() => { setPop(null); setModal({ type: "filament", restock: f }); }}>↻ Repor</button>
+            <button className="neo-bg2 ic" title="Editar" onClick={() => { setPop(null); setModal({ type: "filament", item: f }); }}><Pencil size={13} /></button>
+            <button className="neo-bg2 ic danger stk-del" title="Excluir" onClick={() => { setPop(null); if (confirm(`Excluir "${f.name}"?`)) delItem("filaments", f.id); }}><Trash2 size={13} /></button>
+          </div>
+        </div>
+      );
+    };
+    const mats = data.materials.filter((m) => mcat === "Todos" || (mcat === "__low" ? num(m.stock) <= num(m.minStock) : m.category === mcat));
+    const mcats = [...new Set(data.materials.map((m) => m.category).filter(Boolean))];
+    const matIcon = (m) => (/embal|caixa|saco|saquinho/i.test((m.category || "") + " " + m.name) ? "📦" : /im[ãa]/i.test(m.name) ? "🧲" : /argola|chaveir|corrente/i.test(m.name) ? "🔗" : /led|luz|fio/i.test(m.name) ? "💡" : "🔩");
+    const lowMatN = data.materials.filter((m) => num(m.stock) <= num(m.minStock)).length;
     return (
-      <div>
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-          💡 As compras lançadas em Investimentos (Filamento, Material, Embalagem) entram aqui automaticamente. Os botões abaixo servem só para cadastro manual do que você já tinha antes, ajustes e correções.
+      <div className="neo-stock">
+        <div className="neo-pagehead">
+          <span className="neo-code">ESTOQUE</span><h2>Matéria-prima</h2>
+          <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Como funciona">?</button>
+          <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+            <Btn kind="ghost" onClick={() => setModal({ type: "movement" })} disabled={data.materials.length === 0}><UploadIc size={15} />Entrada / Saída manual</Btn>
+            <Btn kind="ghost" onClick={() => setModal({ type: "filament" })}><Plus size={15} />Filamento (manual)</Btn>
+            <Btn kind="ghost" onClick={() => setModal({ type: "material" })}><Plus size={15} />Material (manual)</Btn>
+          </div>
         </div>
-        <SectionHead title="Estoque de material">
-          <Btn kind="ghost" onClick={() => setModal({ type: "movement" })} disabled={data.materials.length === 0}><UploadIc size={15} />Entrada / Saída manual</Btn>
-          <Btn kind="ghost" onClick={() => setModal({ type: "filament" })}><Plus size={15} />Filamento (manual)</Btn>
-          <Btn kind="ghost" onClick={() => setModal({ type: "material" })}><Plus size={15} />Material (manual)</Btn>
-        </SectionHead>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 12, marginBottom: 14 }}>
-          <Stat label="Valor em estoque (matéria-prima)" value={fmt(matValue + filValue)} sub={`${fmt(matValue)} materiais · ${fmt(filValue)} filamentos`} icon={CircleDollarSign} />
-          <Stat label="Itens de material" value={fmtN(data.materials.length)} sub={`${fmtN(data.materials.reduce((s, m) => s + num(m.stock), 0))} unidades no total`} icon={Package} accent="#6FA0EA" />
-          <Stat label="Filamento disponível" value={`${fmtN(stockTotal / 1000, 2)} kg`} sub={`${data.filaments.length} bobinas cadastradas`} icon={Layers} accent="#A88AF0" />
-          <Stat label="Alertas de estoque" value={fmtN(lowMaterials.length + lowStock.length)} sub={lowMaterials.length + lowStock.length > 0 ? "itens precisando de reposição" : "tudo abastecido"} icon={AlertTriangle} accent={lowMaterials.length + lowStock.length > 0 ? "#F0605F" : "#14A6A4"} />
+        {help && <div className="neo-hud neo-helpbox">💡 As compras lançadas em Investimentos (Filamento, Material, Embalagem) entram aqui automaticamente. Os botões acima servem para cadastro manual do que você já tinha antes, ajustes e correções. Clique num carretel para ver os detalhes.</div>}
+        <div className="neo-ckpis">
+          <Reveal className="neo-hud neo-k or" delay={0}><div className="l">Valor em estoque</div><div className="v"><CountUp value={matValue + filValue} format={fmt} /></div><span className="neo-kd">{fmt(filValue)} filamentos · {fmt(matValue)} materiais</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={60}><div className="l">Filamento disponível</div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={stockTotal / 1000} format={(v) => fmtN(v, 2) + " kg"} /></div><span className="neo-kd">{data.filaments.length} carretéis{daysLeftAll != null ? ` · dura ${durTxt(daysLeftAll)} no ritmo atual` : ""}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={120}><div className="l">A fila precisa de</div><div className="v"><CountUp value={totalNeed / 1000} format={(v) => fmtN(v, 2) + " kg"} /></div><span className={"neo-kd" + (shortIds.length ? " o" : "")}>{shortIds.length ? `${shortIds.length} cor${shortIds.length > 1 ? "es" : ""} sem filamento suficiente` : totalNeed > 0 ? "todas as cores dão ✓" : "nenhum pedido em aberto"}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={180}><div className="l">Alertas</div><div className="v" style={{ color: lowStock.length + lowMatN ? "#FF6B6B" : "#3FD1CE" }}><CountUp value={lowStock.length + lowMatN} /></div><span className="neo-kd">{lowStock.length + lowMatN ? `${lowStock.length} filamento${lowStock.length === 1 ? "" : "s"} · ${lowMatN} ${lowMatN === 1 ? "material" : "materiais"} para repor` : "tudo abastecido"}</span></Reveal>
         </div>
 
-        <Card style={{ padding: 6, marginBottom: 14 }}>
-          <div style={{ font: "600 14px 'Space Grotesk',sans-serif", padding: "10px 12px 4px" }}>Filamentos</div>
-          {data.filaments.length === 0 ? <Empty icon={Layers} text="Nenhum filamento cadastrado" hint="Lance a compra na aba Investimentos (categoria Filamento) que a bobina entra aqui sozinha." /> : (
-            <div style={{ overflowX: "auto" }}>
-              <table>
-                <thead><tr><Th s={sFil} col="name">Filamento</Th><Th s={sFil} col="type">Tipo</Th><Th s={sFil} col="color">Cor</Th><Th s={sFil} col="qtyG">Comprado</Th><Th s={sFil} col="stockG">Estoque</Th><Th s={sFil} col="price">Valor pago</Th><Th s={sFil} col="perKg">Custo/kg</Th><th></th></tr></thead>
-                <tbody>
-                  {sortRows(data.filaments, sFil, {
-                    name: (x) => x.name, type: (x) => x.type, color: (x) => x.color, qtyG: (x) => num(x.qtyG), stockG: (x) => num(x.stockG),
-                    price: (x) => num(x.price), perKg: (x) => (num(x.price) / Math.max(1, num(x.qtyG))) * 1000,
-                  }).map((x) => {
-                    const perKg = (num(x.price) / Math.max(1, num(x.qtyG))) * 1000;
-                    const pct = Math.min(100, (num(x.stockG) / Math.max(1, num(x.qtyG))) * 100);
-                    const low = num(x.stockG) < num(data.settings.lowStockG);
-                    return (
-                      <tr key={x.id}>
-                        <td style={{ fontWeight: 600 }}>{x.name}</td>
-                        <td>{x.type}</td>
-                        <td><span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}>
-                          <span style={{ width: 13, height: 13, borderRadius: 4, background: x.colorHex || "#4A5257", border: "1px solid #0002" }} />{x.color}</span></td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(x.qtyG)}g</td>
-                        <td style={{ minWidth: 130 }}>
-                          <div style={{ font: "600 12.5px 'JetBrains Mono',monospace", color: low ? "#F0605F" : "#F3F6F6" }}>{fmtN(x.stockG)}g {low && "⚠"}</div>
-                          <div style={{ height: 5, background: "rgba(5,12,12,.55)", borderRadius: 99, marginTop: 3 }}>
-                            <div style={{ height: 5, width: `${pct}%`, background: low ? "#F0605F" : "#14A6A4", borderRadius: 99 }} />
-                          </div>
-                        </td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(x.price)}</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(perKg)}</td>
-                        <td style={{ whiteSpace: "nowrap" }}>
-                          <Btn small kind="ghost" title="Repor estoque (nova compra)" style={{ color: "#3FD1CE", borderColor: "rgba(63,209,206,.1)" }} onClick={() => setModal({ type: "filament", restock: x })}><Plus size={13} /></Btn>{" "}
-                          <Btn small kind="ghost" onClick={() => setModal({ type: "filament", item: x })}><Pencil size={13} /></Btn>{" "}
-                          <Btn small kind="danger" onClick={() => { if (confirm(`Excluir "${x.name}"?`)) delItem("filaments", x.id); }}><Trash2 size={13} /></Btn>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
+        <div className="neo-penbar">
+          <span className="neo-code">FILAMENTOS</span><b className="neo-sect">Carretéis</b>
+          <div className="neo-seg sm">{[["spools", "Carretéis"], ["table", "Tabela"]].map(([k, l]) => <button key={k} className={"stk-view" + (view === k ? " on" : "")} data-v={k} onClick={() => setView(k)}>{l}</button>)}</div>
+          <div className="neo-fchips">
+            <button className={"neo-fchip stk-type" + (typeF === "Todos" ? " on" : "")} data-t="Todos" onClick={() => setTypeF("Todos")}>Todos {data.filaments.length}</button>
+            {types.map((t) => <button key={t} className={"neo-fchip stk-type" + (typeF === t ? " on" : "")} data-t={t} onClick={() => setTypeF(t)}>{t} {data.filaments.filter((f) => String(f.type || "").trim() === t).length}</button>)}
+            {(lowStock.length > 0 || shortIds.length > 0) && <button className={"neo-fchip r stk-type" + (typeF === "__low" ? " on" : "")} data-t="__low" onClick={() => setTypeF(typeF === "__low" ? "Todos" : "__low")}>⚠ Baixos {new Set([...lowStock.map((f) => f.id), ...shortIds]).size}</button>}
+          </div>
+          {view === "spools" && <Sel value={sortBy} onChange={(e) => setSortBy(e.target.value)} style={{ width: 225, marginLeft: "auto", height: 36, padding: "6px 10px" }} title="Ordenar">
+            <option value="menos">Ordenar: menos estoque</option><option value="mais">Ordenar: mais estoque</option><option value="nome">Ordenar: nome</option><option value="tipo">Ordenar: tipo</option>
+          </Sel>}
+        </div>
+
+        {data.filaments.length === 0 ? <Card><Empty icon={Layers} text="Nenhum filamento cadastrado" hint="Lance a compra na aba Investimentos (categoria Filamento) que o carretel entra aqui sozinho." /></Card>
+          : view === "spools" ? (
+            <div className="neo-fgrid">
+              {fils.map((f, i) => {
+                const pct = Math.min(100, (num(f.stockG) / Math.max(1, num(f.qtyG))) * 100);
+                const low = lowIds.has(f.id);
+                const short = (need[f.id] || 0) > num(f.stockG) + 0.01;
+                return (
+                  <div key={f.id} className="neo-fcell">
+                    <button className={"neo-ftile" + (low ? " low" : short ? " need" : "") + (pop && pop.id === f.id ? " on" : "")} data-fil={f.id} title={`${f.name} — clique para ver detalhes`}
+                      onClick={(e) => { if (pop && pop.id === f.id) { setPop(null); return; } const r = e.currentTarget.getBoundingClientRect(); setPop({ id: f.id, align: r.left + 260 > window.innerWidth ? "r" : r.left < 280 ? "l" : "c", up: r.top + 380 > window.innerHeight && r.top > 380 }); }}>
+                      <Ring pct={pct} size={58} stroke={8} color={ringColor(f)} track="rgba(127,154,155,.13)"><span className="hub" /></Ring>
+                      <b>{f.name}</b><small>{fmtN(f.stockG)} g{low || short ? " ⚠" : ""}</small>
+                    </button>
+                    {pop && pop.id === f.id && <div className={"neo-fpop a-" + pop.align + (pop.up ? " up" : "")}>{fcard(f)}</div>}
+                  </div>
+                );
+              })}
+              {fils.length === 0 && <div className="neo-empty">Nenhum carretel neste filtro.</div>}
+            </div>
+          ) : (
+            <div className="neo-otbl">
+              <div style={{ overflowX: "auto" }}>
+                <table className="neo-otable">
+                  <thead><tr><Th s={sFil} col="name">Filamento</Th><Th s={sFil} col="type">Tipo</Th><Th s={sFil} col="color">Cor</Th><Th s={sFil} col="qtyG">Comprado</Th><Th s={sFil} col="stockG">Estoque</Th><th>Fila precisa</th><Th s={sFil} col="price">Preço</Th><Th s={sFil} col="perKg">R$/kg</Th><th /></tr></thead>
+                  <tbody>
+                    {sortRows(fils, sFil, { name: (x) => x.name, type: (x) => x.type, color: (x) => x.color, qtyG: (x) => num(x.qtyG), stockG: (x) => num(x.stockG), price: (x) => num(x.price), perKg: (x) => (num(x.price) / Math.max(1, num(x.qtyG))) * 1000 }).map((x) => {
+                      const pct = Math.min(100, (num(x.stockG) / Math.max(1, num(x.qtyG))) * 100);
+                      const low = lowIds.has(x.id);
+                      const nd = need[x.id] || 0;
+                      return (
+                        <tr key={x.id}>
+                          <td style={{ fontWeight: 600 }}>{x.name}</td>
+                          <td>{x.type}</td>
+                          <td><span style={{ display: "inline-flex", alignItems: "center", gap: 6 }}><span style={{ width: 13, height: 13, borderRadius: 4, background: x.colorHex || "#4A5257", border: "1px solid rgba(255,255,255,.2)" }} />{x.color}</span></td>
+                          <td className="neo-on" style={{ textAlign: "left" }}>{fmtN(x.qtyG)}g</td>
+                          <td style={{ minWidth: 130 }}>
+                            <div style={{ font: "600 12.5px 'JetBrains Mono',monospace", color: low ? "#FF8A8A" : "#F3F6F6" }}>{fmtN(x.stockG)}g {low && "⚠"}</div>
+                            <div style={{ height: 5, background: "rgba(127,154,155,.15)", borderRadius: 99, marginTop: 3 }}><div style={{ height: 5, width: `${pct}%`, background: low ? "#FF6B6B" : "#3FD1CE", borderRadius: 99, boxShadow: `0 0 6px ${low ? "#FF6B6B" : "#3FD1CE"}` }} /></div>
+                          </td>
+                          <td className="neo-on" style={{ textAlign: "left", color: nd > num(x.stockG) ? "#FFAA5C" : "#7F9A9B" }}>{nd > 0 ? `${fmtN(nd)}g` : "—"}</td>
+                          <td className="neo-on" style={{ textAlign: "left" }}>{fmt(x.price)}</td>
+                          <td className="neo-on" style={{ textAlign: "left" }}>{fmt((num(x.price) / Math.max(1, num(x.qtyG))) * 1000)}</td>
+                          <td><div className="neo-oico">
+                            <button className="neo-bg2" title="Repor estoque (nova compra)" onClick={() => setModal({ type: "filament", restock: x })}>↻ Repor</button>
+                            <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "filament", item: x })}><Pencil size={13} /></button>
+                            <button className="neo-bg2 ic danger" title="Excluir" onClick={() => { if (confirm(`Excluir "${x.name}"?`)) delItem("filaments", x.id); }}><Trash2 size={13} /></button>
+                          </div></td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
           )}
-        </Card>
 
-        <Card style={{ padding: 6, marginBottom: 14 }}>
-          <div style={{ font: "600 14px 'Space Grotesk',sans-serif", padding: "10px 12px 4px" }}>Materiais e embalagens</div>
-          {data.materials.length === 0 ? <Empty icon={WarehouseIc} text="Nenhum material no estoque" hint="Lance a compra na aba Investimentos (Material/Embalagem, com unidades) que o item entra aqui sozinho." /> : (
-            <div style={{ overflowX: "auto" }}>
-              <table>
-                <thead><tr><Th s={sMat} col="name">Item</Th><Th s={sMat} col="category">Categoria</Th><Th s={sMat} col="unitCost">Custo/un</Th><Th s={sMat} col="stock">Estoque</Th><Th s={sMat} col="minStock">Mínimo</Th><Th s={sMat} col="value">Valor em estoque</Th><Th s={sMat} col="status">Situação</Th><th></th></tr></thead>
-                <tbody>
-                  {sortRows(data.materials, sMat, {
-                    name: (m) => m.name, category: (m) => m.category, unitCost: (m) => num(m.unitCost), stock: (m) => num(m.stock), minStock: (m) => num(m.minStock),
-                    value: (m) => num(m.stock) * num(m.unitCost), status: (m) => (num(m.stock) <= num(m.minStock) ? "1 Repor" : "2 OK"),
-                  }).map((m) => {
-                    const low = num(m.stock) <= num(m.minStock);
-                    return (
-                      <tr key={m.id}>
-                        <td style={{ fontWeight: 600 }}>{m.name}</td>
-                        <td>{m.category}</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(m.unitCost)}</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, color: low ? "#F0605F" : "#F3F6F6" }}>{fmtN(m.stock)} un</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace", color: "#7E9191" }}>{fmtN(m.minStock)}</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(num(m.stock) * num(m.unitCost))}</td>
-                        <td>{low
-                          ? <span style={{ background: "#331A1A", color: "#F0605F", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>Repor ⚠</span>
-                          : <span style={{ background: "rgba(63,209,206,.1)", color: "#3FD1CE", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>OK</span>}</td>
-                        <td style={{ whiteSpace: "nowrap" }}>
-                          <Btn small kind="ghost" onClick={() => setViewMov(viewMov === m.id ? null : m.id)} style={{ marginRight: 4 }}><EyeIc size={13} /></Btn>
-                          <Btn small kind="ghost" onClick={() => setModal({ type: "material", item: m })}><Pencil size={13} /></Btn>{" "}
-                          <Btn small kind="danger" onClick={() => { if (confirm(`Excluir "${m.name}" do estoque?`)) delItem("materials", m.id); }}><Trash2 size={13} /></Btn>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </tbody>
-              </table>
-              {viewMov && matMap[viewMov] && (
-                <div style={{ margin: "8px 12px 12px", background: "rgba(5,12,12,.55)", border: "1px solid #223838", borderRadius: 10, padding: 12 }}>
-                  <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", marginBottom: 6 }}>Movimentações — {matMap[viewMov].name}</div>
-                  {(matMap[viewMov].movements || []).length === 0 ? (
-                    <div style={{ font: "400 12.5px Inter,sans-serif", color: "#93A6A6" }}>Sem movimentações registradas.</div>
-                  ) : (matMap[viewMov].movements || []).slice(0, 20).map((mv) => (
-                    <div key={mv.id} style={{ display: "flex", gap: 10, font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", padding: "3px 0" }}>
-                      <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#93A6A6" }}>{fmtDate(mv.date)}</span>
-                      <span style={{ fontWeight: 600, color: mv.type === "entrada" ? "#3FD1CE" : "#F0605F" }}>{mv.type === "entrada" ? "+" : "−"}{fmtN(mv.qty)} un</span>
-                      <span>{mv.note}</span>
+        <div className="neo-penbar" style={{ marginTop: 22 }}>
+          <span className="neo-code">MATERIAIS</span><b className="neo-sect">Materiais e embalagens</b>
+          <div className="neo-fchips">
+            <button className={"neo-fchip" + (mcat === "Todos" ? " on" : "")} onClick={() => setMcat("Todos")}>Todos {data.materials.length}</button>
+            {mcats.map((c) => <button key={c} className={"neo-fchip" + (mcat === c ? " on" : "")} onClick={() => setMcat(c)}>{c} {data.materials.filter((m) => m.category === c).length}</button>)}
+            {lowMatN > 0 && <button className={"neo-fchip r" + (mcat === "__low" ? " on" : "")} onClick={() => setMcat(mcat === "__low" ? "Todos" : "__low")}>⚠ Repor {lowMatN}</button>}
+          </div>
+          <button className={"neo-bg2 stk-mov" + (showMov ? " on" : "")} style={{ marginLeft: "auto" }} onClick={() => setShowMov(!showMov)}>Últimas movimentações</button>
+        </div>
+        {showMov && (
+          <div className="neo-hud" style={{ marginBottom: 12 }}>
+            {allMovements.length === 0 ? <div className="neo-empty">As entradas e saídas de materiais aparecerão aqui.</div> : (
+              <div className="neo-tline">
+                {allMovements.map((mv) => <div key={mv.id} className="print-row"><span className="d">{fmtDate(mv.date).slice(0, 5)}</span><b style={{ color: mv.type === "entrada" ? "#3FD1CE" : "#FF8A8A" }}>{mv.type === "entrada" ? "+" : "−"}{fmtN(mv.qty)}</b><span>{mv.matName}</span><span className="pr">{mv.note}</span></div>)}
+              </div>
+            )}
+          </div>
+        )}
+        {data.materials.length === 0 ? <Card><Empty icon={WarehouseIc} text="Nenhum material no estoque" hint="Lance a compra na aba Investimentos (Material/Embalagem, com unidades) que o item entra aqui sozinho." /></Card> : (
+          <div className="neo-mgrid">
+            {mats.map((m, i) => {
+              const low = num(m.stock) <= num(m.minStock);
+              const ref = Math.max(num(m.stock), num(m.minStock) * 3, 1);
+              return (
+                <Reveal key={m.id} className={"neo-mcard" + (low ? " low" : "")} delay={Math.min(i, 9) * 35} style={menu === m.id ? { zIndex: 30 } : undefined} title={m.name}>
+                  <div className="top">
+                    <span className="ic">{matIcon(m)}</span>
+                    <div style={{ minWidth: 0 }}><b>{m.name}</b><small>{m.category || "Material"} · {fmt(m.unitCost)}/un</small></div>
+                    <span className={"st" + (low ? " r" : "")}>{low ? "REPOR" : "OK"}</span>
+                  </div>
+                  <div className="bar"><i style={{ width: Math.min(100, (num(m.stock) / ref) * 100) + "%" }} /><em style={{ left: Math.min(100, (num(m.minStock) / ref) * 100) + "%" }} title={`mínimo ${fmtN(m.minStock)}`} /></div>
+                  <div className="row"><span>estoque <b>{fmtN(m.stock)} un</b></span><span>mínimo {fmtN(m.minStock)}</span><span>valor <b>{fmt(num(m.stock) * num(m.unitCost))}</b></span></div>
+                  <div className="neo-oacts left">
+                    <button className={"neo-bg2" + (viewMov === m.id ? " on" : "")} onClick={() => setViewMov(viewMov === m.id ? null : m.id)}><EyeIc size={13} />Histórico</button>
+                    <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "material", item: m })}><Pencil size={13} /></button>
+                    <button className={"neo-bg2 ic neo-qmore" + (menu === m.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === m.id ? null : m.id)}>⋯</button>
+                    {menu === m.id && <div className="neo-qmenu"><button className="r" onClick={() => { setMenu(null); if (confirm(`Excluir "${m.name}" do estoque?`)) delItem("materials", m.id); }}><Trash2 size={13} />Excluir</button></div>}
+                  </div>
+                  {viewMov === m.id && (
+                    <div className="neo-tline" style={{ marginTop: 10 }}>
+                      {(m.movements || []).length === 0 ? <div className="neo-prog-t mut">Sem movimentações registradas.</div>
+                        : (m.movements || []).slice(0, 12).map((mv) => <div key={mv.id} className="print-row"><span className="d">{fmtDate(mv.date).slice(0, 5)}</span><b style={{ color: mv.type === "entrada" ? "#3FD1CE" : "#FF8A8A" }}>{mv.type === "entrada" ? "+" : "−"}{fmtN(mv.qty)}</b><span className="pr">{mv.note}</span></div>)}
                     </div>
-                  ))}
-                </div>
-              )}
-            </div>
-          )}
-        </Card>
-
-        <Card style={{ padding: 6 }}>
-          <div style={{ font: "600 14px 'Space Grotesk',sans-serif", padding: "10px 12px 4px" }}>Últimas movimentações de materiais</div>
-          {allMovements.length === 0 ? <div style={{ font: "400 13px Inter,sans-serif", color: "#93A6A6", padding: 12 }}>As entradas e saídas de materiais aparecerão aqui.</div> : (
-            <div style={{ padding: "4px 12px 12px" }}>
-              {allMovements.map((mv) => (
-                <div key={mv.id} style={{ display: "flex", gap: 10, font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", padding: "4px 0", borderBottom: "1px solid rgba(63,209,206,.1)" }}>
-                  <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#93A6A6", flexShrink: 0 }}>{fmtDate(mv.date)}</span>
-                  <span style={{ fontWeight: 600, color: mv.type === "entrada" ? "#3FD1CE" : "#F0605F", flexShrink: 0 }}>{mv.type === "entrada" ? "+" : "−"}{fmtN(mv.qty)}</span>
-                  <span style={{ fontWeight: 600 }}>{mv.matName}</span>
-                  <span style={{ color: "#93A6A6", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{mv.note}</span>
-                </div>
-              ))}
-            </div>
-          )}
-        </Card>
+                  )}
+                </Reveal>
+              );
+            })}
+          </div>
+        )}
       </div>
     );
   }

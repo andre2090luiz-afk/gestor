@@ -544,6 +544,37 @@
   .neo-agi .neo-kreg{margin-top:0;}
   @media (max-width: 1000px){ .neo-aggrid{grid-template-columns:1fr;} }
   @media (max-width: 620px){ .neo-agd{min-height:60px;padding:4px;} .neo-agc .t{font-size:9.5px;} .neo-agwk.wkv{grid-template-columns:1fr;} .neo-agd.wkd{min-height:80px;} }
+
+  /* ===== v4.53 Clientes ===== */
+  .neo-ckpis{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr));gap:12px;margin-bottom:14px;}
+  .neo-fchip.g{color:#FFD166;border-color:rgba(255,209,102,.4);} .neo-fchip.o{color:#FFAA5C;border-color:rgba(245,130,31,.4);}
+  .neo-fchip.g.on{background:rgba(255,209,102,.1);} .neo-fchip.o.on{background:rgba(245,130,31,.1);}
+  .neo-cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px;}
+  .neo-ccard{position:relative;background:rgba(12,26,28,.72);border:1px solid rgba(63,209,206,.14);border-radius:16px;padding:14px 16px;backdrop-filter:blur(10px);}
+  .neo-ccard.in:hover{border-color:rgba(63,209,206,.35);transform:translateY(-2px);}
+  .neo-ccard.vip{border-color:rgba(255,209,102,.35);box-shadow:0 0 24px rgba(255,209,102,.08);}
+  .neo-ccard.debt{border-color:rgba(255,107,107,.3);}
+  .neo-ccard .top{display:flex;gap:12px;align-items:center;}
+  .neo-ccard .av{width:46px;height:46px;flex-shrink:0;border-radius:50%;display:grid;place-items:center;font:700 17px 'Space Grotesk',sans-serif;color:#061314;background:linear-gradient(135deg,#3FD1CE,#14B8B2);box-shadow:0 0 0 3px #0B1718,0 0 0 5px rgba(63,209,206,.5),0 0 18px rgba(63,209,206,.35);}
+  .neo-ccard.vip .av{background:linear-gradient(135deg,#FFE29A,#F5B83D);box-shadow:0 0 0 3px #0B1718,0 0 0 5px rgba(255,209,102,.6),0 0 18px rgba(255,209,102,.35);}
+  .neo-ccard.debt .av{background:linear-gradient(135deg,#FF8A8A,#FF6B6B);box-shadow:0 0 0 3px #0B1718,0 0 0 5px rgba(255,107,107,.5),0 0 18px rgba(255,107,107,.3);}
+  .neo-ccard.gone .av{background:linear-gradient(135deg,#7F9A9B,#4E6869);box-shadow:0 0 0 3px #0B1718,0 0 0 5px rgba(127,154,155,.35);}
+  .neo-ccard .nm{min-width:0;} .neo-ccard .nm b{font:700 15px 'Space Grotesk',sans-serif;color:#F3F6F6;} .neo-ccard .nm small{display:block;font:400 12px Inter,sans-serif;color:#7F9A9B;margin-top:2px;}
+  .neo-ccard .tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;min-height:20px;}
+  .neo-ctag{font:700 9.5px 'JetBrains Mono',monospace;letter-spacing:.06em;text-transform:uppercase;border:1px solid currentColor;border-radius:6px;padding:2px 7px;}
+  .neo-ctag.g{color:#FFD166;} .neo-ctag.t{color:#3FD1CE;} .neo-ctag.o{color:#FFAA5C;} .neo-ctag.r{color:#FF8A8A;}
+  .neo-cniche{font:600 10.5px Inter,sans-serif;color:#9DB8B8;background:rgba(63,209,206,.08);border-radius:999px;padding:3px 9px;}
+  .neo-ccard .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(63,209,206,.1);}
+  .neo-ccard .stats div{font:500 10px 'JetBrains Mono',monospace;color:#7F9A9B;letter-spacing:.06em;}
+  .neo-ccard .stats b{display:block;font:700 15px 'Space Grotesk',sans-serif;color:#fff;letter-spacing:0;margin-top:2px;white-space:nowrap;}
+  .neo-ccard .spark{display:flex;align-items:flex-end;gap:3px;height:28px;margin-top:10px;}
+  .neo-ccard .spark i{flex:1;border-radius:3px 3px 0 0;background:linear-gradient(180deg,#3FD1CE,rgba(20,184,178,.25));}
+  .neo-ccard .spark i.z{background:rgba(127,154,155,.15);height:3px;}
+  .neo-ccard.vip .spark i:not(.z){background:linear-gradient(180deg,#FFD166,rgba(245,184,61,.25));}
+  .neo-ccard .last{display:flex;justify-content:space-between;gap:8px;font:400 11.5px Inter,sans-serif;color:#7F9A9B;margin-top:8px;}
+  .neo-ccard .last b{color:#C9DADA;font-weight:500;}
+  .neo-ccard .debtline{margin-top:8px;font:600 11.5px Inter,sans-serif;color:#FF8A8A;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.25);border-radius:9px;padding:6px 10px;display:flex;justify-content:space-between;}
+  @media (max-width: 900px){ .neo-ckpis{grid-template-columns:repeat(2,1fr);} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -686,7 +717,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.52";
+const APP_VERSION = "4.53";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -5776,65 +5807,145 @@ function App() {
   }
 
   /* ================================ CLIENTES =============================== */
+  const CLI_UI = { seg: "todos", q: "", niche: "Todos", sort: "gasto" };
+  const comebackMsg = (c, lastProj) => {
+    const si = data.storeInfo || {};
+    return `Oi, ${firstName(c && c.name)}! Tudo bem? 😊\nAqui é da ${si.name || "PrintAR 3D"}. Faz um tempinho que a gente não se fala!${lastProj ? `\nLembrei de você — o ${lastProj} ficou bem bacana.` : ""}\nTemos novidades e posso fazer algo sob medida pra você. Quer ver umas ideias?${si.instagram ? `\n📸 ${String(si.instagram).startsWith("@") ? si.instagram : "@" + si.instagram}` : ""}`;
+  };
   function Clients() {
-    const [q, setQ] = useState("");
-    const [nicheF, setNicheF] = useState("Todos");
+    const today = todayISO();
+    const [seg, setSegS] = useState(CLI_UI.seg);
+    const setSeg = (v) => { CLI_UI.seg = v; setSegS(v); setCliPage(1); };
+    const [q, setQS] = useState(CLI_UI.q);
+    const setQ = (v) => { CLI_UI.q = v; setQS(v); setCliPage(1); };
+    const [nicheF, setNicheS] = useState(CLI_UI.niche);
+    const setNicheF = (v) => { CLI_UI.niche = v; setNicheS(v); setCliPage(1); };
+    const [sortBy, setSortS] = useState(CLI_UI.sort);
+    const setSortBy = (v) => { CLI_UI.sort = v; setSortS(v); };
     const [cliPage, setCliPage] = useState(1);
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
+    /* estatisticas por cliente */
+    const months6 = Array.from({ length: 6 }).map((_, i) => { const d = new Date(thisMonth + "-15T12:00:00"); d.setMonth(d.getMonth() - (5 - i)); return d.toISOString().slice(0, 7); });
+    const stats = {};
+    data.clients.forEach((c) => {
+      const ords = clientOrders(c.id);
+      const sales = ords.filter((o) => isSale(o) && isDone(o));
+      const spent = sales.reduce((s, o) => s + num(o.price), 0);
+      const dates = ords.map((o) => o.date).filter(Boolean).sort();
+      const last = ords.slice().sort((a, b) => (b.date > a.date ? 1 : -1))[0];
+      const debt = sales.filter((o) => !o.paid);
+      const bars = months6.map((m) => sales.filter((o) => monthKey(o.date) === m).reduce((s, o) => s + num(o.price), 0));
+      stats[c.id] = { n: ords.length, spent, ticket: sales.length ? spent / sales.length : 0, first: dates[0] || null, last, lastDays: last ? daysSince(last.date) : null, debt: debt.reduce((s, o) => s + num(o.price), 0), debtSince: debt.length ? debt.map((o) => o.date).sort()[0] : null, bars };
+    });
+    const buyers = data.clients.filter((c) => stats[c.id].spent > 0).sort((a, b) => stats[b.id].spent - stats[a.id].spent);
+    const vipN = Math.max(buyers.length ? 1 : 0, Math.ceil(buyers.length * 0.2));
+    const vipSet = new Set(buyers.slice(0, vipN).map((c) => c.id));
+    const segOf = (c) => {
+      const s = stats[c.id];
+      return {
+        vip: vipSet.has(c.id),
+        rec: s.n >= 2,
+        novo: !!s.first && daysSince(s.first) <= 30,
+        sumido: s.n > 0 && s.lastDays != null && s.lastDays > 60,
+        devendo: s.debt > 0,
+      };
+    };
+    const segs = {}; data.clients.forEach((c) => { segs[c.id] = segOf(c); });
+    const cnt = (k) => data.clients.filter((c) => segs[c.id][k]).length;
     const list = data.clients
       .filter((c) => !q || c.name.toLowerCase().includes(q.toLowerCase()) || (c.phone || "").includes(q))
-      .filter((c) => nicheF === "Todos" || (c.niches || []).includes(nicheF));
+      .filter((c) => nicheF === "Todos" || (c.niches || []).includes(nicheF))
+      .filter((c) => seg === "todos" || segs[c.id][seg])
+      .sort((a, b) => sortBy === "az" ? a.name.localeCompare(b.name, "pt-BR") : sortBy === "recente" ? ((stats[b.id].last ? stats[b.id].last.date : "") > (stats[a.id].last ? stats[a.id].last.date : "") ? 1 : -1) : stats[b.id].spent - stats[a.id].spent);
     const PER = 24;
     const pageCount = Math.max(1, Math.ceil(list.length / PER));
     const curPage = Math.min(cliPage, pageCount);
     const pageList = list.slice((curPage - 1) * PER, curPage * PER);
+    /* numeros do topo */
+    const newMonth = data.clients.filter((c) => stats[c.id].first && stats[c.id].first >= thisMonth + "-01").length;
+    const active90 = data.clients.filter((c) => stats[c.id].last && stats[c.id].last.date >= addDays(today, -89)).length;
+    const withOrders = data.clients.filter((c) => stats[c.id].n > 0);
+    const recPct = withOrders.length ? (withOrders.filter((c) => stats[c.id].n >= 2).length / withOrders.length) * 100 : null;
+    const avgVal = buyers.length ? buyers.reduce((s, c) => s + stats[c.id].spent, 0) / buyers.length : 0;
+    const filters = [["todos", "Todos", data.clients.length, ""], ["vip", "⭐ VIP", cnt("vip"), "g"], ["rec", "Recorrentes", cnt("rec"), ""], ["novo", "Novos", cnt("novo"), ""], ["sumido", "Sumidos", cnt("sumido"), "o"], ["devendo", "Devendo", cnt("devendo"), "r"]];
+    const relDays = (d) => (d === 0 ? "hoje" : d === 1 ? "há 1 dia" : `há ${d} dias`);
     return (
-      <div>
-        <SectionHead title="Clientes (CRM)" count={list.length}>
-          <In placeholder="Buscar por nome ou telefone…" value={q} onChange={(e) => setQ(e.target.value)} style={{ width: 220 }} />
-          <Sel value={nicheF} onChange={(e) => setNicheF(e.target.value)} style={{ width: 170 }}>
-            <option>Todos</option>{data.settings.niches.map((n) => <option key={n}>{n}</option>)}
+      <div className="neo-clients">
+        <div className="neo-pagehead">
+          <span className="neo-code">CLIENTES</span><h2>CRM</h2>
+          <button className="neo-b1" style={{ marginLeft: "auto" }} onClick={() => setModal({ type: "client" })}><Plus size={15} />Cadastrar cliente</button>
+        </div>
+        <div className="neo-ckpis">
+          <Reveal className="neo-hud neo-k" delay={0}><div className="l">Clientes</div><div className="v"><CountUp value={data.clients.length} /></div><span className="neo-kd">{newMonth ? `+${newMonth} novo${newMonth > 1 ? "s" : ""} este mês` : "nenhum novo este mês"}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={60}><div className="l">Ativos (90 dias)</div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={active90} /></div><span className="neo-kd">compraram nos últimos 3 meses</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={120}><div className="l">Voltam a comprar</div><div className="v">{recPct == null ? "—" : <CountUp value={recPct} format={(v) => fmtN(v, 0) + "%"} />}</div><span className="neo-kd">clientes com 2+ pedidos</span></Reveal>
+          <Reveal className="neo-hud neo-k or" delay={180}><div className="l">Valor médio por cliente</div><div className="v"><CountUp value={avgVal} format={fmt} /></div><span className="neo-kd">total gasto ÷ clientes que compraram</span></Reveal>
+        </div>
+        <div className="neo-penbar">
+          <div className="neo-fchips">{filters.map(([k, l, n, tone]) => <button key={k} className={"neo-fchip cli-seg" + (seg === k ? " on" : "") + (tone ? " " + tone : "")} data-s={k} onClick={() => setSeg(k)}>{l} {n}</button>)}</div>
+          <Sel value={sortBy} onChange={(e) => setSortBy(e.target.value)} style={{ width: 200, marginLeft: "auto", height: 36, padding: "6px 10px" }} title="Ordenar">
+            <option value="gasto">Ordenar: maior gasto</option><option value="recente">Ordenar: mais recente</option><option value="az">Ordenar: A–Z</option>
           </Sel>
-          <Btn onClick={() => setModal({ type: "client" })}><Plus size={16} />Cadastrar cliente</Btn>
-        </SectionHead>
+          <Sel value={nicheF} onChange={(e) => setNicheF(e.target.value)} style={{ width: 160, height: 36, padding: "6px 10px" }} title="Nicho">
+            <option value="Todos">Nicho: todos</option>{data.settings.niches.map((n) => <option key={n} value={n}>{n}</option>)}
+          </Sel>
+          <div className="neo-search" style={{ marginLeft: 0 }}><SearchIc size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Nome ou telefone…" />{q && <button onClick={() => setQ("")}>×</button>}</div>
+        </div>
         {list.length === 0 ? (
-          <Card><Empty icon={UsersIc} text={q || nicheF !== "Todos" ? "Nenhum cliente encontrado" : "Nenhum cliente cadastrado"} hint="Conheça seus clientes: registre interesses e nichos para vender mais e melhor." /></Card>
+          <Card><Empty icon={UsersIc} text={q || nicheF !== "Todos" || seg !== "todos" ? "Nenhum cliente encontrado" : "Nenhum cliente cadastrado"} hint="Conheça seus clientes: registre interesses e nichos para vender mais e melhor." /></Card>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(290px,1fr))", gap: 14 }}>
-            {pageList.map((c) => {
-              const ords = clientOrders(c.id);
-              const spent = ords.filter((o) => isDone(o) && isSale(o)).reduce((s, o) => s + num(o.price), 0);
-              const last = ords.slice().sort((a, b) => (b.date > a.date ? 1 : -1))[0];
+          <div className="neo-cgrid">
+            {pageList.map((c, idx) => {
+              const s = stats[c.id], g = segs[c.id];
+              const tone = g.devendo ? "debt" : g.vip ? "vip" : g.sumido ? "gone" : "";
+              const mx = Math.max(...s.bars, 0);
+              const lastName = s.last ? projName(s.last) : "";
+              const waBtn = g.devendo
+                ? { label: "Cobrar", msg: () => cobrarMsg(c, clientOrders(c.id).filter((o) => isSale(o) && isDone(o) && !o.paid)), tip: "Mensagem de cobrança pronta" }
+                : g.sumido ? { label: "Chamar de volta", msg: () => comebackMsg(c, lastName), tip: "Mensagem simpática para quem sumiu" }
+                : { label: "WhatsApp", msg: () => `Oi, ${firstName(c.name)}! Tudo bem? 😊`, tip: "Abrir conversa" };
               return (
-                <Card key={c.id}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                      <div style={{ width: 38, height: 38, borderRadius: 999, background: "#14A6A418", color: "#3FD1CE", display: "grid", placeItems: "center", font: "700 15px 'Space Grotesk',sans-serif" }}>
-                        {c.name.slice(0, 1).toUpperCase()}
+                <Reveal key={c.id} className={"neo-ccard " + tone} delay={Math.min(idx, 9) * 40} title={c.name}>
+                  <div className="top">
+                    <span className="av">{c.name.slice(0, 1).toUpperCase()}</span>
+                    <div className="nm"><b>{c.name}</b><small>{c.phone || "sem telefone"}{c.city ? ` · ${c.city}` : ""}</small></div>
+                  </div>
+                  <div className="tags">
+                    {g.vip && <span className="neo-ctag g">⭐ VIP</span>}
+                    {g.rec && <span className="neo-ctag t">Recorrente</span>}
+                    {g.novo && <span className="neo-ctag t">Novo</span>}
+                    {g.sumido && <span className="neo-ctag o">Sumido · {s.lastDays} dias</span>}
+                    {g.devendo && <span className="neo-ctag r">Devendo</span>}
+                    {(c.niches || []).map((n) => <span key={n} className="neo-cniche">{n}</span>)}
+                  </div>
+                  <div className="stats">
+                    <div>PEDIDOS<b>{fmtN(s.n)}</b></div>
+                    <div>TOTAL<b style={{ color: "#3FD1CE" }}>{fmt(s.spent)}</b></div>
+                    <div>TICKET<b>{s.ticket ? fmt(s.ticket) : "—"}</b></div>
+                  </div>
+                  <div className="spark" title="Compras dos últimos 6 meses">{s.bars.map((v, i) => <i key={i} className={v > 0 ? "" : "z"} style={v > 0 ? { height: Math.max(12, (v / mx) * 100) + "%" } : undefined} title={`${months6[i]}: ${fmt(v)}`} />)}</div>
+                  {s.debt > 0
+                    ? <div className="debtline"><span>A receber {relDays(daysSince(s.debtSince))}</span><span>{fmt(s.debt)}</span></div>
+                    : <div className="last"><span>{s.last ? <>Último: <b>{lastName} × {fmtN(s.last.qty)}</b></> : "Ainda sem pedidos"}</span><span>{s.last ? relDays(s.lastDays) : ""}</span></div>}
+                  <div className="neo-oacts left">
+                    <button className={"neo-bg2 wa cli-wa"} disabled={!c.phone} title={c.phone ? waBtn.tip : "Cadastre o telefone do cliente para usar"} onClick={() => waOpen(c.phone, waBtn.msg())}><WaIc size={13} />{waBtn.label}</button>
+                    <button className="neo-bg2 cli-orc" title="Novo orçamento já com este cliente" onClick={() => setModal({ type: "quote", clientId: c.id })}><Plus size={13} />Orçamento</button>
+                    <button className="neo-bg2 ic" title="Ver ficha" onClick={() => setModal({ type: "clientDetail", item: c })}><EyeIc size={13} /></button>
+                    <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "client", item: c })}><Pencil size={13} /></button>
+                    <button className={"neo-bg2 ic neo-qmore" + (menu === c.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === c.id ? null : c.id)}>⋯</button>
+                    {menu === c.id && (
+                      <div className="neo-qmenu">
+                        <button className="r cli-del" onClick={() => { setMenu(null); if (confirm(`Excluir "${c.name}"?`)) delItem("clients", c.id); }}><Trash2 size={13} />Excluir cliente</button>
                       </div>
-                      <div>
-                        <div style={{ font: "600 15px 'Space Grotesk',sans-serif" }}>{c.name}</div>
-                        {c.phone && <div style={{ font: "400 12px Inter,sans-serif", color: "#7E9191", display: "flex", gap: 5, alignItems: "center" }}><PhoneIc size={11} />{c.phone}</div>}
-                      </div>
-                    </div>
-                    <div style={{ display: "flex", gap: 6 }}>
-                      <Btn small kind="ghost" onClick={() => setModal({ type: "clientDetail", item: c })}><EyeIc size={13} /></Btn>
-                      <Btn small kind="ghost" onClick={() => setModal({ type: "client", item: c })}><Pencil size={13} /></Btn>
-                      <Btn small kind="danger" onClick={() => { if (confirm(`Excluir "${c.name}"?`)) delItem("clients", c.id); }}><Trash2 size={13} /></Btn>
-                    </div>
+                    )}
                   </div>
-                  {(c.niches || []).length > 0 && (
-                    <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 10 }}>
-                      {c.niches.map((n) => <NicheChip key={n}>{n}</NicheChip>)}
-                    </div>
-                  )}
-                  <div style={{ display: "flex", gap: 14, marginTop: 12, font: "400 12px Inter,sans-serif", color: "#7E9191", flexWrap: "wrap" }}>
-                  </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 10, borderTop: "1px solid rgba(63,209,206,.1)", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
-                    <span>{ords.length} pedido(s)</span>
-                    <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, color: "#3FD1CE" }}>{fmt(spent)}</span>
-                  </div>
-                  {last && <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>Último pedido: {fmtDate(last.date)} — {projMap[last.projectId] ? projMap[last.projectId].name : "—"}</div>}
-                </Card>
+                </Reveal>
               );
             })}
           </div>
@@ -7403,10 +7514,10 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     );
   }
 
-  function QuoteModal({ item }) {
+  function QuoteModal({ item, presetClient }) {
     const sugPrice = (p) => p ? (num(p.salePrice) > 0 ? num(p.salePrice).toFixed(2) : (num(p.cost) * (1 + num(data.settings.defaultMargin) / 100)).toFixed(2)) : "";
     const [f, setF] = useState(item ? { discount: 0, notes: "", ...item } : {
-      id: uid(), code: nextQuoteCode(), date: todayISO(), clientId: data.clients[0] ? data.clients[0].id : "",
+      id: uid(), code: nextQuoteCode(), date: todayISO(), clientId: presetClient || (data.clients[0] ? data.clients[0].id : ""),
       validUntil: addDays(todayISO(), num(data.settings.quoteValidityDays) || 7),
       items: [{ id: uid(), projectId: activeProjects[0] ? activeProjects[0].id : "", desc: "", qty: 1, unitPrice: sugPrice(activeProjects[0]), auto: true }],
       discount: 0, notes: "", deadline: "", status: "Pendente",
@@ -9350,7 +9461,7 @@ SC,
       {modal && modal.type === "quick" && <QuickPrintModal key={modalKey} />}
       {modal && modal.type === "client" && <ClientModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "clientDetail" && <ClientDetailModal key={modalKey} item={modal.item} />}
-      {modal && modal.type === "quote" && <QuoteModal key={modalKey} item={modal.item} />}
+      {modal && modal.type === "quote" && <QuoteModal key={modalKey} item={modal.item} presetClient={modal.clientId} />}
       {modal && modal.type === "fixedCost" && <FixedCostModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "cashflow" && <CashflowModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "catalog" && <CatalogModal key={modalKey} />}

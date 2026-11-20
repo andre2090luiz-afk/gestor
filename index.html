@@ -452,6 +452,54 @@
   .neo-tline .print-row.fut:before{background:transparent;border:2px dashed rgba(245,130,31,.7);box-shadow:none;width:6px;height:6px;}
   @media (max-width: 1100px){ .neo-qtop{grid-template-columns:repeat(2,1fr);} .neo-qtop .neo-funnel{grid-column:1 / -1;} .neo-qline{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;} .neo-qitems{grid-column:1 / -1;order:5;} .neo-qexp{grid-template-columns:1fr;} }
   @media (max-width: 620px){ .neo-qline{grid-template-columns:1fr;} .neo-qtot{text-align:left;} .neo-oacts{justify-content:flex-start;} }
+
+  /* ===== v4.50 Pedidos ===== */
+  .neo-help{width:24px;height:24px;border-radius:50%;border:1px solid rgba(63,209,206,.4);background:rgba(6,16,15,.5);color:#3FD1CE;font:700 12px Inter,sans-serif;cursor:pointer;}
+  .neo-help.on,.neo-help:hover{background:rgba(63,209,206,.15);}
+  .neo-helpbox{font:400 13px/1.5 Inter,sans-serif;color:#C9DADA;margin-bottom:14px;} .neo-helpbox b{color:#fff;}
+  .neo-helpbox.o{color:#FFB067;}
+  .neo-okpis{display:grid;grid-template-columns:repeat(4,minmax(150px,1fr)) minmax(240px,1.3fr);gap:12px;margin-bottom:14px;}
+  .neo-kring{display:flex;gap:12px;align-items:center;} .neo-k .v.sm{font-size:19px;}
+  .neo-funnel .bar .o{background:#F5821F;} .neo-funnel .leg .o:before{background:#F5821F;}
+  .neo-fchip .cdot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;vertical-align:0;}
+  .neo-sep{width:1px;height:22px;background:rgba(63,209,206,.2);margin:0 4px;align-self:center;}
+  .neo-otbl{background:rgba(12,26,28,.72);border:1px solid rgba(63,209,206,.14);border-radius:16px;overflow:hidden;backdrop-filter:blur(10px);}
+  .neo-otable{width:100%;border-collapse:collapse;}
+  .neo-otable thead th{background:rgba(5,12,12,.55) !important;font:600 10px Inter,sans-serif !important;letter-spacing:.1em;text-transform:uppercase;color:#7F9A9B !important;padding:11px 12px !important;border-bottom:1px solid rgba(63,209,206,.12) !important;white-space:nowrap;}
+  .neo-otable thead th.on{color:#3FD1CE !important;}
+  .neo-otable td{padding:9px 12px !important;border-bottom:1px solid rgba(63,209,206,.07) !important;vertical-align:middle;}
+  .neo-otable tbody tr{transition:background .15s;}
+  .neo-otable tbody tr:hover td{background:rgba(63,209,206,.04);}
+  .neo-omon td{background:linear-gradient(90deg,rgba(20,184,178,.12),transparent) !important;font:600 10.5px 'JetBrains Mono',monospace;color:#3FD1CE;letter-spacing:.12em;padding:8px 14px !important;}
+  .neo-omon td span{color:#7F9A9B;font-weight:500;letter-spacing:.04em;}
+  .neo-okit td{background:rgba(245,130,31,.05);}
+  .neo-osub td{background:rgba(5,12,12,.45);}
+  .neo-odt{font:600 12px 'JetBrains Mono',monospace;color:#E6F1F1;white-space:nowrap;} .neo-odt small{display:block;font:500 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-opj{display:flex;align-items:center;gap:10px;min-width:0;}
+  .neo-opj b{font:600 13px Inter,sans-serif;color:#F3F6F6;} .neo-opj small{display:block;font:500 11px Inter,sans-serif;color:#7F9A9B;}
+  .neo-opj .th2{width:34px;height:34px;flex-shrink:0;border-radius:9px;background:linear-gradient(135deg,#0E2A2C,#0A3437);border:1px solid rgba(63,209,206,.3);box-shadow:0 0 10px rgba(63,209,206,.15);display:grid;place-items:center;color:#3FD1CE;font-size:15px;}
+  .neo-opj .th2.img{object-fit:cover;padding:0;}
+  .neo-opj .sub{color:#5E7A7B;padding-left:22px;}
+  .neo-opj.kit{border:0;background:none;cursor:pointer;text-align:left;padding:0;}
+  .neo-opj.kit b{color:#FFD2A3;} .neo-opj.kit .th2{border-color:rgba(245,130,31,.45);box-shadow:0 0 10px rgba(245,130,31,.2);}
+  .neo-ocli{display:inline-flex;align-items:center;gap:8px;font:500 12.5px Inter,sans-serif;color:#E6F1F1;}
+  .neo-ocli .av{width:24px;height:24px;flex-shrink:0;border-radius:7px;display:grid;place-items:center;font:700 11px 'Space Grotesk',sans-serif;color:#061314;background:linear-gradient(135deg,#3FD1CE,#14B8B2);}
+  .neo-ocli small{font:500 11px Inter,sans-serif;color:#7F9A9B;} .neo-ocli small.o{color:#FFB067;font-weight:600;}
+  .neo-dest{font:700 10px 'JetBrains Mono',monospace;letter-spacing:.05em;text-transform:uppercase;border:1px solid currentColor;border-radius:6px;padding:2px 7px;white-space:nowrap;}
+  .neo-dest.o{color:#F5821F;} .neo-dest.r{color:#FF8A8A;} .neo-dest.g{color:#8FA0AC;}
+  .neo-on{text-align:right;font:600 12.5px 'JetBrains Mono',monospace;color:#E6F1F1;}
+  .neo-ov2{text-align:right;font:700 13px 'JetBrains Mono',monospace;color:#E6F1F1;white-space:nowrap;}
+  .neo-oc{text-align:right;font:500 11.5px 'JetBrains Mono',monospace;color:#7F9A9B;white-space:nowrap;}
+  .neo-oc b{display:block;font:600 11px Inter,sans-serif;color:#3FD1CE;} .neo-oc b.neg{color:#FF8A8A;}
+  .neo-opaid{text-align:center;} .mut{color:#5E7A7B;}
+  .neo-sw{width:36px;height:20px;border-radius:999px;border:0;background:rgba(127,154,155,.25);position:relative;cursor:pointer;transition:background .2s, box-shadow .2s;vertical-align:middle;}
+  .neo-sw i{position:absolute;left:3px;top:3px;width:14px;height:14px;border-radius:50%;background:#7F9A9B;transition:left .2s, background .2s;}
+  .neo-sw.on{background:rgba(20,184,178,.45);box-shadow:0 0 10px rgba(63,209,206,.45);} .neo-sw.on i{left:19px;background:#3FD1CE;}
+  .neo-sw.mix{background:rgba(245,130,31,.3);} .neo-sw.mix i{left:11px;background:#FFAA5C;}
+  .neo-stsel{appearance:none;-webkit-appearance:none;font:700 11px Inter,sans-serif;border-radius:999px;padding:4px 22px 4px 10px;border:1px solid rgba(127,154,155,.4);background:rgba(5,12,12,.7) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%237F9A9B' stroke-width='3'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") right 7px center/10px no-repeat;cursor:pointer;outline:none;}
+  .neo-oico{display:flex;gap:6px;justify-content:flex-end;}
+  .neo-bg2.danger{color:#FF7A7E;border-color:rgba(255,107,107,.35);} .neo-bg2.danger:hover{background:rgba(255,107,107,.1);}
+  @media (max-width: 1100px){ .neo-okpis{grid-template-columns:repeat(2,1fr);} .neo-okpis .neo-funnel{grid-column:1 / -1;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -594,7 +642,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.49";
+const APP_VERSION = "4.50";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -4830,6 +4878,29 @@ function App() {
   }
 
   /* linha de KIT: varios pedidos do mesmo orcamento mostrados como um so, com expandir */
+  /* ---------- v4.50: Pedidos ---------- */
+  const ORD_UI = { per: "mes", from: "", to: "", type: "todos", sit: "todos", q: "" };
+  const Switch = ({ on, onChange, title, mixed }) => (
+    <button type="button" role="switch" aria-checked={!!on} title={title} className={"neo-sw" + (on ? " on" : "") + (mixed ? " mix" : "")} onClick={(e) => { e.stopPropagation(); onChange(!on); }}><i /></button>
+  );
+  const orderType = (o) => (o.dest === "estoque" ? "estoque" : o.dest === "brinde" ? "brinde" : o.dest === "avulso" ? "avulso" : "venda");
+  const destPill = (o, cli) => {
+    const t = orderType(o);
+    if (t === "estoque") return <span className="neo-dest o">→ Estoque</span>;
+    if (t === "avulso") return <span className="neo-dest g">Avulso</span>;
+    if (t === "brinde") return <span className="neo-ocli"><span className="neo-dest r">Brinde / Teste</span>{cli && <small>{cli.name}</small>}</span>;
+    return <span className="neo-ocli"><span className="av">{String(cli ? cli.name : (o.client || "?")).trim().charAt(0).toUpperCase()}</span>{cli ? cli.name : (o.client || "—")}{o.fromStock && <small className="o">(do estoque)</small>}</span>;
+  };
+  const statusSel = (value, onChange, extra) => {
+    const stl = STATUS_STYLE[value] || {};
+    return (
+      <select className="neo-stsel" value={value} onChange={onChange} style={{ color: stl.fg || "#C9D6D6", borderColor: stl.fg ? stl.fg + "99" : undefined }}>
+        {extra}{STATUSES.map((s) => <option key={s}>{s}</option>)}
+      </select>
+    );
+  };
+  const profitLine = (rev, cost) => rev > 0 ? <b className={rev - cost < 0 ? "neg" : ""}>lucro {fmt(rev - cost)} · {fmtN(((rev - cost) / rev) * 100, 0)}%</b> : null;
+
   function KitRow({ kit, orders, aberto, toggle, render }) {
     const cli = orders.map((o) => o.clientId).filter(Boolean)[0];
     const c = cli ? cliMap[cli] : null;
@@ -4845,40 +4916,26 @@ function App() {
     const entregas = orders.map((o) => o.dueDate).filter(Boolean).sort();
     return (
       <React.Fragment>
-        <tr style={{ background: "#182A2B" }}>
-          <td style={{ whiteSpace: "nowrap" }}>{fmtDate(dataMin)}
-            {entregas.length > 0 && <div style={{ font: "400 11px Inter,sans-serif", color: "#8FA3A3" }}>entrega {fmtDate(entregas[entregas.length - 1])}</div>}
-          </td>
-          <td style={{ fontWeight: 700 }}>
-            <button onClick={toggle} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "none", border: "none", cursor: "pointer", color: "#F3F6F6", font: "700 13.5px 'Space Grotesk',sans-serif", padding: 0 }}>
-              <span style={{ display: "inline-grid", placeItems: "center", width: 20, height: 20, borderRadius: 5, background: "#14A6A4", color: "#fff", font: "700 12px Inter,sans-serif" }}>{aberto ? "–" : "+"}</span>
-              <span style={{ background: "#12302F", color: "#3FD1CE", borderRadius: 999, padding: "2px 9px", font: "700 11px Inter,sans-serif" }}>KIT</span>
-              {orders.length} itens
-            </button>
-            <div style={{ font: "400 11px 'JetBrains Mono',monospace", color: "#7E9191", marginTop: 2 }}>{kit}</div>
-          </td>
-          <td>{c ? c.name : "—"}</td>
-          <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700 }}>{fmtN(qtdTotal)}</td>
-          <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700 }}>{valor > 0 ? fmt(valor) : "—"}</td>
-          <td style={{ fontFamily: "'JetBrains Mono',monospace", color: "#7E9191" }}>{fmt(custo)}</td>
+        <tr className="neo-okit">
+          <td><div className="neo-odt">{fmtDate(dataMin).slice(0, 5)}<small>{entregas.length ? `entrega ${fmtDate(entregas[entregas.length - 1]).slice(0, 5)}` : "sem prazo"}</small></div></td>
           <td>
-            {vendaveis.length === 0 ? "—" : (
-              <input type="checkbox" title="Marcar/desmarcar o kit inteiro" checked={todosPagos}
-                ref={(el) => { if (el) el.indeterminate = algunsPagos && !todosPagos; }}
-                onChange={(e) => { const v = e.target.checked; setData((d) => ({ ...d, orders: d.orders.map((x) => x.quoteCode === kit && isSale(x) ? { ...x, paid: v } : x) })); notify(v ? "Kit marcado como pago" : "Kit marcado como não pago"); }}
-                style={{ width: 16, height: 16, accentColor: "#14A6A4", cursor: "pointer" }} />
+            <button className="neo-opj kit" onClick={toggle} title={aberto ? "Recolher itens" : "Ver itens"}>
+              <span className="th2">🧩</span>
+              <span><b>{kit} · {orders.length} itens</b><small>{aberto ? "recolher ▴" : "clique para ver os itens ▾"}</small></span>
+            </button>
+          </td>
+          <td>{c ? <span className="neo-ocli"><span className="av">{c.name.trim().charAt(0).toUpperCase()}</span>{c.name}</span> : "—"}</td>
+          <td className="neo-on">{fmtN(qtdTotal)}</td>
+          <td className="neo-ov2">{valor > 0 ? fmt(valor) : "—"}</td>
+          <td className="neo-oc">{fmt(custo)}{profitLine(valor, custo)}</td>
+          <td className="neo-opaid">
+            {vendaveis.length === 0 ? <span className="mut">—</span> : (
+              <Switch on={todosPagos} mixed={algunsPagos && !todosPagos} title={todosPagos ? "Kit pago — clique para desmarcar" : "Marcar o kit inteiro como pago"}
+                onChange={(v) => { setData((d) => ({ ...d, orders: d.orders.map((x) => x.quoteCode === kit && isSale(x) ? { ...x, paid: v } : x) })); notify(v ? "Kit marcado como pago" : "Kit marcado como não pago"); }} />
             )}
           </td>
-          <td>
-            <select value={statusComum} onChange={(e) => { const v = e.target.value; if (!v) return; orders.forEach((o) => { if (o.status !== v) setOrderStatus(o, v); }); }}
-              style={{ ...inputStyle, width: "auto", padding: "4px 8px", font: "600 12px Inter,sans-serif", background: (STATUS_STYLE[statusComum] || {}).bg || "#2A3033", color: (STATUS_STYLE[statusComum] || {}).fg || "#C9D6D6", border: "none", borderRadius: 999, cursor: "pointer" }}>
-              {!statusComum && <option value="">misto ({sts.length})</option>}
-              {STATUSES.map((s) => <option key={s}>{s}</option>)}
-            </select>
-          </td>
-          <td style={{ whiteSpace: "nowrap" }}>
-            <Btn small kind="ghost" onClick={toggle}>{aberto ? "Recolher" : "Ver itens"}</Btn>
-          </td>
+          <td>{statusSel(statusComum, (e) => { const v = e.target.value; if (!v) return; orders.forEach((o) => { if (o.status !== v) setOrderStatus(o, v); }); }, !statusComum ? <option value="">misto ({sts.length})</option> : null)}</td>
+          <td><div className="neo-oico"><button className="neo-bg2 ic" title={aberto ? "Recolher" : "Ver itens"} onClick={toggle}>{aberto ? "▴" : "▾"}</button></div></td>
         </tr>
         {aberto && orders.map((o) => render(o, true))}
       </React.Fragment>
@@ -4886,36 +4943,52 @@ function App() {
   }
 
   function Orders() {
-    const first = thisMonth + "-01";
-    const [from, setFrom] = useState(first);
-    const [to, setTo] = useState(todayISO());
-    const [status, setStatus] = useState("Todos");
-    const [qtext, setQtext] = useState("");
+    const today = todayISO();
+    const [per, setPerS] = useState(ORD_UI.per);
+    const [from, setFromS] = useState(ORD_UI.from || thisMonth + "-01");
+    const [to, setToS] = useState(ORD_UI.to || today);
+    const [type, setTypeS] = useState(ORD_UI.type);
+    const [sit, setSitS] = useState(ORD_UI.sit);
+    const [qtext, setQtextS] = useState(ORD_UI.q);
     const [page, setPage] = useState(1);
     const [openKits, setOpenKits] = useState({});
+    const [help, setHelp] = useState(false);
+    const setFrom = (v) => { ORD_UI.from = v; setFromS(v); setPage(1); };
+    const setTo = (v) => { ORD_UI.to = v; setToS(v); setPage(1); };
+    const setType = (v) => { ORD_UI.type = v; setTypeS(v); setPage(1); };
+    const setSit = (v) => { ORD_UI.sit = v; setSitS(v); setPage(1); };
+    const setQtext = (v) => { ORD_UI.q = v; setQtextS(v); setPage(1); };
+    const setPer = (k) => {
+      ORD_UI.per = k; setPerS(k); setPage(1);
+      if (k === "custom") return;
+      let f = "", t = today;
+      if (k === "mes") f = thisMonth + "-01";
+      else if (k === "mesp") { const d = new Date(thisMonth + "-01T12:00:00"); d.setMonth(d.getMonth() - 1); f = d.toISOString().slice(0, 7) + "-01"; t = new Date(d.getFullYear(), d.getMonth() + 1, 0, 12).toISOString().slice(0, 10); }
+      else if (k === "90d") f = addDays(today, -89);
+      else if (k === "ano") f = today.slice(0, 4) + "-01-01";
+      else { f = ""; t = ""; }
+      ORD_UI.from = f; ORD_UI.to = t; setFromS(f); setToS(t);
+    };
     const sOrdRaw = useSort("pedidos");
     const sOrd = { sort: sOrdRaw.sort, toggle: (c) => { sOrdRaw.toggle(c); setPage(1); } };
 
-    const list = data.orders
-      .filter((o) => (!from || o.date >= from) && (!to || o.date <= to))
-      .filter((o) => status === "Todos" || o.status === status)
-      .filter((o) => { if (!qtext) return true; const t = qtext.toLowerCase(); const pn = (projName(o) || "").toLowerCase(); const cn = ((o.clientId && cliMap[o.clientId] ? cliMap[o.clientId].name : "") || "").toLowerCase(); return pn.includes(t) || cn.includes(t); })
-      .sort((a, b) => (b.date > a.date ? 1 : -1));
-    /* KIT: pedidos que nasceram do mesmo orcamento viram UMA linha que expande.
-       Nada muda na estrutura do pedido — cada peca continua com seu custo e seu filamento. */
+    const inPeriod = data.orders.filter((o) => (!from || o.date >= from) && (!to || o.date <= to));
+    const bySearch = inPeriod.filter((o) => { if (!qtext) return true; const t = qtext.toLowerCase(); const pn = (projName(o) || "").toLowerCase(); const cn = ((o.clientId && cliMap[o.clientId] ? cliMap[o.clientId].name : "") || "").toLowerCase(); return pn.includes(t) || cn.includes(t); });
+    const typeCount = { venda: 0, estoque: 0, brinde: 0, avulso: 0 };
+    bySearch.forEach((o) => { typeCount[orderType(o)]++; });
+    const sitOk = (o) => sit === "todos" || (sit === "aberto" && !isDone(o)) || (sit === "concluidos" && isDone(o)) || (sit === "naopagos" && isSale(o) && isDone(o) && !o.paid);
+    const unpaidN = bySearch.filter((o) => isSale(o) && isDone(o) && !o.paid && (type === "todos" || orderType(o) === type)).length;
+    const list = bySearch.filter((o) => (type === "todos" || orderType(o) === type) && sitOk(o)).sort((a, b) => (b.date > a.date ? 1 : -1));
+    /* pedidos do mesmo orcamento viram UMA linha que expande */
     const kitCount = {};
     list.forEach((o) => { if (o.quoteCode) kitCount[o.quoteCode] = (kitCount[o.quoteCode] || 0) + 1; });
     const rows = [];
     const vistos = {};
     list.forEach((o) => {
       const k = o.quoteCode;
-      if (k && kitCount[k] > 1) {
-        if (vistos[k]) return;
-        vistos[k] = true;
-        rows.push({ kit: k, orders: list.filter((x) => x.quoteCode === k) });
-      } else rows.push({ order: o });
+      if (k && kitCount[k] > 1) { if (vistos[k]) return; vistos[k] = true; rows.push({ kit: k, orders: list.filter((x) => x.quoteCode === k) }); }
+      else rows.push({ order: o });
     });
-    /* ordenacao por coluna: vale para todas as paginas; o kit anda como um bloco so */
     const destLabel = (o) => o.dest === "estoque" ? "→ Estoque" : o.dest === "avulso" ? "Impressão avulsa" : o.dest === "brinde" ? "Brinde / Teste" : (o.clientId && cliMap[o.clientId] ? cliMap[o.clientId].name : (o.client || ""));
     const rowOrders = (r) => (r.kit ? r.orders : [r.order]);
     const sortedRows = sortRows(rows, sOrd, {
@@ -4928,138 +5001,151 @@ function App() {
       paid: (r) => { const v = rowOrders(r).filter(isSale); return v.length ? v.every((o) => o.paid) : null; },
       status: (r) => Math.min(...rowOrders(r).map((o) => { const i = STATUSES.indexOf(o.status); return i < 0 ? 99 : i; })),
     });
-
     const PER = 25;
     const pageCount = Math.max(1, Math.ceil(rows.length / PER));
     const curPage = Math.min(page, pageCount);
     const pageList = sortedRows.slice((curPage - 1) * PER, curPage * PER);
+    const byDate = !sOrd.sort || !sOrd.sort.col || sOrd.sort.col === "date";
+    /* resumo de cada mes (todos os pedidos do filtro, nao so da pagina) */
+    const monthSum = {};
+    list.forEach((o) => { const m = monthKey(o.date); (monthSum[m] = monthSum[m] || { n: 0, v: 0 }); monthSum[m].n++; if (isSale(o)) monthSum[m].v += num(o.price); });
+    const monthName = (m) => new Date(m + "-15T12:00:00").toLocaleDateString("pt-BR", { month: "long", year: "numeric" }).replace(" de ", " ").toUpperCase();
 
     const doneSales = list.filter((o) => isDone(o) && isSale(o));
     const faturamento = doneSales.reduce((s, o) => s + num(o.price), 0);
     const recebido = list.filter((o) => o.paid && isSale(o)).reduce((s, o) => s + num(o.price), 0);
     const lucro = doneSales.reduce((s, o) => s + num(o.price) - num(o.cost), 0);
     const ticket = doneSales.length ? faturamento / doneSales.length : 0;
+    const pecas = list.reduce((s, o) => s + num(o.qty), 0);
+    const recPct = faturamento > 0 ? Math.min(100, (recebido / faturamento) * 100) : 0;
+    const typeTot = Object.values(typeCount).reduce((s, n) => s + n, 0);
+    const periods = [["mes", "Este mês"], ["mesp", "Mês passado"], ["90d", "90 dias"], ["ano", "Ano"], ["tudo", "Tudo"], ["custom", "📅 Período…"]];
+    const types = [["todos", "Todos", bySearch.length, null], ["venda", "Vendas", typeCount.venda, "#3FD1CE"], ["estoque", "Estoque", typeCount.estoque, "#F5821F"], ["brinde", "Brinde / Teste", typeCount.brinde, "#FF6B6B"], ["avulso", "Avulso", typeCount.avulso, "#5E7A7B"]];
 
+    let lastMonth = null;
     return (
-      <div>
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-          💡 Três tipos de pedido: <b>Venda para cliente</b> (gera faturamento), <b>Produção para estoque</b> (as peças vão para a aba Estoque de Produtos) e <b>Brinde / Teste</b> (sem receita — só consome material e guarda a peça no estoque). Em todos, ao concluir, a matéria-prima (filamento + extras) é baixada automaticamente. Use <b>Calibração</b> para lançar só o gasto de ajustar a impressora, sem gerar peça.
+      <div className="neo-orders">
+        <div className="neo-pagehead">
+          <span className="neo-code">PEDIDOS</span><h2>Histórico de pedidos</h2>
+          <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Os três tipos de pedido">?</button>
+          <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+            <Btn kind="ghost" onClick={() => setModal({ type: "calc" })}><CalculatorIc size={15} />Calculadora</Btn>
+            <Btn kind="ghost" onClick={() => setModal({ type: "quick" })} disabled={data.filaments.length === 0}><ZapIc size={15} />Impressão avulsa</Btn>
+            <Btn kind="ghost" onClick={() => setModal({ type: "calib" })} disabled={data.printers.length === 0 || data.filaments.length === 0}><WrenchIc size={15} />Calibração</Btn>
+            <Btn onClick={() => setModal({ type: "order" })} disabled={data.projects.length === 0}><Plus size={16} />Novo pedido</Btn>
+          </div>
         </div>
-        <SectionHead title="Pedidos" count={list.length}>
-          <Btn kind="ghost" onClick={() => setModal({ type: "calc" })}><CalculatorIc size={15} />Calculadora</Btn>
-          <Btn kind="ghost" onClick={() => setModal({ type: "quick" })} disabled={data.filaments.length === 0}><ZapIc size={15} />Impressão avulsa</Btn>
-          <Btn kind="ghost" onClick={() => setModal({ type: "calib" })} disabled={data.printers.length === 0 || data.filaments.length === 0}><WrenchIc size={15} />Calibração</Btn>
-          <Btn onClick={() => setModal({ type: "order" })} disabled={data.projects.length === 0}><Plus size={16} />Novo pedido</Btn>
-        </SectionHead>
-        {data.projects.length === 0 && (
-          <div style={{ font: "400 13px Inter,sans-serif", color: "#FFB067", background: "#2E2413", border: "1px solid #2E2413", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-            Pedidos são criados a partir de projetos. Cadastre um projeto primeiro na aba Projetos.
+        {help && (
+          <div className="neo-hud neo-helpbox">
+            💡 Três tipos de pedido: <b>Venda para cliente</b> (gera faturamento), <b>Produção para estoque</b> (as peças vão para a aba Estoque de Produtos) e <b>Brinde / Teste</b> (sem receita — só consome material e guarda a peça no estoque). <b>Impressão avulsa</b> e <b>Calibração</b> lançam só o consumo de material e máquina.
           </div>
         )}
+        {data.projects.length === 0 && <div className="neo-hud neo-helpbox o">Pedidos são criados a partir de projetos. Cadastre um projeto primeiro na aba Projetos.</div>}
 
-        <Card style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 14, padding: 14 }}>
-          <div><L>De</L><In type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ width: 150 }} /></div>
-          <div><L>Até</L><In type="date" value={to} onChange={(e) => setTo(e.target.value)} style={{ width: 150 }} /></div>
-          <div><L>Status</L>
-            <Sel value={status} onChange={(e) => setStatus(e.target.value)} style={{ width: 160 }}>
-              <option>Todos</option>{STATUSES.map((s) => <option key={s}>{s}</option>)}
-            </Sel>
-          </div>
-          <div style={{ flex: 1, minWidth: 180 }}><L>Buscar</L><In placeholder="Projeto ou cliente…" value={qtext} onChange={(e) => { setQtext(e.target.value); setPage(1); }} /></div>
-        </Card>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(190px,1fr))", gap: 12, marginBottom: 14 }}>
-          <Stat label="Faturamento" value={fmt(faturamento)} sub="vendas concluídas no período" icon={CircleDollarSign} />
-          <Stat label="Recebido" value={fmt(recebido)} sub="vendas marcadas como pagas" icon={CheckCircle2} accent="#6FA0EA" />
-          <Stat label="Lucro estimado" value={fmt(lucro)} sub="faturamento − custo de produção" icon={TrendingUp} accent={lucro >= 0 ? "#14A6A4" : "#F0605F"} />
-          <Stat label="Ticket médio" value={fmt(ticket)} sub={`${doneSales.length} vendas concluídas`} icon={Package} accent="#A88AF0" />
+        <div className="neo-penbar">
+          <div className="neo-seg sm">{periods.map(([k, l]) => <button key={k} className={"ord-per" + (per === k ? " on" : "")} data-p={k} onClick={() => setPer(k)}>{l}</button>)}</div>
+          {per === "custom" && <>
+            <In type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ width: 150, height: 36, padding: "6px 10px" }} title="De" />
+            <In type="date" value={to} onChange={(e) => setTo(e.target.value)} style={{ width: 150, height: 36, padding: "6px 10px" }} title="Até" />
+          </>}
+          <div className="neo-search"><SearchIc size={14} /><input value={qtext} onChange={(e) => setQtext(e.target.value)} placeholder="Projeto ou cliente…" />{qtext && <button onClick={() => setQtext("")}>×</button>}</div>
         </div>
 
-        <Card style={{ padding: 6 }}>
-          {list.length === 0 ? <Empty icon={ShoppingCart} text="Nenhum pedido no período" hint="Ajuste o filtro de datas ou registre um novo pedido." /> : (
+        <div className="neo-okpis">
+          <Reveal className="neo-hud neo-k" delay={0}><div className="l">Faturamento</div><div className="v"><CountUp value={faturamento} format={fmt} /></div><span className="neo-kd up">{fmtN(doneSales.length)} venda{doneSales.length === 1 ? "" : "s"} concluída{doneSales.length === 1 ? "" : "s"}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={60}><div className="neo-kring"><Ring pct={recPct} size={54} color="#6FA0EA"><b>{fmtN(recPct, 0)}%</b></Ring><div><div className="l">Recebido</div><div className="v sm"><CountUp value={recebido} format={fmt} /></div><span className="neo-kd">{faturamento - recebido > 0.005 ? `falta ${fmt(faturamento - recebido)}` : faturamento > 0 ? "tudo recebido ✓" : "—"}</span></div></div></Reveal>
+          <Reveal className="neo-hud neo-k" delay={120}><div className="l">Lucro estimado</div><div className="v" style={{ color: lucro >= 0 ? "#5CE0D4" : "#FF8A8A" }}><CountUp value={lucro} format={fmt} /></div><span className="neo-kd">{faturamento > 0 ? `margem ${fmtN((lucro / faturamento) * 100, 0)}%` : "faturamento − custo de produção"}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={180}><div className="l">Ticket médio</div><div className="v"><CountUp value={ticket} format={fmt} /></div><span className="neo-kd">{fmtN(pecas)} peça{pecas === 1 ? "" : "s"} no período</span></Reveal>
+          <Reveal className="neo-hud neo-funnel" delay={240}>
+            <span className="neo-code">TIPO DE PEDIDO</span>
+            <div className="bar">{typeTot ? [["venda", "a"], ["estoque", "o"], ["brinde", "r"], ["avulso", "e"]].map(([k, c]) => typeCount[k] > 0 && <i key={k} className={c} style={{ width: (typeCount[k] / typeTot * 100) + "%" }} />) : <i className="e" style={{ width: "100%", opacity: .3 }} />}</div>
+            <div className="leg"><span className="a">Vendas {typeCount.venda}</span><span className="o">Estoque {typeCount.estoque}</span><span className="r">Brinde {typeCount.brinde}</span><span className="e">Avulso {typeCount.avulso}</span></div>
+          </Reveal>
+        </div>
+
+        <div className="neo-penbar">
+          <div className="neo-fchips">
+            {types.map(([k, l, n, c]) => <button key={k} className={"neo-fchip ord-type" + (type === k ? " on" : "")} data-t={k} onClick={() => setType(k)}>{c && <i className="cdot" style={{ background: c }} />}{l} {n}</button>)}
+            <span className="neo-sep" />
+            {[["aberto", "Em aberto"], ["concluidos", "Concluídos"], ["naopagos", `⚠ Não pagos ${unpaidN}`]].map(([k, l]) => <button key={k} className={"neo-fchip ord-sit" + (sit === k ? " on" : "") + (k === "naopagos" && unpaidN ? " r" : "")} data-s={k} onClick={() => setSit(sit === k ? "todos" : k)}>{l}</button>)}
+          </div>
+        </div>
+
+        <div className="neo-otbl">
+          {list.length === 0 ? <Empty icon={ShoppingCart} text="Nenhum pedido neste filtro" hint="Ajuste o período e os filtros ou registre um novo pedido." /> : (
             <div style={{ overflowX: "auto" }}>
-              <table>
-                <thead><tr><Th s={sOrd} col="date">Data</Th><Th s={sOrd} col="project">Projeto</Th><Th s={sOrd} col="client">Cliente / Destino</Th><Th s={sOrd} col="qty">Qtd</Th><Th s={sOrd} col="price">Valor</Th><Th s={sOrd} col="cost">Custo</Th><Th s={sOrd} col="paid">Pago</Th><Th s={sOrd} col="status">Status</Th><th></th></tr></thead>
+              <table className="neo-otable">
+                <thead><tr><Th s={sOrd} col="date">Data</Th><Th s={sOrd} col="project">Projeto</Th><Th s={sOrd} col="client">Cliente / destino</Th><Th s={sOrd} col="qty" style={{ textAlign: "right" }}>Qtd</Th><Th s={sOrd} col="price" style={{ textAlign: "right" }}>Valor</Th><Th s={sOrd} col="cost" style={{ textAlign: "right" }}>Custo · lucro</Th><Th s={sOrd} col="paid" style={{ textAlign: "center" }}>Pago</Th><Th s={sOrd} col="status">Status</Th><th /></tr></thead>
                 <tbody>
                   {pageList.map((linhaTab) => {
-                    if (linhaTab.kit) return <KitRow key={"kit" + linhaTab.kit} kit={linhaTab.kit} orders={linhaTab.orders} aberto={!!openKits[linhaTab.kit]} toggle={() => setOpenKits((s) => ({ ...s, [linhaTab.kit]: !s[linhaTab.kit] }))} render={renderOrderRow} />;
-                    return renderOrderRow(linhaTab.order);
+                    const d0 = rowOrders(linhaTab).map((o) => o.date).sort()[0];
+                    const m = monthKey(d0);
+                    const sep = byDate && m !== lastMonth ? (
+                      <tr key={"m" + m} className="neo-omon"><td colSpan={9}>{monthName(m)}<span> · {fmtN(monthSum[m] ? monthSum[m].n : 0)} pedido{monthSum[m] && monthSum[m].n === 1 ? "" : "s"}{monthSum[m] && monthSum[m].v > 0 ? ` · ${fmt(monthSum[m].v)}` : ""}</span></td></tr>
+                    ) : null;
+                    lastMonth = m;
+                    const row = linhaTab.kit
+                      ? <KitRow key={"kit" + linhaTab.kit} kit={linhaTab.kit} orders={linhaTab.orders} aberto={!!openKits[linhaTab.kit]} toggle={() => setOpenKits((s) => ({ ...s, [linhaTab.kit]: !s[linhaTab.kit] }))} render={renderOrderRow} />
+                      : renderOrderRow(linhaTab.order);
+                    return sep ? <React.Fragment key={"f" + (linhaTab.kit || linhaTab.order.id)}>{sep}{row}</React.Fragment> : row;
                   })}
                 </tbody>
               </table>
             </div>
           )}
-        </Card>
+        </div>
         <Pager total={rows.length} page={curPage} per={PER} setPage={setPage} />
       </div>
     );
 
     function renderOrderRow(o, dentroDoKit) {
-                    const p = projMap[o.projectId];
-                    const cli = o.clientId ? cliMap[o.clientId] : null;
-                    const isStk = o.dest === "estoque";
-                    const isBrd = o.dest === "brinde";
-                    const noSale = isStk || isBrd;
-                    return (
-                      <tr key={o.id} style={dentroDoKit ? { background: "#1A1E21" } : undefined}>
-                        <td style={{ whiteSpace: "nowrap" }}>{fmtDate(o.date)}{o.dueDate && <div style={{ font: "400 11px Inter,sans-serif", color: "#8FA3A3" }}>entrega {fmtDate(o.dueDate)}</div>}</td>
-                        <td style={{ fontWeight: 600, paddingLeft: dentroDoKit ? 26 : undefined }}>
-                          <span style={{ display: "inline-flex", gap: 8, alignItems: "center" }}>
-                            {dentroDoKit && <span style={{ color: "#5B6B7B" }}>↳</span>}
-                            {p && p.image && <img src={p.image} alt="" style={{ width: 30, height: 30, objectFit: "cover", borderRadius: 6 }} />}
-                            {projName(o)}
-                          </span>
-                        </td>
-                        <td>
-                          {isStk
-                            ? <span style={{ background: "#2E2413", color: "#FFB067", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif", whiteSpace: "nowrap" }}>→ Estoque</span>
-                            : o.dest === "avulso"
-                            ? <span style={{ background: "#1B2022", color: "#8FA0AC", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif", whiteSpace: "nowrap" }}>Impressão avulsa</span>
-                            : isBrd
-                            ? <span><span style={{ background: "#331A1A", color: "#F0605F", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif", whiteSpace: "nowrap" }}>Brinde / Teste</span>{cli && <span style={{ font: "500 11.5px Inter,sans-serif", color: "#93A6A6", marginLeft: 6 }}>{cli.name}</span>}{o.fromStock && <span style={{ font: "600 10.5px Inter,sans-serif", color: "#FFB067", marginLeft: 6 }}>(do estoque)</span>}{o.giftNote && <div style={{ font: "400 11px Inter,sans-serif", color: "#8FA3A3", marginTop: 2 }}>{o.giftNote}</div>}</span>
-                            : <span>{cli ? cli.name : (o.client || "—")}{o.fromStock && <span style={{ font: "600 10.5px Inter,sans-serif", color: "#FFB067", marginLeft: 6 }}>(do estoque)</span>}</span>}
-                        </td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(o.qty)}</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600 }}>{noSale ? "—" : fmt(o.price)}</td>
-                        <td style={{ fontFamily: "'JetBrains Mono',monospace", color: "#7E9191" }}>{fmt(o.cost)}</td>
-                        <td>
-                          {noSale ? "—" : <input type="checkbox" checked={!!o.paid} onChange={(e) => saveItem("orders", { ...o, paid: e.target.checked })} style={{ width: 16, height: 16, accentColor: "#14A6A4", cursor: "pointer" }} />}
-                        </td>
-                        <td>
-                          <select value={o.status} onChange={(e) => setOrderStatus(o, e.target.value)}
-                            style={{ ...inputStyle, width: "auto", padding: "4px 8px", font: "600 12px Inter,sans-serif", background: (STATUS_STYLE[o.status] || {}).bg, color: (STATUS_STYLE[o.status] || {}).fg, border: "none", borderRadius: 999, cursor: "pointer" }}>
-                            {STATUSES.map((s) => <option key={s}>{s}</option>)}
-                          </select>
-                        </td>
-                        <td style={{ whiteSpace: "nowrap" }}>
-                          <Btn small kind="ghost" onClick={() => setModal({ type: "order", item: o })}><Pencil size={13} /></Btn>{" "}
-                          <Btn small kind="danger" onClick={() => {
-                            const pj = projMap[o.projectId];
-                            if (isDone(o) && isSale(o) && o.processed && pj) {
-                              if (!confirm(`Excluir esta venda de ${fmtN(o.qty)}× ${pj.name}?`)) return;
-                              const back = confirm(`Devolver ${fmtN(o.qty)} un de "${pj.name}" ao estoque de produtos?\n\nOK = estornar (peças voltam ao estoque)\nCancelar = excluir sem devolver`);
-                              const snap = data;
-                              setData((d) => ({ ...d, products: back ? changeProductStock(d.products, o.projectId, num(o.qty)) : d.products, orders: d.orders.filter((x) => x.id !== o.id) }));
-                              notify(back ? `Venda estornada — ${fmtN(o.qty)} un de "${pj.name}" voltaram ao estoque de produtos` : "Venda excluída sem devolução ao estoque", snap);
-                            } else if (o.dest === "brinde" && o.fromStock && isDone(o) && o.processed && pj) {
-                              if (!confirm(`Excluir este brinde de ${fmtN(o.qty)}× ${pj.name}?\n\nAs peças voltam para o estoque de produtos.`)) return;
-                              const snap = data;
-                              setData((d) => ({ ...d,
-                                products: changeProductStock(d.products, o.projectId, num(o.qty)),
-                                orders: d.orders.filter((x) => x.id !== o.id) }));
-                              notify(`Brinde excluído — ${fmtN(o.qty)} un de "${pj.name}" voltaram ao estoque`, snap);
-                            } else if (o.dest === "brinde" && isDone(o) && o.processed && pj) {
-                              if (!confirm(`Excluir este Brinde/Teste de ${fmtN(o.qty)}× ${pj.name}?\n\nAs peças produzidas também serão removidas do estoque.`)) return;
-                              const snap = data;
-                              setData((d) => ({ ...d,
-                                products: changeProductStock(d.products, o.projectId, -num(o.qty)),
-                                orders: d.orders.filter((x) => x.id !== o.id) }));
-                              notify(`Brinde/Teste excluído — ${fmtN(o.qty)} un removidas do estoque`, snap);
-                            } else if (confirm("Excluir este pedido?")) delItem("orders", o.id);
-                          }}><Trash2 size={13} /></Btn>
-                        </td>
-                      </tr>
-                    );
+      const p = projMap[o.projectId];
+      const cli = o.clientId ? cliMap[o.clientId] : null;
+      const noSale = !isSale(o);
+      const cs = p ? itemColors(p, o.filChoices) : [];
+      const colorTxt = cs.length ? (cs.length > 1 ? `${cs.length} cores` : colorName(cs[0].fil)) : "";
+      return (
+        <tr key={o.id} className={dentroDoKit ? "neo-osub" : ""}>
+          <td>{!dentroDoKit && <div className="neo-odt">{fmtDate(o.date).slice(0, 5)}<small>{o.dueDate && !isDone(o) ? `entrega ${fmtDate(o.dueDate).slice(0, 5)}` : isDone(o) ? (o.status === "Entregue" ? "entregue" : "concluído") : "sem prazo"}</small></div>}</td>
+          <td>
+            <div className="neo-opj">
+              {dentroDoKit ? <span className="sub">↳</span> : (p && p.image ? <img src={p.image} alt="" className="th2 img" /> : <span className="th2"><Package size={15} /></span>)}
+              <span><b>{projName(o)}</b>{(colorTxt || o.giftNote) && <small>{dentroDoKit && colorTxt ? "" : ""}{colorTxt}{colorTxt && o.giftNote ? " · " : ""}{o.giftNote || ""}</small>}</span>
+            </div>
+          </td>
+          <td>{dentroDoKit ? null : destPill(o, cli)}</td>
+          <td className="neo-on">{fmtN(o.qty)}</td>
+          <td className="neo-ov2">{noSale ? <span className="mut">—</span> : fmt(o.price)}</td>
+          <td className="neo-oc">{fmt(o.cost)}{!noSale && !dentroDoKit && profitLine(num(o.price), num(o.cost))}</td>
+          <td className="neo-opaid">{noSale ? <span className="mut">—</span> : <Switch on={!!o.paid} title={o.paid ? "Pago — clique para desmarcar" : "Marcar como pago"} onChange={(v) => saveItem("orders", { ...o, paid: v })} />}</td>
+          <td>{statusSel(o.status, (e) => setOrderStatus(o, e.target.value))}</td>
+          <td>
+            <div className="neo-oico">
+              <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "order", item: o })}><Pencil size={13} /></button>
+              <button className="neo-bg2 ic danger" title="Excluir" onClick={() => {
+                const pj = projMap[o.projectId];
+                if (isDone(o) && isSale(o) && o.processed && pj) {
+                  if (!confirm(`Excluir esta venda de ${fmtN(o.qty)}× ${pj.name}?`)) return;
+                  const back = confirm(`Devolver ${fmtN(o.qty)} un de "${pj.name}" ao estoque de produtos?\n\nOK = estornar (peças voltam ao estoque)\nCancelar = excluir sem devolver`);
+                  const snap = data;
+                  setData((d) => ({ ...d, products: back ? changeProductStock(d.products, o.projectId, num(o.qty)) : d.products, orders: d.orders.filter((x) => x.id !== o.id) }));
+                  notify(back ? `Venda estornada — ${fmtN(o.qty)} un de "${pj.name}" voltaram ao estoque de produtos` : "Venda excluída sem devolução ao estoque", snap);
+                } else if (o.dest === "brinde" && o.fromStock && isDone(o) && o.processed && pj) {
+                  if (!confirm(`Excluir este brinde de ${fmtN(o.qty)}× ${pj.name}?\n\nAs peças voltam para o estoque de produtos.`)) return;
+                  const snap = data;
+                  setData((d) => ({ ...d, products: changeProductStock(d.products, o.projectId, num(o.qty)), orders: d.orders.filter((x) => x.id !== o.id) }));
+                  notify(`Brinde excluído — ${fmtN(o.qty)} un de "${pj.name}" voltaram ao estoque`, snap);
+                } else if (o.dest === "brinde" && isDone(o) && o.processed && pj) {
+                  if (!confirm(`Excluir este Brinde/Teste de ${fmtN(o.qty)}× ${pj.name}?\n\nAs peças produzidas também serão removidas do estoque.`)) return;
+                  const snap = data;
+                  setData((d) => ({ ...d, products: changeProductStock(d.products, o.projectId, -num(o.qty)), orders: d.orders.filter((x) => x.id !== o.id) }));
+                  notify(`Brinde/Teste excluído — ${fmtN(o.qty)} un removidas do estoque`, snap);
+                } else if (confirm("Excluir este pedido?")) delItem("orders", o.id);
+              }}><Trash2 size={13} /></button>
+            </div>
+          </td>
+        </tr>
+      );
     }
   }
 

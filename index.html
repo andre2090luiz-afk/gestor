@@ -839,6 +839,48 @@
   @keyframes neoPop{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
   @media (max-width:1000px){ .neo-actgrid{grid-template-columns:1fr;} }
   @media (max-width:600px){ .neo-actrow{grid-template-columns:38px minmax(0,1fr);} .neo-actrow .ic{display:none;} .neo-actrow .act-btns{grid-column:1 / -1;justify-self:end;} }
+  /* v4.63 Configurações */
+  .neo-cflay{display:grid;grid-template-columns:230px minmax(0,1fr);gap:16px;align-items:start;}
+  .neo-cfnav{position:sticky;top:12px;border-radius:16px;border:1px solid rgba(63,209,206,.14);background:rgba(8,20,21,.8);padding:8px;display:flex;flex-direction:column;gap:2px;}
+  .neo-cfnav button{all:unset;cursor:pointer;display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:10px;font:600 12.5px Inter,sans-serif;color:#CFE3E3;transition:background .15s;}
+  .neo-cfnav button span{width:18px;text-align:center;}
+  .neo-cfnav button:hover{background:rgba(63,209,206,.06);}
+  .neo-cfnav button.on{background:rgba(63,209,206,.12);color:#3FD1CE;box-shadow:inset 3px 0 0 #3FD1CE;}
+  .neo-cfnav button.dg{color:#FF8A8A;}
+  .neo-cfnav button small{margin-left:auto;font:700 9px 'JetBrains Mono',monospace;color:#F5821F;border:1px solid rgba(245,130,31,.5);border-radius:4px;padding:0 4px;}
+  .neo-cfnav .foot{font:500 10.5px Inter,sans-serif;color:#7F9A9B;padding:10px 10px 4px;border-top:1px solid rgba(63,209,206,.12);margin-top:6px;}
+  .neo-cfsec{margin-bottom:14px;scroll-margin-top:12px;}
+  .neo-cfhead{display:flex;align-items:center;flex-wrap:wrap;gap:6px 10px;margin-bottom:12px;}
+  .neo-cfhead h3{margin:0;font:700 16px 'Space Grotesk',sans-serif;color:#F3F6F6;}
+  .neo-cfhead .d{flex-basis:100%;font:500 12px Inter,sans-serif;color:#7F9A9B;}
+  .neo-cfsaved{margin-left:auto;font:700 10px 'JetBrains Mono',monospace;color:#3FD1CE;animation:neoPop .2s ease-out;}
+  .neo-cfg3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+  .neo-cff .hint{font:500 10.5px Inter,sans-serif;color:#7F9A9B;margin-top:4px;line-height:1.4;}
+  .neo-cff{border-radius:12px;transition:box-shadow .3s,background .3s;} .neo-cff.flash{box-shadow:0 0 0 2px #F5821F,0 0 18px rgba(245,130,31,.35);background:rgba(245,130,31,.06);}
+  .neo-cfsearch{position:relative;width:min(340px,100%);} .neo-cfsearch .neo-search{width:100%;}
+  .neo-cfres{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:50;border-radius:12px;border:1px solid rgba(63,209,206,.35);background:rgba(8,18,19,.98);box-shadow:0 18px 40px rgba(0,0,0,.6);padding:6px;}
+  .neo-cfres button{all:unset;cursor:pointer;display:flex;justify-content:space-between;gap:10px;width:100%;box-sizing:border-box;padding:8px 10px;border-radius:8px;font:600 12.5px Inter,sans-serif;color:#E6F1F1;}
+  .neo-cfres button:hover{background:rgba(63,209,206,.1);} .neo-cfres small{font:500 11px Inter,sans-serif;color:#7F9A9B;white-space:nowrap;} .neo-cfres .none{font:500 12px Inter,sans-serif;color:#7F9A9B;padding:8px 10px;}
+  .neo-pixart{width:200px;border-radius:14px;background:#fff;padding:12px;color:#111;text-align:center;display:flex;flex-direction:column;align-items:center;gap:4px;box-shadow:0 8px 24px rgba(0,0,0,.35);}
+  .neo-pixart b{font:800 13px Inter,sans-serif;color:#0a2a2a;} .neo-pixart small{font:500 10px Inter,sans-serif;color:#666;} .neo-pixart .k{font:600 11px Inter,sans-serif;color:#111;word-break:break-all;} .neo-pixart em{font-style:normal;font:500 9.5px Inter,sans-serif;color:#888;}
+  .neo-pixart .ph{width:120px;height:120px;border:1px dashed #bbb;border-radius:8px;display:grid;place-items:center;font:500 10.5px Inter,sans-serif;color:#888;padding:8px;margin:6px 0;}
+  .neo-cfex{border-radius:14px;border:1px dashed rgba(245,130,31,.5);background:rgba(245,130,31,.05);padding:12px 14px;margin-top:14px;}
+  .neo-cfex h5{margin:0 0 8px;font:700 10px 'JetBrains Mono',monospace;color:#F5821F;letter-spacing:.08em;display:flex;align-items:center;gap:6px;}
+  .neo-cfex .g{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:8px;} .neo-cfex .g div{border-radius:10px;background:rgba(5,12,12,.6);border:1px solid rgba(63,209,206,.12);padding:8px 10px;}
+  .neo-cfex small{display:block;font:600 9.5px Inter,sans-serif;color:#7F9A9B;text-transform:uppercase;} .neo-cfex b{font:700 15px 'Space Grotesk',sans-serif;color:#E6F1F1;}
+  .neo-cfprs{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:12px;}
+  .neo-cfpr{border-radius:14px;border:1px solid rgba(63,209,206,.14);background:rgba(5,12,12,.55);padding:12px 14px;}
+  .neo-cfpr .top{display:flex;align-items:center;gap:12px;} .neo-cfpr .ico{width:44px;height:44px;flex:none;border-radius:12px;border:1px solid rgba(63,209,206,.4);display:grid;place-items:center;color:#3FD1CE;background:rgba(63,209,206,.06);}
+  .neo-cfpr .nm{font:700 14px Inter,sans-serif;color:#F3F6F6;} .neo-cfpr .md{font:500 11px Inter,sans-serif;color:#7F9A9B;}
+  .neo-cfpr .g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:10px;} .neo-cfpr .g div{border-radius:9px;background:rgba(5,12,12,.6);padding:6px 8px;font:600 9.5px Inter,sans-serif;color:#7F9A9B;text-transform:uppercase;} .neo-cfpr .g b{display:block;font:700 13px 'JetBrains Mono',monospace;color:#E6F1F1;text-transform:none;}
+  .neo-cfpr .bl{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font:600 10.5px Inter,sans-serif;color:#7F9A9B;margin-top:9px;}
+  .neo-cfpr .bar{height:7px;border-radius:4px;background:rgba(127,154,155,.14);margin-top:5px;} .neo-cfpr .bar i{display:block;height:100%;border-radius:4px;transition:width .8s;}
+  .neo-cfpr .warn{font:600 11px Inter,sans-serif;color:#FFAA5C;margin-top:8px;}
+  .neo-cfbk{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+  .neo-cfdanger{border-color:rgba(255,107,107,.4) !important;} .neo-cfdanger .neo-code{color:#FF8A8A;border-color:rgba(255,107,107,.5);}
+  @media (max-width:1100px){ .neo-cfex .g{grid-template-columns:repeat(3,minmax(0,1fr));} }
+  @media (max-width:900px){ .neo-cflay{grid-template-columns:1fr;} .neo-cfnav{position:static;flex-direction:row;flex-wrap:wrap;} .neo-cfnav .foot{display:none;} .neo-cfg3{grid-template-columns:1fr 1fr;} }
+  @media (max-width:600px){ .neo-cfg3{grid-template-columns:1fr;} .neo-cfex .g{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-cfprs{grid-template-columns:1fr;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -981,7 +1023,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.62";
+const APP_VERSION = "4.63";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -5050,53 +5092,56 @@ function App() {
 
   /* ============================== IMPRESSORAS ============================ */
   function Printers() {
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
+    const every = Math.max(1, num(data.settings.maintEveryH));
     return (
       <div>
-        <SectionHead title="Impressoras" count={data.printers.length}>
-          <Btn onClick={() => setModal({ type: "printer" })}><Plus size={16} />Cadastrar impressora</Btn>
-        </SectionHead>
-        {data.printers.length === 0 ? (
-          <Card><Empty icon={PrinterIc} text="Nenhuma impressora cadastrada" hint="Cadastre suas máquinas para calcular depreciação e acompanhar manutenção." /></Card>
-        ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(280px,1fr))", gap: 14 }}>
+        <div className="neo-cfhead"><span className="neo-code">IMPRESSORAS</span><h3>Suas máquinas</h3><span style={{ marginLeft: "auto" }}><Btn onClick={() => setModal({ type: "printer" })}><Plus size={16} />Cadastrar impressora</Btn></span><div className="d">Valor e data de compra entram no relatório de retorno do investimento; consumo e vida útil, no custo de cada peça.</div></div>
+        {data.printers.length === 0 ? <Empty icon={PrinterIc} text="Nenhuma impressora cadastrada" hint="Cadastre suas máquinas para calcular desgaste, energia e acompanhar a manutenção." /> : (
+          <div className="neo-cfprs">
             {data.printers.map((p) => {
               const sinceMaint = num(p.hoursUsed) - num(p.lastMaintH || 0);
-              const maintPct = Math.min(100, (sinceMaint / Math.max(1, num(data.settings.maintEveryH))) * 100);
-              const deprH = num(p.lifeH) > 0 ? num(p.price) / num(p.lifeH) : 0;
+              const maintPct = Math.min(100, (sinceMaint / every) * 100);
+              const left = every - sinceMaint;
+              const lifeH = num(p.lifeH) || num(data.settings.printerLifeH);
+              const lifePct = lifeH > 0 ? Math.min(100, (num(p.hoursUsed) / lifeH) * 100) : 0;
+              const deprH = lifeH > 0 ? num(p.price) / lifeH : 0;
+              const mCol = maintPct >= 100 ? "#FF6B6B" : maintPct > 70 ? "#FFD166" : "#3FD1CE";
               return (
-                <Card key={p.id}>
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <div>
-                      <div style={{ font: "600 15px 'Space Grotesk',sans-serif" }}>{p.name}</div>
-                      <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191" }}>{p.brand} {p.model}</div>
-                    </div>
-                    <div style={{ display: "flex", gap: 6 }}>
-                      <Btn small kind="ghost" onClick={() => setModal({ type: "printer", item: p })}><Pencil size={13} /></Btn>
-                      <Btn small kind="danger" onClick={() => { if (confirm(`Excluir "${p.name}"?`)) delItem("printers", p.id); }}><Trash2 size={13} /></Btn>
-                    </div>
-                  </div>
-                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, marginTop: 12, font: "400 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
-                    <div>Valor pago<br /><b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(p.price)}</b></div>
-                    <div>Compra<br /><b>{fmtDate(p.date)}</b></div>
-                    <div>Horas de uso<br /><b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(p.hoursUsed, 1)}h</b></div>
-                    <div>Depreciação/h<br /><b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(deprH)}</b></div>
-                    <div>Consumo<br /><b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(p.watts)}W</b></div>
-                    <div>Vida útil<br /><b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(p.lifeH)}h</b></div>
-                  </div>
-                  <div style={{ marginTop: 12 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", font: "600 11px Inter,sans-serif", color: maintPct >= 100 ? "#F0605F" : "#7E9191", marginBottom: 4 }}>
-                      <span>MANUTENÇÃO ({fmtN(sinceMaint, 0)}h / {fmtN(data.settings.maintEveryH)}h)</span>
-                      {maintPct >= 100 && <span>REVISAR ⚠</span>}
-                    </div>
-                    <div style={{ height: 6, background: "rgba(5,12,12,.55)", borderRadius: 99 }}>
-                      <div style={{ height: 6, width: `${maintPct}%`, background: maintPct >= 100 ? "#F0605F" : maintPct > 70 ? "#F47A20" : "#14A6A4", borderRadius: 99 }} />
-                    </div>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 8, gap: 8, flexWrap: "wrap" }}>
-                      <span style={{ font: "400 11px Inter,sans-serif", color: "#8FA3A3" }}>{p.lastMaintDate ? `Última: ${fmtDate(p.lastMaintDate)}` : "Sem manutenção registrada"}{(p.maintLog && p.maintLog.length) ? ` · ${p.maintLog.length} no histórico` : ""}</span>
-                      <Btn small kind={maintPct >= 100 ? "primary" : "ghost"} onClick={() => setModal({ type: "maint", item: p })}><WrenchIc size={13} />Registrar manutenção</Btn>
+                <div key={p.id} className="neo-cfpr cfg-pr" data-id={p.id} style={menu === p.id ? { zIndex: 30, position: "relative" } : undefined}>
+                  <div className="top">
+                    <span className="ico"><PrinterIc size={22} /></span>
+                    <div style={{ minWidth: 0 }}><div className="nm">{p.name}</div><div className="md">{[p.brand, p.model].filter(Boolean).join(" · ") || "—"}</div></div>
+                    <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+                      <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "printer", item: p })}><Pencil size={13} /></button>
+                      <button className={"neo-bg2 ic neo-qmore" + (menu === p.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === p.id ? null : p.id)}>⋯</button>
+                      {menu === p.id && <div className="neo-qmenu"><button onClick={() => { setMenu(null); setModal({ type: "maint", item: p }); }}><WrenchIc size={13} />Registrar manutenção</button><button className="r pr-del" onClick={() => { setMenu(null); if (confirm(`Excluir "${p.name}"?`)) delItem("printers", p.id); }}><Trash2 size={13} />Excluir</button></div>}
                     </div>
                   </div>
-                </Card>
+                  <div className="g">
+                    <div>Valor<b style={!num(p.price) ? { color: "#FFAA5C" } : undefined}>{num(p.price) ? fmt(p.price) : "—"}</b></div>
+                    <div>Compra<b style={!p.date ? { color: "#FFAA5C" } : undefined}>{p.date ? fmtDate(p.date) : "—"}</b></div>
+                    <div>Consumo<b>{fmtN(p.watts)} W</b></div>
+                    <div>Horas de uso<b>{fmtN(p.hoursUsed, 1)} h</b></div>
+                    <div>Desgaste/h<b>{fmt(deprH)}</b></div>
+                    <div>Vida útil<b>{fmtN(lifeH)} h</b></div>
+                  </div>
+                  <div className="bl"><span>MANUTENÇÃO · {fmtN(sinceMaint, 0)} h de {fmtN(every)} h</span>{maintPct >= 100 ? <span style={{ color: "#FF6B6B" }}>REVISAR ⚠</span> : <span style={{ color: mCol }}>faltam {fmtN(left, 0)} h</span>}</div>
+                  <div className="bar"><i style={{ width: `${maintPct}%`, background: maintPct >= 100 ? "#FF6B6B" : maintPct > 70 ? "linear-gradient(90deg,#F5821F,#FFD166)" : "linear-gradient(90deg,#14B8B2,#3FD1CE)" }} /></div>
+                  <div className="bl"><span>VIDA ÚTIL · {fmtN(lifePct, 0)}%</span><span>{fmtN(Math.max(0, lifeH - num(p.hoursUsed)), 0)} h restantes</span></div>
+                  <div className="bar"><i style={{ width: `${lifePct}%`, background: "#6FA0EA" }} /></div>
+                  <div className="bl" style={{ marginTop: 10 }}>
+                    <span>{p.lastMaintDate ? `Última manutenção: ${fmtDate(p.lastMaintDate)}` : "Sem manutenção registrada"}{(p.maintLog && p.maintLog.length) ? ` · ${p.maintLog.length} no histórico` : ""}</span>
+                    <Btn small kind={maintPct >= 100 ? "primary" : "ghost"} onClick={() => setModal({ type: "maint", item: p })}><WrenchIc size={13} />Registrar manutenção</Btn>
+                  </div>
+                  {(!p.date || !num(p.price)) && <div className="warn cfg-pr-warn">⚠ {!num(p.price) && !p.date ? "Sem valor e sem data de compra" : !p.date ? "Sem data de compra" : "Sem valor de compra"} — cadastre para ver o retorno do investimento em Relatórios.</div>}
+                </div>
               );
             })}
           </div>
@@ -9887,34 +9932,90 @@ SC,
     );
   }
 
+  const CFG_SECS = [
+    ["empresa", "🏢", "Empresa e PIX"], ["impressoras", "🖨", "Impressoras"], ["comando", "🎛", "Central de Comando"], ["custos", "💲", "Custos e preços"],
+    ["canais", "🛒", "Canais de venda"], ["alertas", "🔔", "Alertas e prazos"], ["listas", "🏷", "Listas"], ["backup", "💾", "Backup e dados"], ["perigo", "⚠", "Zona de perigo"], ["sobre", "ℹ", "Sobre"],
+  ];
+  const CFG_INDEX = [
+    ["Nome da empresa", "empresa"], ["Slogan", "empresa"], ["CNPJ / CPF", "empresa"], ["WhatsApp / Telefone", "empresa"], ["E-mail", "empresa"], ["Instagram", "empresa"], ["Endereço", "empresa"], ["Cidade / UF", "empresa"],
+    ["PIX · chave, tipo, favorecido", "empresa"], ["Impressoras · cadastrar, editar, manutenção", "impressoras"], ["Seu nome (saudação)", "comando", "ownerName"], ["Meta de faturamento do mês", "comando", "monthlyGoal"],
+    ["Valor do kWh (energia)", "custos", "kwhPrice"], ["Taxa de falha", "custos", "failureRate"], ["Valor da sua hora de trabalho", "custos", "laborRate"], ["Margem de lucro padrão", "custos", "defaultMargin"], ["Margem de manutenção", "custos", "maintMarginPct"], ["Vida útil padrão da impressora", "custos", "printerLifeH"],
+    ["Multiplicador revendedor", "canais", "resaleMultiplier"], ["Multiplicador consumidor final", "canais", "finalMultiplier"], ["Taxa Shopee", "canais", "shopeeFeePct"], ["Taxa Mercado Livre clássico", "canais", "mlClassicFeePct"], ["Taxa Mercado Livre premium", "canais", "mlPremiumFeePct"], ["Taxa TikTok Shop", "canais", "tiktokFeePct"],
+    ["Alerta de estoque baixo (filamento)", "alertas", "lowStockG"], ["Manutenção a cada (h)", "alertas", "maintEveryH"], ["Horas de impressão por dia", "alertas", "prodHoursPerDay"], ["Validade padrão do orçamento", "alertas", "quoteValidityDays"],
+    ["Categorias de gastos", "listas"], ["Tipos de filamento", "listas"], ["Nichos de mercado", "listas"], ["Backup · exportar, importar, restaurar", "backup"], ["Armazenamento e fotos", "backup"], ["Apagar todos os dados", "perigo"], ["Versão do app", "sobre"],
+  ];
+  const CFG_UI = { sec: "empresa" };
   function Config() {
     // Estado local: digitar não salva a cada tecla (senão o app remonta e o campo perde o foco).
     // O valor é gravado quando o campo perde o foco (onBlur).
     const [ls, setLs] = useState({ ...data.settings });
     const [lsi, setLsi] = useState({ ...(data.storeInfo || DEFAULTS.storeInfo) });
+    const [saved, setSaved] = useState(null);
+    const [sec, setSecS] = useState(CFG_UI.sec);
+    const setSec = (v) => { CFG_UI.sec = v; setSecS(v); };
+    const [cq, setCq] = useState("");
+    const [flash, setFlash] = useState(null);
+    const savedT = useRef(null);
+    const markSaved = (sc) => { setSaved(sc); clearTimeout(savedT.current); savedT.current = setTimeout(() => setSaved(null), 2500); };
     const s = ls;
     const set = (k) => (e) => setLs({ ...ls, [k]: e.target.value });
-    const commitS = () => up({ settings: { ...data.settings, ...ls } });
-    const setList = (k, list) => { setLs({ ...ls, [k]: list }); up({ settings: { ...data.settings, ...ls, [k]: list } }); };
+    const KSEC = {}; CFG_INDEX.forEach((x) => { if (x[2]) KSEC[x[2]] = x[1]; });
+    const commitS = (e) => { const changed = Object.keys(ls).some((k) => String(ls[k]) !== String(data.settings[k])); up({ settings: { ...data.settings, ...ls } }); if (changed) { const k = e && e.target && e.target.closest && e.target.closest("[data-k]"); markSaved(k ? KSEC[k.dataset.k] || "custos" : "comando"); } };
+    const setList = (k, list) => { setLs({ ...ls, [k]: list }); up({ settings: { ...data.settings, ...ls, [k]: list } }); markSaved("listas"); };
     const F = ({ label, k, hint, step }) => (
-      <div>
+      <div id={"cfg-f-" + k} data-k={k} className={"neo-cff" + (flash === "cfg-f-" + k ? " flash" : "")}>
         <L>{label}</L>
         <In type="number" step={step || "0.01"} value={s[k]} onChange={set(k)} onBlur={commitS} />
-        {hint && <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>{hint}</div>}
+        {hint && <div className="hint">{hint}</div>}
       </div>
     );
     const ecats = s.ecats || DEFAULT_ECATS;
     const ftypes = s.ftypes || DEFAULT_FTYPES;
     const si = lsi;
     const setSi = (k) => (e) => setLsi({ ...lsi, [k]: e.target.value });
-    const commitSi = () => up({ storeInfo: { ...(data.storeInfo || DEFAULTS.storeInfo), ...lsi } });
+    const commitSi = () => { const cur = data.storeInfo || DEFAULTS.storeInfo; const changed = JSON.stringify({ ...cur, ...lsi }) !== JSON.stringify(cur); up({ storeInfo: { ...cur, ...lsi } }); if (changed) markSaved("empresa"); };
+    const go = (sc, el) => {
+      setSec(sc); setCq("");
+      const target = document.getElementById(el || "cfg-s-" + sc);
+      if (target && target.scrollIntoView) target.scrollIntoView({ behavior: "smooth", block: el ? "center" : "start" });
+      if (el) { setFlash(el); setTimeout(() => setFlash(null), 1800); }
+    };
+    useEffect(() => {
+      if (typeof IntersectionObserver === "undefined") return;
+      const io = new IntersectionObserver((es) => { const v = es.filter((x) => x.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0]; if (v) { CFG_UI.sec = v.target.dataset.sec; setSecS(v.target.dataset.sec); } }, { rootMargin: "-10% 0px -70% 0px" });
+      document.querySelectorAll(".neo-cfsec").forEach((el) => io.observe(el));
+      return () => io.disconnect();
+    }, []);
+    const normq = (t) => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
+    const results = cq.trim() ? CFG_INDEX.filter((x) => normq(x[0] + " " + (CFG_SECS.find((y) => y[0] === x[1]) || [])[2]).includes(normq(cq.trim()))).slice(0, 8) : [];
+    const prAlert = data.printers.filter((p) => num(p.hoursUsed) - num(p.lastMaintH || 0) >= num(data.settings.maintEveryH) || !p.date || !num(p.price)).length;
+    let lastBk = 0; try { lastBk = +(localStorage.getItem(LAST_BACKUP_KEY) || 0); } catch (e) { /* sem acesso */ }
+    const bkDays = lastBk ? Math.floor((Date.now() - lastBk) / 86400000) : null;
+    const badge = { impressoras: prAlert ? `${prAlert} ⚠` : null, backup: bkDays == null ? "nunca" : bkDays > 7 ? `${bkDays} d` : null };
+    // exemplo ao vivo: peça de 50 g e 3 h na primeira impressora
+    const exPr = data.printers[0] || { watts: 150, price: 0, lifeH: num(s.printerLifeH) || 6000, name: "impressora" };
+    const fils = data.filaments.filter((f) => num(f.price) > 0 && num(f.qtyG) > 0);
+    const kgPrice = fils.length ? fils.reduce((t, f) => t + (num(f.price) / num(f.qtyG)) * 1000, 0) / fils.length : 90;
+    const ex = calcPrint({ mode: "completo", pieces: 1, materialCost: (kgPrice / 1000) * 50, hoursTotal: 3, watts: exPr.watts, kwhPrice: s.kwhPrice, deprPerH: num(exPr.lifeH || s.printerLifeH) > 0 ? num(exPr.price) / num(exPr.lifeH || s.printerLifeH) : 0, failureRate: s.failureRate, laborH: 0, laborRate: s.laborRate, fixed: 0, margin: s.defaultMargin, extrasCost: 0, maintMarginPct: s.maintMarginPct });
+    const Head = ({ id, title, desc, right }) => <div className="neo-cfhead"><span className="neo-code">{(CFG_SECS.find((x) => x[0] === id) || [])[2].toUpperCase()}</span><h3>{title}</h3>{saved === id && <span className="neo-cfsaved cfg-saved">✓ SALVO</span>}{right}{desc && <div className="d">{desc}</div>}</div>;
     return (
-      <div style={{ maxWidth: 680 }}>
-        <SectionHead title="Configurações" />
+      <div className="neo-cfg">
+        <div className="neo-pagehead">
+          <span className="neo-code">CONFIGURAÇÕES</span><h2>Ajustes do sistema</h2>
+          <div className="neo-cfsearch" style={{ marginLeft: "auto" }}>
+            <div className="neo-search"><SearchIc size={14} /><input className="cfg-search" value={cq} onChange={(e) => setCq(e.target.value)} placeholder="Buscar configuração… (ex: kWh, PIX, margem)" />{cq && <button onClick={() => setCq("")}>×</button>}</div>
+            {cq.trim() && <div className="neo-cfres">{results.length === 0 ? <div className="none">Nada encontrado para “{cq}”.</div> : results.map((x) => { const S = CFG_SECS.find((y) => y[0] === x[1]); return <button key={x[0]} className="cfg-res" onClick={() => go(x[1], x[2] ? "cfg-f-" + x[2] : null)}><span>{x[0]}</span><small>{S[1]} {S[2]}</small></button>; })}</div>}
+          </div>
+        </div>
         {sb && profile && profile.is_admin && <UsersAdminPanel />}
-        <Card style={{ marginBottom: 16 }}>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 4, textTransform: "uppercase", letterSpacing: ".06em" }}>Dados da empresa</div>
-          <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginBottom: 12 }}>Aparecem no cabeçalho dos orçamentos e do catálogo em PDF.</div>
+        <div className="neo-cflay">
+          <nav className="neo-cfnav">
+            {CFG_SECS.map(([id, ic, t]) => <button key={id} className={"cfg-nav" + (sec === id ? " on" : "") + (id === "perigo" ? " dg" : "")} data-s={id} onClick={() => go(id)}><span>{ic}</span>{t}{badge[id] && <small className="cfg-badge">{badge[id]}</small>}</button>)}
+            <div className="foot">Tudo salva sozinho ao sair do campo ✓</div>
+          </nav>
+          <div style={{ minWidth: 0 }}>
+            <div id="cfg-s-empresa" data-sec="empresa" className="neo-hud neo-cfsec">
+              {Head({ id: "empresa", title: "Dados que aparecem nos PDFs", desc: "Cabeçalho dos orçamentos, do catálogo e da arte de cobrança." })}
           <Row>
             <div><L>Nome</L><In value={si.name} onChange={setSi("name")} onBlur={commitSi} /></div>
             <div><L>Slogan</L><In value={si.tagline} onChange={setSi("tagline")} onBlur={commitSi} /></div>
@@ -9938,7 +10039,7 @@ SC,
             const setPix = (k) => (e) => setLsi({ ...lsi, pix: { ...pixFull, [k]: e.target.value } });
             const keyOk = !!pixKeyNormalized(pixFull);
             return (
-              <div className="pix-config" style={{ borderTop: "1px solid rgba(63,209,206,.14)", marginTop: 6, paddingTop: 12 }}>
+              <div className="pix-config" style={{ borderTop: "1px solid rgba(63,209,206,.14)", marginTop: 10, paddingTop: 12 }}>
                 <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 8 }}>PIX para recebimentos</div>
                 <div style={{ display: "flex", gap: 16, alignItems: "flex-start", flexWrap: "wrap" }}>
                   <div style={{ flex: 1, minWidth: 260 }}>
@@ -9953,69 +10054,73 @@ SC,
                     {pixFull.key && !keyOk && <div style={{ font: "500 12px Inter,sans-serif", color: "#F0605F", marginTop: -4 }}>Chave inválida para o tipo "{PIX_TYPES[pixFull.type]}" — confira os números.</div>}
                     <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>O QR sai sem valor: o cliente escaneia e digita o valor no app do banco. Teste o QR ao lado com o seu banco antes de mandar para clientes.</div>
                   </div>
-                  <div style={{ textAlign: "center" }}>
-                    {pixReady(pixFull) ? <div style={{ padding: 6, background: "#fff", borderRadius: 8 }}><QRSvg text={pixPayload(pixFull)} size={130} /></div>
-                      : <div style={{ width: 142, height: 142, border: "1px dashed rgba(63,209,206,.22)", borderRadius: 8, display: "grid", placeItems: "center", font: "400 11px Inter,sans-serif", color: "#7E9191", padding: 10 }}>preencha a chave para ver o QR</div>}
-                    <div style={{ font: "500 10.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>QR de teste</div>
+                  <div className="neo-pixart cfg-pixart">
+                    <b>{si.name || "Sua loja"}</b><small>{si.tagline || ""}</small>
+                    {pixReady(pixFull) ? <QRSvg text={pixPayload(pixFull)} size={120} /> : <div className="ph">preencha a chave para ver o QR</div>}
+                    <div className="k">PIX · {pixFull.key || "—"}</div>
+                    <em>prévia ao vivo · teste o QR com seu banco</em>
                   </div>
                 </div>
               </div>
             );
           })()}
-        </Card>
-        <div style={{ marginBottom: 16 }}><Printers /></div>
-        <Card>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 12, textTransform: "uppercase", letterSpacing: ".06em" }}>Central de Comando</div>
-          <Row>
-            <div>
-              <L>Seu nome (saudação)</L>
-              <In value={s.ownerName || ""} onChange={set("ownerName")} onBlur={commitS} placeholder="ex: André" />
-              <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>Aparece em "Bom dia, …" no topo da tela inicial.</div>
             </div>
-            {F({ label: "Meta de faturamento do mês (R$)", k: "monthlyGoal", step: "50", hint: "Mostra o anel \"Meta do mês\" nos números do negócio. Deixe vazio para não usar." })}
-          </Row>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Energia e produção</div>
-          <Row>
-            {F({ label: "Valor do kWh (R$)", k: "kwhPrice", hint: "Confira na sua conta de luz. Usado na calculadora." })}
-            {F({ label: "Taxa de falha padrão (%)", k: "failureRate", hint: "Impressões perdidas, testes e ajustes.", step: "1" })}
-          </Row>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Precificação</div>
-          <Row>
-            {F({ label: "Valor da sua hora de trabalho (R$)", k: "laborRate", hint: "Pós-processamento, montagem, atendimento." })}
-            {F({ label: "Margem de lucro padrão (%)", k: "defaultMargin", step: "5" })}
-          </Row>
-          <Row>
-            {F({ label: "Margem de manutenção (%)", k: "maintMarginPct", step: "1", hint: "% somado ao custo para cobrir bicos, correias, limpeza." })}
-            <div />
-          </Row>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Preços por canal de venda</div>
-          <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginBottom: 12 }}>Usados para calcular o preço e o lucro do produto em cada canal, a partir do custo por peça.</div>
-          <Row>
-            {F({ label: "Multiplicador revendedor (×)", k: "resaleMultiplier", step: "0.5", hint: "Preço = custo × este valor." })}
-            {F({ label: "Multiplicador consumidor final (×)", k: "finalMultiplier", step: "0.5", hint: "Preço = custo × este valor." })}
-          </Row>
-          <Row>
-            {F({ label: "Taxa Shopee (%)", k: "shopeeFeePct", step: "1" })}
-            {F({ label: "Taxa Mercado Livre clássico (%)", k: "mlClassicFeePct", step: "1" })}
-          </Row>
-          <Row>
-            {F({ label: "Taxa Mercado Livre premium (%)", k: "mlPremiumFeePct", step: "1" })}
-            {F({ label: "Taxa TikTok Shop (%)", k: "tiktokFeePct", step: "1" })}
-          </Row>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Alertas e máquinas</div>
-          <Row>
-            {F({ label: "Alerta de estoque baixo — filamento (g)", k: "lowStockG", step: "50", hint: "Filamentos abaixo disso aparecem no Dashboard." })}
-            {F({ label: "Manutenção a cada (h)", k: "maintEveryH", step: "50", hint: "Limpeza, lubrificação, revisão das impressoras." })}
-          </Row>
-          <Row>
-            {F({ label: "Vida útil padrão da impressora (h)", k: "printerLifeH", step: "500", hint: "Usada para calcular a depreciação por hora." })}
-            {F({ label: "Horas de impressão por dia", k: "prodHoursPerDay", step: "1", hint: "Usada para estimar o prazo de entrega nos orçamentos, com base na fila." })}
-          </Row>
-          <Row>
-            {F({ label: "Validade padrão do orçamento (dias)", k: "quoteValidityDays", step: "1", hint: "Preenche automaticamente o campo “válido até”." })}
-            <div />
-          </Row>
-
+            <div id="cfg-s-impressoras" data-sec="impressoras" className="neo-hud neo-cfsec"><Printers /></div>
+            <div id="cfg-s-comando" data-sec="comando" className="neo-hud neo-cfsec">
+              {Head({ id: "comando", title: "Tela inicial", desc: "Saudação e meta que aparecem no Comando." })}
+              <Row>
+                <div id="cfg-f-ownerName" data-k="ownerName" className={"neo-cff" + (flash === "cfg-f-ownerName" ? " flash" : "")}>
+                  <L>Seu nome (saudação)</L>
+                  <In value={s.ownerName || ""} onChange={set("ownerName")} onBlur={commitS} placeholder="ex: André" />
+                  <div className="hint">Aparece em "Bom dia, …" no topo da tela inicial.</div>
+                </div>
+                {F({ label: "Meta de faturamento do mês (R$)", k: "monthlyGoal", step: "50", hint: "Mostra o anel \"Meta do mês\" nos números do negócio. Deixe vazio para não usar." })}
+              </Row>
+            </div>
+            <div id="cfg-s-custos" data-sec="custos" className="neo-hud neo-cfsec">
+              {Head({ id: "custos", title: "Como o app calcula custo e preço", desc: "Energia, falhas, sua hora de trabalho, margem e desgaste das máquinas." })}
+              <div className="neo-cfg3">
+                {F({ label: "Valor do kWh (R$)", k: "kwhPrice", hint: "Confira na sua conta de luz." })}
+                {F({ label: "Taxa de falha padrão (%)", k: "failureRate", hint: "Impressões perdidas, testes e ajustes.", step: "1" })}
+                {F({ label: "Valor da sua hora de trabalho (R$)", k: "laborRate", hint: "Pós-processamento, montagem, atendimento." })}
+                {F({ label: "Margem de lucro padrão (%)", k: "defaultMargin", step: "5" })}
+                {F({ label: "Margem de manutenção (%)", k: "maintMarginPct", step: "1", hint: "% somado ao custo para cobrir bicos, correias, limpeza." })}
+                {F({ label: "Vida útil padrão da impressora (h)", k: "printerLifeH", step: "500", hint: "Usada para calcular o desgaste por hora." })}
+              </div>
+              <div className="neo-cfex cfg-example">
+                <h5>▶ EXEMPLO AO VIVO · PEÇA DE 50 g E 3 h NA {(exPr.name || "IMPRESSORA").toUpperCase()} <InfoTip text={`Mesma conta da calculadora, no modo completo, sem mão de obra: filamento a ${fmt(kgPrice)}/kg (média dos seus filamentos), energia pelo consumo da impressora, desgaste pelo valor ÷ vida útil, mais manutenção e falhas. Muda na hora quando você altera os campos acima.`} /></h5>
+                <div className="g">
+                  <div><small>Filamento</small><b>{fmt(ex.matPieces)}</b></div>
+                  <div><small>Energia</small><b>{fmt(ex.energy)}</b></div>
+                  <div><small>Desgaste</small><b>{fmt(ex.depr)}</b></div>
+                  <div><small>Falhas + manut.</small><b>{fmt(ex.fail + ex.maint)}</b></div>
+                  <div><small>Custo</small><b className="ex-cost" style={{ color: "#FF8A8A" }}>{fmt(ex.totalCost)}</b></div>
+                  <div><small>Preço sugerido</small><b className="ex-price" style={{ color: "#3FD1CE" }}>{fmt(ex.totalPrice)}</b></div>
+                </div>
+              </div>
+            </div>
+            <div id="cfg-s-canais" data-sec="canais" className="neo-hud neo-cfsec">
+              {Head({ id: "canais", title: "Preços por canal de venda", desc: "Usados para calcular o preço e o lucro de cada produto em cada canal, a partir do custo por peça." })}
+              <div className="neo-cfg3">
+                {F({ label: "Multiplicador revendedor (×)", k: "resaleMultiplier", step: "0.5", hint: "Preço = custo × este valor." })}
+                {F({ label: "Multiplicador consumidor final (×)", k: "finalMultiplier", step: "0.5", hint: "Preço = custo × este valor." })}
+                {F({ label: "Taxa Shopee (%)", k: "shopeeFeePct", step: "1" })}
+                {F({ label: "Taxa Mercado Livre clássico (%)", k: "mlClassicFeePct", step: "1" })}
+                {F({ label: "Taxa Mercado Livre premium (%)", k: "mlPremiumFeePct", step: "1" })}
+                {F({ label: "Taxa TikTok Shop (%)", k: "tiktokFeePct", step: "1" })}
+              </div>
+            </div>
+            <div id="cfg-s-alertas" data-sec="alertas" className="neo-hud neo-cfsec">
+              {Head({ id: "alertas", title: "Alertas, máquinas e prazos" })}
+              <div className="neo-cfg3">
+                {F({ label: "Alerta de estoque baixo — filamento (g)", k: "lowStockG", step: "50", hint: "Filamentos abaixo disso aparecem nos alertas." })}
+                {F({ label: "Manutenção a cada (h)", k: "maintEveryH", step: "50", hint: "Limpeza, lubrificação, revisão das impressoras." })}
+                {F({ label: "Horas de impressão por dia", k: "prodHoursPerDay", step: "1", hint: "Usada para estimar o prazo de entrega nos orçamentos, com base na fila." })}
+                {F({ label: "Validade padrão do orçamento (dias)", k: "quoteValidityDays", step: "1", hint: "Preenche automaticamente o campo “válido até”." })}
+              </div>
+            </div>
+            <div id="cfg-s-listas" data-sec="listas" className="neo-hud neo-cfsec">
+              {Head({ id: "listas", title: "Listas do sistema", desc: "Categorias, tipos e nichos que aparecem nos cadastros." })}
           <ListEditor title="Categorias de gastos" hint="Usadas na aba Investimentos. Filamento, Material e Embalagem alimentam o estoque — evite removê-las."
             items={ecats}
             onAdd={() => { const n = prompt("Nome da nova categoria:"); if (n && n.trim() && !ecats.includes(n.trim())) setList("ecats", [...ecats, n.trim()]); }}
@@ -10030,22 +10135,27 @@ SC,
             items={s.niches}
             onAdd={() => { const n = prompt("Nome do novo nicho:"); if (n) addNiche(n); }}
             onRemove={(n) => { if (confirm(`Remover o nicho "${n}"?`)) setList("niches", s.niches.filter((x) => x !== n)); }} />
-
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Backup dos dados</div>
-          <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 12 }}>
-            <Btn kind="ghost" onClick={exportBackup}><DownloadIc size={15} />Exportar backup</Btn>
-            <Btn kind="ghost" onClick={() => importRef.current && importRef.current.click()}><UploadIc size={15} />Importar backup</Btn>
-            <input ref={importRef} type="file" accept="application/json,.json" style={{ display: "none" }}
-              onChange={(e) => { const file = e.target.files && e.target.files[0]; if (file) importBackup(file); e.target.value = ""; }} />
-            <Btn kind="ghost" onClick={restoreInternal}><UploadIc size={15} />Restaurar cópia interna</Btn>
-          </div>
-          <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 16 }}>
-            Seus dados ficam salvos neste navegador, neste computador. Exporte um backup de vez em quando (guarde no Google Drive ou pen drive) — se trocar de computador ou limpar o navegador, é só importar o arquivo de volta.
-          </div>
-
-          <StoragePanel />
-
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#F0605F", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Zona de perigo</div>
+            </div>
+            <div id="cfg-s-backup" data-sec="backup" className="neo-hud neo-cfsec">
+              {Head({ id: "backup", title: "Seus dados estão seguros?" })}
+              <div className="neo-cfbk">
+                <Ring pct={bkDays == null ? 0 : Math.max(0, 100 - (bkDays / 14) * 100)} size={88} stroke={8} color={bkDays == null || bkDays > 7 ? "#F5821F" : "#3FD1CE"}><b style={{ font: "700 18px 'Space Grotesk',sans-serif", color: bkDays == null || bkDays > 7 ? "#FFAA5C" : "#3FD1CE" }}>{bkDays == null ? "—" : bkDays}</b><small style={{ display: "block", font: "600 8.5px Inter,sans-serif", color: "#7F9A9B" }}>{bkDays == null ? "SEM BACKUP" : bkDays === 1 ? "DIA" : "DIAS"}</small></Ring>
+                <div style={{ flex: 1, minWidth: 220 }}>
+                  <div className="cfg-bk-t" style={{ font: "700 14px Inter,sans-serif", color: bkDays == null || bkDays > 7 ? "#FFAA5C" : "#3FD1CE" }}>{bkDays == null ? "Você ainda não exportou nenhum backup" : bkDays === 0 ? "Backup feito hoje ✓" : `Último backup há ${bkDays} dia${bkDays > 1 ? "s" : ""}`}</div>
+                  <div style={{ font: "500 12px Inter,sans-serif", color: "#7F9A9B", marginTop: 3 }}>{sb && session ? "Nuvem sincronizada ✓ · " : ""}Exporte um backup de vez em quando (Google Drive ou pen drive) — se trocar de computador ou limpar o navegador, é só importar de volta.</div>
+                  <div className="neo-oacts" style={{ marginTop: 10, flexWrap: "wrap" }}>
+                    <Btn onClick={exportBackup}><DownloadIc size={15} />Exportar backup</Btn>
+                    <Btn kind="ghost" onClick={() => importRef.current && importRef.current.click()}><UploadIc size={15} />Importar backup</Btn>
+                    <input ref={importRef} type="file" accept="application/json,.json" style={{ display: "none" }}
+                      onChange={(e) => { const file = e.target.files && e.target.files[0]; if (file) importBackup(file); e.target.value = ""; }} />
+                    <Btn kind="ghost" onClick={restoreInternal}><UploadIc size={15} />Restaurar cópia interna</Btn>
+                  </div>
+                </div>
+              </div>
+              <div style={{ marginTop: 14 }}><StoragePanel /></div>
+            </div>
+            <div id="cfg-s-perigo" data-sec="perigo" className="neo-hud neo-cfsec neo-cfdanger">
+              {Head({ id: "perigo", title: "Zona de perigo", desc: "Apaga tudo deste navegador. Não tem volta — exporte um backup antes." })}
           <Btn kind="danger" onClick={() => {
             if (!confirm("APAGAR TODOS os dados do Gestor PrintAR 3D? Essa ação não pode ser desfeita.")) return;
             if (!confirm("Tem certeza mesmo? Recomendamos exportar um backup antes. Confirmar exclusão total?")) return;
@@ -10056,16 +10166,13 @@ SC,
             setDataQuiet(DEFAULTS);
             notify("Todos os dados foram apagados");
           }}><Trash2 size={15} />Apagar todos os dados</Btn>
-        </Card>
-
-        <Card style={{ marginTop: 16 }}>
-          <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 8, textTransform: "uppercase", letterSpacing: ".06em" }}>Sobre o app</div>
-          <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191" }}>
-            Gestor PrintAR 3D — versão <span style={{ font: "600 12.5px 'JetBrains Mono',monospace", color: "#F3F6F6" }}>{APP_VERSION}</span>
-            <span style={{ margin: "0 6px" }}>·</span>
-            última atualização em <span style={{ font: "600 12.5px 'JetBrains Mono',monospace", color: "#F3F6F6" }}>{APP_UPDATED}</span>
+            </div>
+            <div id="cfg-s-sobre" data-sec="sobre" className="neo-hud neo-cfsec">
+              {Head({ id: "sobre", title: "Sobre o app" })}
+              <div style={{ font: "500 13px Inter,sans-serif", color: "#D6E2E2" }}>Gestor PrintAR 3D — versão <b style={{ fontFamily: "'JetBrains Mono',monospace", color: "#3FD1CE" }}>{APP_VERSION}</b> · última atualização em <b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{APP_UPDATED}</b></div>
+            </div>
           </div>
-        </Card>
+        </div>
       </div>
     );
   }

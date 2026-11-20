@@ -575,6 +575,49 @@
   .neo-ccard .last b{color:#C9DADA;font-weight:500;}
   .neo-ccard .debtline{margin-top:8px;font:600 11.5px Inter,sans-serif;color:#FF8A8A;background:rgba(255,107,107,.08);border:1px solid rgba(255,107,107,.25);border-radius:9px;padding:6px 10px;display:flex;justify-content:space-between;}
   @media (max-width: 900px){ .neo-ckpis{grid-template-columns:repeat(2,1fr);} }
+
+  /* ===== v4.54 Projetos e Kits ===== */
+  .neo-pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:14px;}
+  .neo-pcard{position:relative;background:rgba(12,26,28,.72);border:1px solid rgba(63,209,206,.14);border-radius:16px;backdrop-filter:blur(10px);}
+  .neo-pcard.in:hover{border-color:rgba(63,209,206,.45);transform:translateY(-4px);box-shadow:0 18px 40px rgba(0,0,0,.45),0 0 24px rgba(20,184,178,.15);}
+  .neo-pcard.off{opacity:.6;}
+  .neo-pcard .ph{height:150px;position:relative;overflow:hidden;border-radius:16px 16px 0 0;cursor:zoom-in;background:rgba(5,12,12,.6);}
+  .neo-pcard .ph img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.8,.2,1);}
+  .neo-pcard:hover .ph img{transform:scale(1.08);}
+  .neo-pcard .ph .noimg{height:100%;display:grid;place-items:center;color:#4A5559;}
+  .neo-pcard .ph:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(5,12,12,.94));pointer-events:none;}
+  .neo-pcard .tl{position:absolute;top:8px;left:8px;display:flex;gap:4px;z-index:2;flex-wrap:wrap;max-width:60%;}
+  .neo-pcard .nch{font:600 10px Inter,sans-serif;color:#061314;background:rgba(63,209,206,.92);border-radius:999px;padding:2px 8px;}
+  .neo-pcard .nch.kit{background:#F5821F;color:#1a0d02;font-weight:700;}
+  .neo-pcard .tr{position:absolute;top:8px;right:8px;display:flex;gap:4px;z-index:2;flex-wrap:wrap;justify-content:flex-end;max-width:62%;}
+  .neo-pcard .bdg{font:700 10px Inter,sans-serif;border-radius:999px;padding:3px 8px;white-space:nowrap;}
+  .neo-pcard .bdg.o{background:#F5821F;color:#1a0d02;box-shadow:0 0 12px rgba(245,130,31,.5);}
+  .neo-pcard .bdg.g{background:linear-gradient(135deg,#FFE29A,#F5B83D);color:#2a1d00;box-shadow:0 0 12px rgba(255,209,102,.4);}
+  .neo-pcard .bdg.t{background:#14B8B2;color:#061314;}
+  .neo-pcard .bdg.pt{background:rgba(5,12,12,.85);color:#FFB067;border:1px solid rgba(245,130,31,.5);}
+  .neo-pcard .bdg.off{background:#5B6B7B;color:#fff;}
+  .neo-pcard .nm{position:absolute;left:12px;right:12px;bottom:10px;z-index:2;}
+  .neo-pcard .nm b{font:700 15px 'Space Grotesk',sans-serif;color:#fff;display:block;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+  .neo-pcard .dots{display:flex;gap:4px;margin-top:5px;align-items:center;}
+  .neo-pcard .dots i{width:10px;height:10px;border-radius:50%;border:1.5px solid rgba(255,255,255,.45);}
+  .neo-pcard .dots em{font:600 10px Inter,sans-serif;color:#C9DADA;font-style:normal;}
+  .neo-pcard .bd{padding:12px 14px;}
+  .neo-pcard .sp{font:500 11.5px 'JetBrains Mono',monospace;color:#C9DADA;} .neo-pcard .sp span{color:#7F9A9B;} .neo-pcard .warn{color:#FFB067;font-family:Inter,sans-serif;font-weight:600;}
+  .neo-pcard .kits-items{font:400 12px Inter,sans-serif;color:#9DB8B8;min-height:16px;}
+  .neo-pcard .pr{display:flex;align-items:flex-end;justify-content:space-between;gap:8px;margin-top:10px;}
+  .neo-pcard .pr .l{font:600 9.5px Inter,sans-serif;letter-spacing:.12em;color:#7F9A9B;}
+  .neo-pcard .pr .v{font:700 19px 'Space Grotesk',sans-serif;color:#3FD1CE;} .neo-pcard .pr .v.none{color:#6E8080;font-size:16px;}
+  .neo-pcard .mg{font:700 10.5px Inter,sans-serif;border-radius:999px;padding:3px 9px;border:1px solid currentColor;white-space:nowrap;}
+  .neo-pcard .mg.t{color:#3FD1CE;} .neo-pcard .mg.o{color:#FFAA5C;} .neo-pcard .mg.r{color:#FF8A8A;}
+  .neo-pcard .ch{display:flex;gap:6px;margin-top:10px;}
+  .neo-pcard .ch span{flex:1;text-align:center;font:600 10.5px 'JetBrains Mono',monospace;color:#9DB8B8;background:rgba(5,12,12,.6);border:1px solid rgba(63,209,206,.1);border-radius:8px;padding:5px 0;white-space:nowrap;}
+  .neo-pcard .ch em{display:block;font:600 8.5px Inter,sans-serif;letter-spacing:.1em;color:#7F9A9B;font-style:normal;margin-bottom:1px;}
+  .neo-pcard .sold{font:500 11px Inter,sans-serif;color:#7F9A9B;margin-top:8px;display:flex;justify-content:space-between;gap:8px;} .neo-pcard .sold b{color:#E6F1F1;} .neo-pcard .eco{color:#FFB067;}
+  .neo-pcard .neo-oacts.left{margin-top:12px;gap:5px;flex-wrap:nowrap;}
+  .neo-pcard .neo-bp,.neo-pcard .neo-bg2{padding:6px 8px;font-size:11.5px;}
+  .neo-pcard .neo-bg2.ic{width:30px;height:30px;}
+  .neo-qmenu.up{top:auto;bottom:calc(100% + 6px);}
+  .neo-ccard,.neo-qrow{z-index:auto;}
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -717,7 +760,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.53";
+const APP_VERSION = "4.54";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -3400,100 +3443,147 @@ function App() {
   }
 
   /* =============================== PROJETOS ============================== */
+  const PJ_UI = { niche: "Todos", q: "", sort: "vendidos", help: false };
+  const marginTone = (m) => (m == null ? "r" : m >= 50 ? "t" : m >= 30 ? "o" : "r");
   function Projects() {
-    const [showInactive, setShowInactive] = useState(false);
-    const [pq, setPq] = useState("");
-    const [pNiche, setPNiche] = useState("Todos");
-    const [pSort, setPSort] = useState("recentes");
-    const inactiveCount = data.projects.filter((p) => p.active === false).length;
-    const soldMap = {}; data.orders.filter((o) => isSale(o) && isDone(o)).forEach((o) => { soldMap[o.projectId] = (soldMap[o.projectId] || 0) + num(o.qty); });
-    const base = showInactive ? data.projects : activeProjects;
-    let shown = base.filter((p) => { if (pq) { const t = pq.toLowerCase(); if (!((p.name || "").toLowerCase().includes(t) || (p.catalogDesc || "").toLowerCase().includes(t))) return false; } if (pNiche !== "Todos" && !hasNiche(p, pNiche)) return false; return true; });
-    if (pSort === "nome") shown = shown.slice().sort((a, b) => (a.name || "").localeCompare(b.name || ""));
-    else if (pSort === "vendidos") shown = shown.slice().sort((a, b) => (soldMap[b.id] || 0) - (soldMap[a.id] || 0));
-    else if (pSort === "margem") shown = shown.slice().sort((a, b) => { const ma = num(a.salePrice) > 0 ? (num(a.salePrice) - num(a.cost)) / num(a.salePrice) : -1; const mb = num(b.salePrice) > 0 ? (num(b.salePrice) - num(b.cost)) / num(b.salePrice) : -1; return mb - ma; });
-    else shown = shown.slice().reverse();
+    const [pq, setPqS] = useState(PJ_UI.q);
+    const setPq = (v) => { PJ_UI.q = v; setPqS(v); };
+    const [pNiche, setPNicheS] = useState(PJ_UI.niche);
+    const setPNiche = (v) => { PJ_UI.niche = v; setPNicheS(v); };
+    const [pSort, setPSortS] = useState(PJ_UI.sort);
+    const setPSort = (v) => { PJ_UI.sort = v; setPSortS(v); };
+    const [help, setHelp] = useState(false);
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
     const [ptab, setPtabS] = useState(() => PROJ_TAB.v);
     const setPtab = (v) => { PROJ_TAB.v = v; setPtabS(v); };
-    const tabs = <SubTabs value={ptab} onChange={setPtab} tabs={[{ id: "proj", label: "Projetos", icon: Boxes, count: data.projects.length }, { id: "kits", label: "Kits", icon: Package, count: (data.kits || []).length }]} />;
-    if (ptab === "kits") return <KitsTab tabs={tabs} />;
-    return (
-      <div>
-        {tabs}
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-          💡 Aqui fica seu catálogo: cadastre os modelos que você produz e vende. A produção e a venda acontecem na aba Pedidos (ou direto na aba Estoque de Produtos, se já estiver pronto).
+    const inactiveCount = data.projects.filter((p) => p.active === false).length;
+    const soldMap = {}; data.orders.filter((o) => isSale(o) && isDone(o)).forEach((o) => { soldMap[o.projectId] = (soldMap[o.projectId] || 0) + num(o.qty); });
+    const rankIds = Object.entries(soldMap).filter(([id, n]) => n > 0 && projMap[id]).sort((a, b) => b[1] - a[1]).slice(0, 3).map(([id]) => id);
+    const marginOf = (p) => (num(p.salePrice) > 0 ? ((num(p.salePrice) - num(p.cost)) / num(p.salePrice)) * 100 : null);
+    const tabsEl = (
+      <div className="neo-pagehead">
+        <span className="neo-code">PROJETOS</span><h2>Catálogo</h2>
+        <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Como funciona">?</button>
+        <div className="neo-seg" style={{ marginLeft: 6 }}>
+          <button className={ptab === "proj" ? "on" : ""} onClick={() => setPtab("proj")}><Boxes size={14} />Projetos <i>{data.projects.length}</i></button>
+          <button className={ptab === "kits" ? "on" : ""} onClick={() => setPtab("kits")}><Package size={14} />Kits <i>{(data.kits || []).length}</i></button>
         </div>
-        <SectionHead title="Projetos" count={shown.length}>
-          {inactiveCount > 0 && <Btn small kind="ghost" onClick={() => setShowInactive(!showInactive)}><EyeIc size={13} />{showInactive ? "Ocultar inativos" : `Mostrar inativos (${inactiveCount})`}</Btn>}
-          <Btn kind="ghost" onClick={() => setModal({ type: "catalog" })}><PrintIc size={15} />Catálogo</Btn>
-          <Btn kind="ghost" onClick={() => setModal({ type: "calc" })}><CalculatorIc size={15} />Calculadora</Btn>
-          <Btn onClick={() => setModal({ type: "project" })}><Plus size={16} />Cadastrar projeto</Btn>
-        </SectionHead>
-        <Card style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "flex-end", marginBottom: 14, padding: 14 }}>
-          <div style={{ flex: 1, minWidth: 180 }}><L>Buscar</L><In placeholder="Nome ou descrição…" value={pq} onChange={(e) => setPq(e.target.value)} /></div>
-          <div><L>Nicho</L><Sel value={pNiche} onChange={(e) => setPNiche(e.target.value)} style={{ width: 160 }}><option>Todos</option>{(data.settings.niches || []).map((n) => <option key={n}>{n}</option>)}</Sel></div>
-          <div><L>Ordenar por</L><Sel value={pSort} onChange={(e) => setPSort(e.target.value)} style={{ width: 175 }}><option value="recentes">Últimos adicionados</option><option value="nome">Nome (A–Z)</option><option value="vendidos">Mais vendidos</option><option value="margem">Maior margem</option></Sel></div>
-        </Card>
+        <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+          <Btn kind="ghost" onClick={() => setModal({ type: "catalog" })}><PrintIc size={15} />Catálogo em PDF</Btn>
+          {ptab === "proj" && <Btn kind="ghost" onClick={() => setModal({ type: "calc" })}><CalculatorIc size={15} />Calculadora</Btn>}
+          {ptab === "proj" ? <Btn onClick={() => setModal({ type: "project" })}><Plus size={16} />Cadastrar projeto</Btn>
+            : <Btn onClick={() => setModal({ type: "kit" })} disabled={data.projects.length === 0}><Plus size={16} />Montar kit</Btn>}
+        </div>
+      </div>
+    );
+    const helpEl = help && (
+      <div className="neo-hud neo-helpbox">
+        {ptab === "proj"
+          ? <>💡 Aqui fica seu catálogo: cadastre os modelos que você produz e vende. A produção e a venda acontecem na aba Pedidos (ou direto na aba Estoque de Produtos, se já estiver pronto).</>
+          : <>💡 Monte kits com os projetos que você já tem, coloque a foto do kit e o preço que quiser. O kit aparece no catálogo e entra no orçamento pelo botão <b>+ Kit</b>.</>}
+      </div>
+    );
+    if (ptab === "kits") return <KitsTab tabs={<>{tabsEl}{helpEl}</>} />;
+    const isInactiveView = pNiche === "__inativos";
+    const base = isInactiveView ? data.projects.filter((p) => p.active === false) : activeProjects;
+    let shown = base.filter((p) => {
+      if (pq) { const t = pq.toLowerCase(); if (!((p.name || "").toLowerCase().includes(t) || (p.catalogDesc || "").toLowerCase().includes(t))) return false; }
+      if (!isInactiveView && pNiche !== "Todos" && !projNiches(p).includes(pNiche)) return false;
+      return true;
+    });
+    if (pSort === "nome") shown = shown.slice().sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+    else if (pSort === "vendidos") shown = shown.slice().sort((a, b) => (soldMap[b.id] || 0) - (soldMap[a.id] || 0));
+    else if (pSort === "margem") shown = shown.slice().sort((a, b) => (marginOf(b) ?? -1) - (marginOf(a) ?? -1));
+    else shown = shown.slice().reverse();
+    const nicheCount = {}; activeProjects.forEach((p) => projNiches(p).forEach((n) => { nicheCount[n] = (nicheCount[n] || 0) + 1; }));
+    const priced = activeProjects.filter((p) => marginOf(p) != null);
+    const avgMargin = priced.length ? priced.reduce((s, p) => s + marginOf(p), 0) / priced.length : null;
+    const top = rankIds[0] ? projMap[rankIds[0]] : null;
+    const stockPieces = data.products.reduce((s, x) => s + Math.max(0, num(x.qty)), 0);
+    const stockVal = data.products.reduce((s, x) => { const p = projMap[x.projectId]; return s + Math.max(0, num(x.qty)) * (p ? num(p.salePrice) : 0); }, 0);
+    const colorsOf = (p) => {
+      const out = []; const seen = new Set();
+      const add = (hex, name) => { const k = String(hex || "").toLowerCase(); if (!hex || seen.has(k)) return; seen.add(k); out.push({ hex, name }); };
+      projFilaments(p).forEach((x) => { const f = filMap[x.filamentId]; if (f) add(f.colorHex, colorName(f)); });
+      if (p.colorsOn !== false) (p.extraColors || []).forEach((c) => add(c.hex, c.name));
+      return out;
+    };
+    return (
+      <div className="neo-projects">
+        {tabsEl}
+        {helpEl}
+        <div className="neo-ckpis">
+          <Reveal className="neo-hud neo-k" delay={0}><div className="l">Projetos ativos</div><div className="v"><CountUp value={activeProjects.length} /></div><span className="neo-kd">{inactiveCount} inativo{inactiveCount === 1 ? "" : "s"} · {Object.keys(nicheCount).length} nicho{Object.keys(nicheCount).length === 1 ? "" : "s"}</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={60}><div className="l">Margem média</div><div className="v" style={{ color: avgMargin == null ? undefined : avgMargin >= 50 ? "#3FD1CE" : avgMargin >= 30 ? "#FFAA5C" : "#FF8A8A" }}>{avgMargin == null ? "—" : <CountUp value={avgMargin} format={(v) => fmtN(v, 0) + "%"} />}</div><span className="neo-kd">preço de venda × custo</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={120}><div className="l">Mais vendido</div><div className="v" style={{ fontSize: 17, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{top ? `🏆 ${top.name}` : "—"}</div><span className="neo-kd">{top ? `${fmtN(soldMap[top.id])} peças vendidas` : "sem vendas ainda"}</span></Reveal>
+          <Reveal className="neo-hud neo-k or" delay={180} onClick={() => setTab("prod")}><div className="l">Prontos em estoque</div><div className="v"><CountUp value={stockPieces} format={(v) => `${fmtN(Math.round(v))} peça${Math.round(v) === 1 ? "" : "s"}`} /></div><span className="neo-kd">{fmt(stockVal)} a preço de venda</span></Reveal>
+        </div>
+        <div className="neo-penbar">
+          <div className="neo-fchips">
+            <button className={"neo-fchip pj-niche" + (pNiche === "Todos" ? " on" : "")} data-n="Todos" onClick={() => setPNiche("Todos")}>Todos {activeProjects.length}</button>
+            {(data.settings.niches || []).filter((n) => nicheCount[n]).map((n) => <button key={n} className={"neo-fchip pj-niche" + (pNiche === n ? " on" : "")} data-n={n} onClick={() => setPNiche(n)}>{n} {nicheCount[n]}</button>)}
+            {inactiveCount > 0 && <button className={"neo-fchip pj-niche" + (isInactiveView ? " on" : "")} data-n="__inativos" onClick={() => setPNiche(isInactiveView ? "Todos" : "__inativos")}>Inativos {inactiveCount}</button>}
+          </div>
+          <Sel value={pSort} onChange={(e) => setPSort(e.target.value)} style={{ width: 210, marginLeft: "auto", height: 36, padding: "6px 10px" }} title="Ordenar">
+            <option value="vendidos">Ordenar: mais vendidos</option><option value="recentes">Ordenar: últimos adicionados</option><option value="nome">Ordenar: nome (A–Z)</option><option value="margem">Ordenar: maior margem</option>
+          </Sel>
+          <div className="neo-search" style={{ marginLeft: 0 }}><SearchIc size={14} /><input value={pq} onChange={(e) => setPq(e.target.value)} placeholder="Nome ou descrição…" />{pq && <button onClick={() => setPq("")}>×</button>}</div>
+        </div>
         {shown.length === 0 ? (
-          <Card><Empty icon={Boxes} text="Nenhum projeto cadastrado" hint="Cadastre seu primeiro projeto para poder produzir e vender a partir dele." /></Card>
+          <Card><Empty icon={Boxes} text={data.projects.length ? "Nenhum projeto neste filtro" : "Nenhum projeto cadastrado"} hint="Cadastre seu primeiro projeto para poder produzir e vender a partir dele." /></Card>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 14 }}>
-            {shown.map((p) => {
-              const f = filMap[p.filamentId];
+          <div className="neo-pgrid">
+            {shown.map((p, idx) => {
               const inStock = prodQty(p.id);
+              const mg = marginOf(p);
+              const rank = rankIds.indexOf(p.id);
+              const cols = colorsOf(p);
+              const ch = num(p.cost) > 0 ? calcChannelPrices(p.cost, data.settings) : null;
+              const grams = projFilaments(p).reduce((s, x) => s + num(x.grams), 0);
+              const noFil = projFilaments(p).length === 0;
               return (
-                <Card key={p.id} style={{ padding: 0, overflow: "hidden", opacity: p.active === false ? .62 : 1 }}>
-                  <div style={{ height: 130, background: "rgba(5,12,12,.55)", display: "grid", placeItems: "center", position: "relative", overflow: "hidden" }}>
-                    {p.image ? <img src={p.image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-                      : <ImageIcon size={30} style={{ color: "#4A5559" }} />}
-                    {projNiches(p).length > 0 && <span style={{ position: "absolute", top: 8, left: 8, right: 8, display: "flex", gap: 4, flexWrap: "wrap" }}>{projNiches(p).map((n) => <NicheChip key={n}>{n}</NicheChip>)}</span>}
-                    {p.active === false && <span style={{ position: "absolute", bottom: 8, left: 8, background: "#5B6B7B", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>Inativo</span>}
-                    {inStock > 0 && <span style={{ position: "absolute", top: 8, right: 42, background: "#F47A20", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>{fmtN(inStock)} em estoque</span>}
-                    <button title="Ver detalhes do projeto" onClick={() => setModal({ type: "projectView", item: p })} style={{
-                      position: "absolute", top: 8, right: 8, width: 28, height: 28, borderRadius: "50%", cursor: "pointer",
-                      display: "grid", placeItems: "center", border: "1px solid rgba(63,209,206,.22)", background: "rgba(20,23,26,.78)", color: "#3FD1CE",
-                    }}><ZoomIc size={15} /></button>
+                <Reveal key={p.id} className={"neo-pcard" + (p.active === false ? " off" : "")} delay={Math.min(idx, 11) * 35} style={menu === p.id ? { zIndex: 30 } : undefined} title={p.name}>
+                  <div className="ph" onClick={() => setModal({ type: "projectView", item: p })}>
+                    {p.image ? <img src={p.image} alt={p.name} /> : <div className="noimg"><ImageIcon size={30} /></div>}
+                    <div className="tl">{projNiches(p).slice(0, 2).map((n) => <span key={n} className="nch">{n}</span>)}</div>
+                    <div className="tr">
+                      {rank >= 0 && <span className="bdg g">🏆 {rank + 1}º</span>}
+                      {inStock > 0 && <span className="bdg o">{fmtN(inStock)} em estoque</span>}
+                      {isPartsProj(p) && <span className="bdg pt">{p.parts.length} partes</span>}
+                      {p.active === false && <span className="bdg off">Inativo</span>}
+                    </div>
+                    <div className="nm"><b>{p.name}</b>{cols.length > 0 && <div className="dots">{cols.slice(0, 8).map((c, i) => <i key={i} style={{ background: c.hex }} title={c.name} />)}{cols.length > 8 && <em>+{cols.length - 8}</em>}</div>}</div>
                   </div>
-                  <div style={{ padding: 14 }}>
-                    <div style={{ font: "600 15px 'Space Grotesk',sans-serif" }}>{p.name}</div>
-                    <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", marginTop: 4 }}>
-                      {(() => {
-                        const pfs = projFilaments(p).map((x) => filMap[x.filamentId]).filter(Boolean);
-                        if (pfs.length === 0) return <span style={{ color: "#FFB067", fontWeight: 600 }}>⚠ Sem filamento vinculado</span>;
-                        if (pfs.length === 1) return `${pfs[0].name} (${pfs[0].type})`;
-                        return `${pfs[0].name} + ${pfs.length - 1} filamento(s)`;
-                      })()}
-                      {p.extras && p.extras.length > 0 && ` · ${p.extras.length} extra(s)`}
+                  <div className="bd">
+                    <div className="sp">{noFil ? <span className="warn">⚠ Sem filamento vinculado</span> : <>{fmtN(grams)}g<span>/pç</span> {fmtN(p.hours, 1)}h<span>/pç</span>{p.extras && p.extras.length > 0 ? <> · {p.extras.length} extra{p.extras.length > 1 ? "s" : ""}</> : null}</>}</div>
+                    <div className="pr">
+                      <div><div className="l">PREÇO DE VENDA</div><div className={"v" + (num(p.salePrice) > 0 ? "" : " none")}>{num(p.salePrice) > 0 ? fmt(num(p.salePrice)) : "sem preço"}</div></div>
+                      <span className={"mg " + marginTone(mg)}>{mg == null ? "defina o preço" : `margem ${fmtN(mg, 0)}%`}</span>
                     </div>
-                    <div style={{ display: "flex", gap: 12, marginTop: 8, font: "500 12px 'JetBrains Mono',monospace", color: "#D6E2E2", flexWrap: "wrap" }}>
-                      <span>{fmtN(projFilaments(p).reduce((s, x) => s + num(x.grams), 0))}g/pç</span><span>{fmtN(p.hours, 1)}h/pç{isPartsProj(p) ? ` · ${p.parts.length} partes` : ""}</span>
-                    </div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 10 }}>
-                      <div>
-                        <div style={{ font: "600 11px Inter,sans-serif", color: "#7E9191" }}>PREÇO DE VENDA</div>
-                        <div style={{ font: "700 15px 'Space Grotesk',sans-serif", color: num(p.salePrice) > 0 ? "#3FD1CE" : "#6E8080" }}>{fmt(num(p.salePrice))}</div>
-                      </div>
-                      <div style={{ display: "flex", gap: 6 }}>
-                        <Btn small kind="ghost" title="Duplicar projeto" onClick={() => {
-                          const copy = { ...p, id: uid(), name: `${p.name} (cópia)` };
-                          setModal({ type: "project", item: copy, isCopy: true });
-                        }}><CopyIc size={13} /></Btn>
-                        <Btn small kind="ghost" title="Editar" onClick={() => setModal({ type: "project", item: p })}><Pencil size={13} /></Btn>
-                        <Btn small kind="danger" title="Excluir" onClick={() => { if (confirm(`Excluir o projeto "${p.name}"?`)) delItem("projects", p.id); }}><Trash2 size={13} /></Btn>
-                      </div>
-                    </div>
-                    {num(p.cost) > 0 && (() => {
-                      const ch = calcChannelPrices(p.cost, data.settings);
-                      return (
-                        <div style={{ display: "flex", gap: 10, marginTop: 8, paddingTop: 8, borderTop: "1px dashed rgba(63,209,206,.14)", font: "500 11px 'JetBrains Mono',monospace", color: "#93A6A6", flexWrap: "wrap" }}>
-                          <span title="Consumidor final">Final {fmt(ch.final.price)}</span>
-                          <span title="Shopee">Shopee {fmt(ch.shopee.price)}</span>
-                          <span title="Mercado Livre clássico">ML {fmt(ch.mlClassic.price)}</span>
+                    {ch && <div className="ch"><span><em>FINAL</em>{fmt(ch.final.price)}</span><span><em>SHOPEE</em>{fmt(ch.shopee.price)}</span><span><em>ML</em>{fmt(ch.mlClassic.price)}</span></div>}
+                    <div className="sold"><span>Vendidos: <b>{fmtN(soldMap[p.id] || 0)}</b></span><span>custo {fmt(num(p.cost))}</span></div>
+                    <div className="neo-oacts left">
+                      <button className="neo-bp pj-order" title="Novo pedido com este projeto" onClick={() => setModal({ type: "order", projectId: p.id })}><Plus size={13} />Pedido</button>
+                      <button className="neo-bg2 pj-quote" title="Novo orçamento com este projeto" onClick={() => setModal({ type: "quote", projectId: p.id })}><Plus size={13} />Orçamento</button>
+                      <button className="neo-bg2 ic" title="Duplicar projeto" onClick={() => setModal({ type: "project", item: { ...p, id: uid(), name: `${p.name} (cópia)` }, isCopy: true })}><CopyIc size={13} /></button>
+                      <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "project", item: p })}><Pencil size={13} /></button>
+                      <button className={"neo-bg2 ic neo-qmore" + (menu === p.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === p.id ? null : p.id)}>⋯</button>
+                      {menu === p.id && (
+                        <div className="neo-qmenu up">
+                          <button className="pj-toggle" onClick={() => { setMenu(null); logAs(`${p.active === false ? "Ativou" : "Inativou"} o projeto ${p.name}`); saveItem("projects", { ...p, active: p.active === false }); }}>{p.active === false ? "▶ Ativar projeto" : "⏸ Inativar projeto"}</button>
+                          <hr />
+                          <button className="r pj-del" title="Excluir" onClick={() => { setMenu(null); if (confirm(`Excluir o projeto "${p.name}"?`)) delItem("projects", p.id); }}><Trash2 size={13} />Excluir</button>
                         </div>
-                      );
-                    })()}
+                      )}
+                    </div>
                   </div>
-                </Card>
+                </Reveal>
               );
             })}
           </div>
@@ -3505,48 +3595,50 @@ function App() {
   /* =============================== KITS (v4.39) =============================== */
   function KitsTab({ tabs }) {
     const kits = data.kits || [];
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
     return (
-      <div>
+      <div className="neo-projects">
         {tabs}
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-          💡 Monte kits com os projetos que você já tem, coloque a foto do kit e o preço que quiser. O kit aparece no catálogo e entra no orçamento pelo botão <b>+ Kit</b>. Ele não tem estoque próprio: usa o estoque de cada peça.
-        </div>
-        <SectionHead title="Kits" count={kits.length}>
-          <Btn kind="ghost" onClick={() => setModal({ type: "catalog" })}><PrintIc size={15} />Catálogo</Btn>
-          <Btn onClick={() => setModal({ type: "kit" })} disabled={data.projects.length === 0}><Plus size={16} />Montar kit</Btn>
-        </SectionHead>
         {kits.length === 0 ? (
           <Card><Empty icon={Package} text="Nenhum kit montado" hint='Clique em "Montar kit", escolha os projetos e as quantidades, coloque a foto e o preço.' /></Card>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(240px,1fr))", gap: 14 }}>
-            {kits.map((k) => {
+          <div className="neo-pgrid">
+            {kits.map((k, idx) => {
               const sum = kitSum(k), cost = kitCost(k), price = num(k.price);
+              const mg = price > 0 ? ((price - cost) / price) * 100 : null;
               return (
-                <Card key={k.id} className="kit-card" style={{ padding: 0, overflow: "hidden", opacity: k.active === false ? .62 : 1 }}>
-                  <div style={{ height: 130, background: "rgba(5,12,12,.55)", display: "grid", placeItems: "center", position: "relative", overflow: "hidden" }}>
-                    {k.image ? <img src={k.image} alt={k.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <Package size={30} style={{ color: "#4A5559" }} />}
-                    <span style={{ position: "absolute", top: 8, left: 8, background: "#F47A20", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "700 11px Inter,sans-serif" }}>KIT</span>
-                    {kitReady(k) && <span style={{ position: "absolute", top: 8, right: 8, background: "#14A6A4", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>⚡ pronta entrega</span>}
-                    {k.active === false && <span style={{ position: "absolute", bottom: 8, left: 8, background: "#5B6B7B", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>Inativo</span>}
+                <Reveal key={k.id} className={"neo-pcard kit-card" + (k.active === false ? " off" : "")} delay={Math.min(idx, 11) * 35} style={menu === k.id ? { zIndex: 30 } : undefined} title={k.name}>
+                  <div className="ph">
+                    {k.image ? <img src={k.image} alt={k.name} /> : <div className="noimg"><Package size={30} /></div>}
+                    <div className="tl"><span className="nch kit">KIT</span>{(k.niches || []).slice(0, 1).map((n) => <span key={n} className="nch">{n}</span>)}</div>
+                    <div className="tr">{kitReady(k) && <span className="bdg t">pronta entrega</span>}{k.active === false && <span className="bdg off">Inativo</span>}</div>
+                    <div className="nm"><b>{k.name}</b></div>
                   </div>
-                  <div style={{ padding: 14 }}>
-                    <div style={{ font: "600 15px 'Space Grotesk',sans-serif" }}>{k.name}</div>
-                    <div style={{ font: "400 12px Inter,sans-serif", color: "#93A6A6", marginTop: 4 }}>{kitItemsText(k) || <span style={{ color: "#FFB067" }}>⚠ sem itens</span>}</div>
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-end", marginTop: 10, gap: 8 }}>
-                      <div>
-                        <div style={{ font: "600 11px Inter,sans-serif", color: "#7E9191" }}>PREÇO DO KIT</div>
-                        <div style={{ font: "700 15px 'Space Grotesk',sans-serif", color: price > 0 ? "#3FD1CE" : "#6E8080" }}>{price > 0 ? fmt(price) : "Sob consulta"}</div>
-                        {price > 0 && sum > price + 0.004 && <div style={{ font: "500 11px Inter,sans-serif", color: "#FFB067" }}>economia de {fmt(sum - price)}</div>}
-                        {price > 0 && <div style={{ font: "500 11px 'JetBrains Mono',monospace", color: "#8FA3A3" }}>custo {fmt(cost)} · lucro {fmt(price - cost)}</div>}
-                      </div>
-                      <div style={{ display: "flex", gap: 6 }}>
-                        <Btn small kind="ghost" title="Duplicar kit" onClick={() => setModal({ type: "kit", item: { ...k, id: uid(), name: `${k.name} (cópia)` }, isCopy: true })}><CopyIc size={13} /></Btn>
-                        <Btn small kind="ghost" title="Editar" onClick={() => setModal({ type: "kit", item: k })}><Pencil size={13} /></Btn>
-                        <Btn small kind="danger" title="Excluir" onClick={() => { if (confirm(`Excluir o kit "${k.name}"?`)) delItem("kits", k.id); }}><Trash2 size={13} /></Btn>
-                      </div>
+                  <div className="bd">
+                    <div className="kits-items">{kitItemsText(k) || <span className="warn">⚠ sem itens</span>}</div>
+                    <div className="pr">
+                      <div><div className="l">PREÇO DO KIT</div><div className={"v" + (price > 0 ? "" : " none")}>{price > 0 ? fmt(price) : "Sob consulta"}</div></div>
+                      {mg != null && <span className={"mg " + marginTone(mg)}>margem {fmtN(mg, 0)}%</span>}
+                    </div>
+                    <div className="sold">{price > 0 && sum > price + 0.004 ? <span className="eco">economia de {fmt(sum - price)}</span> : <span />}{price > 0 && <span>custo {fmt(cost)} · lucro {fmt(price - cost)}</span>}</div>
+                    <div className="neo-oacts left">
+                      <button className="neo-bg2 ic" title="Duplicar kit" onClick={() => setModal({ type: "kit", item: { ...k, id: uid(), name: `${k.name} (cópia)` }, isCopy: true })}><CopyIc size={13} /></button>
+                      <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "kit", item: k })}><Pencil size={13} /></button>
+                      <button className={"neo-bg2 ic neo-qmore" + (menu === k.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === k.id ? null : k.id)}>⋯</button>
+                      {menu === k.id && (
+                        <div className="neo-qmenu up">
+                          <button className="r" title="Excluir" onClick={() => { setMenu(null); if (confirm(`Excluir o kit "${k.name}"?`)) delItem("kits", k.id); }}><Trash2 size={13} />Excluir</button>
+                        </div>
+                      )}
                     </div>
                   </div>
-                </Card>
+                </Reveal>
               );
             })}
           </div>
@@ -5321,9 +5413,9 @@ function App() {
     }
   }
 
-  function OrderModal({ item }) {
+  function OrderModal({ item, presetProject }) {
     const [f, setF] = useState(item ? { clientId: "", dest: "venda", ...item } : {
-      id: uid(), projectId: data.projects[0] ? data.projects[0].id : "", clientId: "", qty: 1,
+      id: uid(), projectId: presetProject || (data.projects[0] ? data.projects[0].id : ""), clientId: "", qty: 1,
       date: todayISO(), dueDate: "", price: "", cost: "", status: "Orçamento", dest: "venda",
       printerId: data.printers[0] ? data.printers[0].id : "", paid: false, processed: false,
     });
@@ -5911,7 +6003,7 @@ function App() {
                 : g.sumido ? { label: "Chamar de volta", msg: () => comebackMsg(c, lastName), tip: "Mensagem simpática para quem sumiu" }
                 : { label: "WhatsApp", msg: () => `Oi, ${firstName(c.name)}! Tudo bem? 😊`, tip: "Abrir conversa" };
               return (
-                <Reveal key={c.id} className={"neo-ccard " + tone} delay={Math.min(idx, 9) * 40} title={c.name}>
+                <Reveal key={c.id} className={"neo-ccard " + tone} delay={Math.min(idx, 9) * 40} title={c.name} style={menu === c.id ? { zIndex: 30 } : undefined}>
                   <div className="top">
                     <span className="av">{c.name.slice(0, 1).toUpperCase()}</span>
                     <div className="nm"><b>{c.name}</b><small>{c.phone || "sem telefone"}{c.city ? ` · ${c.city}` : ""}</small></div>
@@ -7452,7 +7544,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
             const disc = num(q.discount);
             const nOrders = st === "Aprovado" ? data.orders.filter((o) => o.quoteCode === q.code) : [];
             return (
-              <Reveal key={q.id} className={"neo-qrow" + (isOpen ? " open" : "") + (st === "Expirado" || st === "Recusado" ? " bad" : "")} delay={Math.min(idx, 8) * 35} style={{ "--qc": Q_TONE[st] || "#7F9A9B" }}>
+              <Reveal key={q.id} className={"neo-qrow" + (isOpen ? " open" : "") + (st === "Expirado" || st === "Recusado" ? " bad" : "")} delay={Math.min(idx, 8) * 35} style={{ "--qc": Q_TONE[st] || "#7F9A9B", ...(menu === q.id ? { zIndex: 30 } : null) }}>
                 <div className="neo-qstripe" />
                 <div className="neo-qbody" data-code={q.code}>
                   <div className="neo-qline" onClick={() => setOpen(isOpen ? null : q.id)}>
@@ -7514,12 +7606,12 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     );
   }
 
-  function QuoteModal({ item, presetClient }) {
+  function QuoteModal({ item, presetClient, presetProject }) {
     const sugPrice = (p) => p ? (num(p.salePrice) > 0 ? num(p.salePrice).toFixed(2) : (num(p.cost) * (1 + num(data.settings.defaultMargin) / 100)).toFixed(2)) : "";
     const [f, setF] = useState(item ? { discount: 0, notes: "", ...item } : {
       id: uid(), code: nextQuoteCode(), date: todayISO(), clientId: presetClient || (data.clients[0] ? data.clients[0].id : ""),
       validUntil: addDays(todayISO(), num(data.settings.quoteValidityDays) || 7),
-      items: [{ id: uid(), projectId: activeProjects[0] ? activeProjects[0].id : "", desc: "", qty: 1, unitPrice: sugPrice(activeProjects[0]), auto: true }],
+      items: [(() => { const p0 = (presetProject && projMap[presetProject]) || activeProjects[0]; return { id: uid(), projectId: p0 ? p0.id : "", desc: "", qty: 1, unitPrice: sugPrice(p0), auto: true }; })()],
       discount: 0, notes: "", deadline: "", status: "Pendente",
     });
     const setItem = (i, patch) => setF({ ...f, items: f.items.map((x, idx) => idx === i ? { ...x, ...patch, auto: false } : x) });
@@ -9456,12 +9548,12 @@ SC,
       {modal && modal.type === "projectView" && <ProjectViewModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "kit" && <KitModal key={modalKey} item={modal.item} isCopy={modal.isCopy} />}
       {modal && modal.type === "print" && <PrintModal key={modalKey} orderId={modal.orderId} />}
-      {modal && modal.type === "order" && <OrderModal key={modalKey} item={modal.item} />}
+      {modal && modal.type === "order" && <OrderModal key={modalKey} item={modal.item} presetProject={modal.projectId} />}
       {modal && modal.type === "calib" && <CalibrationModal key={modalKey} />}
       {modal && modal.type === "quick" && <QuickPrintModal key={modalKey} />}
       {modal && modal.type === "client" && <ClientModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "clientDetail" && <ClientDetailModal key={modalKey} item={modal.item} />}
-      {modal && modal.type === "quote" && <QuoteModal key={modalKey} item={modal.item} presetClient={modal.clientId} />}
+      {modal && modal.type === "quote" && <QuoteModal key={modalKey} item={modal.item} presetClient={modal.clientId} presetProject={modal.projectId} />}
       {modal && modal.type === "fixedCost" && <FixedCostModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "cashflow" && <CashflowModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "catalog" && <CatalogModal key={modalKey} />}

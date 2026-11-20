@@ -29,7 +29,7 @@
 <style>
   html,body{margin:0;padding:0;background:#14171A;}
   button:hover { filter:brightness(.97); }
-  ::-webkit-scrollbar{width:8px;height:8px} ::-webkit-scrollbar-thumb{background:#3A4147;border-radius:8px}
+  ::-webkit-scrollbar{width:8px;height:8px} ::-webkit-scrollbar-thumb{background:rgba(63,209,206,.25);border-radius:8px}
   table { border-collapse: collapse; width:100%; }
   .print-sheet { color:#22302F; }
   .print-sheet th { color:#64787A; border-bottom:1px solid #D3DEDE; }
@@ -45,14 +45,14 @@
     .app-main{ margin-left: 0 !important; padding: 14px 12px 48px !important; max-width: 100% !important; }
     table{ display: block; overflow-x: auto; white-space: nowrap; }
   }
-  th { text-align:left; font:600 11.5px Inter,sans-serif; color:#7E9191; text-transform:uppercase; letter-spacing:.05em; padding:8px 10px; border-bottom:1px solid #2C3237; }
+  th { text-align:left; font:600 11.5px Inter,sans-serif; color:#7E9191; text-transform:uppercase; letter-spacing:.05em; padding:8px 10px; border-bottom:1px solid rgba(63,209,206,.14); }
   th.th-sort { cursor:pointer; user-select:none; white-space:nowrap; transition:color .12s; }
   th.th-sort:hover { color:#D6E2E2; }
   th.th-sort.on { color:#3FD1CE; }
   th.th-sort .th-arr { display:inline-block; width:12px; margin-left:4px; font-size:10px; opacity:0; transition:opacity .12s; }
   th.th-sort:hover .th-arr { opacity:.45; }
   th.th-sort.on .th-arr { opacity:1; }
-  td { padding:10px; font:400 13.5px Inter,sans-serif; border-bottom:1px solid #232829; vertical-align:middle; }
+  td { padding:10px; font:400 13.5px Inter,sans-serif; border-bottom:1px solid rgba(63,209,206,.07); vertical-align:middle; }
   tr:last-child td { border-bottom:none; }
 
   /* ===== v4.45 visual "Central de Comando" ===== */
@@ -479,7 +479,11 @@
   .neo-opj b{font:600 13px Inter,sans-serif;color:#F3F6F6;} .neo-opj small{display:block;font:500 11px Inter,sans-serif;color:#7F9A9B;}
   .neo-opj .th2{width:34px;height:34px;flex-shrink:0;border-radius:9px;background:linear-gradient(135deg,#0E2A2C,#0A3437);border:1px solid rgba(63,209,206,.3);box-shadow:0 0 10px rgba(63,209,206,.15);display:grid;place-items:center;color:#3FD1CE;font-size:15px;}
   .neo-opj .th2.img{object-fit:cover;padding:0;}
-  .neo-opj .sub{color:#5E7A7B;padding-left:22px;}
+  .neo-opj .sub{color:#5E7A7B;padding-left:14px;}
+  .neo-opj .th2.sm{width:28px;height:28px;border-radius:8px;}
+  .neo-stack{display:flex;flex-shrink:0;}
+  .neo-stack .th2{position:relative;border-color:rgba(245,130,31,.45);box-shadow:0 0 0 2px #0B1718,0 0 10px rgba(245,130,31,.2);}
+  .neo-stack .th2 + .th2{margin-left:-14px;}
   .neo-opj.kit{border:0;background:none;cursor:pointer;text-align:left;padding:0;}
   .neo-opj.kit b{color:#FFD2A3;} .neo-opj.kit .th2{border-color:rgba(245,130,31,.45);box-shadow:0 0 10px rgba(245,130,31,.2);}
   .neo-ocli{display:inline-flex;align-items:center;gap:8px;font:500 12.5px Inter,sans-serif;color:#E6F1F1;}
@@ -642,7 +646,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.50";
+const APP_VERSION = "4.51";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -880,7 +884,7 @@ function ColorsEditor({ on, colors, onChange, filaments, ownColors }) {
   const [adding, setAdding] = useState(false);
   const [nc, setNc] = useState({ name: "", hex: "#C0392B" });
   return (
-    <div className="colors-editor" style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "10px 12px", marginBottom: 12, background: "#1B2022" }}>
+    <div className="colors-editor" style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "10px 12px", marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
       <label style={{ display: "flex", alignItems: "center", gap: 8, cursor: "pointer", font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#D6E2E2" }}>
         <input className="colors-on" type="checkbox" checked={!!on} onChange={(e) => onChange(e.target.checked, sel)} style={{ width: 16, height: 16, accentColor: "#14A6A4" }} />
         Este projeto tem outras cores disponíveis
@@ -895,7 +899,7 @@ function ColorsEditor({ on, colors, onChange, filaments, ownColors }) {
               return (
                 <button key={colorKey(c.name)} type="button" className={"color-opt" + (s ? " on" : "")} data-c={c.name} onClick={() => toggle(c)} style={{
                   display: "inline-flex", alignItems: "center", gap: 6, padding: "5px 11px 5px 7px", borderRadius: 999, cursor: "pointer",
-                  border: s ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: s ? "#16302F" : "#1C2023",
+                  border: s ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: s ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)",
                   font: "600 12px Inter,sans-serif", color: s ? "#3FD1CE" : "#B5C4C4",
                 }}><ColorDot hex={c.hex} size={13} />{c.name}{s ? " ✓" : ""}</button>
               );
@@ -904,7 +908,7 @@ function ColorsEditor({ on, colors, onChange, filaments, ownColors }) {
           </div>
           {adding && (
             <div style={{ display: "flex", gap: 8, alignItems: "center", marginTop: 8, flexWrap: "wrap" }}>
-              <input type="color" value={nc.hex} onChange={(e) => setNc({ ...nc, hex: e.target.value })} title="Escolha a cor" style={{ width: 38, height: 34, border: "1px solid #3A4147", borderRadius: 8, background: "#1C2023", padding: 2, cursor: "pointer" }} />
+              <input type="color" value={nc.hex} onChange={(e) => setNc({ ...nc, hex: e.target.value })} title="Escolha a cor" style={{ width: 38, height: 34, border: "1px solid rgba(63,209,206,.22)", borderRadius: 8, background: "rgba(12,26,28,.72)", padding: 2, cursor: "pointer" }} />
               <In className="color-new-name" value={nc.name} onChange={(e) => setNc({ ...nc, name: e.target.value })} placeholder="nome da cor (ex: Rosa bebê)" style={{ width: 220 }} />
               <Btn small disabled={!nc.name.trim()} onClick={() => { const n = nc.name.trim(); if (!sel.some((x) => colorKey(x.name) === colorKey(n))) onChange(true, [...sel, { name: n, hex: nc.hex }]); setNc({ name: "", hex: "#C0392B" }); setAdding(false); }}>Adicionar cor</Btn>
               <Btn small kind="ghost" onClick={() => setAdding(false)}>Cancelar</Btn>
@@ -968,10 +972,10 @@ const DEFAULT_ECATS = ["Filamento", "Material", "Embalagem", "Ferramenta", "Manu
 const STOCK_CATS = ["Material", "Embalagem"];
 const STATUSES = ["Orçamento", "Aprovado", "Em produção", "Concluído", "Entregue"];
 const STATUS_STYLE = {
-  "Orçamento":   { bg: "#1B2022", fg: "#8FA0AC" },
+  "Orçamento":   { bg: "rgba(5,12,12,.55)", fg: "#8FA0AC" },
   "Aprovado":    { bg: "#16202E", fg: "#6FA0EA" },
   "Em produção": { bg: "#2E2413", fg: "#FFB067" },
-  "Concluído":   { bg: "#16302F", fg: "#3FD1CE" },
+  "Concluído":   { bg: "rgba(63,209,206,.1)", fg: "#3FD1CE" },
   "Entregue":    { bg: "#1D3838", fg: "#3FD1CE" },
 };
 const CHART_COLORS = ["#14A6A4", "#F47A20", "#6FA0EA", "#A88AF0", "#F0605F", "#5CD6C7", "#FFB067", "#8FA0AC"];
@@ -1162,7 +1166,7 @@ const Empty = ({ icon: Icon, text, hint }) => (
 );
 
 const Card = ({ children, style }) => (
-  <div className="g-card" style={{ background: "#1C2023", border: "1px solid #2C3237", borderRadius: 14, padding: 18, ...style }}>{children}</div>
+  <div className="g-card" style={{ background: "rgba(12,26,28,.72)", border: "1px solid rgba(63,209,206,.14)", borderRadius: 14, padding: 18, ...style }}>{children}</div>
 );
 
 /* ===================== v4.45: CENTRAL DE COMANDO (pecas visuais) ===================== */
@@ -1400,7 +1404,7 @@ const Stat = ({ label, value, sub, icon: Icon, accent = "#14A6A4" }) => (
 );
 
 const NicheChip = ({ children }) => (
-  <span style={{ background: "#16302F", color: "#3FD1CE", border: "1px solid #2E4A4A", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif", whiteSpace: "nowrap" }}>{children}</span>
+  <span style={{ background: "rgba(63,209,206,.1)", color: "#3FD1CE", border: "1px solid #2E4A4A", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif", whiteSpace: "nowrap" }}>{children}</span>
 );
 
 /* --------------------- extra materials (shared editor) ----------------- */
@@ -1412,7 +1416,7 @@ function ExtrasEditor({ extras, onChange, materials, lote }) {
   }, 0);
   const unitLbl = lote ? "Qtd no lote" : "Qtd/peça";
   return (
-    <div style={{ border: "1px dashed #3A4147", borderRadius: 10, padding: 12, marginBottom: 12, background: "#1B2022" }}>
+    <div style={{ border: "1px dashed rgba(63,209,206,.22)", borderRadius: 10, padding: 12, marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
       <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
         <span style={{ font: "600 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
           {lote ? "Materiais da impressão — TOTAL do lote (ex: 10 argolas para 10 chaveiros)" : "Materiais extras POR PEÇA (argolas, ímãs, clicks, embalagem…)"}
@@ -1445,7 +1449,7 @@ function ExtrasEditor({ extras, onChange, materials, lote }) {
         );
       })}
       {extras.length > 0 && (
-        <div style={{ display: "flex", justifyContent: "space-between", font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", borderTop: "1px dashed #3A4147", paddingTop: 8 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", borderTop: "1px dashed rgba(63,209,206,.22)", paddingTop: 8 }}>
           <span>{lote ? "Total de extras do lote" : "Total de extras por peça"}</span><span style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(total)}</span>
         </div>
       )}
@@ -1502,7 +1506,7 @@ function PartsEditor({ parts, onChange, printers, filaments, unitLabel }) {
         const g = (p.fils || []).reduce((s, x) => s + num(x.grams), 0);
         const c = (p.fils || []).reduce((s, x) => s + num(x.grams) * priceG(x.filamentId), 0);
         return (
-          <div key={p.id || i} className="part-card" style={{ border: "1px solid #2C3237", borderRadius: 10, padding: 10, marginBottom: 8, background: "#1C2023" }}>
+          <div key={p.id || i} className="part-card" style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 10, padding: 10, marginBottom: 8, background: "rgba(12,26,28,.72)" }}>
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr 64px 64px 34px", gap: 8, alignItems: "end", marginBottom: 8 }}>
               <div><div style={mini}>Parte</div><In value={p.name} onChange={(e) => upd(i, { name: e.target.value })} placeholder="ex: Base" /></div>
               <div><div style={mini}>Impressora</div>
@@ -1520,7 +1524,7 @@ function PartsEditor({ parts, onChange, printers, filaments, unitLabel }) {
               return (
                 <div key={k} style={{ display: "grid", gridTemplateColumns: "1fr 90px 84px 30px", gap: 8, alignItems: "center", marginBottom: 6 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <span style={{ width: 13, height: 13, borderRadius: "50%", background: fl ? (fl.colorHex || "#3A4147") : "#1C2023", border: "1.5px solid #3A4147", flexShrink: 0 }} />
+                    <span style={{ width: 13, height: 13, borderRadius: "50%", background: fl ? (fl.colorHex || "rgba(63,209,206,.22)") : "rgba(12,26,28,.72)", border: "1.5px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
                     <Combo style={{ flex: 1 }} value={x.filamentId} onChange={(v) => updFil(i, k, { filamentId: v })} placeholder="— selecionar —"
                       options={filaments.map((y) => ({ value: y.id, label: y.name, sub: y.type + ", " + (y.color || "sem cor") + " · " + fmtN(y.stockG) + "g" }))} />
                   </div>
@@ -1664,8 +1668,8 @@ function CalcModal({ data, onClose, onApply, prefill }) {
   );
   const toggleBtn = (on) => ({
     flex: 1, padding: "8px 0", borderRadius: 9, cursor: "pointer",
-    border: on ? "1.5px solid #14A6A4" : "1px solid #3A4147",
-    background: on ? "#16302F" : "#1C2023",
+    border: on ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)",
+    background: on ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)",
     font: "600 13px Inter,sans-serif", color: on ? "#3FD1CE" : "#7E9191",
   });
 
@@ -1693,7 +1697,7 @@ function CalcModal({ data, onClose, onApply, prefill }) {
             <div><L>Peças nesta impressão</L><In type="number" min="1" value={f.pieces} onChange={set("pieces")} /></div>
             <div /><div />
           </Row>
-          <div style={{ border: "1px dashed #3A4147", borderRadius: 10, padding: 12, marginBottom: 12, background: "#1B2022" }}>
+          <div style={{ border: "1px dashed rgba(63,209,206,.22)", borderRadius: 10, padding: 12, marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
             <PartsEditor parts={parts} onChange={setParts} printers={data.printers} filaments={data.filaments} unitLabel="nesta impressão" />
             {lowFils.length > 0 && (
               <div style={{ font: "600 12px Inter,sans-serif", color: "#F0605F", background: "#331A1A", borderRadius: 8, padding: "8px 12px", marginTop: 8 }}>
@@ -1720,7 +1724,7 @@ function CalcModal({ data, onClose, onApply, prefill }) {
             </div>
           </Row>
 
-          <div style={{ border: "1px dashed #3A4147", borderRadius: 10, padding: 12, marginBottom: 12, background: "#1B2022" }}>
+          <div style={{ border: "1px dashed rgba(63,209,206,.22)", borderRadius: 10, padding: 12, marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
               <span style={{ font: "600 12.5px Inter,sans-serif", color: "#D6E2E2" }}>Filamentos da impressão (adicione mais para multicolor)</span>
               <Btn small kind="ghost" onClick={() => setFils([...fils, { filamentId: data.filaments[0] ? data.filaments[0].id : "", grams: "" }])}><Plus size={13} />Filamento</Btn>
@@ -1734,7 +1738,7 @@ function CalcModal({ data, onClose, onApply, prefill }) {
               return (
                 <div key={i} style={{ display: "grid", gridTemplateColumns: "1.3fr 110px 90px 30px", gap: 8, alignItems: "center", marginBottom: 8 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                    <span title={fil ? fil.color : "manual"} style={{ width: 14, height: 14, borderRadius: "50%", background: fil ? (fil.colorHex || "#3A4147") : "#1C2023", border: "1.5px solid #3A4147", flexShrink: 0 }} />
+                    <span title={fil ? fil.color : "manual"} style={{ width: 14, height: 14, borderRadius: "50%", background: fil ? (fil.colorHex || "rgba(63,209,206,.22)") : "rgba(12,26,28,.72)", border: "1.5px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
                     <Combo style={{ flex: 1 }} value={rw.filamentId} onChange={(v) => setFil(i, { filamentId: v })} placeholder="— manual —"
                       options={[{ value: "", label: "— manual (R$/kg abaixo) —" }].concat(data.filaments.map((x) => ({ value: x.id, label: x.name, sub: x.type + ", " + (x.color || "sem cor") + " · " + fmtN(x.stockG) + "g" })))} />
                   </div>
@@ -1756,7 +1760,7 @@ function CalcModal({ data, onClose, onApply, prefill }) {
               </div>
             )}
             {gramsAll > 0 && (
-              <div style={{ display: "flex", justifyContent: "space-between", font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", borderTop: "1px dashed #3A4147", paddingTop: 8, marginTop: 4 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", borderTop: "1px dashed rgba(63,209,206,.22)", paddingTop: 8, marginTop: 4 }}>
                 <span>Total: {fmtN(gramsAll, 1)}g de filamento</span>
                 <span style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(materialCost)}</span>
               </div>
@@ -1789,8 +1793,8 @@ function CalcModal({ data, onClose, onApply, prefill }) {
         <Row><div><L>Margem de lucro (%)</L><In type="number" value={f.margin} onChange={set("margin")} /></div><div /></Row>
       )}
 
-      <div style={{ background: "#1D2124", border: "1px solid #16302F", borderRadius: 12, padding: "12px 16px", marginTop: 6 }}>
-        <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", gap: 8, font: "600 10.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase", letterSpacing: ".06em", paddingBottom: 6, borderBottom: "1px solid #16302F" }}>
+      <div style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 12, padding: "12px 16px", marginTop: 6 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", gap: 8, font: "600 10.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase", letterSpacing: ".06em", paddingBottom: 6, borderBottom: "1px solid rgba(63,209,206,.1)" }}>
           <span>Item</span><span style={{ textAlign: "right" }}>Impressão ({r.qty} pç)</span><span style={{ textAlign: "right" }}>Por peça</span>
         </div>
         {row(`Filamento (${fmtN(gramsAll, 1)}g)`, r.matPieces)}
@@ -1801,7 +1805,7 @@ function CalcModal({ data, onClose, onApply, prefill }) {
         {row("Materiais extras", r.extras, !r.extras)}
         {row(`Margem de manutenção (${num(s.maintMarginPct)}%)`, r.maint, f.mode !== "completo")}
         {row(`Taxa de falha (${num(s.failureRate)}%)`, r.fail, f.mode !== "completo")}
-        <div style={{ borderTop: "1px dashed #3A4147", margin: "6px 0" }} />
+        <div style={{ borderTop: "1px dashed rgba(63,209,206,.22)", margin: "6px 0" }} />
         <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr 1fr", gap: 8, padding: "4px 0", font: "600 14px Inter,sans-serif", color: "#F3F6F6" }}>
           <span>CUSTO</span>
           <span style={{ fontFamily: "'JetBrains Mono',monospace", textAlign: "right" }}>{fmt(r.totalCost)}</span>
@@ -3345,7 +3349,7 @@ function App() {
     return (
       <div>
         {tabs}
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
+        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
           💡 Aqui fica seu catálogo: cadastre os modelos que você produz e vende. A produção e a venda acontecem na aba Pedidos (ou direto na aba Estoque de Produtos, se já estiver pronto).
         </div>
         <SectionHead title="Projetos" count={shown.length}>
@@ -3368,7 +3372,7 @@ function App() {
               const inStock = prodQty(p.id);
               return (
                 <Card key={p.id} style={{ padding: 0, overflow: "hidden", opacity: p.active === false ? .62 : 1 }}>
-                  <div style={{ height: 130, background: "#1B2022", display: "grid", placeItems: "center", position: "relative", overflow: "hidden" }}>
+                  <div style={{ height: 130, background: "rgba(5,12,12,.55)", display: "grid", placeItems: "center", position: "relative", overflow: "hidden" }}>
                     {p.image ? <img src={p.image} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       : <ImageIcon size={30} style={{ color: "#4A5559" }} />}
                     {projNiches(p).length > 0 && <span style={{ position: "absolute", top: 8, left: 8, right: 8, display: "flex", gap: 4, flexWrap: "wrap" }}>{projNiches(p).map((n) => <NicheChip key={n}>{n}</NicheChip>)}</span>}
@@ -3376,7 +3380,7 @@ function App() {
                     {inStock > 0 && <span style={{ position: "absolute", top: 8, right: 42, background: "#F47A20", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>{fmtN(inStock)} em estoque</span>}
                     <button title="Ver detalhes do projeto" onClick={() => setModal({ type: "projectView", item: p })} style={{
                       position: "absolute", top: 8, right: 8, width: 28, height: 28, borderRadius: "50%", cursor: "pointer",
-                      display: "grid", placeItems: "center", border: "1px solid #3A4147", background: "rgba(20,23,26,.78)", color: "#3FD1CE",
+                      display: "grid", placeItems: "center", border: "1px solid rgba(63,209,206,.22)", background: "rgba(20,23,26,.78)", color: "#3FD1CE",
                     }}><ZoomIc size={15} /></button>
                   </div>
                   <div style={{ padding: 14 }}>
@@ -3410,7 +3414,7 @@ function App() {
                     {num(p.cost) > 0 && (() => {
                       const ch = calcChannelPrices(p.cost, data.settings);
                       return (
-                        <div style={{ display: "flex", gap: 10, marginTop: 8, paddingTop: 8, borderTop: "1px dashed #2C3237", font: "500 11px 'JetBrains Mono',monospace", color: "#93A6A6", flexWrap: "wrap" }}>
+                        <div style={{ display: "flex", gap: 10, marginTop: 8, paddingTop: 8, borderTop: "1px dashed rgba(63,209,206,.14)", font: "500 11px 'JetBrains Mono',monospace", color: "#93A6A6", flexWrap: "wrap" }}>
                           <span title="Consumidor final">Final {fmt(ch.final.price)}</span>
                           <span title="Shopee">Shopee {fmt(ch.shopee.price)}</span>
                           <span title="Mercado Livre clássico">ML {fmt(ch.mlClassic.price)}</span>
@@ -3433,7 +3437,7 @@ function App() {
     return (
       <div>
         {tabs}
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
+        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
           💡 Monte kits com os projetos que você já tem, coloque a foto do kit e o preço que quiser. O kit aparece no catálogo e entra no orçamento pelo botão <b>+ Kit</b>. Ele não tem estoque próprio: usa o estoque de cada peça.
         </div>
         <SectionHead title="Kits" count={kits.length}>
@@ -3448,7 +3452,7 @@ function App() {
               const sum = kitSum(k), cost = kitCost(k), price = num(k.price);
               return (
                 <Card key={k.id} className="kit-card" style={{ padding: 0, overflow: "hidden", opacity: k.active === false ? .62 : 1 }}>
-                  <div style={{ height: 130, background: "#1B2022", display: "grid", placeItems: "center", position: "relative", overflow: "hidden" }}>
+                  <div style={{ height: 130, background: "rgba(5,12,12,.55)", display: "grid", placeItems: "center", position: "relative", overflow: "hidden" }}>
                     {k.image ? <img src={k.image} alt={k.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} /> : <Package size={30} style={{ color: "#4A5559" }} />}
                     <span style={{ position: "absolute", top: 8, left: 8, background: "#F47A20", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "700 11px Inter,sans-serif" }}>KIT</span>
                     {kitReady(k) && <span style={{ position: "absolute", top: 8, right: 8, background: "#14A6A4", color: "#fff", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>⚡ pronta entrega</span>}
@@ -3496,13 +3500,13 @@ function App() {
           <div><L>Status</L><Sel value={f.active === false ? "0" : "1"} onChange={(e) => setF({ ...f, active: e.target.value === "1" })}><option value="1">Ativo (aparece no catálogo)</option><option value="0">Inativo (fica guardado)</option></Sel></div>
         </Row>
         <L>Itens do kit</L>
-        <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: 12, marginBottom: 12, background: "#1B2022" }}>
+        <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: 12, marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
           {f.items.map((it, i) => {
             const p = projMap[it.projectId];
             return (
               <div key={it.id || i} className="kit-line" style={{ display: "grid", gridTemplateColumns: "1fr 70px 110px 34px", gap: 8, alignItems: "center", marginBottom: 8 }}>
                 <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
-                  {p && p.image ? <img src={p.image} alt="" style={{ width: 30, height: 30, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} /> : <span style={{ width: 30, height: 30, borderRadius: 6, background: "#1C2023", border: "1px solid #2C3237", flexShrink: 0 }} />}
+                  {p && p.image ? <img src={p.image} alt="" style={{ width: 30, height: 30, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} /> : <span style={{ width: 30, height: 30, borderRadius: 6, background: "rgba(12,26,28,.72)", border: "1px solid rgba(63,209,206,.14)", flexShrink: 0 }} />}
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <Combo value={it.projectId} onChange={(v) => setIt(i, { projectId: v })} placeholder="Escolher projeto…"
                       options={data.projects.filter((x) => x.active !== false || x.id === it.projectId).map((x) => ({ value: x.id, label: x.name, sub: num(x.salePrice) > 0 ? fmt(x.salePrice) : "sem preço" }))} />
@@ -3518,7 +3522,7 @@ function App() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, alignItems: "end", marginBottom: 12 }}>
           <div><L>Preço do kit (R$) — você decide</L><In className="kit-price" type="number" step="0.01" value={f.price} onChange={set("price")} placeholder="vazio = Sob consulta" /></div>
-          <div className="kit-summary" style={{ background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "8px 12px", font: "400 12px Inter,sans-serif", color: "#93A6A6", lineHeight: 1.6 }}>
+          <div className="kit-summary" style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "8px 12px", font: "400 12px Inter,sans-serif", color: "#93A6A6", lineHeight: 1.6 }}>
             <div>Soma dos itens avulsos: <b style={{ color: "#D6E2E2" }}>{fmt(sum)}</b></div>
             {price > 0 && <div>Economia para o cliente: <b style={{ color: sum - price >= 0 ? "#FFB067" : "#F0605F" }}>{fmt(sum - price)}</b>{sum > 0 ? ` (${fmtN(((sum - price) / sum) * 100, 0)}%)` : ""}</div>}
             <div>Custo de produção: <b style={{ color: "#D6E2E2" }}>{fmt(cost)}</b>{price > 0 && <span> · lucro <b style={{ color: price - cost >= 0 ? "#3FD1CE" : "#F0605F" }}>{fmt(price - cost)}</b></span>}</div>
@@ -3527,7 +3531,7 @@ function App() {
         <L>Nichos</L>
         <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
           {(data.settings.niches || []).map((n) => (
-            <button key={n} type="button" className={"kit-niche" + (ns.includes(n) ? " on" : "")} onClick={() => toggleNiche(n)} style={{ padding: "5px 11px", borderRadius: 999, cursor: "pointer", border: ns.includes(n) ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: ns.includes(n) ? "#16302F" : "#1C2023", font: "600 12.5px Inter,sans-serif", color: ns.includes(n) ? "#3FD1CE" : "#B5C4C4" }}>{n}{ns.includes(n) ? " ✓" : ""}</button>
+            <button key={n} type="button" className={"kit-niche" + (ns.includes(n) ? " on" : "")} onClick={() => toggleNiche(n)} style={{ padding: "5px 11px", borderRadius: 999, cursor: "pointer", border: ns.includes(n) ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: ns.includes(n) ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: ns.includes(n) ? "#3FD1CE" : "#B5C4C4" }}>{n}{ns.includes(n) ? " ✓" : ""}</button>
           ))}
         </div>
         <Row cols={1}>
@@ -3536,7 +3540,7 @@ function App() {
             <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
               {photos.map((img, i) => (
                 <div key={i} style={{ position: "relative" }}>
-                  <img src={img} alt="" style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8, border: i === 0 ? "2px solid #F47A20" : "1px solid #3A4147" }} />
+                  <img src={img} alt="" style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8, border: i === 0 ? "2px solid #F47A20" : "1px solid rgba(63,209,206,.22)" }} />
                   <button onClick={() => { if (i === 0) { const g = f.gallery || []; setF({ ...f, image: g[0] || "", gallery: g.slice(1) }); } else setF({ ...f, gallery: (f.gallery || []).filter((_, j) => j !== i - 1) }); }} title="Remover foto" style={{ position: "absolute", top: -7, right: -7, width: 19, height: 19, borderRadius: "50%", background: "#C43A3A", color: "#fff", border: "none", cursor: "pointer", font: "700 11px Inter,sans-serif", lineHeight: 1 }}>×</button>
                 </div>
               ))}
@@ -3582,7 +3586,7 @@ function App() {
     const ch = num(p.cost) > 0 ? calcChannelPrices(p.cost, data.settings) : null;
 
     const Stat = ({ label, value, hint, color }) => (
-      <div style={{ background: "#1B2022", border: "1px solid #2C3237", borderRadius: 10, padding: "10px 12px" }}>
+      <div style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.14)", borderRadius: 10, padding: "10px 12px" }}>
         <div style={{ font: "600 10.5px Inter,sans-serif", color: "#7E9191", letterSpacing: ".05em" }}>{label}</div>
         <div style={{ font: "700 17px 'Space Grotesk',sans-serif", color: color || "#D6E2E2", marginTop: 2 }}>{value}</div>
         {hint && <div style={{ font: "400 11px Inter,sans-serif", color: "#7E9191", marginTop: 1 }}>{hint}</div>}
@@ -3598,7 +3602,7 @@ function App() {
                 {photos.map((src, i) => (
                   <button key={i} onClick={() => setBig(i)} title={`Foto ${i + 1}`} style={{
                     width: 68, height: 68, borderRadius: 8, overflow: "hidden", cursor: "pointer", padding: 0, flexShrink: 0,
-                    border: i === big ? "2px solid #14A6A4" : "1px solid #2C3237", background: "#14171A",
+                    border: i === big ? "2px solid #14A6A4" : "1px solid rgba(63,209,206,.14)", background: "#14171A",
                   }}><img src={src} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /></button>
                 ))}
               </div>
@@ -3608,14 +3612,14 @@ function App() {
             </div>
           </div>
         ) : (
-          <div style={{ height: 150, background: "#1B2022", borderRadius: 12, display: "grid", placeItems: "center", marginBottom: 14, color: "#4A5559" }}>
+          <div style={{ height: 150, background: "rgba(5,12,12,.55)", borderRadius: 12, display: "grid", placeItems: "center", marginBottom: 14, color: "#4A5559" }}>
             <ImageIcon size={30} /><div style={{ font: "400 12.5px Inter,sans-serif", marginTop: 6 }}>Sem fotos cadastradas</div>
           </div>
         )}
 
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 14, alignItems: "center" }}>
           {projNiches(p).map((n, i) => <NicheChip key={n}>{i === 0 && projNiches(p).length > 1 ? "★ " : ""}{n}</NicheChip>)}
-          {p.active === false && <span style={{ background: "#232829", color: "#8FA0AC", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>Inativo</span>}
+          {p.active === false && <span style={{ background: "rgba(63,209,206,.06)", color: "#8FA0AC", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>Inativo</span>}
           {inStock > 0 && <span style={{ background: "#2E2413", color: "#FFB067", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>{fmtN(inStock)} em estoque</span>}
         </div>
 
@@ -3633,12 +3637,12 @@ function App() {
           </div>
         )}
         {isPartsProj(p) && (
-          <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
+          <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
             <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Impressa em {p.parts.length} partes</div>
             {p.parts.map((pt) => {
               const prn = data.printers.find((x) => x.id === pt.printerId);
               return (
-                <div key={pt.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "4px 0", borderBottom: "1px solid #232829", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", flexWrap: "wrap" }}>
+                <div key={pt.id} style={{ display: "flex", justifyContent: "space-between", gap: 10, padding: "4px 0", borderBottom: "1px solid rgba(63,209,206,.1)", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", flexWrap: "wrap" }}>
                   <span><b>{pt.name || "Parte"}</b> <span style={{ color: "#8FA3A3" }}>· {prn ? prn.name : "sem impressora"}</span></span>
                   <span style={{ color: "#93A6A6" }}>{(pt.fils || []).map((x) => `${filMap[x.filamentId] ? filMap[x.filamentId].name : "—"} ${fmtN(x.grams, 1)}g`).join(" + ")} · <b style={{ color: "#D6E2E2" }}>{fmtHM(pt.hours)}</b></span>
                 </div>
@@ -3647,13 +3651,13 @@ function App() {
           </div>
         )}
 
-        <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
+        <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
           <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Filamentos e materiais</div>
           {fils.length === 0 ? (
             <div style={{ font: "400 12.5px Inter,sans-serif", color: "#FFB067" }}>⚠ Nenhum filamento vinculado — o estoque não será baixado ao produzir.</div>
           ) : fils.map((x, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "3px 0", font: "400 13px Inter,sans-serif", color: "#D6E2E2" }}>
-              <span style={{ width: 12, height: 12, borderRadius: "50%", background: x.fil.colorHex || "#3A4147", border: "1px solid #3A4147", flexShrink: 0 }} />
+              <span style={{ width: 12, height: 12, borderRadius: "50%", background: x.fil.colorHex || "rgba(63,209,206,.22)", border: "1px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
               <span style={{ flex: 1 }}>{x.fil.name} <span style={{ color: "#7E9191" }}>({x.fil.type}{x.fil.color ? `, ${x.fil.color}` : ""})</span></span>
               <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#93A6A6" }}>{fmtN(x.grams)}g</span>
             </div>
@@ -3668,7 +3672,7 @@ function App() {
         </div>
 
         {ch && (
-          <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
+          <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
             <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Preços por canal</div>
             {Object.entries(ch).map(([k, c]) => (
               <div key={k} style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", gap: 8, padding: "3px 0", font: "400 12.5px Inter,sans-serif", color: "#93A6A6" }}>
@@ -3681,7 +3685,7 @@ function App() {
         )}
 
         {p.catalogDesc && (
-          <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
+          <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 14 }}>
             <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 6 }}>Descrição</div>
             <div style={{ font: "400 13px Inter,sans-serif", color: "#D6E2E2", whiteSpace: "pre-wrap", lineHeight: 1.5 }}>{p.catalogDesc}</div>
           </div>
@@ -3700,7 +3704,7 @@ function App() {
     const [calc, setCalc] = useState(false);
     const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
     const emPartes = f.printMode === "partes";
-    const toggleBtn = (on) => ({ flex: 1, padding: "8px 0", borderRadius: 9, cursor: "pointer", border: on ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: on ? "#16302F" : "#1C2023", font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#7E9191" });
+    const toggleBtn = (on) => ({ flex: 1, padding: "8px 0", borderRadius: 9, cursor: "pointer", border: on ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: on ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#7E9191" });
     /* ao trocar para "em partes", a 1a parte nasce com os filamentos e o tempo da peca unica */
     const toPartes = () => setF((x) => ({ ...x, printMode: "partes", parts: (x.parts || []).length ? x.parts : [{
       ...newPart(data.printers, data.filaments, 1), hours: x.hours,
@@ -3741,7 +3745,7 @@ function App() {
                     {all.map((n) => {
                       const on = ns.includes(n); const main = ns[0] === n;
                       return (
-                        <span key={n} className={"niche-opt" + (on ? " on" : "")} data-n={n} style={{ display: "inline-flex", alignItems: "center", borderRadius: 999, border: on ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: on ? "#16302F" : "#1C2023", overflow: "hidden" }}>
+                        <span key={n} className={"niche-opt" + (on ? " on" : "")} data-n={n} style={{ display: "inline-flex", alignItems: "center", borderRadius: 999, border: on ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: on ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", overflow: "hidden" }}>
                           {on && <button type="button" className="niche-star" title={main ? "Nicho principal" : "Tornar principal"} onClick={() => makeMain(n)} style={{ background: "none", border: "none", cursor: "pointer", padding: "5px 0 5px 9px", color: main ? "#FFB067" : "#4E6262", font: "700 13px Inter,sans-serif" }}>★</button>}
                           <button type="button" className="niche-toggle" onClick={() => toggle(n)} style={{ background: "none", border: "none", cursor: "pointer", padding: on ? "5px 11px 5px 5px" : "5px 11px", font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#B5C4C4" }}>{n}{on ? " ✓" : ""}</button>
                         </span>
@@ -3759,12 +3763,12 @@ function App() {
             <button onClick={toPartes} style={toggleBtn(emPartes)}>Em partes (cada parte na sua impressora)</button>
           </div>
           {emPartes ? (
-            <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: 12, marginBottom: 12, background: "#1B2022" }}>
+            <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: 12, marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
               <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 8 }}>Partes da peça (valores POR PEÇA)</div>
               <PartsEditor parts={f.parts || []} onChange={(parts) => setF({ ...f, parts })} printers={data.printers} filaments={data.filaments} unitLabel="por peça" />
             </div>
           ) : (
-          <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 12px 6px", marginBottom: 12, background: "#1B2022" }}>
+          <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 12px 6px", marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
             <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 8 }}>Filamentos da peça (valores POR PEÇA)</div>
             <div style={{ display: "grid", gridTemplateColumns: "1.4fr 110px 84px 34px", gap: 8, marginBottom: 4, font: "700 10px Inter,sans-serif", color: "#93A6A6", letterSpacing: ".06em" }}>
               <span>FILAMENTO</span><span>TOTAL USADO (G)</span><span style={{ textAlign: "right" }}>CUSTO</span><span />
@@ -3776,7 +3780,7 @@ function App() {
                 <React.Fragment>
                   <div style={{ display: "grid", gridTemplateColumns: "1.4fr 110px 84px 34px", gap: 8, alignItems: "center", marginBottom: 8 }}>
                     <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                      <span title={mainFil ? mainFil.color : ""} style={{ width: 14, height: 14, borderRadius: "50%", background: mainFil ? (mainFil.colorHex || "#3A4147") : "#1C2023", border: "1.5px solid #3A4147", flexShrink: 0 }} />
+                      <span title={mainFil ? mainFil.color : ""} style={{ width: 14, height: 14, borderRadius: "50%", background: mainFil ? (mainFil.colorHex || "rgba(63,209,206,.22)") : "rgba(12,26,28,.72)", border: "1.5px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
                       <Combo style={{ flex: 1 }} value={f.filamentId} onChange={(v) => setF({ ...f, filamentId: v })} placeholder="— selecionar —"
                         options={[{ value: "", label: "— selecionar —" }].concat(data.filaments.map((x) => ({ value: x.id, label: x.name, sub: x.type + ", " + (x.color || "sem cor") })))} />
                     </div>
@@ -3789,7 +3793,7 @@ function App() {
                     return (
                       <div key={mf.id || i} style={{ display: "grid", gridTemplateColumns: "1.4fr 110px 84px 34px", gap: 8, alignItems: "center", marginBottom: 8 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                          <span title={xf ? xf.color : ""} style={{ width: 14, height: 14, borderRadius: "50%", background: xf ? (xf.colorHex || "#3A4147") : "#1C2023", border: "1.5px solid #3A4147", flexShrink: 0 }} />
+                          <span title={xf ? xf.color : ""} style={{ width: 14, height: 14, borderRadius: "50%", background: xf ? (xf.colorHex || "rgba(63,209,206,.22)") : "rgba(12,26,28,.72)", border: "1.5px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
                           <Sel style={{ flex: 1 }} value={mf.filamentId} onChange={(e) => setF({ ...f, moreFils: f.moreFils.map((x, idx) => idx === i ? { ...x, filamentId: e.target.value } : x) })}>
                             <option value="">— selecionar —</option>
                             {data.filaments.map((x) => <option key={x.id} value={x.id}>{x.name} ({x.type}, {x.color || "sem cor"})</option>)}
@@ -3821,7 +3825,7 @@ function App() {
           <Row>
             <div><L>{emPartes ? "Tempo POR PEÇA (soma das partes)" : "Tempo de impressão POR PEÇA"}</L>
               {emPartes ? (
-                <div style={{ ...inputStyle, background: "#232829", color: "#D6E2E2" }}>
+                <div style={{ ...inputStyle, background: "rgba(63,209,206,.06)", color: "#D6E2E2" }}>
                   máquina <b>{fmtHM(partsHours(f.parts))}</b> · pronta em <b>{fmtHM(partsWall(f.parts))}</b>
                 </div>
               ) : (() => {
@@ -3846,7 +3850,7 @@ function App() {
             <div><L>Custo POR PEÇA (R$)</L><In type="number" value={f.cost} onChange={set("cost")} /></div>
           </Row>
           {num(f.cost) > 0 && (
-            <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 12px 6px", marginBottom: 12, background: "#1B2022" }}>
+            <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 12px 6px", marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
               <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 8 }}>Preços por canal de venda</div>
               <div style={{ display: "grid", gridTemplateColumns: "1.5fr 1fr 1fr", gap: 8, marginBottom: 4, font: "700 10px Inter,sans-serif", color: "#93A6A6", letterSpacing: ".06em" }}>
                 <span>CANAL</span><span style={{ textAlign: "right" }}>PREÇO</span><span style={{ textAlign: "right" }}>LUCRO</span>
@@ -3872,7 +3876,7 @@ function App() {
               <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
                 {[f.image, ...(f.gallery || [])].filter(Boolean).map((img, i) => (
                   <div key={i} style={{ position: "relative" }}>
-                    <img src={img} alt="" style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8, border: i === 0 ? "2px solid #F47A20" : "1px solid #3A4147" }} />
+                    <img src={img} alt="" style={{ width: 64, height: 64, objectFit: "cover", borderRadius: 8, border: i === 0 ? "2px solid #F47A20" : "1px solid rgba(63,209,206,.22)" }} />
                     {i === 0 && <span style={{ position: "absolute", bottom: -6, left: "50%", transform: "translateX(-50%)", background: "#F47A20", color: "#fff", borderRadius: 999, padding: "0 6px", font: "700 8.5px Inter,sans-serif" }}>CAPA</span>}
                     <button onClick={() => {
                       if (i === 0) { const g = f.gallery || []; setF({ ...f, image: g[0] || "", gallery: g.slice(1) }); }
@@ -3944,7 +3948,7 @@ function App() {
       .sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0)).slice(0, 12);
     return (
       <div>
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
+        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
           💡 As compras lançadas em Investimentos (Filamento, Material, Embalagem) entram aqui automaticamente. Os botões abaixo servem só para cadastro manual do que você já tinha antes, ajustes e correções.
         </div>
         <SectionHead title="Estoque de material">
@@ -3983,14 +3987,14 @@ function App() {
                         <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(x.qtyG)}g</td>
                         <td style={{ minWidth: 130 }}>
                           <div style={{ font: "600 12.5px 'JetBrains Mono',monospace", color: low ? "#F0605F" : "#F3F6F6" }}>{fmtN(x.stockG)}g {low && "⚠"}</div>
-                          <div style={{ height: 5, background: "#1B2022", borderRadius: 99, marginTop: 3 }}>
+                          <div style={{ height: 5, background: "rgba(5,12,12,.55)", borderRadius: 99, marginTop: 3 }}>
                             <div style={{ height: 5, width: `${pct}%`, background: low ? "#F0605F" : "#14A6A4", borderRadius: 99 }} />
                           </div>
                         </td>
                         <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(x.price)}</td>
                         <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(perKg)}</td>
                         <td style={{ whiteSpace: "nowrap" }}>
-                          <Btn small kind="ghost" title="Repor estoque (nova compra)" style={{ color: "#3FD1CE", borderColor: "#16302F" }} onClick={() => setModal({ type: "filament", restock: x })}><Plus size={13} /></Btn>{" "}
+                          <Btn small kind="ghost" title="Repor estoque (nova compra)" style={{ color: "#3FD1CE", borderColor: "rgba(63,209,206,.1)" }} onClick={() => setModal({ type: "filament", restock: x })}><Plus size={13} /></Btn>{" "}
                           <Btn small kind="ghost" onClick={() => setModal({ type: "filament", item: x })}><Pencil size={13} /></Btn>{" "}
                           <Btn small kind="danger" onClick={() => { if (confirm(`Excluir "${x.name}"?`)) delItem("filaments", x.id); }}><Trash2 size={13} /></Btn>
                         </td>
@@ -4025,7 +4029,7 @@ function App() {
                         <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(num(m.stock) * num(m.unitCost))}</td>
                         <td>{low
                           ? <span style={{ background: "#331A1A", color: "#F0605F", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>Repor ⚠</span>
-                          : <span style={{ background: "#16302F", color: "#3FD1CE", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>OK</span>}</td>
+                          : <span style={{ background: "rgba(63,209,206,.1)", color: "#3FD1CE", borderRadius: 999, padding: "3px 10px", font: "600 11.5px Inter,sans-serif" }}>OK</span>}</td>
                         <td style={{ whiteSpace: "nowrap" }}>
                           <Btn small kind="ghost" onClick={() => setViewMov(viewMov === m.id ? null : m.id)} style={{ marginRight: 4 }}><EyeIc size={13} /></Btn>
                           <Btn small kind="ghost" onClick={() => setModal({ type: "material", item: m })}><Pencil size={13} /></Btn>{" "}
@@ -4037,7 +4041,7 @@ function App() {
                 </tbody>
               </table>
               {viewMov && matMap[viewMov] && (
-                <div style={{ margin: "8px 12px 12px", background: "#1B2022", border: "1px solid #223838", borderRadius: 10, padding: 12 }}>
+                <div style={{ margin: "8px 12px 12px", background: "rgba(5,12,12,.55)", border: "1px solid #223838", borderRadius: 10, padding: 12 }}>
                   <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", marginBottom: 6 }}>Movimentações — {matMap[viewMov].name}</div>
                   {(matMap[viewMov].movements || []).length === 0 ? (
                     <div style={{ font: "400 12.5px Inter,sans-serif", color: "#93A6A6" }}>Sem movimentações registradas.</div>
@@ -4059,7 +4063,7 @@ function App() {
           {allMovements.length === 0 ? <div style={{ font: "400 13px Inter,sans-serif", color: "#93A6A6", padding: 12 }}>As entradas e saídas de materiais aparecerão aqui.</div> : (
             <div style={{ padding: "4px 12px 12px" }}>
               {allMovements.map((mv) => (
-                <div key={mv.id} style={{ display: "flex", gap: 10, font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", padding: "4px 0", borderBottom: "1px solid #232829" }}>
+                <div key={mv.id} style={{ display: "flex", gap: 10, font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", padding: "4px 0", borderBottom: "1px solid rgba(63,209,206,.1)" }}>
                   <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#93A6A6", flexShrink: 0 }}>{fmtDate(mv.date)}</span>
                   <span style={{ fontWeight: 600, color: mv.type === "entrada" ? "#3FD1CE" : "#F0605F", flexShrink: 0 }}>{mv.type === "entrada" ? "+" : "−"}{fmtN(mv.qty)}</span>
                   <span style={{ fontWeight: 600 }}>{mv.matName}</span>
@@ -4090,11 +4094,11 @@ function App() {
         <Modal title="Cadastrar filamento" onClose={() => setModal(null)}>
           <div style={{ font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginBottom: 14 }}>Você comprou um filamento que <b>já está cadastrado</b> ou é um <b>modelo novo</b>?</div>
           <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
-            <button onClick={() => setMode("repor")} style={{ border: "2px solid #14A6A4", background: "#1B2022", borderRadius: 12, padding: "16px 12px", cursor: "pointer", textAlign: "left" }}>
+            <button onClick={() => setMode("repor")} style={{ border: "2px solid #14A6A4", background: "rgba(5,12,12,.55)", borderRadius: 12, padding: "16px 12px", cursor: "pointer", textAlign: "left" }}>
               <div style={{ font: "700 14px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 4 }}>🔄 Repor existente</div>
               <div style={{ font: "400 12px Inter,sans-serif", color: "#6FA3A3" }}>Soma no filamento já cadastrado e recalcula o custo médio. Sem linha duplicada.</div>
             </button>
-            <button onClick={() => setMode("new")} style={{ border: "2px solid #2C3237", background: "#1C2023", borderRadius: 12, padding: "16px 12px", cursor: "pointer", textAlign: "left" }}>
+            <button onClick={() => setMode("new")} style={{ border: "2px solid rgba(63,209,206,.14)", background: "rgba(12,26,28,.72)", borderRadius: 12, padding: "16px 12px", cursor: "pointer", textAlign: "left" }}>
               <div style={{ font: "700 14px 'Space Grotesk',sans-serif", color: "#F3F6F6", marginBottom: 4 }}>✨ Modelo novo</div>
               <div style={{ font: "400 12px Inter,sans-serif", color: "#7E9191" }}>Marca, tipo ou cor que ainda não existe no estoque.</div>
             </button>
@@ -4116,12 +4120,12 @@ function App() {
             <div><L>Valor pago nesta compra (R$)</L><In type="number" step="0.01" value={rep.value} onChange={(e) => setRep({ ...rep, value: e.target.value })} /></div>
           </Row>
           {target && num(rep.grams) > 0 && (
-            <div style={{ background: "#1B2022", border: "1px solid #16302F", borderRadius: 10, padding: "10px 12px", marginBottom: 12, font: "400 12.5px Inter,sans-serif", color: "#2A4A4A", lineHeight: 1.6 }}>
+            <div style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 12px", marginBottom: 12, font: "400 12.5px Inter,sans-serif", color: "#2A4A4A", lineHeight: 1.6 }}>
               <b style={{ color: "#3FD1CE" }}>Prévia:</b> {target.name} ficará com <b>{fmtN(num(target.stockG) + num(rep.grams))}g em estoque</b> ({fmtN(newQtyG)}g compradas no total, {fmt(newPrice)} pagos).<br />
               Custo médio ponderado: <b style={{ color: "#3FD1CE" }}>{fmt(avgKg)}/kg</b>{num(rep.value) > 0 && num(target.qtyG) > 0 ? ` (antes: ${fmt(num(target.price) / num(target.qtyG) * 1000)}/kg)` : ""}
             </div>
           )}
-          <label style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "#1B2022", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12, cursor: "pointer" }}>
+          <label style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "rgba(5,12,12,.55)", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12, cursor: "pointer" }}>
             <input type="checkbox" checked={launch} onChange={(e) => setLaunch(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#14A6A4", marginTop: 1 }} />
             <span style={{ font: "400 12.5px Inter,sans-serif", color: "#2A4A4A" }}>
               <b style={{ color: "#3FD1CE" }}>Lançar {num(rep.value) > 0 ? fmt(rep.value) : "o valor pago"} como gasto em Investimentos</b><br />
@@ -4152,7 +4156,7 @@ function App() {
           <div><L>Tipo</L><Sel value={f.type} onChange={set("type")}>{ftypes.map((t) => <option key={t}>{t}</option>)}</Sel></div>
           <div><L>Cor</L>
             <div style={{ display: "flex", gap: 8 }}>
-              <input type="color" value={f.colorHex} onChange={set("colorHex")} style={{ width: 42, height: 38, border: "1px solid #3A4147", borderRadius: 8, padding: 2, background: "#1C2023", cursor: "pointer" }} />
+              <input type="color" value={f.colorHex} onChange={set("colorHex")} style={{ width: 42, height: 38, border: "1px solid rgba(63,209,206,.22)", borderRadius: 8, padding: 2, background: "rgba(12,26,28,.72)", cursor: "pointer" }} />
               <In value={f.color} onChange={set("color")} placeholder="ex: Verde" />
             </div>
           </div>
@@ -4163,10 +4167,10 @@ function App() {
         </Row>
         <Row>
           <div><L>Valor pago (R$)</L><In type="number" value={f.price} onChange={set("price")} /></div>
-          <div><L>Custo por kg / por grama</L><In disabled value={`${fmt(perG * 1000)} · ${fmt(perG)}/g`} style={{ background: "#232829" }} /></div>
+          <div><L>Custo por kg / por grama</L><In disabled value={`${fmt(perG * 1000)} · ${fmt(perG)}/g`} style={{ background: "rgba(63,209,206,.06)" }} /></div>
         </Row>
         {!item && (
-          <label style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "#1B2022", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12, cursor: "pointer" }}>
+          <label style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "rgba(5,12,12,.55)", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12, cursor: "pointer" }}>
             <input type="checkbox" checked={launch} onChange={(e) => setLaunch(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#14A6A4", marginTop: 1 }} />
             <span style={{ font: "400 12.5px Inter,sans-serif", color: "#2A4A4A" }}>
               <b style={{ color: "#3FD1CE" }}>Lançar {num(f.price) > 0 ? fmt(f.price) : "o valor pago"} como gasto em Investimentos</b><br />
@@ -4209,7 +4213,7 @@ function App() {
           <div><L>Estoque mínimo (alerta)</L><In type="number" value={f.minStock} onChange={set("minStock")} /></div>
         </Row>
         {!item && (
-          <label style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "#1B2022", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12, cursor: "pointer" }}>
+          <label style={{ display: "flex", gap: 9, alignItems: "flex-start", background: "rgba(5,12,12,.55)", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12, cursor: "pointer" }}>
             <input type="checkbox" checked={launch} onChange={(e) => setLaunch(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#14A6A4", marginTop: 1 }} />
             <span style={{ font: "400 12.5px Inter,sans-serif", color: "#2A4A4A" }}>
               <b style={{ color: "#3FD1CE" }}>Lançar {totalPago > 0 ? fmt(totalPago) : "o total"} como gasto em Investimentos</b><br />
@@ -4254,7 +4258,7 @@ function App() {
         </Row>
         <Row cols={1}><div><L>Observação</L><In value={f.note} onChange={set("note")} placeholder="ex: perda, brinde, ajuste de contagem…" /></div></Row>
         {f.type === "entrada" && (
-          <div style={{ background: "#1B2022", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
+          <div style={{ background: "rgba(5,12,12,.55)", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
             <label style={{ display: "flex", gap: 9, alignItems: "flex-start", cursor: "pointer" }}>
               <input type="checkbox" checked={launch} onChange={(e) => setLaunch(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#14A6A4", marginTop: 1 }} />
               <span style={{ font: "400 12.5px Inter,sans-serif", color: "#2A4A4A" }}>
@@ -4293,7 +4297,7 @@ function App() {
     const saleValue = rows.reduce((s, p) => s + num(p.qty) * num(projMap[p.projectId].cost) * (1 + num(data.settings.defaultMargin) / 100), 0);
     return (
       <div>
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
+        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
           💡 Produtos prontos para venda. Eles entram aqui quando você conclui um pedido de "Produção para estoque" na aba Pedidos. Para vender direto daqui, use o botão <b>Vender</b> — o produto sai do estoque e a venda entra no faturamento. Para dar a peça de cortesia, use <b>Brinde</b> — sai do estoque e <b>nenhuma receita é lançada</b>.
         </div>
         <SectionHead title="Estoque de produtos" count={rows.length}>
@@ -4378,7 +4382,7 @@ function App() {
               return (
                 <button key={op.v} type="button" onClick={() => setF({ ...f, mode: op.v })}
                   style={{ padding: "10px 12px", borderRadius: 10, cursor: "pointer",
-                    border: `1px solid ${on ? ac : "#2B3234"}`, background: on ? (op.v === "brinde" ? "#2A1718" : "#12302F") : "#1C2023",
+                    border: `1px solid ${on ? ac : "#2B3234"}`, background: on ? (op.v === "brinde" ? "#2A1718" : "#12302F") : "rgba(12,26,28,.72)",
                     color: on ? (op.v === "brinde" ? "#FF8A88" : "#3FD1CE") : "#8FA3A3", font: "600 13px Inter,sans-serif" }}>
                   {op.t}
                 </button>
@@ -4415,7 +4419,7 @@ function App() {
         </Row>
         )}
         {p && (
-          <div style={{ background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "8px 12px", marginBottom: 12, display: "flex", gap: 18, flexWrap: "wrap", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
+          <div style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "8px 12px", marginBottom: 12, display: "flex", gap: 18, flexWrap: "wrap", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
             <span>Custo de produção: <b style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmt(p.cost)}/pç</b>{num(f.qty) > 1 ? ` · total ${fmt(num(p.cost) * num(f.qty))}` : ""}</span>
             {gift
               ? <span>Receita: <b style={{ fontFamily: "'JetBrains Mono',monospace", color: "#FF8A88" }}>R$ 0,00</b> · brinde não entra no faturamento</span>
@@ -4531,7 +4535,7 @@ function App() {
                       <span>MANUTENÇÃO ({fmtN(sinceMaint, 0)}h / {fmtN(data.settings.maintEveryH)}h)</span>
                       {maintPct >= 100 && <span>REVISAR ⚠</span>}
                     </div>
-                    <div style={{ height: 6, background: "#1B2022", borderRadius: 99 }}>
+                    <div style={{ height: 6, background: "rgba(5,12,12,.55)", borderRadius: 99 }}>
                       <div style={{ height: 6, width: `${maintPct}%`, background: maintPct >= 100 ? "#F0605F" : maintPct > 70 ? "#F47A20" : "#14A6A4", borderRadius: 99 }} />
                     </div>
                     <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginTop: 8, gap: 8, flexWrap: "wrap" }}>
@@ -4560,7 +4564,7 @@ function App() {
     const set = (k) => (e) => setF({ ...f, [k]: e.target.value });
     return (
       <Modal title={`Manutenção — ${item.name}`} onClose={() => setModal(null)}>
-        <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "9px 11px", marginBottom: 12 }}>
+        <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "9px 11px", marginBottom: 12 }}>
           Registrar zera o contador de horas desde a última manutenção (atual: {fmtN(num(item.hoursUsed) - num(item.lastMaintH || 0), 0)}h).
         </div>
         <Row>
@@ -4576,9 +4580,9 @@ function App() {
         {(item.maintLog && item.maintLog.length > 0) && (
           <div style={{ marginBottom: 12 }}>
             <L>Histórico</L>
-            <div style={{ border: "1px solid #232829", borderRadius: 8, maxHeight: 160, overflowY: "auto" }}>
+            <div style={{ border: "1px solid rgba(63,209,206,.1)", borderRadius: 8, maxHeight: 160, overflowY: "auto" }}>
               {item.maintLog.slice().reverse().map((mx) => (
-                <div key={mx.id} style={{ display: "flex", justifyContent: "space-between", gap: 8, padding: "7px 10px", borderBottom: "1px solid #1D2124", font: "400 12px Inter,sans-serif" }}>
+                <div key={mx.id} style={{ display: "flex", justifyContent: "space-between", gap: 8, padding: "7px 10px", borderBottom: "1px solid rgba(5,12,12,.55)", font: "400 12px Inter,sans-serif" }}>
                   <span><b>{fmtDate(mx.date)}</b>{mx.notes ? " — " + mx.notes : ""}</span>
                   {num(mx.cost) > 0 && <span style={{ fontFamily: "'JetBrains Mono',monospace", color: "#F0605F" }}>{fmt(num(mx.cost))}</span>}
                 </div>
@@ -4632,7 +4636,7 @@ function App() {
     const byCat = catNames.map((c) => ({ name: c, value: +list.filter((e) => e.category === c).reduce((s, e) => s + num(e.value), 0).toFixed(2) })).filter((x) => x.value > 0);
     return (
       <div>
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
+        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
           💡 Esta é a porta de entrada de tudo que você compra: filamento, materiais, embalagens, energia, ferramentas… As categorias Filamento, Material e Embalagem alimentam o Estoque automaticamente.
         </div>
         <SectionHead title="Investimentos e gastos" count={list.length}>
@@ -4717,11 +4721,11 @@ function App() {
         <Row cols={3}>
           <div><L>Valor pago (R$)</L><In type="number" value={f.value} onChange={set("value")} /></div>
           <div><L>{isFil ? "Quantidade (gramas)" : "Quantas unidades vêm?"}</L><In type="number" value={f.units} onChange={set("units")} placeholder={isFil ? "ex: 1000" : "ex: 200"} /></div>
-          <div><L>{isFil ? "Custo por kg" : "Custo por unidade"}</L><In disabled value={num(f.units) > 0 ? (isFil ? fmt(unitCost * 1000) : fmt(unitCost)) : "—"} style={{ background: "#232829" }} /></div>
+          <div><L>{isFil ? "Custo por kg" : "Custo por unidade"}</L><In disabled value={num(f.units) > 0 ? (isFil ? fmt(unitCost * 1000) : fmt(unitCost)) : "—"} style={{ background: "rgba(63,209,206,.06)" }} /></div>
         </Row>
 
         {isFil && num(f.units) > 0 && (
-          <div style={{ border: "1px dashed #5FA3A3", background: "#1B2022", borderRadius: 10, padding: 12, marginBottom: 12 }}>
+          <div style={{ border: "1px dashed #5FA3A3", background: "rgba(5,12,12,.55)", borderRadius: 10, padding: 12, marginBottom: 12 }}>
             <div style={{ font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", marginBottom: 8 }}>🧵 Entrada automática no estoque de filamentos</div>
             <Row>
               <div><L>O que fazer?</L>
@@ -4746,7 +4750,7 @@ function App() {
               <Row>
                 <div><L>Cor</L>
                   <div style={{ display: "flex", gap: 8 }}>
-                    <input type="color" value={f.fColorHex} onChange={set("fColorHex")} style={{ width: 42, height: 38, border: "1px solid #3A4147", borderRadius: 8, padding: 2, background: "#1C2023", cursor: "pointer" }} />
+                    <input type="color" value={f.fColorHex} onChange={set("fColorHex")} style={{ width: 42, height: 38, border: "1px solid rgba(63,209,206,.22)", borderRadius: 8, padding: 2, background: "rgba(12,26,28,.72)", cursor: "pointer" }} />
                     <In value={f.fColor} onChange={set("fColor")} placeholder="ex: Verde" />
                   </div>
                 </div>
@@ -4761,7 +4765,7 @@ function App() {
         )}
 
         {isMat && num(f.units) > 0 && (
-          <div style={{ border: "1px dashed #5FA3A3", background: "#1B2022", borderRadius: 10, padding: 12, marginBottom: 12 }}>
+          <div style={{ border: "1px dashed #5FA3A3", background: "rgba(5,12,12,.55)", borderRadius: 10, padding: 12, marginBottom: 12 }}>
             <div style={{ font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", marginBottom: 8 }}>📦 Entrada automática no estoque de materiais</div>
             <Row>
               <div><L>O que fazer?</L>
@@ -4836,10 +4840,10 @@ function App() {
     const MES = ["janeiro", "fevereiro", "março", "abril", "maio", "junho", "julho", "agosto", "setembro", "outubro", "novembro", "dezembro"];
     const cells = []; for (let i = 0; i < startDow; i++) cells.push(null); for (let d = 1; d <= daysInMonth; d++) cells.push(d);
     const ds = (d) => ym + "-" + String(d).padStart(2, "0");
-    const chip = (o) => { const p = projMap[o.projectId]; const cli = o.clientId ? cliMap[o.clientId] : null; const st = STATUS_STYLE[o.status] || { bg: "#1B2022", fg: "#8FA0AC" };
+    const chip = (o) => { const p = projMap[o.projectId]; const cli = o.clientId ? cliMap[o.clientId] : null; const st = STATUS_STYLE[o.status] || { bg: "rgba(5,12,12,.55)", fg: "#8FA0AC" };
       return <div key={o.id} onClick={() => setModal({ type: "order", item: o })} title={projName(o) + (cli ? " — " + cli.name : "")} style={{ background: st.bg, color: st.fg, borderRadius: 6, padding: "2px 6px", font: "600 10.5px Inter,sans-serif", marginTop: 3, cursor: "pointer", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{projName(o)}</div>; };
-    const rowItem = (o) => { const p = projMap[o.projectId]; const cli = o.clientId ? cliMap[o.clientId] : null; const st = STATUS_STYLE[o.status] || { bg: "#1B2022", fg: "#8FA0AC" }; const over = o.dueDate < today;
-      return <div key={o.id} onClick={() => setModal({ type: "order", item: o })} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderBottom: "1px solid #232829", cursor: "pointer" }}>
+    const rowItem = (o) => { const p = projMap[o.projectId]; const cli = o.clientId ? cliMap[o.clientId] : null; const st = STATUS_STYLE[o.status] || { bg: "rgba(5,12,12,.55)", fg: "#8FA0AC" }; const over = o.dueDate < today;
+      return <div key={o.id} onClick={() => setModal({ type: "order", item: o })} style={{ display: "flex", alignItems: "center", gap: 10, padding: "9px 12px", borderBottom: "1px solid rgba(63,209,206,.1)", cursor: "pointer" }}>
         <div style={{ minWidth: 92, font: "600 12.5px Inter,sans-serif", color: over ? "#F0605F" : "#F3F6F6" }}>{fmtDate(o.dueDate)}</div>
         <div style={{ flex: 1 }}><div style={{ font: "600 13px Inter,sans-serif" }}>{projName(o)}</div>{cli && <div style={{ font: "400 11.5px Inter,sans-serif", color: "#7E9191" }}>{cli.name}</div>}</div>
         <span style={{ background: st.bg, color: st.fg, borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>{o.status}</span>
@@ -4856,7 +4860,7 @@ function App() {
           <div style={{ display: "grid", gridTemplateColumns: "repeat(7,1fr)", gap: 4 }}>
             {["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"].map((w) => <div key={w} style={{ textAlign: "center", font: "700 10px Inter,sans-serif", color: "#8FA3A3", padding: "2px 0" }}>{w}</div>)}
             {cells.map((d, i) => { if (!d) return <div key={"e" + i} />; const iso = ds(d); const list = byDay[iso] || []; const isToday = iso === today; const hasLate = list.length > 0 && iso < today;
-              return <div key={iso} style={{ minHeight: 66, border: "1px solid " + (isToday ? "#14A6A4" : "#232829"), borderRadius: 8, padding: 4, background: hasLate ? "#331A1A" : "#1C2023" }}>
+              return <div key={iso} style={{ minHeight: 66, border: "1px solid " + (isToday ? "#14A6A4" : "rgba(63,209,206,.06)"), borderRadius: 8, padding: 4, background: hasLate ? "#331A1A" : "rgba(12,26,28,.72)" }}>
                 <div style={{ font: "600 11px Inter,sans-serif", color: isToday ? "#3FD1CE" : "#7E9191" }}>{d}</div>
                 {list.slice(0, 3).map(chip)}
                 {list.length > 3 && <div style={{ font: "600 9.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 2 }}>+{list.length - 3}</div>}
@@ -4920,7 +4924,7 @@ function App() {
           <td><div className="neo-odt">{fmtDate(dataMin).slice(0, 5)}<small>{entregas.length ? `entrega ${fmtDate(entregas[entregas.length - 1]).slice(0, 5)}` : "sem prazo"}</small></div></td>
           <td>
             <button className="neo-opj kit" onClick={toggle} title={aberto ? "Recolher itens" : "Ver itens"}>
-              <span className="th2">🧩</span>
+              <span className="neo-stack">{[...new Set(orders.map((o) => o.projectId))].slice(0, 3).map((pid, i) => { const pp = projMap[pid]; return pp && pp.image ? <img key={pid} src={pp.image} alt="" className="th2 img" style={{ zIndex: 3 - i }} /> : <span key={pid} className="th2" style={{ zIndex: 3 - i }}><Package size={14} /></span>; })}</span>
               <span><b>{kit} · {orders.length} itens</b><small>{aberto ? "recolher ▴" : "clique para ver os itens ▾"}</small></span>
             </button>
           </td>
@@ -5109,7 +5113,7 @@ function App() {
           <td>{!dentroDoKit && <div className="neo-odt">{fmtDate(o.date).slice(0, 5)}<small>{o.dueDate && !isDone(o) ? `entrega ${fmtDate(o.dueDate).slice(0, 5)}` : isDone(o) ? (o.status === "Entregue" ? "entregue" : "concluído") : "sem prazo"}</small></div>}</td>
           <td>
             <div className="neo-opj">
-              {dentroDoKit ? <span className="sub">↳</span> : (p && p.image ? <img src={p.image} alt="" className="th2 img" /> : <span className="th2"><Package size={15} /></span>)}
+              {dentroDoKit && <span className="sub">↳</span>}{p && p.image ? <img src={p.image} alt="" className={"th2 img" + (dentroDoKit ? " sm" : "")} /> : <span className={"th2" + (dentroDoKit ? " sm" : "")}><Package size={dentroDoKit ? 13 : 15} /></span>}
               <span><b>{projName(o)}</b>{(colorTxt || o.giftNote) && <small>{dentroDoKit && colorTxt ? "" : ""}{colorTxt}{colorTxt && o.giftNote ? " · " : ""}{o.giftNote || ""}</small>}</span>
             </div>
           </td>
@@ -5170,8 +5174,8 @@ function App() {
               {[["venda", "Venda para cliente"], ["estoque", "Produção para estoque"], ["brinde", "Brinde / Teste"]].map(([v, lbl]) => (
                 <button key={v} onClick={() => setF({ ...f, dest: v })} style={{
                   flex: 1, padding: "8px 0", borderRadius: 9, cursor: "pointer",
-                  border: f.dest === v ? "1.5px solid #14A6A4" : "1px solid #3A4147",
-                  background: f.dest === v ? "#16302F" : "#1C2023",
+                  border: f.dest === v ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)",
+                  background: f.dest === v ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)",
                   font: "600 12.5px Inter,sans-serif", color: f.dest === v ? "#3FD1CE" : "#7E9191",
                 }}>{lbl}</button>
               ))}
@@ -5183,8 +5187,8 @@ function App() {
           <div><L>Projeto</L>
             <div style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
               {p && (p.image
-                ? <img src={p.image} alt="" title={p.name} style={{ width: 38, height: 38, objectFit: "cover", borderRadius: 8, border: "1px solid #2C3237", flexShrink: 0, display: "block" }} />
-                : <span style={{ width: 38, height: 38, borderRadius: 8, border: "1px solid #2C3237", background: "#1B2022", flexShrink: 0, display: "grid", placeItems: "center", color: "#4A5559" }}><ImageIcon size={16} /></span>)}
+                ? <img src={p.image} alt="" title={p.name} style={{ width: 38, height: 38, objectFit: "cover", borderRadius: 8, border: "1px solid rgba(63,209,206,.14)", flexShrink: 0, display: "block" }} />
+                : <span style={{ width: 38, height: 38, borderRadius: 8, border: "1px solid rgba(63,209,206,.14)", background: "rgba(5,12,12,.55)", flexShrink: 0, display: "grid", placeItems: "center", color: "#4A5559" }}><ImageIcon size={16} /></span>)}
               <div style={{ flex: 1, minWidth: 0 }}>
                 <Combo value={f.projectId} onChange={(v) => setF({ ...f, projectId: v, filChoices: {}, partPrinters: {} })} placeholder="Selecionar projeto…"
                   options={data.projects.filter((x) => x.active !== false || x.id === f.projectId).map((x) => ({ value: x.id, label: x.name, sub: nichesText(x) || undefined }))} />
@@ -5202,7 +5206,7 @@ function App() {
                 }}><Plus size={13} /></Btn>
               </div>
             </div>
-          ) : <div><L>Cliente</L><In disabled value="Produção interna → Estoque de Produtos" style={{ background: "#232829" }} /></div>}
+          ) : <div><L>Cliente</L><In disabled value="Produção interna → Estoque de Produtos" style={{ background: "rgba(63,209,206,.06)" }} /></div>}
         </Row>
         <Row cols={3}>
           <div><L>Quantidade de peças</L><In type="number" value={f.qty} onChange={(e) => {
@@ -5213,10 +5217,10 @@ function App() {
           <div><L>Entrega prevista</L><In type="date" value={f.dueDate} onChange={set("dueDate")} /></div>
         </Row>
         <Row cols={3}>
-          {!noSale ? <div><L>Valor cobrado (R$)</L><In type="number" value={f.price} onChange={set("price")} placeholder={p ? (num(p.cost) * (1 + num(data.settings.defaultMargin) / 100) * Math.max(1, num(f.qty))).toFixed(2) : ""} /></div> : <div><L>Valor cobrado</L><In disabled value={isBrinde ? "— (brinde / teste)" : "— (sem venda)"} style={{ background: "#232829" }} /></div>}
-          <div><L>Custo estimado (R$)</L><In disabled title="Calculado automaticamente a partir do projeto e do filamento escolhido" value={autoCost ? fmt(autoCost) : "—"} style={{ background: "#232829", color: "#93A6A6" }} /></div>
+          {!noSale ? <div><L>Valor cobrado (R$)</L><In type="number" value={f.price} onChange={set("price")} placeholder={p ? (num(p.cost) * (1 + num(data.settings.defaultMargin) / 100) * Math.max(1, num(f.qty))).toFixed(2) : ""} /></div> : <div><L>Valor cobrado</L><In disabled value={isBrinde ? "— (brinde / teste)" : "— (sem venda)"} style={{ background: "rgba(63,209,206,.06)" }} /></div>}
+          <div><L>Custo estimado (R$)</L><In disabled title="Calculado automaticamente a partir do projeto e do filamento escolhido" value={autoCost ? fmt(autoCost) : "—"} style={{ background: "rgba(63,209,206,.06)", color: "#93A6A6" }} /></div>
           {isPartsProj(p) && !f.fromStock ? (
-            <div><L>Impressora</L><In disabled value={`Em ${p.parts.length} partes ↓`} style={{ background: "#232829", color: "#93A6A6" }} /></div>
+            <div><L>Impressora</L><In disabled value={`Em ${p.parts.length} partes ↓`} style={{ background: "rgba(63,209,206,.06)", color: "#93A6A6" }} /></div>
           ) : (
           <div><L>Impressora</L>
             <Combo value={f.printerId} onChange={(v) => setF({ ...f, printerId: v })} placeholder="—"
@@ -5225,7 +5229,7 @@ function App() {
           )}
         </Row>
         {isPartsProj(p) && !f.fromStock && (
-          <div className="order-parts" style={{ border: "1px dashed #2C3237", background: "#1B2022", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
+          <div className="order-parts" style={{ border: "1px dashed rgba(63,209,206,.14)", background: "rgba(5,12,12,.55)", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
             <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Impressora de cada parte</div>
             {p.parts.map((pt) => {
               const cur = (f.partPrinters || {})[pt.id] || pt.printerId || "";
@@ -5238,7 +5242,7 @@ function App() {
                 </div>
               );
             })}
-            <div style={{ font: "400 11px Inter,sans-serif", color: "#7E9191", borderTop: "1px solid #2C3237", paddingTop: 6, marginTop: 2 }}>
+            <div style={{ font: "400 11px Inter,sans-serif", color: "#7E9191", borderTop: "1px solid rgba(63,209,206,.14)", paddingTop: 6, marginTop: 2 }}>
               Já vem com a impressora do projeto — troque aqui se nesta produção uma parte for para outra máquina. Pronta em <b>{fmtHM(projWallHours(p, f.partPrinters) * Math.max(1, num(f.qty)))}</b>.
             </div>
           </div>
@@ -5261,7 +5265,7 @@ function App() {
           const atual = filCostPerPiece(slots, escolha);
           const dif = atual - base;
           return (
-            <div style={{ border: "1px dashed #2C3237", background: "#1B2022", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
+            <div style={{ border: "1px dashed rgba(63,209,206,.14)", background: "rgba(5,12,12,.55)", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
               <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Filamentos desta produção</div>
               {slots.map((s) => {
                 const atualId = escolha[s.key] || s.filamentId;
@@ -5272,7 +5276,7 @@ function App() {
                 return (
                   <div key={s.key} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 6 }}>
                     <span style={{ font: "500 12px Inter,sans-serif", color: "#93A6A6", minWidth: 86 }}>{s.label}</span>
-                    <span title={fl ? fl.color : ""} style={{ width: 14, height: 14, borderRadius: "50%", background: fl ? (fl.colorHex || "#3A4147") : "#1C2023", border: "1.5px solid #3A4147", flexShrink: 0 }} />
+                    <span title={fl ? fl.color : ""} style={{ width: 14, height: 14, borderRadius: "50%", background: fl ? (fl.colorHex || "rgba(63,209,206,.22)") : "rgba(12,26,28,.72)", border: "1.5px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
                     <div style={{ flex: 1, minWidth: 0 }}>
                       <Combo value={atualId} onChange={(v) => pick(s.key, v)} placeholder="— selecionar —"
                         options={(() => {
@@ -5290,7 +5294,7 @@ function App() {
                   </div>
                 );
               })}
-              <div style={{ font: "400 11px Inter,sans-serif", color: "#7E9191", borderTop: "1px solid #2C3237", paddingTop: 6, marginTop: 2 }}>
+              <div style={{ font: "400 11px Inter,sans-serif", color: "#7E9191", borderTop: "1px solid rgba(63,209,206,.14)", paddingTop: 6, marginTop: 2 }}>
                 {Math.abs(dif) > 0.005
                   ? <span>Filamento diferente do projeto: custo por peça {dif > 0 ? "sobe" : "cai"} <b style={{ color: dif > 0 ? "#FFB067" : "#3FD1CE" }}>{fmt(Math.abs(dif))}</b> (projeto {fmt(p.cost)} → {fmt(orderUnitCost(p, escolha))}).</span>
                   : <span>Usando os filamentos do projeto. ⚠ = estoque insuficiente.</span>}
@@ -5336,7 +5340,7 @@ function App() {
     const pr = data.printers.find((x) => x.id === f.printerId);
     const q = Math.max(1, num(f.qty));
     const emPartes = f.print === "partes";
-    const toggleBtn = (on) => ({ flex: 1, padding: "8px 0", borderRadius: 9, cursor: "pointer", border: on ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: on ? "#16302F" : "#1C2023", font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#7E9191" });
+    const toggleBtn = (on) => ({ flex: 1, padding: "8px 0", borderRadius: 9, cursor: "pointer", border: on ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: on ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#7E9191" });
 
     /* varios filamentos: cada linha tem seu filamento e suas gramas por peca.
        Em partes: as linhas sao todas as cores de todas as partes. */
@@ -5431,13 +5435,13 @@ function App() {
           <button onClick={() => setF({ ...f, print: "partes" })} style={toggleBtn(emPartes)}>Em partes (cada parte na sua impressora)</button>
         </div>
         {emPartes ? (
-          <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 12, background: "#1B2022" }}>
+          <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
             <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Partes (valores por peça)</div>
             <PartsEditor parts={f.parts} onChange={(parts) => setF({ ...f, parts })} printers={data.printers} filaments={data.filaments} unitLabel="por peça" />
           </div>
         ) : (
         <React.Fragment>
-        <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 12, background: "#1B2022" }}>
+        <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 12, background: "rgba(5,12,12,.55)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 8 }}>
             <span style={{ flex: 1, font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em" }}>
               Filamentos usados{gramasTotais > 0 ? ` · ${fmtN(gramasTotais)}g por peça` : ""}
@@ -5484,7 +5488,7 @@ function App() {
           <div><L>Observação</L><In value={f.note} onChange={set("note")} placeholder="ex: peça para o vizinho, medida especial" /></div>
         </Row>
         <ExtrasEditor extras={f.extras || []} onChange={(ex) => setF({ ...f, extras: ex })} materials={data.materials} />
-        <div style={{ border: "1px dashed #2C3237", background: "#1B2022", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
+        <div style={{ border: "1px dashed rgba(63,209,206,.14)", background: "rgba(5,12,12,.55)", borderRadius: 10, padding: "10px 12px", marginBottom: 12 }}>
           <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 8 }}>Vendeu esta peça? (opcional)</div>
           <Row cols={3}>
             <div><L>Valor da venda (R$)</L><In type="number" step="0.01" value={f.price} onChange={set("price")} placeholder="deixe vazio se não vendeu" /></div>
@@ -5503,13 +5507,13 @@ function App() {
             ⚠ Estoque insuficiente: {faltando.map(([id, g]) => `${filMap[id].name} tem ${fmtN(filMap[id].stockG)}g e a impressão usa ${fmtN(g)}g`).join(" · ")}
           </div>
         )}
-        <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 14, background: "#1B2022" }}>
+        <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 14, background: "rgba(5,12,12,.55)" }}>
           <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 6 }}>Custo da impressão</div>
           {linha("Filamento", filCost, Object.keys(usoPorFil).length > 1 ? `${Object.keys(usoPorFil).length} filamentos · ${fmtN(gramasTotais * q)}g` : (gramasTotais > 0 ? `${fmtN(gramasTotais * q)}g` : ""))}
           {linha("Energia", energyCost, emPartes ? `${f.parts.length} partes · ${fmtHM(horasPeca * q)} de máquina` : (pr ? `${num(pr.watts)}W` : ""))}
           {linha("Depreciação", deprCost, emPartes ? "pela impressora de cada parte" : (deprPerH > 0 ? `${fmt(deprPerH)}/h` : ""))}
           {extrasCost > 0 && linha("Materiais extras", extrasCost)}
-          <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px solid #2C3237", marginTop: 8, paddingTop: 8 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px solid rgba(63,209,206,.14)", marginTop: 8, paddingTop: 8 }}>
             <span style={{ font: "700 13.5px 'Space Grotesk',sans-serif", color: "#D6E2E2" }}>Custo total</span>
             <span style={{ font: "700 16px 'JetBrains Mono',monospace", color: "#D6E2E2" }}>{fmt(custoTotal)}</span>
           </div>
@@ -5596,7 +5600,7 @@ function App() {
         <Row cols={1}>
           <div><L>Filamento usado</L>
             <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-              <span style={{ width: 14, height: 14, borderRadius: "50%", background: fil ? (fil.colorHex || "#3A4147") : "#1C2023", border: "1.5px solid #3A4147", flexShrink: 0 }} />
+              <span style={{ width: 14, height: 14, borderRadius: "50%", background: fil ? (fil.colorHex || "rgba(63,209,206,.22)") : "rgba(12,26,28,.72)", border: "1.5px solid rgba(63,209,206,.22)", flexShrink: 0 }} />
               <div style={{ flex: 1 }}>
                 <Combo value={f.filamentId} onChange={(v) => setF({ ...f, filamentId: v })} placeholder="Selecionar filamento…"
                   options={data.filaments.map((x) => ({ value: x.id, label: x.name, sub: x.type + ", " + (x.color || "sem cor") + " · " + fmtN(x.stockG) + "g em estoque" }))} />
@@ -5616,12 +5620,12 @@ function App() {
             ⚠ Estoque insuficiente: {fil.name} tem {fmtN(fil.stockG)}g e você informou {fmtN(f.grams)}g.
           </div>
         )}
-        <div style={{ border: "1px solid #2C3237", borderRadius: 12, padding: "12px 14px", marginBottom: 14, background: "#1B2022" }}>
+        <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "12px 14px", marginBottom: 14, background: "rgba(5,12,12,.55)" }}>
           <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", marginBottom: 6 }}>Custo da calibração</div>
           {row("Filamento", filCost, fil ? `${fmt(kgPrice)}/kg` : "")}
           {row("Energia", energyCost, pr ? `${num(pr.watts)}W × ${fmt(s.kwhPrice)}/kWh` : "")}
           {row("Depreciação da impressora", deprCost, deprPerH > 0 ? `${fmt(deprPerH)}/h` : "")}
-          <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px solid #2C3237", marginTop: 8, paddingTop: 8 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", borderTop: "1px solid rgba(63,209,206,.14)", marginTop: 8, paddingTop: 8 }}>
             <span style={{ font: "700 13.5px 'Space Grotesk',sans-serif", color: "#D6E2E2" }}>Total a lançar como despesa</span>
             <span style={{ font: "700 16px 'JetBrains Mono',monospace", color: "#F0605F" }}>−{fmt(total)}</span>
           </div>
@@ -5688,7 +5692,7 @@ function App() {
                   )}
                   <div style={{ display: "flex", gap: 14, marginTop: 12, font: "400 12px Inter,sans-serif", color: "#7E9191", flexWrap: "wrap" }}>
                   </div>
-                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 10, borderTop: "1px solid #232829", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", marginTop: 12, paddingTop: 10, borderTop: "1px solid rgba(63,209,206,.1)", font: "400 12.5px Inter,sans-serif", color: "#D6E2E2" }}>
                     <span>{ords.length} pedido(s)</span>
                     <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, color: "#3FD1CE" }}>{fmt(spent)}</span>
                   </div>
@@ -5748,13 +5752,13 @@ function App() {
               return (
                 <button key={n} onClick={() => toggleNiche(n)} style={{
                   borderRadius: 999, padding: "5px 12px", cursor: "pointer", font: "600 12px Inter,sans-serif",
-                  border: on ? "1.5px solid #14A6A4" : "1px solid #3A4147",
-                  background: on ? "#16302F" : "#1C2023", color: on ? "#3FD1CE" : "#7E9191",
+                  border: on ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)",
+                  background: on ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", color: on ? "#3FD1CE" : "#7E9191",
                 }}>{n}</button>
               );
             })}
             <button onClick={() => { const n = prompt("Nome do novo nicho:"); if (n && n.trim()) { addNiche(n); setF((x) => ({ ...x, niches: [...(x.niches || []), n.trim()] })); } }}
-              style={{ borderRadius: 999, padding: "5px 12px", cursor: "pointer", font: "600 12px Inter,sans-serif", border: "1px dashed #5FA3A3", background: "#1C2023", color: "#3FD1CE" }}>
+              style={{ borderRadius: 999, padding: "5px 12px", cursor: "pointer", font: "600 12px Inter,sans-serif", border: "1px dashed #5FA3A3", background: "rgba(12,26,28,.72)", color: "#3FD1CE" }}>
               + novo nicho
             </button>
           </div>
@@ -5787,7 +5791,7 @@ function App() {
             <TagIc size={14} style={{ color: "#3FD1CE" }} />{c.niches.map((n) => <NicheChip key={n}>{n}</NicheChip>)}
           </div>
         )}
-        {c.notes && <div style={{ font: "400 13px Inter,sans-serif", color: "#D6E2E2", background: "#1B2022", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>📝 {c.notes}</div>}
+        {c.notes && <div style={{ font: "400 13px Inter,sans-serif", color: "#D6E2E2", background: "rgba(5,12,12,.55)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>📝 {c.notes}</div>}
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 14 }}>
           <Stat label="Total gasto" value={fmt(spent)} sub={`${ords.length} pedidos${ords.filter((o) => o.dest === "brinde").length ? ` · ${ords.filter((o) => o.dest === "brinde").length} brinde(s)` : ""}`} icon={CircleDollarSign} />
           <Stat label="Ticket médio" value={fmt(doneSales.length ? spent / doneSales.length : 0)} sub="por venda concluída" icon={TrendingUp} accent="#6FA0EA" />
@@ -5813,7 +5817,7 @@ function App() {
           </table>
         )}
         {sugg.length > 0 && (
-          <div style={{ background: "#1B2022", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 14px" }}>
+          <div style={{ background: "rgba(5,12,12,.55)", border: "1px dashed #5FA3A3", borderRadius: 10, padding: "10px 14px" }}>
             <div style={{ font: "600 12.5px Inter,sans-serif", color: "#3FD1CE", marginBottom: 4 }}>💡 Sugestões de oferta (projetos nos nichos deste cliente)</div>
             <div style={{ font: "400 13px Inter,sans-serif", color: "#D6E2E2" }}>{sugg.map((p) => p.name).join(" · ")}</div>
           </div>
@@ -5930,8 +5934,8 @@ function App() {
           </div>
         </SectionHead>
 
-        <Card style={{ marginBottom: 14, background: "#202124", border: "none", display: "flex", alignItems: "center", gap: 18 }}>
-          <img src={LOGO_L} alt="PrintAR 3D" style={{ width: 76, height: 76, borderRadius: "50%", background: "#1C2023", flexShrink: 0, boxShadow: "0 2px 12px rgba(0,0,0,.35)" }} />
+        <Card style={{ marginBottom: 14, background: "rgba(12,26,28,.72)", border: "none", display: "flex", alignItems: "center", gap: 18 }}>
+          <img src={LOGO_L} alt="PrintAR 3D" style={{ width: 76, height: 76, borderRadius: "50%", background: "rgba(12,26,28,.72)", flexShrink: 0, boxShadow: "0 2px 12px rgba(0,0,0,.35)" }} />
           <div>
             <div style={{ font: "500 11px Inter,sans-serif", color: "#5FA3A3", textTransform: "uppercase", letterSpacing: ".1em" }}>PrintAR 3D · Relatório do período</div>
             <div style={{ font: "700 22px 'Space Grotesk',sans-serif", color: "#fff", textTransform: "capitalize" }}>{label}</div>
@@ -6013,7 +6017,7 @@ function App() {
               <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 10 }}>Gastos por categoria</div>
               <ResponsiveContainer width="100%" height={220}>
                 <BarChart data={byCat} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2C3237" />
+                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(63,209,206,.14)" />
                   <XAxis type="number" tick={{ fontSize: 11, fill: "#8FA3A3" }} />
                   <YAxis type="category" dataKey="name" width={95} tick={{ fontSize: 11.5 }} />
                   <Tooltip formatter={(v) => fmt(v)} />
@@ -6078,7 +6082,7 @@ function App() {
                       <td style={{ ...thR, ...tdMono }}>{g.qty > 0 ? fmtN(g.qty) : "—"}</td>
                       <td>
                         <div style={{ ...tdMono, fontWeight: 600, color: "#FF8A88" }}>{fmt(g.cost)}</div>
-                        <div style={{ height: 5, background: "#1B2022", borderRadius: 99, marginTop: 3 }}><div style={{ height: 5, width: `${(g.cost / maxCost) * 100}%`, background: "#F0605F", borderRadius: 99 }} /></div>
+                        <div style={{ height: 5, background: "rgba(5,12,12,.55)", borderRadius: 99, marginTop: 3 }}><div style={{ height: 5, width: `${(g.cost / maxCost) * 100}%`, background: "#F0605F", borderRadius: 99 }} /></div>
                       </td>
                       <td style={{ ...thR, ...tdMono }}>{r.total.cost > 0 ? fmtN((g.cost / r.total.cost) * 100, 1) + "%" : "—"}</td>
                       <td style={{ ...thR, ...tdMono, color: "#FFB067" }}>{g.lost > 0 ? fmt(g.lost) : "—"}</td>
@@ -6228,7 +6232,7 @@ function App() {
   /* =============================== SUB-TABS =============================== */
   function SubTabs({ tabs, value, onChange }) {
     return (
-      <div style={{ display: "flex", gap: 6, marginBottom: 16, borderBottom: "1px solid #2C3237", flexWrap: "wrap" }}>
+      <div style={{ display: "flex", gap: 6, marginBottom: 16, borderBottom: "1px solid rgba(63,209,206,.14)", flexWrap: "wrap" }}>
         {tabs.map((t) => (
           <button key={t.id} onClick={() => onChange(t.id)} style={{
             display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 14px", cursor: "pointer",
@@ -6251,7 +6255,7 @@ function App() {
     const pp = projMap[o.projectId];
     return (
       <div className="prod-progress" style={{ minWidth: compact ? 150 : 0 }}>
-        <div style={{ height: compact ? 5 : 8, background: "#1B2022", borderRadius: 99, overflow: "hidden" }}>
+        <div style={{ height: compact ? 5 : 8, background: "rgba(5,12,12,.55)", borderRadius: 99, overflow: "hidden" }}>
           <div style={{ height: "100%", width: pct + "%", background: done >= total ? "#14A6A4" : "#F47A20", borderRadius: 99 }} />
         </div>
         <div className="prod-progress-text" style={{ font: (compact ? "500 11px" : "600 12.5px") + " Inter,sans-serif", color: "#93A6A6", marginTop: 3 }}>
@@ -6297,12 +6301,12 @@ function App() {
             <div style={{ marginTop: 8 }}><ProductionProgress o={o} /></div>
           </div>
           <L>Qual parte saiu da impressora?</L>
-          <div className="part-regs" style={{ border: "1px solid #2C3237", borderRadius: 10, background: "#1B2022", padding: "6px 12px", marginBottom: 12 }}>
+          <div className="part-regs" style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 10, background: "rgba(5,12,12,.55)", padding: "6px 12px", marginBottom: 12 }}>
             {p.parts.map((pt) => {
               const r = regs[pt.id] || {}; const n = partPrinted(o, pt.id);
               const fs = partFils(p, o, pt);
               return (
-                <div key={pt.id} className="part-reg" data-part={pt.id} style={{ display: "grid", gridTemplateColumns: "minmax(150px,1.3fr) 70px minmax(130px,1fr) 70px", gap: 10, alignItems: "center", padding: "7px 0", borderTop: "1px dashed #2C3237" }}>
+                <div key={pt.id} className="part-reg" data-part={pt.id} style={{ display: "grid", gridTemplateColumns: "minmax(150px,1.3fr) 70px minmax(130px,1fr) 70px", gap: 10, alignItems: "center", padding: "7px 0", borderTop: "1px dashed rgba(63,209,206,.14)" }}>
                   <label style={{ display: "flex", gap: 8, alignItems: "center", cursor: "pointer", minWidth: 0 }}>
                     <input className="part-on" type="checkbox" checked={!!r.on} onChange={(e) => setReg(pt.id, { on: e.target.checked })} style={{ width: 16, height: 16, accentColor: "#14A6A4", flexShrink: 0 }} />
                     <span style={{ minWidth: 0 }}>
@@ -6323,7 +6327,7 @@ function App() {
             })}
           </div>
           <Row cols={3}><div><L>Data</L><In type="date" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></div><div /><div /></Row>
-          <div className="print-preview" style={{ background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginBottom: 12 }}>
+          <div className="print-preview" style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginBottom: 12 }}>
             {!chosen.length ? "Marque a parte que você imprimiu." : piecesAfter < total
               ? <span>Fica {p.parts.map((pt) => { const n = partPrinted(sim, pt.id); return `${pt.name || "Parte"} ${fmtN(n)}/${fmtN(total)}${n >= total ? " ✔" : ""}`; }).join(" · ")} → <b>{fmtN(piecesAfter)} de {fmtN(total)}</b> peça(s) pronta(s)</span>
               : <span>✔ Todas as partes impressas (<b>{fmtN(piecesAfter)} de {fmtN(total)}</b>) — o pedido vai para <b>Concluído</b>.</span>}
@@ -6334,7 +6338,7 @@ function App() {
               <div style={{ font: "600 13px Inter,sans-serif", color: "#FFB067", marginBottom: 8 }}>{fmtN(extraP)} peça(s) a mais. Para onde vão?</div>
               <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
                 {[["estoque", "📦 Para o estoque"], ["brinde", "🎁 Brinde para o cliente"]].map(([k, lbl]) => (
-                  <button key={k} type="button" className={"extra-opt" + (f.extraDest === k ? " on" : "")} data-k={k} onClick={() => setF({ ...f, extraDest: k })} style={{ padding: "7px 14px", borderRadius: 9, cursor: "pointer", border: f.extraDest === k ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: f.extraDest === k ? "#16302F" : "#1C2023", font: "600 12.5px Inter,sans-serif", color: f.extraDest === k ? "#3FD1CE" : "#B5C4C4" }}>{lbl}</button>
+                  <button key={k} type="button" className={"extra-opt" + (f.extraDest === k ? " on" : "")} data-k={k} onClick={() => setF({ ...f, extraDest: k })} style={{ padding: "7px 14px", borderRadius: 9, cursor: "pointer", border: f.extraDest === k ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: f.extraDest === k ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: f.extraDest === k ? "#3FD1CE" : "#B5C4C4" }}>{lbl}</button>
                 ))}
               </div>
             </div>
@@ -6356,12 +6360,12 @@ function App() {
         <Row cols={3}>
           <div><L>Quantas impressas agora</L><In className="print-qty" type="number" min="1" value={f.qty} onChange={(e) => setF({ ...f, qty: e.target.value })} /></div>
           <div><L>Impressora</L>
-            {parts ? <In disabled value="impressoras das partes" style={{ background: "#232829", color: "#93A6A6" }} />
+            {parts ? <In disabled value="impressoras das partes" style={{ background: "rgba(63,209,206,.06)", color: "#93A6A6" }} />
               : <Combo value={f.printerId} onChange={(v) => setF({ ...f, printerId: v })} placeholder="—" options={data.printers.map((x) => ({ value: x.id, label: x.name }))} />}
           </div>
           <div><L>Data</L><In type="date" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></div>
         </Row>
-        <div className="print-preview" style={{ background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginBottom: 12 }}>
+        <div className="print-preview" style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginBottom: 12 }}>
           {q <= 0 ? "Informe a quantidade impressa." : after < total
             ? <span>Fica <b>{fmtN(after)} de {fmtN(total)}</b> impressos · faltam <b>{fmtN(total - after)}</b></span>
             : <span>✔ Completa o pedido (<b>{fmtN(after)} de {fmtN(total)}</b>) — ele vai para <b>Concluído</b>.</span>}
@@ -6372,7 +6376,7 @@ function App() {
             <div style={{ font: "600 13px Inter,sans-serif", color: "#FFB067", marginBottom: 8 }}>{fmtN(extra)} peça(s) a mais. Para onde vão?</div>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {[["estoque", "📦 Para o estoque"], ["brinde", "🎁 Brinde para o cliente"]].map(([k, lbl]) => (
-                <button key={k} type="button" className={"extra-opt" + (f.extraDest === k ? " on" : "")} data-k={k} onClick={() => setF({ ...f, extraDest: k })} style={{ padding: "7px 14px", borderRadius: 9, cursor: "pointer", border: f.extraDest === k ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: f.extraDest === k ? "#16302F" : "#1C2023", font: "600 12.5px Inter,sans-serif", color: f.extraDest === k ? "#3FD1CE" : "#B5C4C4" }}>{lbl}</button>
+                <button key={k} type="button" className={"extra-opt" + (f.extraDest === k ? " on" : "")} data-k={k} onClick={() => setF({ ...f, extraDest: k })} style={{ padding: "7px 14px", borderRadius: 9, cursor: "pointer", border: f.extraDest === k ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: f.extraDest === k ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: f.extraDest === k ? "#3FD1CE" : "#B5C4C4" }}>{lbl}</button>
               ))}
             </div>
             {f.extraDest === "brinde" && <div style={{ font: "400 11.5px Inter,sans-serif", color: "#B5A58A", marginTop: 6 }}>Entra no relatório de Brindes e perdas como perda.</div>}
@@ -6630,8 +6634,8 @@ function App() {
     return (
       <div className="queue-board" style={{ display: "grid", gridTemplateColumns: `repeat(auto-fit,minmax(240px,1fr))`, gap: 12, alignItems: "start" }}>
         {columns.map((c) => (
-          <div key={c.pr ? c.pr.id : "none"} className="queue-col" data-pr={c.pr ? c.pr.id : ""} style={{ background: "#1B2022", border: "1px solid " + (c.pr ? "#2C3237" : "#4A3A1E"), borderRadius: 12, padding: 10 }}>
-            <div style={{ padding: "2px 4px 8px", borderBottom: "1px solid #2C3237", marginBottom: 8 }}>
+          <div key={c.pr ? c.pr.id : "none"} className="queue-col" data-pr={c.pr ? c.pr.id : ""} style={{ background: "rgba(5,12,12,.55)", border: "1px solid " + (c.pr ? "rgba(63,209,206,.14)" : "#4A3A1E"), borderRadius: 12, padding: 10 }}>
+            <div style={{ padding: "2px 4px 8px", borderBottom: "1px solid rgba(63,209,206,.14)", marginBottom: 8 }}>
               <div style={{ font: "700 14px 'Space Grotesk',sans-serif", color: c.pr ? "#D6E2E2" : "#FFB067" }}>{c.pr ? c.pr.name : "Sem impressora"}</div>
               <div className="queue-head" style={{ font: "500 11.5px Inter,sans-serif", color: "#8FA3A3" }}>
                 {c.pr ? (c.hours > 0 ? <span><b style={{ color: "#D6E2E2" }}>{fmtN(c.hours, 1)}h</b> na fila · livre em <b style={{ color: "#D6E2E2" }}>{fmtDate(c.freeAt)}</b></span> : <span style={{ color: "#3FD1CE" }}>livre</span>)
@@ -6642,7 +6646,7 @@ function App() {
             {c.items.map((it) => {
               const o = it.o, p = it.p;
               return (
-                <div key={o.id + (it.parts ? it.parts.join() : "")} className="queue-card" style={{ background: "#1C2023", border: "1px solid " + (it.late ? "#6B2A2A" : "#2C3237"), borderRadius: 10, padding: "9px 10px", marginBottom: 8 }}>
+                <div key={o.id + (it.parts ? it.parts.join() : "")} className="queue-card" style={{ background: "rgba(12,26,28,.72)", border: "1px solid " + (it.late ? "#6B2A2A" : "rgba(63,209,206,.14)"), borderRadius: 10, padding: "9px 10px", marginBottom: 8 }}>
                   <div style={{ font: "600 13px Inter,sans-serif", color: "#D6E2E2" }}>{projName(o)} <span style={{ color: "#93A6A6", fontWeight: 400 }}>× {fmtN(o.qty)}</span></div>
                   {it.parts && <div style={{ font: "500 11px Inter,sans-serif", color: "#FFB067" }}>parte(s): {it.parts.join(", ")}</div>}
                   {p && itemColors(p, o.filChoices).length > 0 && itemColorsLine(p, o.filChoices)}
@@ -6993,13 +6997,13 @@ function App() {
     return (
       <div>
         <SectionHead title="Ações" count={(actRef.current || []).length} />
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
+        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
           💡 Tudo o que foi feito nos últimos <b>7 dias</b>. <b>Desfazer</b> volta a ação inteira — inclusive o que ela mexeu junto (filamento, horas da impressora, estoque, financeiro). Se outra coisa mexeu nos mesmos dados depois, o sistema avisa antes. As ações ficam guardadas neste computador.
         </div>
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
             {ACT_FILTERS.map((c) => (
-              <button key={c} className="act-filter" data-c={c} onClick={() => set({ cat: c })} style={{ padding: "6px 12px", borderRadius: 999, cursor: "pointer", border: ui.cat === c ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: ui.cat === c ? "#16302F" : "#1C2023", font: "600 12.5px Inter,sans-serif", color: ui.cat === c ? "#3FD1CE" : "#B5C4C4" }}>{c}</button>
+              <button key={c} className="act-filter" data-c={c} onClick={() => set({ cat: c })} style={{ padding: "6px 12px", borderRadius: 999, cursor: "pointer", border: ui.cat === c ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: ui.cat === c ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: ui.cat === c ? "#3FD1CE" : "#B5C4C4" }}>{c}</button>
             ))}
           </div>
           <div style={{ flex: 1, minWidth: 180 }}><In className="act-search" value={ui.q} onChange={(e) => set({ q: e.target.value })} placeholder="Buscar nas ações…" /></div>
@@ -7011,7 +7015,7 @@ function App() {
               {g.items.map((a, i) => {
                 const op = !!ui.open[a.id];
                 return (
-                  <div key={a.id} className={"act-row" + (a.undone ? " undone" : "")} style={{ borderTop: i ? "1px solid #232829" : "none", padding: "10px 14px", opacity: a.undone ? .55 : 1 }}>
+                  <div key={a.id} className={"act-row" + (a.undone ? " undone" : "")} style={{ borderTop: i ? "1px solid rgba(63,209,206,.1)" : "none", padding: "10px 14px", opacity: a.undone ? .55 : 1 }}>
                     <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
                       <span style={{ font: "600 12px 'JetBrains Mono',monospace", color: "#8FA3A3", flexShrink: 0 }}>{hhmm(a.ts)}</span>
                       <span style={{ width: 20, textAlign: "center", flexShrink: 0 }}>{icon(a)}</span>
@@ -7039,9 +7043,9 @@ function App() {
   /* =============================== ORÇAMENTOS ============================== */
   const QUOTE_STYLE = {
     "Pendente": { bg: "#2E2413", fg: "#FFB067" },
-    "Aprovado": { bg: "#16302F", fg: "#3FD1CE" },
+    "Aprovado": { bg: "rgba(63,209,206,.1)", fg: "#3FD1CE" },
     "Recusado": { bg: "#331A1A", fg: "#F0605F" },
-    "Expirado": { bg: "#1B2022", fg: "#8FA0AC" },
+    "Expirado": { bg: "rgba(5,12,12,.55)", fg: "#8FA0AC" },
   };
   const waLink = (quote) => {
     const c = cliMap[quote.clientId];
@@ -7310,15 +7314,15 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
             <div key={it.id} style={{ display: "grid", gridTemplateColumns: "2fr 62px 100px 110px 110px 34px", gap: 8, marginBottom: 8, alignItems: "center" }}>
               <div style={{ display: "flex", alignItems: "center", gap: 7, minWidth: 0 }}>
                 {p && (p.image
-                  ? <img src={p.image} alt="" style={{ width: 30, height: 30, objectFit: "cover", borderRadius: 6, border: "1px solid #2C3237", flexShrink: 0, display: "block" }} />
-                  : <span style={{ width: 30, height: 30, borderRadius: 6, border: "1px solid #2C3237", background: "#1B2022", flexShrink: 0, display: "block" }} />)}
+                  ? <img src={p.image} alt="" style={{ width: 30, height: 30, objectFit: "cover", borderRadius: 6, border: "1px solid rgba(63,209,206,.14)", flexShrink: 0, display: "block" }} />
+                  : <span style={{ width: 30, height: 30, borderRadius: 6, border: "1px solid rgba(63,209,206,.14)", background: "rgba(5,12,12,.55)", flexShrink: 0, display: "block" }} />)}
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <Combo value={it.projectId} onChange={(v) => { const np = projMap[v]; setItem(i, { projectId: v, unitPrice: it.unitPrice || sugPrice(np), filChoices: {} }); }} placeholder="— item avulso —"
                     options={[{ value: "", label: "— item avulso —" }].concat(activeProjects.map((x) => ({ value: x.id, label: x.name, sub: nichesText(x) || undefined })))} />
                 </div>
               </div>
               <In type="number" min="1" value={it.qty} onChange={(e) => setItem(i, { qty: e.target.value })} title="Quantidade" />
-              <In disabled title="Custo por peça (não editável)" value={p ? fmt(orderUnitCost(p, it.filChoices)) : "—"} style={{ background: "#232829", color: "#8FA3A3", textAlign: "right" }} />
+              <In disabled title="Custo por peça (não editável)" value={p ? fmt(orderUnitCost(p, it.filChoices)) : "—"} style={{ background: "rgba(63,209,206,.06)", color: "#8FA3A3", textAlign: "right" }} />
               <In type="number" step="0.01" value={it.unitPrice} onChange={(e) => setItem(i, { unitPrice: e.target.value })} placeholder="R$ unit." title="Preço sugerido (editável)" />
               <div style={{ font: "600 13px 'JetBrains Mono',monospace", color: "#3FD1CE", textAlign: "right" }}>{fmt(num(it.qty) * num(it.unitPrice))}</div>
               <button onClick={() => setF({ ...f, items: f.items.filter((_, idx) => idx !== i) })} style={{ background: "none", border: "none", cursor: "pointer", color: "#F0605F" }}><Trash2 size={15} /></button>
@@ -7610,7 +7614,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     const equipLiq = equipTotal - deprAcum;
     const ativoTotal = caixaHist + estoqueFil + estoqueProd + equipLiq;
     const DreLine = ({ label, value, bold, neg, indent }) => (
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid #232829", font: `${bold ? 700 : 400} ${bold ? 14.5 : 13.5}px Inter,sans-serif`, paddingLeft: indent ? 16 : 0 }}>
+      <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid rgba(63,209,206,.1)", font: `${bold ? 700 : 400} ${bold ? 14.5 : 13.5}px Inter,sans-serif`, paddingLeft: indent ? 16 : 0 }}>
         <span>{label}</span>
         <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: bold ? 700 : 500, color: neg ? "#F0605F" : (bold ? "#3FD1CE" : "#F3F6F6") }}>{neg ? `(${fmt(value)})` : fmt(value)}</span>
       </div>
@@ -7647,7 +7651,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
                   {ticket > 0 && <span>Com ticket médio de {fmt(ticket)}, isso equivale a <b>~{fmtN(Math.ceil(breakEven / ticket))} peças/mês</b>.<br /></span>}
                   Faturamento atual do mês: <b style={{ color: receita >= breakEven ? "#3FD1CE" : "#F0605F" }}>{fmt(receita)}</b> ({receita >= breakEven ? "acima" : "abaixo"} do equilíbrio)
                 </div>
-                <div style={{ height: 8, background: "#1B2022", borderRadius: 99, marginTop: 12 }}>
+                <div style={{ height: 8, background: "rgba(5,12,12,.55)", borderRadius: 99, marginTop: 12 }}>
                   <div style={{ height: 8, width: `${Math.min(100, breakEven > 0 ? (receita / breakEven) * 100 : 0)}%`, background: receita >= breakEven ? "#14A6A4" : "#F47A20", borderRadius: 99 }} />
                 </div>
               </React.Fragment>}
@@ -7941,7 +7945,7 @@ SC,
     const chip = (key, label, on, badge) => (
       <button key={key} className="cat-chip" data-key={key} onClick={() => setNiche(key)} style={{
         padding: "6px 12px", borderRadius: 999, cursor: "pointer", whiteSpace: "nowrap",
-        border: on ? "1.5px solid #14A6A4" : "1px solid #3A4147", background: on ? "#16302F" : "#1C2023",
+        border: on ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: on ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)",
         font: "600 12.5px Inter,sans-serif", color: on ? "#3FD1CE" : "#B5C4C4",
       }}>{label} <span style={{ font: "600 11px 'JetBrains Mono',monospace", color: badge && badge.startsWith("0/") ? "#6E8080" : "#FFB067", marginLeft: 3 }}>{badge}</span></button>
     );
@@ -7965,7 +7969,7 @@ SC,
         ) : (
           <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill,minmax(220px,1fr))", gap: 8, marginBottom: 14, maxHeight: 420, overflowY: "auto" }}>
             {visible.map((p) => (
-              <label key={p.id} className="cat-item" style={{ display: "flex", gap: 9, alignItems: "center", border: sel[p.id] ? "1px solid #14A6A4" : "1px solid #2C3237", borderRadius: 10, padding: "8px 10px", cursor: "pointer", background: sel[p.id] ? "#16302F" : "#1C2023", opacity: p.active === false ? .7 : 1 }}>
+              <label key={p.id} className="cat-item" style={{ display: "flex", gap: 9, alignItems: "center", border: sel[p.id] ? "1px solid #14A6A4" : "1px solid rgba(63,209,206,.14)", borderRadius: 10, padding: "8px 10px", cursor: "pointer", background: sel[p.id] ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", opacity: p.active === false ? .7 : 1 }}>
                 <input type="checkbox" checked={!!sel[p.id]} onChange={(e) => setSel((s) => { const n = { ...s }; if (e.target.checked) n[p.id] = true; else delete n[p.id]; return n; })} style={{ width: 16, height: 16, accentColor: "#14A6A4", flexShrink: 0 }} />
                 {p.image ? <img src={p.image} alt="" style={{ width: 34, height: 34, objectFit: "cover", borderRadius: 6, flexShrink: 0 }} /> : <ImageIcon size={20} style={{ color: "#4A5559" }} />}
                 <span style={{ minWidth: 0 }}>
@@ -7976,7 +7980,7 @@ SC,
             ))}
           </div>
         )}
-        <div style={{ position: "sticky", bottom: -1, background: "#1C2023", borderTop: "1px solid #2C3237", padding: "10px 0 2px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+        <div style={{ position: "sticky", bottom: -1, background: "rgba(12,26,28,.72)", borderTop: "1px solid rgba(63,209,206,.14)", padding: "10px 0 2px", display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
           <span className="cat-count" style={{ font: "500 12.5px Inter,sans-serif", color: "#93A6A6" }}>
             <b style={{ color: chosenAll.length ? "#3FD1CE" : "#93A6A6" }}>{chosenAll.length} produto(s) no catálogo</b>
             {breakdown.length > 0 && <span> · {breakdown.map(([n, c]) => `${n} ${c}`).join(" · ")}</span>}
@@ -7992,7 +7996,7 @@ SC,
             }}><EyeIc size={15} />Site interativo</Btn>
           </div>
         </div>
-        <div style={{ font: "400 11.5px Inter,sans-serif", color: "#7E9191", marginTop: 10, lineHeight: 1.7, background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px" }}>
+        <div style={{ font: "400 11.5px Inter,sans-serif", color: "#7E9191", marginTop: 10, lineHeight: 1.7, background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px" }}>
           <b style={{ color: "#3FD1CE" }}>🌐 Como publicar seu link (uma vez só):</b><br />
           1️⃣ O botão laranja baixa o <b>index.html</b> · 2️⃣ Crie uma pasta (ex: "catalogo") e coloque ele dentro · 3️⃣ Entre em <b>app.netlify.com/drop</b> e arraste a <b>pasta</b> · 4️⃣ Pronto — seu link fica tipo <i>printar3d.netlify.app</i>.<br />
           <b>Para atualizar:</b> gere de novo aqui e arraste a pasta no mesmo site (Deploys → arrastar) — o link não muda. Se preferir mandar como arquivo no WhatsApp, pode renomear para <i>catalogo.html</i> que funciona igual.
@@ -8007,7 +8011,7 @@ SC,
     const TITLES = { resumo: "RESUMO DO NEGÓCIO", pedidos: "PEDIDOS E VENDAS", orcamentos: "ORÇAMENTOS", projetos: "PROJETOS", clientes: "CLIENTES", investimentos: "INVESTIMENTOS", brindes: "BRINDES E PERDAS", itens: "DESEMPENHO POR ITEM" };
     const empty = <div style={{ padding: "22px 4px", font: "400 13px Inter,sans-serif", color: "#93A6A6", textAlign: "center" }}>Nenhum registro neste período.</div>;
     const kpi = (lab, val, color) => (
-      <div style={{ border: "1px solid #2C3237", borderRadius: 10, padding: "10px 12px" }}>
+      <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 10, padding: "10px 12px" }}>
         <div style={{ font: "600 10px Inter,sans-serif", color: "#93A6A6", textTransform: "uppercase", letterSpacing: ".05em" }}>{lab}</div>
         <div style={{ font: "700 17px 'Space Grotesk',sans-serif", color: color || "#F3F6F6", marginTop: 3 }}>{val}</div>
       </div>
@@ -8065,7 +8069,7 @@ SC,
         </React.Fragment>
       );
     } else if (report === "orcamentos") {
-      const QST = { "Pendente": { bg: "#2E2413", fg: "#FFB067" }, "Aprovado": { bg: "#16302F", fg: "#3FD1CE" }, "Recusado": { bg: "#331A1A", fg: "#F0605F" } };
+      const QST = { "Pendente": { bg: "#2E2413", fg: "#FFB067" }, "Aprovado": { bg: "rgba(63,209,206,.1)", fg: "#3FD1CE" }, "Recusado": { bg: "#331A1A", fg: "#F0605F" } };
       const list = (data.quotes || []).filter((q) => inR(q.date)).sort((a, b) => (a.date < b.date ? -1 : 1));
       const tot = list.reduce((s, q) => s + quoteTotal(q), 0);
       const aprov = list.filter((q) => q.status === "Aprovado");
@@ -8076,7 +8080,7 @@ SC,
         <React.Fragment>
           {list.length === 0 ? empty : (
             <table><thead><tr><th>Nº</th><th>Data</th><th>Cliente</th><th>Status</th><th>Validade</th><th style={{ textAlign: "center" }}>Gerou pedido?</th><th style={{ textAlign: "right" }}>Total</th></tr></thead>
-              <tbody>{list.map((q) => { const c = cliMap[q.clientId]; const np = pedidosDe(q); const st = QST[q.status] || { bg: "#1B2022", fg: "#8FA0AC" }; return (
+              <tbody>{list.map((q) => { const c = cliMap[q.clientId]; const np = pedidosDe(q); const st = QST[q.status] || { bg: "rgba(5,12,12,.55)", fg: "#8FA0AC" }; return (
                 <tr key={q.id}><td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600 }}>{q.code}</td><td>{fmtDate(q.date)}</td><td>{c ? c.name : (q.clientName || "—")}</td><td><span style={{ background: st.bg, color: st.fg, borderRadius: 999, padding: "1px 8px", font: "600 11px Inter,sans-serif" }}>{q.status || "—"}</span></td><td>{fmtDate(q.validUntil)}</td><td style={{ textAlign: "center", fontWeight: 600, color: np > 0 ? "#3FD1CE" : "#8FA3A3" }}>{np > 0 ? `Sim (${np})` : "Não"}</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{fmt(quoteTotal(q))}</td></tr>
               ); })}</tbody>
             </table>
@@ -8378,7 +8382,7 @@ SC,
               </div>
             );
           })()}
-          <div style={{ background: "#202124", color: "#fff", borderRadius: 10, padding: "10px 22px", textAlign: "right" }}>
+          <div style={{ background: "rgba(12,26,28,.72)", color: "#fff", borderRadius: 10, padding: "10px 22px", textAlign: "right" }}>
             <div style={{ font: "600 10.5px Inter,sans-serif", color: "#7CC7C9", textTransform: "uppercase", letterSpacing: ".08em" }}>Total do orçamento</div>
             <div style={{ font: "700 24px 'Space Grotesk',sans-serif" }}>{fmt(quoteTotal(quote))}</div>
           </div>
@@ -8523,7 +8527,7 @@ SC,
         {hint && <div style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", marginBottom: 8 }}>{hint}</div>}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
           {items.map((n) => (
-            <span key={n} style={{ display: "inline-flex", gap: 6, alignItems: "center", background: "#16302F", color: "#3FD1CE", border: "1px solid #2E4A4A", borderRadius: 999, padding: "4px 6px 4px 12px", font: "600 12px Inter,sans-serif" }}>
+            <span key={n} style={{ display: "inline-flex", gap: 6, alignItems: "center", background: "rgba(63,209,206,.1)", color: "#3FD1CE", border: "1px solid #2E4A4A", borderRadius: 999, padding: "4px 6px 4px 12px", font: "600 12px Inter,sans-serif" }}>
               {n}
               <button onClick={() => onRemove(n)} style={{ background: "none", border: "none", cursor: "pointer", color: "#3FD1CE", display: "grid", placeItems: "center" }}><XIc size={12} /></button>
             </span>
@@ -8572,7 +8576,7 @@ SC,
         ) : (
           <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
             {rows.map((p) => (
-              <div key={p.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, border: "1px solid #2C3237", borderRadius: 10, padding: "8px 12px" }}>
+              <div key={p.id} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, border: "1px solid rgba(63,209,206,.14)", borderRadius: 10, padding: "8px 12px" }}>
                 <div style={{ minWidth: 0 }}>
                   <div style={{ font: "600 13px Inter,sans-serif", color: "#D6E2E2", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.email}{p.is_admin ? " · admin" : ""}</div>
                   <div style={{ font: "400 11px Inter,sans-serif", color: p.approved ? "#3FD1CE" : "#FFB067" }}>{p.approved ? "Aprovado" : "Aguardando aprovação"}</div>
@@ -8696,7 +8700,7 @@ SC,
       <div style={{ marginBottom: 18 }}>
         <div style={{ font: "600 13px 'Space Grotesk',sans-serif", color: "#3FD1CE", margin: "8px 0 12px", textTransform: "uppercase", letterSpacing: ".06em" }}>Armazenamento</div>
         {!m ? <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191" }}>Medindo…</div> : (
-          <div style={{ background: "#1B2022", border: "1px solid #2C3237", borderRadius: 12, padding: "14px 16px" }}>
+          <div style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.14)", borderRadius: 12, padding: "14px 16px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 6, flexWrap: "wrap", gap: 8 }}>
               <span style={{ font: "600 12.5px Inter,sans-serif", color: "#D6E2E2" }}>Dados (projetos, pedidos, clientes, financeiro)</span>
               <span style={{ font: "700 13px 'JetBrains Mono',monospace", color: cor }}>{kb(m.lsApp)} de ~5 MB · {pct.toFixed(1)}%</span>
@@ -8726,7 +8730,7 @@ SC,
               </div>
             </div>
             {m.pesados.length > 0 && (
-              <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px dashed #2C3237" }}>
+              <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px dashed rgba(63,209,206,.14)" }}>
                 <div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", marginBottom: 6 }}>PROJETOS COM AS FOTOS MAIS PESADAS</div>
                 {m.pesados.map((x, i) => (
                   <div key={i} style={{ display: "flex", justifyContent: "space-between", gap: 10, font: "400 12.5px Inter,sans-serif", color: "#D6E2E2", padding: "2px 0" }}>
@@ -8801,7 +8805,7 @@ SC,
             const setPix = (k) => (e) => setLsi({ ...lsi, pix: { ...pixFull, [k]: e.target.value } });
             const keyOk = !!pixKeyNormalized(pixFull);
             return (
-              <div className="pix-config" style={{ borderTop: "1px solid #2C3237", marginTop: 6, paddingTop: 12 }}>
+              <div className="pix-config" style={{ borderTop: "1px solid rgba(63,209,206,.14)", marginTop: 6, paddingTop: 12 }}>
                 <div style={{ font: "600 12.5px 'Space Grotesk',sans-serif", color: "#3FD1CE", marginBottom: 8 }}>PIX para recebimentos</div>
                 <div style={{ display: "flex", gap: 16, alignItems: "flex-start", flexWrap: "wrap" }}>
                   <div style={{ flex: 1, minWidth: 260 }}>
@@ -8818,7 +8822,7 @@ SC,
                   </div>
                   <div style={{ textAlign: "center" }}>
                     {pixReady(pixFull) ? <div style={{ padding: 6, background: "#fff", borderRadius: 8 }}><QRSvg text={pixPayload(pixFull)} size={130} /></div>
-                      : <div style={{ width: 142, height: 142, border: "1px dashed #3A4147", borderRadius: 8, display: "grid", placeItems: "center", font: "400 11px Inter,sans-serif", color: "#7E9191", padding: 10 }}>preencha a chave para ver o QR</div>}
+                      : <div style={{ width: 142, height: 142, border: "1px dashed rgba(63,209,206,.22)", borderRadius: 8, display: "grid", placeItems: "center", font: "400 11px Inter,sans-serif", color: "#7E9191", padding: 10 }}>preencha a chave para ver o QR</div>}
                     <div style={{ font: "500 10.5px Inter,sans-serif", color: "#8FA3A3", marginTop: 4 }}>QR de teste</div>
                   </div>
                 </div>
@@ -8902,7 +8906,7 @@ SC,
               onChange={(e) => { const file = e.target.files && e.target.files[0]; if (file) importBackup(file); e.target.value = ""; }} />
             <Btn kind="ghost" onClick={restoreInternal}><UploadIc size={15} />Restaurar cópia interna</Btn>
           </div>
-          <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", background: "#1D2124", border: "1px solid #16302F", borderRadius: 10, padding: "10px 14px", marginBottom: 16 }}>
+          <div style={{ font: "400 12.5px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 16 }}>
             Seus dados ficam salvos neste navegador, neste computador. Exporte um backup de vez em quando (guarde no Google Drive ou pen drive) — se trocar de computador ou limpar o navegador, é só importar o arquivo de volta.
           </div>
 
@@ -8966,7 +8970,7 @@ SC,
     };
     return (
       <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", background: "#14171A", padding: 16 }}>
-        <div style={{ width: "100%", maxWidth: 380, background: "#1C2023", border: "1px solid #2C3237", borderRadius: 16, padding: 26, boxShadow: "0 18px 50px rgba(8,40,40,.10)" }}>
+        <div style={{ width: "100%", maxWidth: 380, background: "rgba(12,26,28,.72)", border: "1px solid rgba(63,209,206,.14)", borderRadius: 16, padding: 26, boxShadow: "0 18px 50px rgba(8,40,40,.10)" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
             <img src={LOGO_S} alt="" style={{ width: 40, height: 40, borderRadius: "50%" }} />
             <div style={{ font: "700 20px 'Space Grotesk',sans-serif", color: "#F3F6F6" }}>Print<span style={{ color: "#14A6A4" }}>AR</span> <span style={{ color: "#F47A20" }}>3D</span></div>
@@ -8991,7 +8995,7 @@ SC,
             {mode === "in" && <a onClick={() => { setMode("recover"); setMsg(""); }} style={{ color: "#8FA3A3", cursor: "pointer" }}>Esqueci minha senha</a>}
             {mode === "recover" && <a onClick={() => { setMode("in"); setMsg(""); }} style={{ color: "#14A6A4", cursor: "pointer", fontWeight: 600 }}>Voltar para entrar</a>}
           </div>
-          <div style={{ textAlign: "center", marginTop: 16, borderTop: "1px solid #232829", paddingTop: 14 }}>
+          <div style={{ textAlign: "center", marginTop: 16, borderTop: "1px solid rgba(63,209,206,.1)", paddingTop: 14 }}>
             <a onClick={() => setOfflineMode(true)} style={{ color: "#8FA3A3", cursor: "pointer", font: "400 12px Inter,sans-serif" }}>Usar offline neste aparelho (sem sincronizar)</a>
           </div>
         </div>
@@ -9018,7 +9022,7 @@ SC,
     };
     return (
       <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", background: "#14171A", padding: 16 }}>
-        <div style={{ width: "100%", maxWidth: 380, background: "#1C2023", border: "1px solid #2C3237", borderRadius: 16, padding: 26, boxShadow: "0 18px 50px rgba(8,40,40,.10)" }}>
+        <div style={{ width: "100%", maxWidth: 380, background: "rgba(12,26,28,.72)", border: "1px solid rgba(63,209,206,.14)", borderRadius: 16, padding: 26, boxShadow: "0 18px 50px rgba(8,40,40,.10)" }}>
           <div style={{ font: "700 18px 'Space Grotesk',sans-serif", color: "#F3F6F6", marginBottom: 6 }}>Defina sua nova senha</div>
           <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", marginBottom: 16 }}>Crie uma nova senha para sua conta.</div>
           <L>Nova senha</L><In type="password" value={pass} onChange={(e) => setPass(e.target.value)} placeholder="mínimo 6 caracteres" />
@@ -9034,7 +9038,7 @@ SC,
   function PendingApprovalScreen() {
     return (
       <div style={{ minHeight: "100vh", display: "grid", placeItems: "center", background: "#14171A", padding: 16 }}>
-        <div style={{ width: "100%", maxWidth: 380, background: "#1C2023", border: "1px solid #2C3237", borderRadius: 16, padding: 26, textAlign: "center" }}>
+        <div style={{ width: "100%", maxWidth: 380, background: "rgba(12,26,28,.72)", border: "1px solid rgba(63,209,206,.14)", borderRadius: 16, padding: 26, textAlign: "center" }}>
           <img src={LOGO_S} alt="" style={{ width: 44, height: 44, borderRadius: "50%", marginBottom: 12 }} />
           <div style={{ font: "700 18px 'Space Grotesk',sans-serif", color: "#F3F6F6", marginBottom: 8 }}>Acesso aguardando aprovação</div>
           <div style={{ font: "400 13.5px Inter,sans-serif", color: "#7E9191", marginBottom: 18 }}>Sua conta ({session && session.user.email}) foi criada, mas ainda precisa ser aprovada pelo administrador para acessar os dados.</div>
@@ -9114,7 +9118,7 @@ SC,
   return (
     <div style={{ minHeight: "100vh", background: "#050C0D", fontFamily: "Inter,sans-serif", color: "#F3F6F6" }}>
       <div className="neo-bg no-print" /><div className="neo-scan no-print" />
-      <aside className="app-aside" style={{ position: "fixed", top: saveState.ok ? 0 : 64, left: 0, bottom: 0, width: 216, background: "#202124", display: "flex", flexDirection: "column", zIndex: 20, overflowY: "auto" }}>
+      <aside className="app-aside" style={{ position: "fixed", top: saveState.ok ? 0 : 64, left: 0, bottom: 0, width: 216, background: "rgba(12,26,28,.72)", display: "flex", flexDirection: "column", zIndex: 20, overflowY: "auto" }}>
         <div className="neo-brand">
           <img src={LOGO_NAV} alt="PrintAR 3D" />
           <small><span>CENTRAL DE COMANDO</span><b>v{APP_VERSION}</b></small>
@@ -9185,7 +9189,7 @@ SC,
       </main>
 
       {toast && (
-        <div style={{ position: "fixed", bottom: 22, left: "50%", transform: "translateX(-50%)", background: "#202124", color: "#fff", padding: "11px 18px", borderRadius: 10, font: "500 13px Inter,sans-serif", boxShadow: "0 10px 30px rgba(0,0,0,.25)", zIndex: 90, display: "flex", gap: 8, alignItems: "center", maxWidth: "90vw" }}>
+        <div style={{ position: "fixed", bottom: 22, left: "50%", transform: "translateX(-50%)", background: "rgba(12,26,28,.72)", color: "#fff", padding: "11px 18px", borderRadius: 10, font: "500 13px Inter,sans-serif", boxShadow: "0 10px 30px rgba(0,0,0,.25)", zIndex: 90, display: "flex", gap: 8, alignItems: "center", maxWidth: "90vw" }}>
           <CheckCircle2 size={16} color="#5CD6C7" /><span>{toast}</span>
           {undoSnap && <button onClick={doUndo} style={{ marginLeft: 6, background: "none", border: "1px solid #5CD6C7", color: "#5CD6C7", borderRadius: 7, padding: "4px 10px", cursor: "pointer", font: "600 12.5px Inter,sans-serif" }}>Desfazer</button>}
         </div>

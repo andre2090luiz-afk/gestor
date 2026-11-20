@@ -801,6 +801,44 @@
   .neo-bebar.sm{height:12px;margin:8px 0 2px;}
     @media (max-width:1000px){ .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(3,minmax(0,1fr));} .neo-rgrid{grid-template-columns:1fr;} }
   @media (max-width:700px){ .neo-rtiles{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-rprs{grid-template-columns:1fr;} .neo-rprg{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-rpr .neo-finleg{position:static;display:block;margin-top:6px;} }
+  /* v4.62 Ações */
+  .neo-actgrid{display:grid;grid-template-columns:minmax(260px,1fr) minmax(0,2.6fr);gap:14px;align-items:start;}
+  .neo-act7{display:flex;gap:8px;height:120px;align-items:stretch;margin-top:12px;}
+  .neo-act7 button{all:unset;cursor:pointer;flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:4px;min-width:0;}
+  .neo-act7 i{display:block;width:100%;max-width:40px;border-radius:6px 6px 3px 3px;background:linear-gradient(180deg,#3FD1CE,rgba(63,209,206,.15));transition:height .8s cubic-bezier(.2,.8,.2,1),filter .15s;}
+  .neo-act7 button:hover i{filter:brightness(1.25);}
+  .neo-act7 button.on i{background:linear-gradient(180deg,#F5821F,rgba(245,130,31,.2));box-shadow:0 0 12px rgba(245,130,31,.45);}
+  .neo-act7 b{font:700 11px 'JetBrains Mono',monospace;color:#E6F1F1;} .neo-act7 small{font:700 9.5px 'JetBrains Mono',monospace;color:#7F9A9B;} .neo-act7 button.td small{color:#3FD1CE;}
+  .neo-act7h{font:500 11px Inter,sans-serif;color:#7F9A9B;margin-top:8px;} .neo-act7h b{color:#F5821F;}
+  .neo-linkbtn{all:unset;cursor:pointer;color:#3FD1CE;font:600 11px Inter,sans-serif;text-decoration:underline;text-underline-offset:2px;}
+  .neo-actareas>div{margin-top:9px;} .neo-actareas .r{display:flex;justify-content:space-between;font:600 12px Inter,sans-serif;color:#E6F1F1;} .neo-actareas .r b{font:700 12px 'JetBrains Mono',monospace;}
+  .neo-actareas .tr{height:6px;border-radius:3px;background:rgba(127,154,155,.12);margin-top:5px;} .neo-actareas .tr i{display:block;height:100%;border-radius:3px;transition:width .8s;}
+  .neo-actday{font:700 11px 'JetBrains Mono',monospace;color:#3FD1CE;letter-spacing:.08em;margin:16px 0 8px;display:flex;gap:10px;align-items:center;}
+  .neo-actday:after{content:"";flex:1;height:1px;background:rgba(63,209,206,.18);order:1;} .neo-actday span{order:2;color:#7F9A9B;font-size:10px;}
+  .neo-actrow{display:grid;grid-template-columns:44px 32px minmax(0,1fr) auto;gap:10px;align-items:start;padding:10px 12px;border-radius:12px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.1);margin-bottom:6px;transition:border-color .15s;}
+  .neo-actrow:hover{border-color:rgba(63,209,206,.28);}
+  .neo-actrow .tm{font:600 12px 'JetBrains Mono',monospace;color:#7F9A9B;padding-top:7px;}
+  .neo-actrow .ic{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;font:700 14px Inter,sans-serif;border:1px solid currentColor;background:rgba(5,12,12,.6);}
+  .neo-actrow .act-label{font:600 13px Inter,sans-serif;color:#F3F6F6;margin-top:6px;}
+  .neo-actrow .tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:4px;}
+  .neo-acttag{font:700 9px 'JetBrains Mono',monospace;border:1px solid rgba(127,154,155,.4);color:#7F9A9B;border-radius:5px;padding:1px 6px;letter-spacing:.05em;text-transform:uppercase;} .neo-acttag.w{color:#FFAA5C;border-color:rgba(255,170,92,.5);}
+  .neo-actrow.undone{opacity:.55;} .neo-actrow.undone .act-label{text-decoration:line-through;}
+  .neo-actdiff{margin-top:8px;display:flex;flex-direction:column;gap:5px;}
+  .neo-actdiff>div{font:500 12px Inter,sans-serif;color:#CFE3E3;display:flex;gap:6px 10px;align-items:center;flex-wrap:wrap;}
+  .neo-adpart{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;}
+  .neo-actdiff em{font-style:normal;font:600 11px 'JetBrains Mono',monospace;color:#FF8A8A;text-decoration:line-through;background:rgba(255,107,107,.08);border-radius:5px;padding:1px 6px;}
+  .neo-actdiff strong{font:600 11px 'JetBrains Mono',monospace;color:#3FD1CE;background:rgba(63,209,206,.1);border-radius:5px;padding:1px 6px;}
+  .neo-actdiff small{font:600 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-adtag{font:700 9.5px 'JetBrains Mono',monospace;border-radius:5px;padding:1px 6px;} .neo-adtag.add{color:#3FD1CE;background:rgba(63,209,206,.1);} .neo-adtag.del{color:#FF8A8A;background:rgba(255,107,107,.1);}
+  .neo-actrow .act-more{margin-top:5px;display:inline-block;}
+  .neo-actrow .act-btns{position:relative;}
+  .neo-actrow .act-undo.on{border-color:#F5821F;color:#F5821F;}
+  .neo-actprev{position:absolute;right:0;top:calc(100% + 8px);width:min(380px,80vw);border-radius:14px;border:1px solid rgba(245,130,31,.55);background:rgba(10,20,21,.98);box-shadow:0 18px 40px rgba(0,0,0,.6);padding:12px 14px;z-index:40;animation:neoPop .16s ease-out;}
+  .neo-actprev h5{margin:0 0 8px;font:700 10px 'JetBrains Mono',monospace;color:#F5821F;letter-spacing:.08em;}
+  .neo-actprev ul{margin:0;padding:0;list-style:none;} .neo-actprev li{font:500 12px/1.5 Inter,sans-serif;color:#E6F1F1;margin:3px 0;padding-left:12px;position:relative;} .neo-actprev li:before{content:"•";position:absolute;left:0;color:#F5821F;} .neo-actprev li b{color:#3FD1CE;}
+  @keyframes neoPop{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+  @media (max-width:1000px){ .neo-actgrid{grid-template-columns:1fr;} }
+  @media (max-width:600px){ .neo-actrow{grid-template-columns:38px minmax(0,1fr);} .neo-actrow .ic{display:none;} .neo-actrow .act-btns{grid-column:1 / -1;justify-self:end;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -943,7 +981,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.61";
+const APP_VERSION = "4.62";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -2183,7 +2221,7 @@ const ACT_DELTA_FIELDS = new Set(["stockG", "qty", "hoursUsed", "stock", "consum
 const ACT_ENT = { orders: "pedido", quotes: "orçamento", projects: "projeto", kits: "kit", clients: "cliente", filaments: "filamento", materials: "material", products: "estoque de produto", expenses: "investimento", cashflow: "lançamento do caixa", fixedCosts: "custo fixo", printers: "impressora" };
 const ACT_KEY_ORDER = ["quotes", "orders", "projects", "kits", "clients", "expenses", "fixedCosts", "cashflow", "filaments", "materials", "printers", "products", "settings", "storeInfo"];
 const ACT_CAT = { orders: "Pedidos", quotes: "Orçamentos", projects: "Projetos", kits: "Projetos", clients: "Clientes", filaments: "Estoque", materials: "Estoque", products: "Estoque", expenses: "Financeiro", cashflow: "Financeiro", fixedCosts: "Financeiro", printers: "Impressoras", settings: "Configurações", storeInfo: "Configurações" };
-const ACT_FIELD = { status: "status", paid: "pago", qty: "quantidade", price: "valor", cost: "custo", stockG: "estoque", hoursUsed: "horas de uso", stock: "estoque", name: "nome", salePrice: "preço de venda", dueDate: "entrega", date: "data", unitPrice: "preço", items: "itens", discount: "desconto", value: "valor", clientId: "cliente", printedQty: "impressas", prints: "impressões", active: "ativo", pix: "PIX", consumedQty: "peças já baixadas" };
+const ACT_FIELD = { status: "status", paid: "pago", qty: "quantidade", price: "valor", cost: "custo", stockG: "estoque", hoursUsed: "horas de uso", stock: "estoque", name: "nome", salePrice: "preço de venda", dueDate: "entrega", date: "data", unitPrice: "preço", items: "itens", discount: "desconto", value: "valor", clientId: "cliente", printedQty: "impressas", prints: "impressões", active: "ativo", pix: "PIX", consumedQty: "peças já baixadas", paidMonths: "meses pagos", partDone: "partes prontas", events: "histórico", quoteCode: "orçamento" };
 const ACT_HIDE_FIELDS = new Set(["ts", "movements", "consumedQty", "updatedAt"]);
 const actSame = (x, y) => x === y || JSON.stringify(x) === JSON.stringify(y);
 const actIsIdList = (arr) => Array.isArray(arr) && arr.length > 0 && arr.every((x) => x && typeof x === "object" && x.id != null);
@@ -7844,61 +7882,161 @@ function App() {
 
   /* =============================== ACOES (v4.41) =============================== */
   const ACT_FILTERS = ["Tudo", "Pedidos", "Orçamentos", "Projetos", "Clientes", "Estoque", "Financeiro", "Impressoras", "Configurações"];
+  const ACT_CAT_IC = { Pedidos: "🛒", "Orçamentos": "📝", Projetos: "📦", Clientes: "👥", Estoque: "🧵", Financeiro: "🧾", Impressoras: "🖨", "Configurações": "⚙", Outros: "•" };
+  const ACT_CAT_COL = { Pedidos: "#3FD1CE", "Orçamentos": "#F5821F", Projetos: "#A88AF0", Clientes: "#6FA0EA", Estoque: "#9AF3EC", Financeiro: "#FFD166", Impressoras: "#FF8AC0", "Configurações": "#8FA0AC", Outros: "#7F9A9B" };
+  const ACT_TYPES = [["all", "Todos os tipos", "", ""], ["add", "Criou", "＋", "#3FD1CE"], ["edit", "Alterou", "✎", "#6FA0EA"], ["del", "Excluiu", "🗑", "#FF6B6B"], ["pay", "Pagamentos", "💰", "#FFD166"], ["undo", "Desfeitas", "↶", "#8FA0AC"]];
+  const actType = (a) => a.kind === "undo" || a.kind === "redo" || /^(Desfez|Refez)/.test(a.label) ? "undo" : /^Excluiu/.test(a.label) ? "del" : /^(Criou|Lançou)/.test(a.label) ? "add" : /pago:? não → sim|^Recebeu|^Recebi|pagamento/i.test(a.label + " " + (a.details || []).join(" ")) ? "pay" : "edit";
+  const ACT_FIELD_LABELS = Array.from(new Set([...Object.values(ACT_FIELD), ...Object.keys(ACT_FIELD)])).sort((a, b) => b.length - a.length);
+  /* "✎ Pedido X: status A → B · pago não → sim" vira partes legíveis */
+  const actParse = (line) => {
+    const m = /^(✎|＋|🗑)\s(.*)$/.exec(line || "");
+    if (!m) return { kind: "txt", text: line };
+    if (m[1] !== "✎") { const i = m[2].indexOf(": "); return { kind: m[1] === "＋" ? "add" : "del", ent: i > 0 ? m[2].slice(0, i) : m[2], name: i > 0 ? m[2].slice(i + 2) : "" }; }
+    const i = m[2].indexOf(": ");
+    const head = i > 0 ? m[2].slice(0, i) : m[2];
+    const parts = (i > 0 ? m[2].slice(i + 2) : "").split(" · ").filter(Boolean).map((p) => {
+      const k = p.indexOf(" → ");
+      if (k < 0) return { field: p };
+      const left = p.slice(0, k); let right = p.slice(k + 3), dl = "";
+      const dm = /^(.*) \(([+−-].*)\)$/.exec(right); if (dm) { right = dm[1]; dl = dm[2]; }
+      const f = ACT_FIELD_LABELS.find((x) => left === x || left.startsWith(x + " "));
+      return f ? { field: f, before: left.slice(f.length + 1), after: right, dl } : { field: "", before: left, after: right, dl };
+    });
+    return { kind: "edit", head, parts };
+  };
+  const ActDiff = ({ line }) => {
+    const d = actParse(line);
+    if (d.kind === "txt") return <div>{d.text}</div>;
+    if (d.kind === "add") return <div><span className="neo-adtag add">＋ novo</span>{d.ent}: <b>{d.name}</b></div>;
+    if (d.kind === "del") return <div><span className="neo-adtag del">🗑 apagado</span>{d.ent}: <b>{d.name}</b></div>;
+    return <div><span>{d.head}:</span>{d.parts.map((p, i) => <span key={i} className="neo-adpart">{p.field ? `${p.field} ` : ""}{p.before != null && <React.Fragment><em>{p.before || "—"}</em> → <strong>{p.after || "—"}</strong>{p.dl ? <small> {p.dl}</small> : null}</React.Fragment>}</span>)}</div>;
+  };
+  const actPreview = (a) => (a.details || []).map((line) => {
+    const d = actParse(line);
+    if (d.kind === "add") return <span>{d.ent} <b>{d.name}</b> será apagado(a)</span>;
+    if (d.kind === "del") return <span>{d.ent} <b>{d.name}</b> volta a existir</span>;
+    if (d.kind === "edit") return <span>{d.head}: {d.parts.map((p, i) => <React.Fragment key={i}>{i ? " · " : ""}{p.field ? `${p.field} ` : ""}{p.before != null ? <React.Fragment>volta para <b>{p.before || "—"}</b>{p.dl ? ` (${p.dl.replace(/^[+−-]/, (s) => (s === "+" ? "−" : "+"))})` : ""}</React.Fragment> : "volta como era"}</React.Fragment>)}</span>;
+    return <span>{d.text}</span>;
+  });
   function Acoes() {
     const [, force] = useState(0);
     const ui = ACT_UI;
+    if (ui.type == null) ui.type = "all";
+    if (ui.day === undefined) ui.day = null;
     const set = (patch) => { Object.assign(ui, patch); force((x) => x + 1); };
+    const [help, setHelp] = useState(false);
+    const [confirmId, setConfirmId] = useState(null);
+    useEffect(() => {
+      if (!confirmId) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-actprev, .act-undo"))) setConfirmId(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [confirmId]);
     const norm = (s) => String(s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
-    const list = actionsPrune(actRef.current || []).filter((a) => ui.cat === "Tudo" || (a.cats || []).includes(ui.cat))
-      .filter((a) => !ui.q.trim() || norm(a.label + " " + (a.details || []).join(" ")).includes(norm(ui.q.trim())));
     const dayKey = (ts) => { const d = new Date(ts); return d.getFullYear() + "-" + String(d.getMonth() + 1).padStart(2, "0") + "-" + String(d.getDate()).padStart(2, "0"); };
-    const dayLabel = (k) => k === todayISO() ? "Hoje" : k === addDays(todayISO(), -1) ? "Ontem" : fmtDate(k);
+    const dayLabel = (k) => { const w = new Date(k + "T12:00:00").toLocaleDateString("pt-BR", { weekday: "long" }).toUpperCase(); return `${k === todayISO() ? "HOJE · " : k === addDays(todayISO(), -1) ? "ONTEM · " : ""}${w}, ${fmtDate(k).slice(0, 5)}`; };
     const hhmm = (ts) => { const d = new Date(ts); return String(d.getHours()).padStart(2, "0") + ":" + String(d.getMinutes()).padStart(2, "0"); };
+    const all = actionsPrune(actRef.current || []);
+    const byCatType = all.filter((a) => (ui.cat === "Tudo" || (a.cats || []).includes(ui.cat)) && (ui.type === "all" || actType(a) === ui.type));
+    const list = byCatType.filter((a) => (!ui.day || dayKey(a.ts) === ui.day) && (!ui.q.trim() || norm(a.label + " " + (a.details || []).join(" ")).includes(norm(ui.q.trim()))));
     const groups = [];
     list.forEach((a) => { const k = dayKey(a.ts); const g = groups[groups.length - 1]; if (g && g.k === k) g.items.push(a); else groups.push({ k, items: [a] }); });
-    const icon = (a) => a.kind === "undo" || /^Desfez/.test(a.label) ? "↶" : /^Refez/.test(a.label) ? "↷" : /^Excluiu/.test(a.label) ? "🗑" : /^(Criou|Lançou)/.test(a.label) ? "＋" : /pago: não → sim/.test(a.label) ? "💰" : "✎";
+    const today = todayISO();
+    const todayL = all.filter((a) => dayKey(a.ts) === today);
+    const undoneN = all.filter((a) => a.undone).length;
+    const catCount = {}; all.forEach((a) => (a.cats || []).forEach((c) => { catCount[c] = (catCount[c] || 0) + 1; }));
+    const cats = Object.entries(catCount).sort((a, b) => b[1] - a[1]);
+    const top = cats[0];
+    const days7 = Array.from({ length: 7 }).map((_, i) => { const k = addDays(today, i - 6); return { k, n: all.filter((a) => dayKey(a.ts) === k).length }; });
+    const max7 = Math.max(1, ...days7.map((d) => d.n));
+    const undoneAt = (a) => { const u = all.find((x) => x.undoOf === a.id); return u ? hhmm(u.ts) : ""; };
+    const fCount = (c) => all.filter((a) => (c === "Tudo" || (a.cats || []).includes(c)) && (ui.type === "all" || actType(a) === ui.type)).length;
     return (
-      <div>
-        <SectionHead title="Ações" count={(actRef.current || []).length} />
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-          💡 Tudo o que foi feito nos últimos <b>7 dias</b>. <b>Desfazer</b> volta a ação inteira — inclusive o que ela mexeu junto (filamento, horas da impressora, estoque, financeiro). Se outra coisa mexeu nos mesmos dados depois, o sistema avisa antes. As ações ficam guardadas neste computador.
+      <div className="neo-act">
+        <div className="neo-pagehead">
+          <span className="neo-code">AÇÕES</span><h2>Histórico do que foi feito</h2>
+          <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Como funciona">?</button>
         </div>
-        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", marginBottom: 12 }}>
-          <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-            {ACT_FILTERS.map((c) => (
-              <button key={c} className="act-filter" data-c={c} onClick={() => set({ cat: c })} style={{ padding: "6px 12px", borderRadius: 999, cursor: "pointer", border: ui.cat === c ? "1.5px solid #14A6A4" : "1px solid rgba(63,209,206,.22)", background: ui.cat === c ? "rgba(63,209,206,.1)" : "rgba(12,26,28,.72)", font: "600 12.5px Inter,sans-serif", color: ui.cat === c ? "#3FD1CE" : "#B5C4C4" }}>{c}</button>
-            ))}
-          </div>
-          <div style={{ flex: 1, minWidth: 180 }}><In className="act-search" value={ui.q} onChange={(e) => set({ q: e.target.value })} placeholder="Buscar nas ações…" /></div>
+        {help && <div className="neo-hud neo-helpbox">💡 Tudo o que foi feito nos últimos <b>7 dias</b>. <b>Desfazer</b> volta a ação inteira — inclusive o que ela mexeu junto (filamento, horas da impressora, estoque, financeiro) — e antes mostra o que vai voltar. Se outra coisa mexeu nos mesmos dados depois, o sistema avisa. As ações ficam guardadas neste computador.</div>}
+        <div className="neo-ckpis">
+          <Reveal className="neo-hud neo-k act-k-today" delay={0}><div className="l">Hoje</div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={todayL.length} format={(v) => fmtN(Math.round(v))} /></div><span className="neo-kd">{todayL.length ? `última às ${hhmm(todayL[0].ts)}` : "nenhuma ação hoje"}</span></Reveal>
+          <Reveal className="neo-hud neo-k act-k-7" delay={60}><div className="l">Últimos 7 dias</div><div className="v"><CountUp value={all.length} format={(v) => fmtN(Math.round(v))} /></div><span className="neo-kd">o histórico guarda 7 dias</span></Reveal>
+          <Reveal className="neo-hud neo-k act-k-undo" delay={120}><div className="l">Desfeitas</div><div className="v" style={{ color: undoneN ? "#F5821F" : undefined }}>{fmtN(undoneN)}</div><span className="neo-kd">ações que voltaram atrás</span></Reveal>
+          <Reveal className="neo-hud neo-k act-k-top" delay={180}><div className="l">Mais mexido</div><div className="v" style={{ fontSize: 22 }}>{top ? `${ACT_CAT_IC[top[0]] || ""} ${top[0]}` : "—"}</div><span className="neo-kd">{top && all.length ? `${fmtN((top[1] / all.length) * 100, 0)}% das ações` : "sem ações ainda"}</span></Reveal>
         </div>
-        {list.length === 0 ? <Card><Empty icon={ClockIc} text="Nenhuma ação encontrada" hint="As ações aparecem aqui conforme você usa o sistema." /></Card> : groups.map((g) => (
-          <div key={g.k} style={{ marginBottom: 14 }}>
-            <div style={{ font: "600 11.5px Inter,sans-serif", color: "#3FD1CE", textTransform: "uppercase", letterSpacing: ".06em", margin: "4px 2px 6px" }}>{dayLabel(g.k)}</div>
-            <Card style={{ padding: 0, overflow: "hidden" }}>
-              {g.items.map((a, i) => {
-                const op = !!ui.open[a.id];
-                return (
-                  <div key={a.id} className={"act-row" + (a.undone ? " undone" : "")} style={{ borderTop: i ? "1px solid rgba(63,209,206,.1)" : "none", padding: "10px 14px", opacity: a.undone ? .55 : 1 }}>
-                    <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-                      <span style={{ font: "600 12px 'JetBrains Mono',monospace", color: "#8FA3A3", flexShrink: 0 }}>{hhmm(a.ts)}</span>
-                      <span style={{ width: 20, textAlign: "center", flexShrink: 0 }}>{icon(a)}</span>
-                      <div onClick={() => set({ open: { ...ui.open, [a.id]: !op } })} style={{ flex: 1, minWidth: 0, cursor: "pointer" }}>
-                        <div className="act-label" style={{ font: "500 13px Inter,sans-serif", color: "#D6E2E2", textDecoration: a.undone ? "line-through" : "none" }}>{a.label}</div>
-                        <div style={{ font: "400 11px Inter,sans-serif", color: "#7E9191" }}>{(a.cats || []).join(" · ")}{(a.details || []).length > 1 ? ` · ${op ? "esconder" : "ver"} ${a.details.length} detalhe(s)` : ""}{a.undone ? " · desfeita" : ""}</div>
-                      </div>
-                      {!a.undone && <Btn small kind="ghost" className="act-undo" onClick={() => undoAction(a)}>{a.kind === "undo" ? "↷ Refazer" : "↶ Desfazer"}</Btn>}
-                    </div>
-                    {op && (a.details || []).length > 0 && (
-                      <div style={{ margin: "6px 0 2px 64px", font: "400 12px Inter,sans-serif", color: "#93A6A6", lineHeight: 1.6 }}>
-                        {a.details.map((t, j) => <div key={j}>{t}</div>)}
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </Card>
+        <div className="neo-actgrid">
+          <div className="neo-col">
+            <Reveal className="neo-hud" delay={40}>
+              <span className="neo-code">ATIVIDADE · 7 DIAS</span>
+              <div className="neo-act7">
+                {days7.map((d) => (
+                  <button key={d.k} className={"act-day" + (ui.day === d.k ? " on" : "") + (d.k === today ? " td" : "")} data-d={d.k} title={`${fmtDate(d.k)} — ${d.n} ação(ões). Clique para ver só este dia`} onClick={() => set({ day: ui.day === d.k ? null : d.k })}>
+                    <b>{d.n || ""}</b><i style={{ height: Math.max(3, (d.n / max7) * 100) + "%" }} /><small>{d.k === today ? "HOJE" : new Date(d.k + "T12:00:00").toLocaleDateString("pt-BR", { weekday: "short" }).replace(".", "").toUpperCase()}</small>
+                  </button>
+                ))}
+              </div>
+              <div className="neo-act7h">{ui.day ? <React.Fragment>Mostrando só <b>{fmtDate(ui.day)}</b> · <button className="neo-linkbtn act-day-clear" onClick={() => set({ day: null })}>ver todos</button></React.Fragment> : "Clique num dia para ver só ele"}</div>
+            </Reveal>
+            <Reveal className="neo-hud neo-actareas" delay={100}>
+              <span className="neo-code">POR ÁREA</span>
+              {cats.length === 0 ? <div className="neo-empty">Sem ações ainda.</div> : cats.slice(0, 6).map(([c, n]) => (
+                <div key={c}><div className="r"><span>{ACT_CAT_IC[c] || "•"} {c}</span><b>{n}</b></div><div className="tr"><i style={{ width: `${(n / cats[0][1]) * 100}%`, background: ACT_CAT_COL[c] || "#7F9A9B" }} /></div></div>
+              ))}
+            </Reveal>
           </div>
-        ))}
+          <div style={{ minWidth: 0 }}>
+            <div className="neo-fchips" style={{ marginBottom: 8 }}>
+              {ACT_FILTERS.map((c) => <button key={c} className={"neo-fchip act-filter" + (ui.cat === c ? " on" : "")} data-c={c} onClick={() => set({ cat: c })}>{c === "Tudo" ? "" : `${ACT_CAT_IC[c] || ""} `}{c} {fCount(c)}</button>)}
+            </div>
+            <div className="neo-penbar">
+              <div className="neo-fchips">
+                {ACT_TYPES.map(([k, l, ic, col]) => <button key={k} className={"neo-fchip act-type" + (ui.type === k ? " on" : "")} data-t={k} style={col && ui.type !== k ? { color: col } : undefined} onClick={() => set({ type: k })}>{ic ? `${ic} ` : ""}{l}</button>)}
+              </div>
+              <div className="neo-search"><SearchIc size={14} /><input className="act-search" value={ui.q} onChange={(e) => set({ q: e.target.value })} placeholder="Buscar nas ações…" />{ui.q && <button onClick={() => set({ q: "" })}>×</button>}</div>
+            </div>
+            <div className="neo-hud neo-acttl">
+              <span className="neo-code">LINHA DO TEMPO</span>
+              {list.length === 0 ? <Empty icon={ClockIc} text="Nenhuma ação encontrada" hint={all.length ? "Troque os filtros ou a busca." : "As ações aparecem aqui conforme você usa o sistema."} /> : groups.map((g) => (
+                <React.Fragment key={g.k}>
+                  <div className="neo-actday">{dayLabel(g.k)}<span>{g.items.length}</span></div>
+                  {g.items.map((a) => {
+                    const t = actType(a); const T = ACT_TYPES.find((x) => x[0] === t);
+                    const icon = a.kind === "undo" || /^Desfez/.test(a.label) ? "↶" : /^Refez/.test(a.label) ? "↷" : T[2];
+                    const op = !!ui.open[a.id];
+                    const det = a.details || [];
+                    const shown = op ? det : det.slice(0, 3);
+                    const isConf = confirmId === a.id;
+                    return (
+                      <div key={a.id} className={"neo-actrow act-row" + (a.undone ? " undone" : "")} data-t={t} style={isConf ? { zIndex: 30, position: "relative" } : undefined}>
+                        <span className="tm">{hhmm(a.ts)}</span>
+                        <span className="ic" style={{ color: T[3] || "#8FA0AC" }}>{icon}</span>
+                        <div style={{ minWidth: 0 }}>
+                          <div className="act-label">{a.label}</div>
+                          <div className="tags">{(a.cats || []).map((c) => <span key={c} className="neo-acttag">{c}</span>)}{a.undone && <span className="neo-acttag w">DESFEITA{undoneAt(a) ? ` ÀS ${undoneAt(a)}` : ""}</span>}</div>
+                          {det.length > 0 && <div className="neo-actdiff">{shown.map((d, j) => <ActDiff key={j} line={d} />)}</div>}
+                          {det.length > 3 && <button className="neo-linkbtn act-more" onClick={() => set({ open: { ...ui.open, [a.id]: !op } })}>{op ? "ver menos" : `ver mais ${det.length - 3}`}</button>}
+                        </div>
+                        <div className="act-btns">
+                          {!a.undone && <button className={"neo-bg2 act-undo" + (isConf ? " on" : "")} onClick={() => setConfirmId(isConf ? null : a.id)}>{a.kind === "undo" ? "↷ Refazer" : "↶ Desfazer"}</button>}
+                          {isConf && (
+                            <div className="neo-actprev">
+                              <h5>{a.kind === "undo" ? "↷ ISSO VAI SER REFEITO:" : "↶ ISSO VAI VOLTAR:"}</h5>
+                              <ul>{(det.length ? actPreview(a).slice(0, 8) : [<span>{a.label}</span>]).map((x, j) => <li key={j}>{x}</li>)}{det.length > 8 && <li style={{ color: "#7F9A9B" }}>… e mais {det.length - 8}</li>}</ul>
+                              <div className="neo-oacts" style={{ justifyContent: "flex-end", marginTop: 10 }}>
+                                <button className="neo-bg2 act-undo-cancel" onClick={() => setConfirmId(null)}>Cancelar</button>
+                                <button className="neo-bp act-undo-ok" onClick={() => { setConfirmId(null); undoAction(a); }}>{a.kind === "undo" ? "Refazer" : "Desfazer"}</button>
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
@@ -8576,7 +8714,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
                     <div className="neo-oacts">
                       <button className="neo-bg2" title="Imagem com QR e chave PIX" onClick={() => openPix(`Venda ${fmtDate(o.date)} · ${projName(o)}`, o.clientId)}>PIX</button>
                       {c && c.phone && <button className="neo-bg2 wa fin-wa" title="Cobrar no WhatsApp" onClick={() => waOpen(c.phone, cobrarMsg(c, [o]))}><WhatsIc size={13} />Cobrar</button>}
-                      <button className="neo-bp fin-recv" onClick={() => { saveItem("orders", { ...o, paid: true }); notify("Recebimento registrado ✓"); }}><CheckCircle2 size={13} />Recebi</button>
+                      <button className="neo-bp fin-recv" onClick={() => { logAs(`Recebeu pagamento: ${projName(o)} × ${fmtN(o.qty)}${c ? ` · ${c.name}` : ""}`); saveItem("orders", { ...o, paid: true }); notify("Recebimento registrado ✓"); }}><CheckCircle2 size={13} />Recebi</button>
                     </div>
                   </div>
                 </div>

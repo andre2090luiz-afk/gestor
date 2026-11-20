@@ -765,12 +765,12 @@
   .res-patr .neo-finleg{float:none;position:absolute;top:14px;right:16px;}
   @media (max-width:700px){ .neo-wf,.neo-wfl{gap:6px;} .neo-wfl span{font-size:9px;} .neo-wf .wf-col b{font-size:9.5px;} }
   /* v4.60 Relatórios */
-  .neo-rtiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+  .neo-rtiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(128px,1fr));gap:8px;margin-bottom:14px;}
   .neo-rtile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;border-radius:14px;border:1px solid rgba(63,209,206,.14);background:rgba(8,20,21,.75);padding:11px 12px;transition:border-color .15s,box-shadow .15s,transform .15s;}
   .neo-rtile:hover{border-color:rgba(63,209,206,.4);transform:translateY(-1px);}
   .neo-rtile.on{border-color:#3FD1CE;box-shadow:0 0 0 1px #3FD1CE,0 0 22px rgba(63,209,206,.22);}
   .neo-rtile.dash{border-style:dashed;}
-  .neo-rtile .ic{font-size:18px;display:block;} .neo-rtile b{display:block;font:600 13px Inter,sans-serif;margin-top:6px;color:#F3F6F6;} .neo-rtile small{display:block;font:400 11px Inter,sans-serif;color:#7F9A9B;margin-top:2px;line-height:1.35;}
+  .neo-rtile{display:flex;align-items:center;gap:9px;padding:11px 12px;min-height:50px;} .neo-rtile .ic{font-size:17px;flex:none;} .neo-rtile b{display:block;font:600 12.5px Inter,sans-serif;color:#F3F6F6;line-height:1.25;} .neo-rtile small{display:block;font:400 11px Inter,sans-serif;color:#7F9A9B;margin-top:2px;line-height:1.35;}
   .neo-rtile .pdf{position:absolute;top:9px;right:9px;font:700 8.5px 'JetBrains Mono',monospace;color:#F5821F;border:1px solid rgba(245,130,31,.5);border-radius:4px;padding:0 4px;}
   .neo-rband{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding:12px 16px;}
   .neo-rband img{width:52px;height:52px;border-radius:50%;flex:none;box-shadow:0 0 14px rgba(63,209,206,.25);}
@@ -786,6 +786,9 @@
   .neo-rhb .tr{height:7px;border-radius:4px;background:rgba(127,154,155,.12);margin-top:5px;} .neo-rhb .tr i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#14B8B2,#3FD1CE);box-shadow:0 0 8px rgba(63,209,206,.35);}
   .neo-rhb .v{font:700 12.5px 'JetBrains Mono',monospace;color:#3FD1CE;text-align:right;white-space:nowrap;} .neo-rhb .v small{display:block;font:500 10px Inter,sans-serif;color:#7F9A9B;}
   .neo-rgrid .neo-donut{grid-template-columns:1fr;justify-items:center;gap:10px;} .neo-rgrid .neo-donut-leg{width:100%;}
+  .neo-rtable{overflow-x:auto;margin-top:8px;} .neo-rtable table{width:100%;border-collapse:collapse;} .neo-rtable th{text-align:left;font:700 9.5px 'JetBrains Mono',monospace;color:#7F9A9B;letter-spacing:.06em;text-transform:uppercase;padding:8px 10px;border-bottom:1px solid rgba(63,209,206,.18);white-space:nowrap;}
+  .neo-rtable td{padding:9px 10px;border-bottom:1px dashed rgba(63,209,206,.1);font:500 12.5px Inter,sans-serif;color:#D6E2E2;} .neo-rtable td b{font-weight:600;color:#F3F6F6;} .neo-rtable td.m{font-family:'JetBrains Mono',monospace;font-size:12px;white-space:nowrap;} .neo-rtable tr:hover td{background:rgba(63,209,206,.04);}
+  .neo-rpill{font:700 10px Inter,sans-serif;border-radius:999px;padding:2px 9px;border:1px solid currentColor;white-space:nowrap;} .neo-rpill.t{color:#3FD1CE;} .neo-rpill.w{color:#FFAA5C;} .neo-rpill.r{color:#FF6B6B;} .neo-rpill.o{color:#6FA0EA;} .neo-rpill.g{color:#8FA0AC;}
   .neo-rsub{font:700 9.5px 'JetBrains Mono',monospace;color:#7F9A9B;margin:14px 0 6px;letter-spacing:.06em;}
   .neo-rcat{display:flex;height:12px;border-radius:7px;overflow:hidden;background:rgba(127,154,155,.12);} .neo-rcat i{display:block;}
   .neo-rcatl{display:flex;flex-wrap:wrap;gap:4px 10px;font:600 10.5px Inter,sans-serif;color:#7F9A9B;margin-top:6px;}
@@ -796,7 +799,7 @@
   .neo-rprg>div{border-radius:12px;border:1px solid rgba(63,209,206,.14);background:rgba(5,12,12,.55);padding:10px;} .neo-rprg small{display:block;font:600 9.5px Inter,sans-serif;color:#7F9A9B;text-transform:uppercase;letter-spacing:.05em;} .neo-rprg b{font:700 16px 'Space Grotesk',sans-serif;color:#E6F1F1;}
   .neo-rpb{margin-top:12px;font:600 11.5px Inter,sans-serif;color:#7F9A9B;} .neo-rpb b{color:#E6F1F1;}
   .neo-bebar.sm{height:12px;margin:8px 0 2px;}
-  @media (max-width:1000px){ .neo-rtiles{grid-template-columns:repeat(3,minmax(0,1fr));} .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(3,minmax(0,1fr));} .neo-rgrid{grid-template-columns:1fr;} }
+    @media (max-width:1000px){ .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(3,minmax(0,1fr));} .neo-rgrid{grid-template-columns:1fr;} }
   @media (max-width:700px){ .neo-rtiles{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-rprs{grid-template-columns:1fr;} .neo-rprg{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-rpr .neo-finleg{position:static;display:block;margin-top:6px;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
@@ -940,7 +943,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.60";
+const APP_VERSION = "4.61";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -6615,16 +6618,15 @@ function App() {
     fallback();
   };
   const REP_TILES = [
-    ["resumo", "📊", "Resumo do negócio", "Faturamento, lucro, produção e rankings", true],
-    ["pedidos", "🛒", "Pedidos e vendas", "Lista do período com pago / a receber", true],
+    ["resumo", "📊", "Resumo", "Faturamento, lucro, produção e rankings", true],
+    ["pedidos", "🛒", "Pedidos", "Lista do período com pago / a receber", true],
     ["orcamentos", "📝", "Orçamentos", "Enviados, aprovados e taxa de conversão", true],
     ["projetos", "📦", "Projetos", "Catálogo com custo, preço e margem", true],
     ["clientes", "👥", "Clientes", "Quem comprou, quanto e quando", true],
     ["investimentos", "🧾", "Investimentos", "Compras e gastos por categoria", true],
-    ["brindes", "🎁", "Brindes e perdas", "Brindes, calibrações e o custo real", true],
-    ["itens", "🏷", "Desempenho por item", "Margem e giro de cada produto", true],
+    ["brindes", "🎁", "Brindes", "Brindes, calibrações e o custo real", true],
+    ["itens", "🏷", "Por item", "Margem e giro de cada produto", true],
     ["impressoras", "🖨", "Impressoras", "Horas, produção em R$, energia e retorno", true],
-    ["whats", "💬", "Resumo no WhatsApp", "Texto pronto com os números do período", false],
   ];
   const RDelta = ({ a, b, pts }) => {
     if (pts) { const d = a - b; return <span className={"neo-rdl " + (d >= 0 ? "up" : "dn")}>{d >= 0 ? "▲" : "▼"} {fmtN(Math.abs(d), 0)} pts</span>; }
@@ -6641,8 +6643,12 @@ function App() {
     const setFrom = (v) => { REP_UI.from = v; setFromS(v); };
     const [to, setToS] = useState(REP_UI.to || todayISO());
     const setTo = (v) => { REP_UI.to = v; setToS(v); };
-    const [rep, setRepS] = useState(REP_UI.rep);
-    const setRep = (v) => { REP_UI.rep = v; setRepS(v); };
+    const [rep, setRepS] = useState(REP_UI.rep === "whats" ? "resumo" : REP_UI.rep);
+    const [vfAll, setVfAll] = useState(REP_UI.vf || {});
+    const setVf = (f) => { const nx = { ...vfAll, [rep]: f }; REP_UI.vf = nx; setVfAll(nx); };
+    const [vq, setVqS] = useState("");
+    const setVq = (v) => setVqS(v);
+    const setRep = (v) => { REP_UI.rep = v; setRepS(v); setVqS(""); };
     const [help, setHelp] = useState(false);
 
     let rFrom, rTo, label;
@@ -6698,18 +6704,9 @@ function App() {
     const byCat = Object.entries(catTot).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
     const expSum = byCat.reduce((s, x) => s + x.value, 0);
     const best = topProjects[0];
-    const waText = [
-      `📊 *PrintAR 3D — ${label}*`,
-      `💰 Faturamento: ${fmt(cur.rev)}${prev.rev > 0 ? ` (${cur.rev >= prev.rev ? "▲" : "▼"}${fmtN(Math.abs(((cur.rev - prev.rev) / prev.rev) * 100), 0)}% vs ${prevLabel || "período anterior"})` : ""}`,
-      `✅ Lucro real: ${fmt(cur.profit)}${cur.rev > 0 ? ` · margem ${fmtN(cur.margin, 0)}%` : ""}`,
-      `📥 Recebido: ${fmt(cur.recebido)}${cur.aReceber > 0 ? ` · a receber ${fmt(cur.aReceber)}` : ""}`,
-      `🖨 ${fmtN(cur.pieces)} peças · ${fmtN(cur.hours, 0)} h de impressão · ${fmtN(cur.grams / 1000, 1)} kg de filamento`,
-      best ? `🏆 Mais vendido: ${best.name} (${fmtN(best.qty)} peça${best.qty === 1 ? "" : "s"})` : null,
-      cur.newClients > 0 ? `👥 ${cur.newClients} cliente${cur.newClients > 1 ? "s" : ""} novo${cur.newClients > 1 ? "s" : ""}` : null,
-    ].filter(Boolean).join("\n");
     const tile = REP_TILES.find((t) => t[0] === rep) || REP_TILES[0];
     const usage = printerUsage(cFrom, cTo);
-    const hasPdf = !["brindes", "itens", "whats"].includes(rep);
+    const hasPdf = !["brindes", "itens"].includes(rep);
     const maxP = Math.max(1, ...topProjects.map((p) => p.rev)), maxC = Math.max(1, ...topClients.map((c) => c.rev));
 
     return (
@@ -6723,12 +6720,11 @@ function App() {
             {mode === "livre" && <React.Fragment><In type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ width: 150 }} /><span style={{ color: "#7F9A9B" }}>até</span><In type="date" value={to} onChange={(e) => setTo(e.target.value)} style={{ width: 150 }} /></React.Fragment>}
           </div>
         </div>
-        {help && <div className="neo-hud neo-helpbox">💡 Escolha o período e o relatório. Todos (menos o resumo do WhatsApp) saem em PDF para guardar, imprimir ou mandar para alguém. O lucro aqui é o mesmo do Financeiro → Resultado.</div>}
+        {help && <div className="neo-hud neo-helpbox">💡 Escolha o período e o relatório. Todos saem em PDF para guardar, imprimir ou mandar para alguém. O lucro aqui é o mesmo do Financeiro → Resultado.</div>}
         <div className="neo-rtiles">
           {REP_TILES.map(([k, ic, nm, ds, pdf]) => (
-            <button key={k} className={"neo-rtile rep-tile" + (rep === k ? " on" : "") + (k === "whats" ? " dash" : "")} data-r={k} onClick={() => setRep(k)}>
-              {pdf ? <span className="pdf">PDF</span> : null}
-              <span className="ic">{ic}</span><b>{nm}</b><small>{ds}</small>
+            <button key={k} className={"neo-rtile rep-tile" + (rep === k ? " on" : "")} data-r={k} title={ds} onClick={() => setRep(k)}>
+              <span className="ic">{ic}</span><b>{nm}</b>
             </button>
           ))}
         </div>
@@ -6740,23 +6736,12 @@ function App() {
             <div className="s">{prevLabel ? `comparado com ${prevLabel} · ` : ""}gerado em {fmtDate(todayISO())}</div>
           </div>
           <div className="neo-oacts" style={{ marginLeft: "auto" }}>
-            {rep !== "whats" && <button className="neo-bg2 wa rep-copy" onClick={() => copyText(waText)}><WhatsIc size={14} />Copiar resumo</button>}
             {hasPdf && <Btn onClick={() => setModal({ type: "report", report: rep, from: rFrom, to: rTo, label })}><PrintIc size={15} />Gerar PDF</Btn>}
           </div>
         </div>
 
         {rep === "brindes" ? <GiftPanel from={rFrom} to={rTo} label={label} />
         : rep === "itens" ? <ItemPanel from={rFrom} to={rTo} label={label} />
-        : rep === "whats" ? (
-          <div className="neo-hud rep-wa">
-            <span className="neo-code">RESUMO NO WHATSAPP</span>
-            <pre className="neo-rwa">{waText}</pre>
-            <div className="neo-oacts" style={{ marginTop: 12 }}>
-              <button className="neo-bg2 wa rep-copy2" onClick={() => copyText(waText)}><WhatsIc size={14} />Copiar texto</button>
-              <button className="neo-bp rep-send" onClick={() => window.open("https://wa.me/?text=" + encodeURIComponent(waText), "_blank")}><WhatsIc size={14} />Abrir no WhatsApp</button>
-            </div>
-          </div>
-        )
         : rep === "impressoras" ? (
           <div className="neo-rprs">
             {data.printers.length === 0 ? <div className="neo-hud"><Empty icon={PrinterIc} text="Nenhuma impressora cadastrada" hint="Cadastre as impressoras em Configurações → Impressoras, com valor e data de compra, para ver o retorno do investimento." /></div> : data.printers.map((pr) => {
@@ -6783,6 +6768,90 @@ function App() {
             {usage._ && usage._.hours > 0 && <div className="neo-hud neo-rpr rep-pr" data-pr="_"><span className="neo-code">SEM IMPRESSORA DEFINIDA</span><div className="neo-rpb" style={{ marginTop: 8 }}>{fmtN(usage._.hours, 1)} h · {fmt(usage._.value)} produzidos em pedidos sem impressora escolhida.</div></div>}
           </div>
         )
+        : ["pedidos", "orcamentos", "projetos", "clientes", "investimentos"].includes(rep) ? (() => {
+          const vf = vfAll[rep] || "all";
+          const ql = vq.trim().toLowerCase();
+          const chips = (opts) => <div className="neo-fchips">{opts.map(([k, l, n]) => <button key={k} className={"neo-fchip rep-vf" + (vf === k ? " on" : "")} data-f={k} onClick={() => setVf(k)}>{l}{n != null ? ` ${n}` : ""}</button>)}</div>;
+          const bar = (opts, ph) => <div className="neo-penbar">{chips(opts)}<div className="neo-search"><SearchIc size={14} /><input value={vq} onChange={(e) => setVq(e.target.value)} placeholder={ph} />{vq && <button onClick={() => setVq("")}>×</button>}</div></div>;
+          const kp = (l, v, col, sub, cls) => <div className={"neo-hud neo-k " + (cls || "")}><div className="l">{l}</div><div className="v" style={col ? { color: col } : undefined}>{v}</div>{sub ? <span className="neo-kd">{sub}</span> : null}</div>;
+          const tot = (items) => <div className="neo-exptotal">{items}</div>;
+          if (rep === "pedidos") {
+            const all = data.orders.filter((o) => inR(o.date, cFrom, cTo)).sort((a, b) => (a.date < b.date ? 1 : -1));
+            const F = { all: () => true, venda: (o) => isSale(o), estoque: (o) => o.dest === "estoque", brinde: (o) => o.dest === "brinde", pago: (o) => isSale(o) && o.paid, receber: (o) => isSale(o) && !o.paid && isDone(o), aberto: (o) => !isDone(o) };
+            const list = all.filter(F[vf] || F.all).filter((o) => !ql || `${projName(o)} ${(cliMap[o.clientId] || {}).name || ""}`.toLowerCase().includes(ql));
+            const rev = list.filter(isSale).reduce((s, o) => s + num(o.price), 0), cost = list.reduce((s, o) => s + num(o.cost), 0);
+            const rec = list.filter((o) => isSale(o) && o.paid).reduce((s, o) => s + num(o.price), 0);
+            return (<React.Fragment>
+              <div className="neo-ckpis">{kp("Pedidos", fmtN(list.length), null, `${list.filter(isDone).length} concluídos`, "rv-k1")}{kp("Faturamento", fmt(rev), "#3FD1CE", "só vendas")}{kp("Recebido", fmt(rec), null, rev - rec > 0 ? <span style={{ color: "#FFAA5C" }}>{fmt(rev - rec)} a receber</span> : "tudo recebido")}{kp("Custo", fmt(cost), "#FF6B6B", rev > 0 ? `lucro bruto ${fmt(rev - list.filter(isSale).reduce((s, o) => s + num(o.cost), 0))}` : "")}</div>
+              {bar([["all", "Todos", all.length], ["venda", "🛒 Vendas", all.filter(F.venda).length], ["estoque", "📦 Estoque", all.filter(F.estoque).length], ["brinde", "🎁 Brindes", all.filter(F.brinde).length], ["pago", "✓ Pagos", all.filter(F.pago).length], ["receber", "💰 A receber", all.filter(F.receber).length], ["aberto", "⏳ Em aberto", all.filter(F.aberto).length]], "Item ou cliente…")}
+              <div className="neo-hud rep-view" data-v="pedidos"><span className="neo-code">PEDIDOS DO PERÍODO</span>
+                {list.length === 0 ? <div className="neo-empty">Nenhum pedido neste filtro.</div> : <div className="neo-rtable"><table><thead><tr><th>Data</th><th>Item</th><th>Cliente / destino</th><th style={{ textAlign: "center" }}>Qtd</th><th style={{ textAlign: "right" }}>Valor</th><th style={{ textAlign: "right" }}>Custo</th><th>Situação</th></tr></thead>
+                  <tbody>{list.map((o) => { const c = cliMap[o.clientId]; return <tr key={o.id}><td className="m">{fmtDate(o.date).slice(0, 5)}</td><td><b>{projName(o)}</b></td><td>{c ? c.name : ""}{o.dest === "estoque" ? `${c ? " · " : ""}📦 Estoque` : o.dest === "brinde" ? `${c ? " · " : ""}🎁 Brinde` : c ? "" : "—"}</td><td style={{ textAlign: "center" }} className="m">{fmtN(o.qty)}</td><td style={{ textAlign: "right", color: "#3FD1CE" }} className="m">{isSale(o) ? fmt(num(o.price)) : "—"}</td><td style={{ textAlign: "right" }} className="m">{fmt(num(o.cost))}</td><td><span className={"neo-rpill " + (!isDone(o) ? "o" : !isSale(o) ? "g" : o.paid ? "t" : "w")}>{!isDone(o) ? o.status : !isSale(o) ? o.status : o.paid ? "✓ pago" : "a receber"}</span></td></tr>; })}</tbody></table></div>}
+                {list.length > 0 && tot(<React.Fragment><span>{list.length} pedido(s)</span><b style={{ color: "#3FD1CE" }}>{fmt(rev)}</b></React.Fragment>)}
+              </div>
+            </React.Fragment>);
+          }
+          if (rep === "orcamentos") {
+            const all = (data.quotes || []).filter((q) => inR(q.date, cFrom, cTo)).sort((a, b) => (a.date < b.date ? 1 : -1));
+            const list = all.filter((q) => vf === "all" || q.status === vf).filter((q) => !ql || `${q.code} ${(cliMap[q.clientId] || {}).name || q.clientName || ""}`.toLowerCase().includes(ql));
+            const sumQ = (arr) => arr.reduce((s, q) => s + quoteTotal(q), 0);
+            const ok = all.filter((q) => q.status === "Aprovado");
+            return (<React.Fragment>
+              <div className="neo-ckpis">{kp("Orçamentos", fmtN(all.length), null, fmt(sumQ(all)) + " no total", "rv-k1")}{kp("Aprovados", fmtN(ok.length), "#3FD1CE", fmt(sumQ(ok)))}{kp("Taxa de aprovação", all.length ? `${fmtN((ok.length / all.length) * 100, 0)}%` : "—", null, "aprovados ÷ enviados")}{kp("Pendentes", fmtN(all.filter((q) => q.status === "Pendente").length), "#FFAA5C", fmt(sumQ(all.filter((q) => q.status === "Pendente"))) + " esperando")}</div>
+              {bar([["all", "Todos", all.length], ["Pendente", "⏳ Pendentes", all.filter((q) => q.status === "Pendente").length], ["Aprovado", "✓ Aprovados", ok.length], ["Recusado", "✕ Recusados", all.filter((q) => q.status === "Recusado").length]], "Nº ou cliente…")}
+              <div className="neo-hud rep-view" data-v="orcamentos"><span className="neo-code">ORÇAMENTOS DO PERÍODO</span>
+                {list.length === 0 ? <div className="neo-empty">Nenhum orçamento neste filtro.</div> : <div className="neo-rtable"><table><thead><tr><th>Nº</th><th>Data</th><th>Cliente</th><th>Itens</th><th>Status</th><th style={{ textAlign: "right" }}>Total</th></tr></thead>
+                  <tbody>{list.map((q) => { const c = cliMap[q.clientId]; return <tr key={q.id}><td className="m"><b>{q.code}</b></td><td className="m">{fmtDate(q.date).slice(0, 5)}</td><td>{c ? c.name : q.clientName || "—"}</td><td>{(q.items || []).length} item(ns)</td><td><span className={"neo-rpill " + (q.status === "Aprovado" ? "t" : q.status === "Recusado" ? "r" : "w")}>{q.status}</span></td><td style={{ textAlign: "right", color: "#3FD1CE" }} className="m">{fmt(quoteTotal(q))}</td></tr>; })}</tbody></table></div>}
+                {list.length > 0 && tot(<React.Fragment><span>{list.length} orçamento(s)</span><b style={{ color: "#3FD1CE" }}>{fmt(sumQ(list))}</b></React.Fragment>)}
+              </div>
+            </React.Fragment>);
+          }
+          if (rep === "projetos") {
+            const sold = {}; cur.sales.forEach((o) => { const x = (sold[o.projectId] = sold[o.projectId] || { q: 0, r: 0 }); x.q += num(o.qty); x.r += num(o.price); });
+            const all = data.projects.map((p) => { const sp = num(p.salePrice); return { p, sp, marg: sp > 0 ? ((sp - num(p.cost)) / sp) * 100 : null, q: (sold[p.id] || {}).q || 0, r: (sold[p.id] || {}).r || 0 }; });
+            const F = { all: () => true, vendidos: (x) => x.q > 0, parados: (x) => x.q === 0 && x.p.active !== false, baixa: (x) => x.marg != null && x.marg < 30, inativos: (x) => x.p.active === false };
+            const list = all.filter(F[vf] || F.all).filter((x) => !ql || (x.p.name || "").toLowerCase().includes(ql)).sort((a, b) => b.r - a.r || (a.p.name || "").localeCompare(b.p.name || ""));
+            const withM = all.filter((x) => x.marg != null);
+            return (<React.Fragment>
+              <div className="neo-ckpis">{kp("Projetos", fmtN(all.length), null, `${all.filter((x) => x.p.active !== false).length} ativos`, "rv-k1")}{kp("Vendidos no período", fmtN(all.filter(F.vendidos).length), "#3FD1CE", `${fmtN(all.reduce((s, x) => s + x.q, 0))} peças`)}{kp("Margem média", withM.length ? `${fmtN(withM.reduce((s, x) => s + x.marg, 0) / withM.length, 0)}%` : "—", null, "pelo preço de venda")}{kp("Sem venda no período", fmtN(all.filter(F.parados).length), "#FFAA5C", "ativos parados")}</div>
+              {bar([["all", "Todos", all.length], ["vendidos", "🛒 Vendidos", all.filter(F.vendidos).length], ["parados", "💤 Sem venda", all.filter(F.parados).length], ["baixa", "⚠ Margem < 30%", all.filter(F.baixa).length], ["inativos", "Inativos", all.filter(F.inativos).length]], "Projeto…")}
+              <div className="neo-hud rep-view" data-v="projetos"><span className="neo-code">PROJETOS</span>
+                {list.length === 0 ? <div className="neo-empty">Nenhum projeto neste filtro.</div> : <div className="neo-rtable"><table><thead><tr><th>Projeto</th><th>Nicho</th><th style={{ textAlign: "right" }}>Custo</th><th style={{ textAlign: "right" }}>Preço</th><th style={{ textAlign: "center" }}>Margem</th><th style={{ textAlign: "center" }}>Vendidos</th><th style={{ textAlign: "right" }}>Faturou</th></tr></thead>
+                  <tbody>{list.map((x) => <tr key={x.p.id} style={x.p.active === false ? { opacity: .55 } : undefined}><td><b>{x.p.name}</b></td><td>{nichesText(x.p) || "—"}</td><td style={{ textAlign: "right" }} className="m">{fmt(num(x.p.cost))}</td><td style={{ textAlign: "right" }} className="m">{x.sp > 0 ? fmt(x.sp) : "—"}</td><td style={{ textAlign: "center", color: x.marg == null ? "#7F9A9B" : { t: "#3FD1CE", o: "#F5821F", r: "#FF6B6B" }[marginTone(x.marg)] }} className="m">{x.marg == null ? "—" : `${fmtN(x.marg, 0)}%`}</td><td style={{ textAlign: "center" }} className="m">{x.q || "—"}</td><td style={{ textAlign: "right", color: "#3FD1CE" }} className="m">{x.r > 0 ? fmt(x.r) : "—"}</td></tr>)}</tbody></table></div>}
+              </div>
+            </React.Fragment>);
+          }
+          if (rep === "clientes") {
+            const all = data.clients.map((c) => { const os = data.orders.filter((o) => o.clientId === c.id && isSale(o) && isDone(o)); const inP = os.filter((o) => inR(o.date, cFrom, cTo)); const last = os.map((o) => o.date).sort().pop(); return { c, n: inP.length, total: inP.reduce((s, o) => s + num(o.price), 0), owe: os.filter((o) => !o.paid).reduce((s, o) => s + num(o.price), 0), last, isNew: c.createdAt && inR(String(c.createdAt).slice(0, 10), cFrom, cTo) }; });
+            const F = { all: () => true, compraram: (x) => x.n > 0, novos: (x) => x.isNew, devendo: (x) => x.owe > 0, semcompra: (x) => x.n === 0 };
+            const list = all.filter(F[vf] || F.all).filter((x) => !ql || (x.c.name || "").toLowerCase().includes(ql)).sort((a, b) => b.total - a.total || (a.c.name || "").localeCompare(b.c.name || ""));
+            const buyers = all.filter(F.compraram);
+            return (<React.Fragment>
+              <div className="neo-ckpis">{kp("Compraram no período", fmtN(buyers.length), "#3FD1CE", `de ${all.length} clientes`, "rv-k1")}{kp("Faturamento", fmt(buyers.reduce((s, x) => s + x.total, 0)), null, buyers.length ? `média ${fmt(buyers.reduce((s, x) => s + x.total, 0) / buyers.length)} por cliente` : "")}{kp("Clientes novos", fmtN(all.filter(F.novos).length))}{kp("Devendo", fmt(all.reduce((s, x) => s + x.owe, 0)), "#FFAA5C", `${all.filter(F.devendo).length} cliente(s)`)}</div>
+              {bar([["all", "Todos", all.length], ["compraram", "🛒 Compraram", buyers.length], ["novos", "✨ Novos", all.filter(F.novos).length], ["devendo", "💰 Devendo", all.filter(F.devendo).length], ["semcompra", "💤 Sem compra no período", all.filter(F.semcompra).length]], "Cliente…")}
+              <div className="neo-hud rep-view" data-v="clientes"><span className="neo-code">CLIENTES</span>
+                {list.length === 0 ? <div className="neo-empty">Nenhum cliente neste filtro.</div> : <div className="neo-rtable"><table><thead><tr><th>Cliente</th><th>Telefone</th><th style={{ textAlign: "center" }}>Compras</th><th style={{ textAlign: "right" }}>No período</th><th style={{ textAlign: "right" }}>Devendo</th><th>Última compra</th></tr></thead>
+                  <tbody>{list.map((x) => <tr key={x.c.id}><td><b>{x.c.name}</b>{x.isNew ? <span className="neo-rpill t" style={{ marginLeft: 6 }}>novo</span> : null}</td><td className="m">{x.c.phone || "—"}</td><td style={{ textAlign: "center" }} className="m">{x.n || "—"}</td><td style={{ textAlign: "right", color: "#3FD1CE" }} className="m">{x.total > 0 ? fmt(x.total) : "—"}</td><td style={{ textAlign: "right", color: x.owe > 0 ? "#FFAA5C" : undefined }} className="m">{x.owe > 0 ? fmt(x.owe) : "—"}</td><td className="m">{x.last ? fmtDate(x.last) : "—"}</td></tr>)}</tbody></table></div>}
+              </div>
+            </React.Fragment>);
+          }
+          // investimentos
+          const all = data.expenses.filter((e) => inR(e.date, cFrom, cTo)).sort((a, b) => (a.date < b.date ? 1 : -1));
+          const cats = Array.from(new Set(all.map((e) => e.category || e.cat || "Outro")));
+          const list = all.filter((e) => vf === "all" || (e.category || e.cat || "Outro") === vf).filter((e) => !ql || (e.desc || e.name || "").toLowerCase().includes(ql));
+          const sumE = (arr) => arr.reduce((s, e) => s + num(e.value), 0);
+          const stockV = sumE(all.filter((e) => STOCK_CATS.includes(e.category || e.cat)));
+          return (<React.Fragment>
+            <div className="neo-ckpis">{kp("Total gasto", fmt(sumE(all)), "#FF6B6B", `${all.length} lançamento(s)`, "rv-k1")}{kp("Virou estoque", fmt(stockV), "#3FD1CE", "filamento, material, embalagem")}{kp("Custo operacional", fmt(sumE(all) - stockV), null, "o resto")}{kp("Maior categoria", byCat[0] ? byCat[0].name : "—", null, byCat[0] ? fmt(byCat[0].value) : "")}</div>
+            {bar([["all", "Todas", all.length], ...cats.map((c) => [c, `${ECAT_ICON[c] || "•"} ${c}`, all.filter((e) => (e.category || e.cat || "Outro") === c).length])], "Descrição…")}
+            <div className="neo-hud rep-view" data-v="investimentos"><span className="neo-code">GASTOS DO PERÍODO</span>
+              {list.length === 0 ? <div className="neo-empty">Nenhum gasto neste filtro.</div> : <div className="neo-rtable"><table><thead><tr><th>Data</th><th>Categoria</th><th>Descrição</th><th style={{ textAlign: "right" }}>Valor</th></tr></thead>
+                <tbody>{list.map((e) => <tr key={e.id}><td className="m">{fmtDate(e.date).slice(0, 5)}</td><td><span style={{ color: ECAT_COLOR[e.category] || "#7F9A9B" }}>{ECAT_ICON[e.category] || "•"}</span> {e.category || "—"}</td><td><b>{e.desc || e.name || "—"}</b></td><td style={{ textAlign: "right", color: "#FF6B6B" }} className="m">{fmt(num(e.value))}</td></tr>)}</tbody></table></div>}
+              {list.length > 0 && tot(<React.Fragment><span>Total {vf !== "all" || ql ? "do filtro" : "do período"}</span><b style={{ color: "#FF6B6B" }}>{fmt(sumE(list))}</b></React.Fragment>)}
+            </div>
+          </React.Fragment>);
+        })()
+
         : (<React.Fragment>
           <div className="neo-ckpis neo-rk5">
             <Reveal className="neo-hud neo-k rep-k-rev" delay={0}><div className="l">Faturamento</div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={cur.rev} format={fmt} /></div><span className="neo-kd"><RDelta a={cur.rev} b={prev.rev} /></span></Reveal>

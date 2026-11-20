@@ -750,6 +750,20 @@
     .neo-finfc{grid-template-columns:42px minmax(0,1fr) auto;} .neo-finfc .st{grid-column:1 / 3;justify-content:flex-start;min-width:0;} .neo-finleg{float:none;display:block;margin-top:6px;}
     .neo-fincal span{font-size:0;height:14px;}
   }
+  /* v4.59 Resultado */
+  .neo-wf{position:relative;display:flex;gap:14px;height:200px;margin:16px 0 6px;padding:0 4px;}
+  .neo-wf0{position:absolute;left:0;right:0;border-top:1px dashed rgba(127,154,155,.45);}
+  .neo-wf .wf-col{flex:1;position:relative;height:100%;}
+  .neo-wf .wf-col i{position:absolute;left:0;right:0;border-radius:6px;transition:all .8s cubic-bezier(.2,.8,.2,1);}
+  .neo-wf .wf-col b{position:absolute;left:0;right:0;text-align:center;font:700 11.5px 'JetBrains Mono',monospace;}
+  .neo-wfl{display:flex;gap:14px;padding:0 4px;} .neo-wfl span{flex:1;text-align:center;font:600 10.5px Inter,sans-serif;color:#7F9A9B;}
+  .neo-resnote{font:500 11.5px Inter,sans-serif;color:#7F9A9B;margin-top:12px;line-height:1.5;} .neo-resnote b{color:#E6F1F1;}
+  .neo-resl{margin-top:10px;font:600 12px Inter,sans-serif;color:#7F9A9B;}
+  .neo-resbe{font:700 28px 'Space Grotesk',sans-serif;color:#FFD166;} .neo-resbe small{font:600 13px Inter,sans-serif;color:#7F9A9B;}
+  .neo-bebar{height:16px;border-radius:9px;background:rgba(127,154,155,.14);position:relative;margin:14px 0 6px;} .neo-bebar i{display:block;height:100%;border-radius:9px;transition:width .8s;} .neo-bebar em{position:absolute;top:-6px;bottom:-6px;width:2px;background:#E6F1F1;box-shadow:0 0 8px #3FD1CE;}
+  .neo-resfoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font:600 11px Inter,sans-serif;color:#7F9A9B;}
+  .res-patr .neo-finleg{float:none;position:absolute;top:14px;right:16px;}
+  @media (max-width:700px){ .neo-wf,.neo-wfl{gap:6px;} .neo-wfl span{font-size:9px;} .neo-wf .wf-col b{font-size:9.5px;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -892,8 +906,8 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.58";
-const APP_UPDATED = "19/11/2026";
+const APP_VERSION = "4.59";
+const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
 const BACKUP_STAMP = "gestor3d-data-v1__bakts";    // quando a copia interna foi gravada
@@ -3177,7 +3191,6 @@ function App() {
     { group: "Dinheiro", items: [
       { id: "inv", label: "Investimentos", icon: Wallet },
       { id: "fin", label: "Financeiro", icon: BanknoteIc },
-      { id: "cont", label: "Contabilidade", icon: ScaleIc },
       { id: "rel", label: "Relatórios", icon: FileTextIc },
     ]},
     { group: "Sistema", items: [
@@ -4577,7 +4590,7 @@ function App() {
             <input type="checkbox" checked={launch} onChange={(e) => setLaunch(e.target.checked)} style={{ width: 16, height: 16, accentColor: "#14A6A4", marginTop: 1 }} />
             <span style={{ font: "400 12.5px Inter,sans-serif", color: "#2A4A4A" }}>
               <b style={{ color: "#3FD1CE" }}>Lançar {num(f.price) > 0 ? fmt(f.price) : "o valor pago"} como gasto em Investimentos</b><br />
-              <span style={{ color: "#6FA3A3" }}>Entra como "Filamento" no mês de hoje e conta no Financeiro e na Contabilidade. Desmarque se essa compra já foi lançada lá.</span>
+              <span style={{ color: "#6FA3A3" }}>Entra como "Filamento" no mês de hoje e conta no Financeiro (e no Resultado). Desmarque se essa compra já foi lançada lá.</span>
             </span>
           </label>
         )}
@@ -8205,7 +8218,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
         </div>
         {help && <div className="neo-hud neo-helpbox">💡 O Financeiro junta tudo sozinho: vendas concluídas (Pedidos), gastos (Investimentos) e custos fixos mensais. Use “Lançamento” só para entradas ou saídas que não passam por esses lugares — assim nada é contado duas vezes.</div>}
         <div className="neo-seg fin-tabs" style={{ width: "max-content", maxWidth: "100%", marginBottom: 14, flexWrap: "wrap" }}>
-          {[["fluxo", "📈 Fluxo de caixa", null], ["receber", "💰 A receber", arList.length], ["fixos", "🗓 Custos fixos", fixed.length]].map(([k, l, n]) => <button key={k} className={"fin-tab" + (sub === k ? " on" : "")} data-t={k} onClick={() => setSub(k)}>{l}{n ? <i>{n}</i> : null}</button>)}
+          {[["fluxo", "📈 Fluxo de caixa", null], ["receber", "💰 A receber", arList.length], ["fixos", "🗓 Custos fixos", fixed.length], ["resultado", "🏁 Resultado", null]].map(([k, l, n]) => <button key={k} className={"fin-tab" + (sub === k ? " on" : "")} data-t={k} onClick={() => setSub(k)}>{l}{n ? <i>{n}</i> : null}</button>)}
         </div>
 
         {sub === "fluxo" && (
@@ -8304,6 +8317,78 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
             </div>
           </React.Fragment>
         )}
+
+        {sub === "resultado" && (() => {
+          const mSales = salesOrders.filter((o) => monthKey(o.date) === mk);
+          const receita = mSales.reduce((s, o) => s + num(o.price), 0);
+          const cpv = mSales.reduce((s, o) => s + num(o.cost), 0);
+          const pecas = mSales.reduce((s, o) => s + num(o.qty), 0);
+          const isEquip = (e) => (e.category || e.cat) === "Equipamento";
+          const equipTotal = data.expenses.filter(isEquip).reduce((s, e) => s + num(e.value), 0);
+          const desgaste = equipTotal / 36;
+          const gastosOp = data.expenses.filter((e) => monthKey(e.date) === mk && !isEquip(e) && !STOCK_CATS.includes(e.category || e.cat)).reduce((s, e) => s + num(e.value), 0);
+          const lucro = receita - cpv - monthFixedTotal - gastosOp - desgaste;
+          const margem = receita > 0 ? lucro / receita : 0;
+          const margContrib = receita > 0 ? 1 - cpv / receita : 0;
+          const custoMes = monthFixedTotal + gastosOp + desgaste;
+          const be = margContrib > 0 ? custoMes / margContrib : 0;
+          const ticket = pecas > 0 ? receita / pecas : 0;
+          let beDay = null; if (be > 0) { let acc = 0; for (let d = 1; d <= nDays; d++) { const dk = `${mk}-${String(d).padStart(2, "0")}`; acc += mSales.filter((o) => o.date === dk).reduce((s, o) => s + num(o.price), 0); if (acc >= be) { beDay = d; break; } } }
+          // patrimônio
+          const caixa = data.orders.filter((o) => isDone(o) && isSale(o) && o.paid).reduce((s, o) => s + num(o.price), 0) - data.expenses.reduce((s, e) => s + num(e.value), 0) + (data.cashflow || []).reduce((s, e) => s + (e.kind === "in" ? 1 : -1) * num(e.value), 0);
+          const estFil = data.filaments.reduce((s, f) => s + (num(f.stockG) / 1000) * ((num(f.price) / Math.max(1, num(f.qtyG))) * 1000), 0);
+          const estProd = data.products.reduce((s, p) => { const pr = projMap[p.projectId]; return s + num(p.qty) * (pr ? num(pr.cost) : 0); }, 0);
+          const firstEquip = data.expenses.filter(isEquip).map((e) => e.date).sort()[0];
+          const now = new Date();
+          const monthsSince = firstEquip ? Math.max(0, (now.getFullYear() - +firstEquip.slice(0, 4)) * 12 + (now.getMonth() + 1 - +firstEquip.slice(5, 7))) : 0;
+          const equipLiq = equipTotal - Math.min(equipTotal, desgaste * monthsSince);
+          const patr = caixa + estFil + estProd + equipLiq;
+          // cascata
+          const steps = [["Vendas", receita, "in"], ["Custo das peças", cpv, "out"], ["Custos fixos", monthFixedTotal, "out"], ["Gastos operac.", gastosOp, "out"], ["Desgaste", desgaste, "out"]];
+          let top = 0; const wf = steps.map(([l, v, k]) => { const hi = k === "in" ? v : top; const lo = k === "in" ? 0 : top - v; top = k === "in" ? v : top - v; return { l, v, k, lo, hi }; });
+          wf.push({ l: "Lucro real", v: lucro, k: lucro >= 0 ? "res" : "neg", lo: Math.min(0, lucro), hi: Math.max(0, lucro) });
+          const wMin = Math.min(0, ...wf.map((x) => x.lo)); const wMax = Math.max(1, receita); const wSpan = wMax - wMin;
+          const pct = (v) => ((v - wMin) / wSpan) * 86;
+          return (
+            <div className="neo-expgrid neo-resgrid">
+              <Reveal className="neo-hud" delay={0}>
+                <span className="neo-code">LUCRO REAL DO MÊS</span>
+                <div className="neo-finbig res-lucro"><span style={{ color: lucro >= 0 ? "#3FD1CE" : "#FF6B6B", fontSize: 34 }}><CountUp value={lucro} format={fmt} /></span><small>{receita > 0 ? `margem de ${fmtN(margem * 100, 0)}% · de cada R$ 1 vendido, ${lucro >= 0 ? "sobram" : "faltam"} ${fmt(Math.abs(margem))}` : "sem vendas neste mês"} <InfoTip text="Vendas concluídas do mês, menos o custo das peças vendidas (filamento, energia e materiais de cada pedido), os custos fixos, os gastos que não viram estoque (energia, ferramentas, marketing…) e o desgaste das impressoras (valor das impressoras dividido em 36 meses). Lançamentos avulsos do caixa não entram aqui." /></small></div>
+                {receita === 0 && cpv === 0 && custoMes === 0 ? <div className="neo-empty">Nada para mostrar neste mês.</div> : <React.Fragment>
+                  <div className="neo-wf">
+                    {wMin < 0 && <span className="neo-wf0" style={{ bottom: pct(0) + "%" }} />}
+                    {wf.map((x) => {
+                      const col = x.k === "in" || x.k === "res" ? "#3FD1CE" : "#FF6B6B";
+                      return <div key={x.l} className={"wf-col wf-" + x.k} title={`${x.l}: ${fmt(x.v)}`}><i style={{ bottom: pct(x.lo) + "%", height: Math.max(.6, pct(x.hi) - pct(x.lo)) + "%", background: col, opacity: x.k === "out" ? .78 : 1, boxShadow: `0 0 14px ${col}55` }} /><b style={{ bottom: pct(x.hi) + 2 + "%", color: col }}>{x.k === "out" || x.k === "neg" ? "−" : ""}{fmtN(Math.round(Math.abs(x.v)))}</b></div>;
+                    })}
+                  </div>
+                  <div className="neo-wfl">{wf.map((x) => <span key={x.l}>{x.l}</span>)}</div>
+                </React.Fragment>}
+                <div className="neo-resnote">✓ Compras de filamento, material e embalagem <b>não são descontadas de novo</b> — elas já estão no custo das peças vendidas. Equipamentos entram aos poucos, como desgaste.</div>
+              </Reveal>
+              <div className="neo-col">
+                <Reveal className="neo-hud res-be" delay={60}>
+                  <span className="neo-code">PONTO DE EQUILÍBRIO</span>
+                  {margContrib <= 0 ? <div className="neo-empty">Registre vendas com custo cadastrado neste mês para calcular.</div> : <React.Fragment>
+                    <div className="neo-resl">Para não ter prejuízo você precisa vender <InfoTip text="Quanto é preciso vender no mês para pagar os custos fixos, os gastos operacionais e o desgaste das impressoras, considerando a margem média das vendas deste mês (o que sobra de cada venda depois do custo da peça)." /></div>
+                    <div className="neo-resbe"><CountUp value={be} format={fmt} /><small> /mês{ticket > 0 ? ` ≈ ${fmtN(Math.ceil(be / ticket))} peças` : ""}</small></div>
+                    <div className="neo-bebar"><i style={{ width: `${Math.min(100, (receita / Math.max(be, receita, 1)) * 100)}%`, background: receita >= be ? "linear-gradient(90deg,#14B8B2,#3FD1CE)" : "linear-gradient(90deg,#F5821F,#FFD166)" }} />{receita > be && <em style={{ left: `${(be / receita) * 100}%` }} />}</div>
+                    <div className="neo-resfoot"><span>vendido {fmt(receita)}</span>{receita >= be ? <span style={{ color: "#3FD1CE" }}>✓ passou o equilíbrio{beDay ? ` no dia ${beDay}` : ""}</span> : <span style={{ color: "#FFAA5C" }}>faltam {fmt(be - receita)}{ticket > 0 ? ` (~${fmtN(Math.ceil((be - receita) / ticket))} peças)` : ""}</span>}</div>
+                  </React.Fragment>}
+                </Reveal>
+                <Reveal className="neo-hud neo-fincmp res-patr" delay={120}>
+                  <span className="neo-code">PATRIMÔNIO</span>
+                  <span className="neo-finleg">hoje <InfoTip text="O que o negócio tem hoje, somando todo o histórico: dinheiro (tudo que foi recebido menos tudo que foi gasto), filamento no estoque pelo preço pago, peças prontas pelo custo e as impressoras já descontado o desgaste." /></span>
+                  <div className="mini" style={{ marginTop: 8 }}><span>Dinheiro em caixa</span><b style={{ color: caixa < 0 ? "#FF6B6B" : undefined }}>{fmt(caixa)}</b></div>
+                  <div className="mini"><span>Filamento em estoque</span><b>{fmt(estFil)}</b></div>
+                  <div className="mini"><span>Peças prontas no estoque</span><b>{fmt(estProd)}</b></div>
+                  <div className="mini"><span>Impressoras (após desgaste)</span><b>{fmt(equipLiq)}</b></div>
+                  <div className="mini" style={{ border: 0, color: "#E6F1F1" }}><span>Total do negócio</span><b style={{ color: patr >= 0 ? "#3FD1CE" : "#FF6B6B" }}>{fmt(patr)}</b></div>
+                </Reveal>
+              </div>
+            </div>
+          );
+        })()}
 
         {sub === "receber" && (
           <div className="neo-hud neo-finar">
@@ -8412,104 +8497,6 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
   }
 
   /* ============================== CONTABILIDADE ============================ */
-  function Contabilidade() {
-    const [mk, setMk] = useState(thisMonth);
-    const mSales = salesOrders.filter((o) => monthKey(o.date) === mk);
-    const receita = mSales.reduce((s, o) => s + num(o.price), 0);
-    const cpv = mSales.reduce((s, o) => s + num(o.cost), 0);
-    const lucroBruto = receita - cpv;
-    const equipTotal = data.expenses.filter((e) => (e.category || e.cat) === "Equipamento").reduce((s, e) => s + num(e.value), 0);
-    const deprMes = equipTotal / 36;
-    const despVar = data.expenses.filter((e) => monthKey(e.date) === mk && (e.category || e.cat) !== "Equipamento").reduce((s, e) => s + num(e.value), 0);
-    const resultado = lucroBruto - monthFixedTotal - despVar - deprMes;
-    const margContrib = receita > 0 ? 1 - cpv / receita : 0;
-    const breakEven = margContrib > 0 ? (monthFixedTotal + deprMes) / margContrib : 0;
-    const ticket = mSales.length > 0 ? receita / mSales.reduce((s, o) => s + num(o.qty), 0) : 0;
-    // balanço simplificado
-    const caixaHist = (() => { let t = 0; data.orders.filter((o) => isDone(o) && isSale(o) && o.paid).forEach((o) => t += num(o.price)); data.expenses.forEach((e) => t -= num(e.value)); (data.cashflow || []).forEach((e) => t += (e.kind === "in" ? 1 : -1) * num(e.value)); return t; })();
-    const estoqueFil = data.filaments.reduce((s, f) => s + num(f.stockG) / 1000 * (num(f.price) / Math.max(1, num(f.qtyG)) * 1000), 0);
-    const estoqueProd = data.products.reduce((s, p) => { const pr = projMap[p.projectId]; return s + num(p.qty) * (pr ? num(pr.cost) : 0); }, 0);
-    const firstEquip = data.expenses.filter((e) => (e.category || e.cat) === "Equipamento").map((e) => e.date).sort()[0];
-    const monthsSince = firstEquip ? Math.max(0, (new Date().getFullYear() - +firstEquip.slice(0, 4)) * 12 + (new Date().getMonth() + 1 - +firstEquip.slice(5, 7))) : 0;
-    const deprAcum = Math.min(equipTotal, deprMes * monthsSince);
-    const equipLiq = equipTotal - deprAcum;
-    const ativoTotal = caixaHist + estoqueFil + estoqueProd + equipLiq;
-    const DreLine = ({ label, value, bold, neg, indent }) => (
-      <div style={{ display: "flex", justifyContent: "space-between", padding: "8px 0", borderBottom: "1px solid rgba(63,209,206,.1)", font: `${bold ? 700 : 400} ${bold ? 14.5 : 13.5}px Inter,sans-serif`, paddingLeft: indent ? 16 : 0 }}>
-        <span>{label}</span>
-        <span style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: bold ? 700 : 500, color: neg ? "#F0605F" : (bold ? "#3FD1CE" : "#F3F6F6") }}>{neg ? `(${fmt(value)})` : fmt(value)}</span>
-      </div>
-    );
-    return (
-      <div>
-        <SectionHead title="Contabilidade">
-          <In type="month" value={mk} onChange={(e) => setMk(e.target.value)} style={{ width: 170 }} />
-        </SectionHead>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(330px,1fr))", gap: 14 }}>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 4 }}>DRE — Demonstrativo de resultado</div>
-            <div style={{ font: "400 11.5px Inter,sans-serif", color: "#93A6A6", marginBottom: 10 }}>Quanto o negócio realmente lucrou no mês</div>
-            <DreLine label="Receita bruta de vendas" value={receita} />
-            <DreLine label="(−) Custo dos produtos vendidos" value={cpv} neg indent />
-            <DreLine label="= Lucro bruto" value={lucroBruto} bold />
-            <DreLine label="(−) Custos fixos mensais" value={monthFixedTotal} neg indent />
-            <DreLine label="(−) Gastos do mês (Investimentos)" value={despVar} neg indent />
-            <DreLine label="(−) Depreciação de equipamentos" value={deprMes} neg indent />
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0 2px", font: "700 16px 'Space Grotesk',sans-serif" }}>
-              <span>= Resultado líquido</span>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", color: resultado >= 0 ? "#3FD1CE" : "#F0605F" }}>{fmt(resultado)}</span>
-            </div>
-            <div style={{ font: "400 12px Inter,sans-serif", color: "#93A6A6", marginTop: 4 }}>{receita > 0 ? `Margem líquida de ${fmtN((resultado / receita) * 100, 1)}%` : "Sem vendas no mês selecionado"}</div>
-          </Card>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 4 }}>Ponto de equilíbrio</div>
-            <div style={{ font: "400 11.5px Inter,sans-serif", color: "#93A6A6", marginBottom: 10 }}>Quanto você precisa faturar por mês para não sair no prejuízo</div>
-            {margContrib <= 0 ? <div style={{ font: "400 13px Inter,sans-serif", color: "#93A6A6" }}>Registre vendas com custo cadastrado para calcular a margem de contribuição.</div>
-            : <React.Fragment>
-                <div style={{ font: "700 28px 'Space Grotesk',sans-serif", color: "#3FD1CE" }}>{fmt(breakEven)}<span style={{ font: "500 13px Inter,sans-serif", color: "#93A6A6" }}> /mês</span></div>
-                <div style={{ font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginTop: 8, lineHeight: 1.6 }}>
-                  Margem de contribuição média: <b>{fmtN(margContrib * 100, 1)}%</b><br />
-                  {ticket > 0 && <span>Com ticket médio de {fmt(ticket)}, isso equivale a <b>~{fmtN(Math.ceil(breakEven / ticket))} peças/mês</b>.<br /></span>}
-                  Faturamento atual do mês: <b style={{ color: receita >= breakEven ? "#3FD1CE" : "#F0605F" }}>{fmt(receita)}</b> ({receita >= breakEven ? "acima" : "abaixo"} do equilíbrio)
-                </div>
-                <div style={{ height: 8, background: "rgba(5,12,12,.55)", borderRadius: 99, marginTop: 12 }}>
-                  <div style={{ height: 8, width: `${Math.min(100, breakEven > 0 ? (receita / breakEven) * 100 : 0)}%`, background: receita >= breakEven ? "#14A6A4" : "#F47A20", borderRadius: 99 }} />
-                </div>
-              </React.Fragment>}
-          </Card>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 4 }}>Balanço simplificado</div>
-            <div style={{ font: "400 11.5px Inter,sans-serif", color: "#93A6A6", marginBottom: 10 }}>O que o negócio tem hoje (posição acumulada)</div>
-            <DreLine label="Caixa acumulado (recebido − gasto)" value={caixaHist} neg={caixaHist < 0} />
-            <DreLine label="Estoque de filamento (ao custo)" value={estoqueFil} />
-            <DreLine label="Produtos acabados (ao custo)" value={estoqueProd} />
-            <DreLine label={`Equipamentos (${fmt(equipTotal)} − depreciação)`} value={equipLiq} />
-            <div style={{ display: "flex", justifyContent: "space-between", padding: "10px 0 2px", font: "700 15px 'Space Grotesk',sans-serif" }}>
-              <span>Patrimônio total</span>
-              <span style={{ fontFamily: "'JetBrains Mono',monospace", color: ativoTotal >= 0 ? "#3FD1CE" : "#F0605F" }}>{fmt(ativoTotal)}</span>
-            </div>
-          </Card>
-          <Card>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 4 }}>Balancete do mês</div>
-            <div style={{ font: "400 11.5px Inter,sans-serif", color: "#93A6A6", marginBottom: 10 }}>Totais por conta em {mk.split("-").reverse().join("/")}</div>
-            <table>
-              <thead><tr><th>Conta</th><th style={{ textAlign: "right" }}>Crédito</th><th style={{ textAlign: "right" }}>Débito</th></tr></thead>
-              <tbody>
-                <tr><td>Receita de vendas</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#3FD1CE" }}>{fmt(receita)}</td><td /></tr>
-                <tr><td>Custo dos produtos vendidos</td><td /><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#F0605F" }}>{fmt(cpv)}</td></tr>
-                {Object.entries(data.expenses.filter((e) => monthKey(e.date) === mk).reduce((m, e) => { const c = e.category || e.cat || "Outros"; m[c] = (m[c] || 0) + num(e.value); return m; }, {})).map(([c, v]) => (
-                  <tr key={c}><td>Gastos — {c}</td><td /><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#F0605F" }}>{fmt(v)}</td></tr>
-                ))}
-                <tr><td>Custos fixos</td><td /><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#F0605F" }}>{fmt(monthFixedTotal)}</td></tr>
-                <tr><td>Depreciação</td><td /><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#F0605F" }}>{fmt(deprMes)}</td></tr>
-              </tbody>
-            </table>
-          </Card>
-        </div>
-      </div>
-    );
-  }
-
   /* ====================== CATÁLOGO INTERATIVO (HTML) ====================== */
   const ytId = (url) => {
     if (!url) return "";
@@ -9911,7 +9898,6 @@ SC,
   Financeiro = stableComponent("Financeiro", Financeiro);
   FixedCostModal = stableComponent("FixedCostModal", FixedCostModal);
   CashflowModal = stableComponent("CashflowModal", CashflowModal);
-  Contabilidade = stableComponent("Contabilidade", Contabilidade);
   CatalogModal = stableComponent("CatalogModal", CatalogModal);
   ReportDoc = stableComponent("ReportDoc", ReportDoc);
   PrintFrame = stableComponent("PrintFrame", PrintFrame);
@@ -10000,7 +9986,6 @@ SC,
         {tab === "prod" && <Products />}
         {tab === "inv" && <Expenses />}
         {tab === "fin" && <Financeiro />}
-        {tab === "cont" && <Contabilidade />}
         {tab === "ped" && <Orders />}
         {tab === "agenda" && <Agenda />}
         {tab === "cli" && <Clients />}

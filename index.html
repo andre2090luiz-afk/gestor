@@ -902,6 +902,12 @@
   @media (max-width:560px){ .neo-modal select,.neo-modal input{max-width:100%;} .neo-modal table{display:block;max-width:100%;overflow-x:auto;} }
   .neo-infobox{display:none;} .neo-info:hover .neo-infobox,.neo-info:focus .neo-infobox{display:block;}
   @media (max-width:700px){ .neo-infobox{position:fixed !important;left:16px !important;right:16px;top:auto !important;bottom:24px;transform:none !important;width:auto !important;z-index:9500;} .neo-cfsearch{width:100% !important;margin-left:0 !important;flex-basis:100%;} }
+  .neo-cfusers{display:flex;flex-direction:column;gap:8px;}
+  .neo-cfuser{display:grid;grid-template-columns:38px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.12);}
+  .neo-cfuser .av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font:700 15px 'Space Grotesk',sans-serif;color:#3FD1CE;border:1px solid rgba(63,209,206,.45);background:rgba(63,209,206,.08);}
+  .neo-cfuser b{display:block;font:600 13.5px Inter,sans-serif;color:#F3F6F6;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;} .neo-cfuser small{display:block;font:500 11px Inter,sans-serif;color:#7F9A9B;}
+  .neo-cfuser .pill{font:700 9.5px 'JetBrains Mono',monospace;border:1px solid currentColor;border-radius:999px;padding:2px 8px;white-space:nowrap;}
+  @media (max-width:600px){ .neo-cfuser{grid-template-columns:38px minmax(0,1fr) auto;} .neo-cfuser .pill{display:none;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -1128,7 +1134,7 @@ const addDays = (iso, n) => {
   d.setDate(d.getDate() + n);
   return d.toISOString().slice(0, 10);
 };
-const APP_VERSION = "4.65";
+const APP_VERSION = "4.66";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";
@@ -1328,6 +1334,54 @@ function hydratePhotos(node, map) {
   }
   return node;
 }
+function mergeData(base, local, remote) {
+  base = base || {};
+  local = local || {};
+  remote = remote || {};
+  const J = v => JSON.stringify(v === undefined ? null : v);
+  const isIdArr = a => Array.isArray(a) && a.every(x => x && typeof x === "object" && "id" in x);
+  const out = {
+    ...remote
+  };
+  new Set([...Object.keys(local), ...Object.keys(remote)]).forEach(k => {
+    const b = base[k],
+      l = local[k],
+      r = remote[k];
+    if (J(l) === J(b)) {
+      out[k] = r === undefined ? l : r;
+      return;
+    }
+    if (r === undefined || J(r) === J(b)) {
+      out[k] = l;
+      return;
+    }
+    if (isIdArr(l) && isIdArr(r) && (b === undefined || b === null || isIdArr(b))) {
+      const bm = new Map((b || []).map(x => [x.id, J(x)]));
+      const lm = new Map(l.map(x => [x.id, x]));
+      const res = [];
+      const seen = new Set();
+      r.forEach(x => {
+        seen.add(x.id);
+        if (lm.has(x.id)) {
+          const lx = lm.get(x.id);
+          res.push(bm.has(x.id) && J(lx) === bm.get(x.id) ? x : lx);
+        } else if (!bm.has(x.id)) res.push(x);
+      });
+      l.forEach(x => {
+        if (!seen.has(x.id) && (!bm.has(x.id) || J(x) !== bm.get(x.id))) res.push(x);
+      });
+      out[k] = res;
+      return;
+    }
+    if (l && r && typeof l === "object" && typeof r === "object" && !Array.isArray(l) && !Array.isArray(r)) {
+      out[k] = mergeData(b && typeof b === "object" && !Array.isArray(b) ? b : {}, l, r);
+      return;
+    }
+    out[k] = l;
+  });
+  return out;
+}
+const LAST_CLOUD_STORE = "gestor3d-last-cloud-store";
 function collectRefs(node, set) {
   if (Array.isArray(node)) {
     node.forEach(v => collectRefs(v, set));
@@ -4808,6 +4862,14 @@ function App() {
   const [recoveryMode, setRecoveryMode] = useState(false);
   const [profile, setProfile] = useState(null);
   const [profileChecked, setProfileChecked] = useState(!sb);
+  const cloudId = session ? profile && (profile.approved || profile.is_admin) && profile.store_id || session.user.id : null;
+  const cloudIdRef = useRef(null);
+  cloudIdRef.current = cloudId;
+  const syncRef = useRef({
+    id: null,
+    base: null,
+    at: 0
+  });
   const dataRef = useRef(data);
   dataRef.current = data;
   const pulledRef = useRef(false);
@@ -4939,21 +5001,158 @@ function App() {
       if (okText && sb && session && pulledRef.current) {
         clearTimeout(cloudTimer.current);
         cloudTimer.current = setTimeout(() => {
-          pushToCloud(session.user.id, dataRef.current).catch(() => {});
+          if (cloudIdRef.current) pushToCloud(cloudIdRef.current, dataRef.current).catch(() => {});
         }, 1200);
       }
     })();
   }, [data]);
-  const pushToCloud = async (uid, curData) => {
-    const photos = {};
-    const light = stripPhotos(curData, photos);
-    const cloudKeys = await cloudListPhotoKeys(uid);
-    const toUp = Object.entries(photos).filter(([k]) => !cloudKeys.has(k));
-    if (toUp.length) await cloudUploadPhotos(uid, toUp);
-    const nowISO = new Date().toISOString();
-    await cloudPutData(uid, light, nowISO);
-    localStorage.setItem(LAST_CLOUD_PUSH, nowISO);
+  const BASE_KEY = id => "__cloudbase__:" + id;
+  const saveBase = async (id, light, atISO) => {
+    syncRef.current = {
+      id,
+      base: JSON.stringify(light),
+      at: Date.parse(atISO) || Date.now()
+    };
+    try {
+      await idbPutMany([[BASE_KEY(id), JSON.stringify({
+        base: syncRef.current.base,
+        at: atISO
+      })]]);
+    } catch (e) {}
   };
+  const loadBase = async id => {
+    if (syncRef.current.id === id && syncRef.current.base) return syncRef.current;
+    try {
+      const m = await idbGetMany([BASE_KEY(id)]);
+      const v = m[BASE_KEY(id)];
+      if (v) {
+        const o = JSON.parse(v);
+        syncRef.current = {
+          id,
+          base: o.base,
+          at: Date.parse(o.at) || 0
+        };
+        return syncRef.current;
+      }
+    } catch (e) {}
+    return null;
+  };
+  const hydrateLight = async (id, light) => {
+    const refs = new Set();
+    collectRefs(light, refs);
+    const local = {};
+    try {
+      stripPhotos(dataRef.current, local);
+    } catch (e) {}
+    let have = new Set();
+    try {
+      have = new Set(await idbAllKeys());
+    } catch (e) {}
+    const missing = [...refs].filter(k => !have.has(k) && !local[k]);
+    let dl = {};
+    if (missing.length) {
+      try {
+        dl = await cloudDownloadPhotos(id, missing);
+        const puts = Object.entries(dl);
+        if (puts.length) await idbPutMany(puts);
+      } catch (e) {}
+    }
+    let map = {};
+    try {
+      map = await idbGetMany([...refs]);
+    } catch (e) {}
+    return normalizeData(hydratePhotos(light, {
+      ...local,
+      ...dl,
+      ...map
+    }));
+  };
+  const takeRemote = async (id, row, msg) => {
+    const hydrated = await hydrateLight(id, row.data);
+    await saveBase(id, row.data, row.updated_at || new Date().toISOString());
+    localStorage.setItem(LAST_CLOUD_PUSH, row.updated_at || new Date().toISOString());
+    localStorage.setItem(LAST_CLOUD_STORE, id);
+    if (cloudIdRef.current === id) {
+      setDataQuiet(hydrated);
+      if (msg) notify(msg);
+    }
+  };
+  const pushingRef = useRef(false);
+  const pushToCloud = async (uid, curData) => {
+    if (pushingRef.current) {
+      clearTimeout(cloudTimer.current);
+      cloudTimer.current = setTimeout(() => {
+        if (cloudIdRef.current) pushToCloud(cloudIdRef.current, dataRef.current).catch(() => {});
+      }, 1500);
+      return;
+    }
+    pushingRef.current = true;
+    try {
+      const photos = {};
+      let light = stripPhotos(curData, photos);
+      const {
+        data: meta
+      } = await sb.from("stores").select("updated_at").eq("id", uid).maybeSingle();
+      const cloudAt = meta && meta.updated_at ? Date.parse(meta.updated_at) : 0;
+      if (cloudAt && syncRef.current.id === uid && cloudAt > syncRef.current.at + 1) {
+        const row = await cloudGetData(uid);
+        if (row && row.data) {
+          light = mergeData(syncRef.current.base ? JSON.parse(syncRef.current.base) : row.data, light, row.data);
+          const hydrated = await hydrateLight(uid, light);
+          if (cloudIdRef.current === uid) {
+            setDataQuiet(hydrated);
+            notify("Juntei suas alterações com as do outro aparelho ✓");
+          }
+        }
+      }
+      if (syncRef.current.id === uid && syncRef.current.base === JSON.stringify(light) && cloudAt && cloudAt <= syncRef.current.at + 1) return;
+      const cloudKeys = await cloudListPhotoKeys(uid);
+      const refs = new Set();
+      collectRefs(light, refs);
+      const toUp = Object.entries(photos).filter(([k]) => refs.has(k) && !cloudKeys.has(k));
+      if (toUp.length) await cloudUploadPhotos(uid, toUp);
+      const nowISO = new Date().toISOString();
+      await cloudPutData(uid, light, nowISO);
+      await saveBase(uid, light, nowISO);
+      localStorage.setItem(LAST_CLOUD_PUSH, nowISO);
+      localStorage.setItem(LAST_CLOUD_STORE, uid);
+    } finally {
+      pushingRef.current = false;
+    }
+  };
+  const syncNow = async () => {
+    const id = cloudIdRef.current;
+    if (!sb || !id || !pulledRef.current || pushingRef.current) return;
+    try {
+      const {
+        data: meta
+      } = await sb.from("stores").select("updated_at").eq("id", id).maybeSingle();
+      const cloudAt = meta && meta.updated_at ? Date.parse(meta.updated_at) : 0;
+      if (!cloudAt || syncRef.current.id !== id || cloudAt <= syncRef.current.at + 1) return;
+      const photos = {};
+      const localLight = stripPhotos(dataRef.current, photos);
+      if (syncRef.current.base === JSON.stringify(localLight)) {
+        const row = await cloudGetData(id);
+        if (row && row.data) await takeRemote(id, row, "Dados atualizados de outro aparelho");
+      } else await pushToCloud(id, dataRef.current);
+    } catch (e) {}
+  };
+  useEffect(() => {
+    if (!sb || !session) return;
+    const t = setInterval(() => {
+      if (document.visibilityState === "visible") syncNow();
+    }, 30000);
+    const onVis = () => {
+      if (document.visibilityState === "visible") syncNow();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    window.addEventListener("focus", onVis);
+    return () => {
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", onVis);
+      window.removeEventListener("focus", onVis);
+    };
+  }, [session && session.user.id]);
   useEffect(() => {
     if (!sb) {
       setAuthChecked(true);
@@ -4991,10 +5190,14 @@ function App() {
     setProfileChecked(false);
     (async () => {
       try {
-        const {
+        let {
           data: prof,
           error
-        } = await sb.from("profiles").select("id, email, approved, is_admin").eq("id", session.user.id).maybeSingle();
+        } = await sb.from("profiles").select("id, email, approved, is_admin, store_id").eq("id", session.user.id).maybeSingle();
+        if (error && /store_id/.test(error.message || "")) ({
+          data: prof,
+          error
+        } = await sb.from("profiles").select("id, email, approved, is_admin").eq("id", session.user.id).maybeSingle());
         if (!alive) return;
         if (error) {
           setProfile(null);
@@ -5011,36 +5214,52 @@ function App() {
     };
   }, [session && session.user.id]);
   useEffect(() => {
-    if (!sb || !session) return;
+    if (!sb || !session || !profileChecked || !cloudId) return;
     let alive = true;
+    pulledRef.current = false;
     (async () => {
+      const id = cloudId;
       try {
-        const uid = session.user.id;
-        const row = await cloudGetData(uid);
-        const localPush = Date.parse(localStorage.getItem(LAST_CLOUD_PUSH) || "") || 0;
+        const row = await cloudGetData(id);
+        const b = await loadBase(id);
+        const photos = {};
+        const localLight = stripPhotos(dataRef.current, photos);
         const cloudMs = row && row.updated_at ? Date.parse(row.updated_at) : 0;
-        if (row && row.data && Object.keys(row.data).length && cloudMs > localPush) {
-          const refs = new Set();
-          collectRefs(row.data, refs);
-          let have = new Set();
-          try {
-            have = new Set(await idbAllKeys());
-          } catch (e) {}
-          const missing = [...refs].filter(k => !have.has(k));
-          if (missing.length) {
-            const dl = await cloudDownloadPhotos(uid, missing);
-            const puts = Object.entries(dl);
-            if (puts.length) await idbPutMany(puts);
+        if (!row || !row.data || !Object.keys(row.data).length) {
+          if (id === session.user.id) {
+            pulledRef.current = true;
+            await pushToCloud(id, dataRef.current);
           }
-          const map = await idbGetMany([...refs]);
-          const hydrated = normalizeData(hydratePhotos(row.data, map));
-          if (alive) {
-            setDataQuiet(hydrated);
-            localStorage.setItem(LAST_CLOUD_PUSH, row.updated_at || new Date().toISOString());
-            notify("Dados sincronizados da nuvem");
+        } else if (b && b.base) {
+          if (b.base !== JSON.stringify(localLight)) {
+            syncRef.current = {
+              id,
+              base: b.base,
+              at: b.at
+            };
+            const merged = mergeData(JSON.parse(b.base), localLight, row.data);
+            const hydrated = await hydrateLight(id, merged);
+            if (alive) setDataQuiet(hydrated);
+            await saveBase(id, row.data, row.updated_at);
+            pulledRef.current = true;
+            await pushToCloud(id, hydrated);
+            if (alive) notify("Dados sincronizados com a nuvem");
+          } else if (cloudMs > b.at + 1) {
+            if (alive) await takeRemote(id, row, "Dados sincronizados da nuvem");
           }
         } else {
-          await pushToCloud(uid, dataRef.current);
+          const localPush = Date.parse(localStorage.getItem(LAST_CLOUD_PUSH) || "") || 0;
+          const lastStore = localStorage.getItem(LAST_CLOUD_STORE);
+          const sameStore = lastStore ? lastStore === id : id === session.user.id;
+          if (sameStore && localPush > cloudMs) {
+            pulledRef.current = true;
+            syncRef.current = {
+              id,
+              base: JSON.stringify(row.data),
+              at: cloudMs
+            };
+            await pushToCloud(id, dataRef.current);
+          } else if (alive) await takeRemote(id, row, "Dados sincronizados da nuvem");
         }
         pulledRef.current = true;
       } catch (e) {
@@ -5051,7 +5270,7 @@ function App() {
     return () => {
       alive = false;
     };
-  }, [session]);
+  }, [session && session.user.id, cloudId, profileChecked]);
   const up = patch => setData(d => ({
     ...d,
     ...patch
@@ -23114,13 +23333,14 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     const [rows, setRows] = useState(null);
     const [err, setErr] = useState("");
     const [busyId, setBusyId] = useState(null);
+    const myStore = cloudId;
     const load = async () => {
       setErr("");
       try {
-        const {
+        let {
           data: profs,
           error
-        } = await sb.from("profiles").select("id, email, approved, is_admin, created_at").order("created_at", {
+        } = await sb.from("profiles").select("id, email, approved, is_admin, store_id, created_at").order("created_at", {
           ascending: false
         });
         if (error) throw error;
@@ -23133,113 +23353,95 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     useEffect(() => {
       load();
     }, []);
-    const setApproved = async (id, val) => {
-      setBusyId(id);
+    const setApproved = async (pf, val) => {
+      if (!val && !(await askConfirm(`Revogar o acesso de ${pf.email}?\n\nA pessoa deixa de ver os dados da loja na próxima vez que abrir o app.`, {
+        ok: "Revogar acesso"
+      }))) return;
+      setBusyId(pf.id);
       try {
+        const patch = val ? {
+          approved: true,
+          store_id: myStore
+        } : {
+          approved: false,
+          store_id: null
+        };
         const {
           error
-        } = await sb.from("profiles").update({
-          approved: val
-        }).eq("id", id);
+        } = await sb.from("profiles").update(patch).eq("id", pf.id);
         if (error) throw error;
-        setRows(r => r.map(p => p.id === id ? {
+        setRows(r => r.map(p => p.id === pf.id ? {
           ...p,
-          approved: val
+          ...patch
         } : p));
-        notify(val ? "Usuário aprovado." : "Aprovação revogada.");
+        notify(val ? `${pf.email} aprovado — já pode entrar e usar os dados da loja.` : "Acesso revogado.");
       } catch (e) {
         notify("Erro: " + (e && e.message || "não foi possível atualizar"));
       }
       setBusyId(null);
     };
-    return React.createElement(Card, {
+    const waiting = (rows || []).filter(p => !p.approved && !p.is_admin).length;
+    return React.createElement("div", null, React.createElement("div", {
+      className: "neo-cfhead"
+    }, React.createElement("span", {
+      className: "neo-code"
+    }, "USU\xC1RIOS E ACESSO"), React.createElement("h3", null, "Quem pode usar o app"), React.createElement("span", {
       style: {
-        marginBottom: 16
+        marginLeft: "auto"
       }
-    }, React.createElement("div", {
-      style: {
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: 4
-      }
-    }, React.createElement("div", {
-      style: {
-        font: "600 13px 'Space Grotesk',sans-serif",
-        color: "#3FD1CE",
-        textTransform: "uppercase",
-        letterSpacing: ".06em"
-      }
-    }, "Usu\xE1rios e acesso"), React.createElement(Btn, {
+    }, React.createElement(Btn, {
       small: true,
       kind: "ghost",
       onClick: load
     }, "Atualizar")), React.createElement("div", {
+      className: "d"
+    }, "Quem cria conta no app fica aguardando. Ao aprovar, a pessoa passa a ver e mexer nos ", React.createElement("b", null, "mesmos dados da loja"), " que voc\xEA \u2014 o que um salva, o outro v\xEA (o app confere a nuvem a cada 30 segundos e junta as altera\xE7\xF5es dos dois).")), err && React.createElement("div", {
+      className: "cfg-users-err",
       style: {
-        font: "400 11.5px Inter,sans-serif",
-        color: "#8FA3A3",
-        marginBottom: 12
+        font: "500 12.5px Inter,sans-serif",
+        color: "#FF8A8A",
+        marginBottom: 10
       }
-    }, "Contas cadastradas no app. Aprove para liberar o acesso aos dados."), err && React.createElement("div", {
-      style: {
-        font: "400 12.5px Inter,sans-serif",
-        color: "#F0605F",
-        marginBottom: 8
-      }
-    }, err), rows === null ? React.createElement("div", {
-      style: {
-        font: "400 13px Inter,sans-serif",
-        color: "#8FA3A3"
-      }
+    }, /profiles/.test(err) ? "A tabela de usuários ainda não foi criada no Supabase. Rode o texto de configuração no SQL Editor (o Claude te passou)." : err), rows === null ? React.createElement("div", {
+      className: "neo-empty"
     }, "Carregando\u2026") : rows.length === 0 ? React.createElement("div", {
-      style: {
-        font: "400 13px Inter,sans-serif",
-        color: "#8FA3A3"
-      }
+      className: "neo-empty"
     }, "Nenhum usu\xE1rio encontrado.") : React.createElement("div", {
+      className: "neo-cfusers"
+    }, rows.map(p => {
+      const st = p.is_admin ? ["ADMINISTRADOR", "#3FD1CE"] : p.approved ? ["APROVADO", "#3FD1CE"] : ["AGUARDANDO", "#FFAA5C"];
+      return React.createElement("div", {
+        key: p.id,
+        className: "neo-cfuser cfg-user",
+        "data-email": p.email
+      }, React.createElement("span", {
+        className: "av"
+      }, (p.email || "?")[0].toUpperCase()), React.createElement("div", {
+        style: {
+          minWidth: 0
+        }
+      }, React.createElement("b", null, p.email), React.createElement("small", null, "conta criada em ", p.created_at ? fmtDate(String(p.created_at).slice(0, 10)) : "—", p.approved && !p.is_admin && p.store_id && p.store_id !== myStore ? " · ⚠ ligada a outra loja" : "")), React.createElement("span", {
+        className: "pill",
+        style: {
+          color: st[1]
+        }
+      }, st[0]), !p.is_admin && (p.approved ? React.createElement(Btn, {
+        small: true,
+        kind: "ghost",
+        disabled: busyId === p.id,
+        onClick: () => setApproved(p, false)
+      }, "Revogar") : React.createElement(Btn, {
+        small: true,
+        disabled: busyId === p.id,
+        onClick: () => setApproved(p, true)
+      }, "Aprovar")));
+    })), waiting > 0 && React.createElement("div", {
       style: {
-        display: "flex",
-        flexDirection: "column",
-        gap: 8
+        font: "600 12px Inter,sans-serif",
+        color: "#FFAA5C",
+        marginTop: 10
       }
-    }, rows.map(p => React.createElement("div", {
-      key: p.id,
-      style: {
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 10,
-        border: "1px solid rgba(63,209,206,.14)",
-        borderRadius: 10,
-        padding: "8px 12px"
-      }
-    }, React.createElement("div", {
-      style: {
-        minWidth: 0
-      }
-    }, React.createElement("div", {
-      style: {
-        font: "600 13px Inter,sans-serif",
-        color: "#D6E2E2",
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap"
-      }
-    }, p.email, p.is_admin ? " · admin" : ""), React.createElement("div", {
-      style: {
-        font: "400 11px Inter,sans-serif",
-        color: p.approved ? "#3FD1CE" : "#FFB067"
-      }
-    }, p.approved ? "Aprovado" : "Aguardando aprovação")), !p.is_admin && (p.approved ? React.createElement(Btn, {
-      small: true,
-      kind: "ghost",
-      disabled: busyId === p.id,
-      onClick: () => setApproved(p.id, false)
-    }, "Revogar") : React.createElement(Btn, {
-      small: true,
-      disabled: busyId === p.id,
-      onClick: () => setApproved(p.id, true)
-    }, "Aprovar"))))));
+    }, waiting, " conta(s) aguardando sua aprova\xE7\xE3o."));
   }
   const LS_LIMITE = 5 * 1024 * 1024;
   function StoragePanel() {
@@ -23299,7 +23501,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
       let vivo = true;
       (async () => {
         try {
-          const ks = await cloudListPhotoKeys(session.user.id);
+          const ks = await cloudListPhotoKeys(cloudId || session.user.id);
           if (vivo) setNuvem({
             fotos: ks.size
           });
@@ -23391,7 +23593,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
           r.forEach(k => usadas.add(k));
         } catch (e) {}
         const todas = await idbAllKeys();
-        const orfas = todas.filter(k => !usadas.has(k));
+        const orfas = todas.filter(k => !usadas.has(k) && !String(k).startsWith("__"));
         if (!orfas.length) {
           setBusy("");
           notify("Nenhuma foto órfã encontrada.");
@@ -23574,8 +23776,8 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
       }
     }, "Os dados em texto s\xE3o o que tem limite apertado (~5 MB por navegador). As fotos ficam num dep\xF3sito separado e bem maior, mas comprimi-las ajuda a sincronizar mais r\xE1pido e a economizar espa\xE7o na nuvem.")));
   }
-  const CFG_SECS = [["empresa", "🏢", "Empresa e PIX"], ["impressoras", "🖨", "Impressoras"], ["comando", "🎛", "Central de Comando"], ["custos", "💲", "Custos e preços"], ["canais", "🛒", "Canais de venda"], ["alertas", "🔔", "Alertas e prazos"], ["listas", "🏷", "Listas"], ["backup", "💾", "Backup e dados"], ["perigo", "⚠", "Zona de perigo"], ["sobre", "ℹ", "Sobre"]];
-  const CFG_INDEX = [["Nome da empresa", "empresa"], ["Slogan", "empresa"], ["CNPJ / CPF", "empresa"], ["WhatsApp / Telefone", "empresa"], ["E-mail", "empresa"], ["Instagram", "empresa"], ["Endereço", "empresa"], ["Cidade / UF", "empresa"], ["PIX · chave, tipo, favorecido", "empresa"], ["Impressoras · cadastrar, editar, manutenção", "impressoras"], ["Seu nome (saudação)", "comando", "ownerName"], ["Meta de faturamento do mês", "comando", "monthlyGoal"], ["Valor do kWh (energia)", "custos", "kwhPrice"], ["Taxa de falha", "custos", "failureRate"], ["Valor da sua hora de trabalho", "custos", "laborRate"], ["Margem de lucro padrão", "custos", "defaultMargin"], ["Margem de manutenção", "custos", "maintMarginPct"], ["Vida útil padrão da impressora", "custos", "printerLifeH"], ["Multiplicador revendedor", "canais", "resaleMultiplier"], ["Multiplicador consumidor final", "canais", "finalMultiplier"], ["Taxa Shopee", "canais", "shopeeFeePct"], ["Taxa Mercado Livre clássico", "canais", "mlClassicFeePct"], ["Taxa Mercado Livre premium", "canais", "mlPremiumFeePct"], ["Taxa TikTok Shop", "canais", "tiktokFeePct"], ["Alerta de estoque baixo (filamento)", "alertas", "lowStockG"], ["Manutenção a cada (h)", "alertas", "maintEveryH"], ["Horas de impressão por dia", "alertas", "prodHoursPerDay"], ["Validade padrão do orçamento", "alertas", "quoteValidityDays"], ["Categorias de gastos", "listas"], ["Tipos de filamento", "listas"], ["Nichos de mercado", "listas"], ["Backup · exportar, importar, restaurar", "backup"], ["Armazenamento e fotos", "backup"], ["Apagar todos os dados", "perigo"], ["Versão do app", "sobre"]];
+  const CFG_SECS = [["empresa", "🏢", "Empresa e PIX"], ["usuarios", "👥", "Usuários e acesso"], ["impressoras", "🖨", "Impressoras"], ["comando", "🎛", "Central de Comando"], ["custos", "💲", "Custos e preços"], ["canais", "🛒", "Canais de venda"], ["alertas", "🔔", "Alertas e prazos"], ["listas", "🏷", "Listas"], ["backup", "💾", "Backup e dados"], ["perigo", "⚠", "Zona de perigo"], ["sobre", "ℹ", "Sobre"]];
+  const CFG_INDEX = [["Nome da empresa", "empresa"], ["Slogan", "empresa"], ["CNPJ / CPF", "empresa"], ["WhatsApp / Telefone", "empresa"], ["E-mail", "empresa"], ["Instagram", "empresa"], ["Endereço", "empresa"], ["Cidade / UF", "empresa"], ["PIX · chave, tipo, favorecido", "empresa"], ["Usuários e acesso · aprovar esposa, sócio, funcionário", "usuarios"], ["Impressoras · cadastrar, editar, manutenção", "impressoras"], ["Seu nome (saudação)", "comando", "ownerName"], ["Meta de faturamento do mês", "comando", "monthlyGoal"], ["Valor do kWh (energia)", "custos", "kwhPrice"], ["Taxa de falha", "custos", "failureRate"], ["Valor da sua hora de trabalho", "custos", "laborRate"], ["Margem de lucro padrão", "custos", "defaultMargin"], ["Margem de manutenção", "custos", "maintMarginPct"], ["Vida útil padrão da impressora", "custos", "printerLifeH"], ["Multiplicador revendedor", "canais", "resaleMultiplier"], ["Multiplicador consumidor final", "canais", "finalMultiplier"], ["Taxa Shopee", "canais", "shopeeFeePct"], ["Taxa Mercado Livre clássico", "canais", "mlClassicFeePct"], ["Taxa Mercado Livre premium", "canais", "mlPremiumFeePct"], ["Taxa TikTok Shop", "canais", "tiktokFeePct"], ["Alerta de estoque baixo (filamento)", "alertas", "lowStockG"], ["Manutenção a cada (h)", "alertas", "maintEveryH"], ["Horas de impressão por dia", "alertas", "prodHoursPerDay"], ["Validade padrão do orçamento", "alertas", "quoteValidityDays"], ["Categorias de gastos", "listas"], ["Tipos de filamento", "listas"], ["Nichos de mercado", "listas"], ["Backup · exportar, importar, restaurar", "backup"], ["Armazenamento e fotos", "backup"], ["Apagar todos os dados", "perigo"], ["Versão do app", "sobre"]];
   const CFG_UI = {
     sec: "empresa"
   };
@@ -23702,6 +23904,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
       document.querySelectorAll(".neo-cfsec").forEach(el => io.observe(el));
       return () => io.disconnect();
     }, []);
+    const isAdm = !!(sb && profile && profile.is_admin);
     const normq = t => String(t || "").normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase();
     const results = cq.trim() ? CFG_INDEX.filter(x => normq(x[0] + " " + (CFG_SECS.find(y => y[0] === x[1]) || [])[2]).includes(normq(cq.trim()))).slice(0, 8) : [];
     const prAlert = data.printers.filter(p => num(p.hoursUsed) - num(p.lastMaintH || 0) >= num(data.settings.maintEveryH) || !p.date || !num(p.price)).length;
@@ -23785,11 +23988,11 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
         className: "cfg-res",
         onClick: () => go(x[1], x[2] ? "cfg-f-" + x[2] : null)
       }, React.createElement("span", null, x[0]), React.createElement("small", null, S[1], " ", S[2]));
-    })))), sb && profile && profile.is_admin && React.createElement(UsersAdminPanel, null), React.createElement("div", {
+    })))), React.createElement("div", {
       className: "neo-cflay"
     }, React.createElement("nav", {
       className: "neo-cfnav"
-    }, CFG_SECS.map(([id, ic, t]) => React.createElement("button", {
+    }, CFG_SECS.filter(([id]) => id !== "usuarios" || isAdm).map(([id, ic, t]) => React.createElement("button", {
       key: id,
       className: "cfg-nav" + (sec === id ? " on" : "") + (id === "perigo" ? " dg" : ""),
       "data-s": id,
@@ -23952,7 +24155,11 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
       }, "preencha a chave para ver o QR"), React.createElement("div", {
         className: "k"
       }, "PIX \xB7 ", pixFull.key || "—"), React.createElement("em", null, "pr\xE9via ao vivo \xB7 teste o QR com seu banco"))));
-    })()), React.createElement("div", {
+    })()), isAdm && React.createElement("div", {
+      id: "cfg-s-usuarios",
+      "data-sec": "usuarios",
+      className: "neo-hud neo-cfsec"
+    }, React.createElement(UsersAdminPanel, null)), React.createElement("div", {
       id: "cfg-s-impressoras",
       "data-sec": "impressoras",
       className: "neo-hud neo-cfsec"
@@ -24636,6 +24843,22 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
         marginBottom: 18
       }
     }, "Sua conta (", session && session.user.email, ") foi criada, mas ainda precisa ser aprovada pelo administrador para acessar os dados."), React.createElement(Btn, {
+      onClick: async () => {
+        try {
+          const {
+            data: prof
+          } = await sb.from("profiles").select("id, email, approved, is_admin, store_id").eq("id", session.user.id).maybeSingle();
+          if (prof && prof.approved) setProfile(prof);else notify("Ainda aguardando a aprovação.");
+        } catch (e) {
+          notify("Sem conexão — tente de novo.");
+        }
+      },
+      style: {
+        width: "100%",
+        justifyContent: "center",
+        marginBottom: 8
+      }
+    }, "J\xE1 fui aprovado(a) \u2014 entrar"), React.createElement(Btn, {
       kind: "ghost",
       onClick: async () => {
         await sb.auth.signOut();

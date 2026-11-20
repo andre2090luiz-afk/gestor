@@ -677,6 +677,31 @@
   .neo-pqty b{font:700 26px 'Space Grotesk',sans-serif;color:#fff;text-shadow:0 0 14px rgba(63,209,206,.6);display:block;line-height:1;}
   .neo-pqty small{font:600 9.5px 'JetBrains Mono',monospace;color:#9DB8B8;letter-spacing:.1em;}
   .neo-pres{font:600 11px Inter,sans-serif;color:#FFAA5C;margin-top:6px;} .neo-ppark{font:600 11px Inter,sans-serif;color:#FF9A6A;margin-top:4px;}
+
+  /* ===== v4.57 Investimentos ===== */
+  .neo-info{position:relative;display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px solid rgba(63,209,206,.55);color:#3FD1CE;font:700 9.5px Georgia,serif;font-style:italic;text-transform:none;letter-spacing:0;margin-left:5px;cursor:help;vertical-align:1px;}
+  .neo-infobox{position:absolute;left:50%;top:calc(100% + 8px);transform:translateX(-50%);width:260px;padding:10px 12px;border-radius:11px;background:rgba(8,18,19,.98);border:1px solid rgba(63,209,206,.45);box-shadow:0 14px 34px rgba(0,0,0,.55),0 0 18px rgba(20,184,178,.15);font:400 12px/1.5 Inter,sans-serif;font-style:normal;color:#C9DADA;text-align:left;opacity:0;visibility:hidden;transition:opacity .15s;z-index:60;pointer-events:none;}
+  .neo-info:hover .neo-infobox,.neo-info:focus .neo-infobox{opacity:1;visibility:visible;}
+  .neo-k:has(.neo-info:hover),.neo-k:has(.neo-info:focus){z-index:40;}
+  .neo-mlabel{font:700 16px 'Space Grotesk',sans-serif;color:#F3F6F6;min-width:150px;text-align:center;text-transform:capitalize;}
+  .neo-expgrid{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(300px,1fr);gap:14px;align-items:start;}
+  .neo-expday{display:flex;gap:8px;font:600 10.5px 'JetBrains Mono',monospace;color:#7F9A9B;letter-spacing:.1em;margin:14px 0 6px;} .neo-expday span{margin-left:auto;color:#FFAA5C;}
+  .neo-exrow{display:grid;grid-template-columns:38px minmax(0,1fr) auto auto;gap:12px;align-items:center;padding:9px 12px;border-radius:12px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.1);margin-bottom:6px;transition:border-color .15s;}
+  .neo-exrow:hover{border-color:rgba(63,209,206,.3);}
+  .neo-exrow .ic{width:38px;height:38px;border-radius:11px;display:grid;place-items:center;font-size:17px;border:1px solid currentColor;background:rgba(5,12,12,.6);}
+  .neo-exrow b{font:600 13px Inter,sans-serif;color:#F3F6F6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;} .neo-exrow small{display:block;font:400 11.5px Inter,sans-serif;color:#7F9A9B;margin-top:1px;}
+  .neo-exrow .stk{font:700 9.5px 'JetBrains Mono',monospace;color:#3FD1CE;border:1px solid rgba(63,209,206,.4);border-radius:5px;padding:1px 5px;margin-left:6px;}
+  .neo-exrow .v{font:700 14px 'JetBrains Mono',monospace;color:#FFAA5C;white-space:nowrap;}
+  .neo-exptotal{display:flex;justify-content:space-between;margin-top:12px;padding-top:10px;border-top:1px solid rgba(63,209,206,.12);font:600 13px Inter,sans-serif;color:#C9DADA;} .neo-exptotal b{font:700 15px 'JetBrains Mono',monospace;color:#FFAA5C;}
+  .neo-expbars{display:flex;align-items:stretch;gap:10px;height:150px;margin-top:12px;}
+  .neo-expbars button{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:stretch;border:0;background:none;cursor:pointer;padding:0;}
+  .neo-expbars i{display:block;border-radius:6px 6px 0 0;background:linear-gradient(180deg,#FFAA5C,rgba(245,130,31,.25));transition:height .8s cubic-bezier(.2,.8,.2,1);}
+  .neo-expbars button.on i{background:linear-gradient(180deg,#3FD1CE,rgba(20,184,178,.3));box-shadow:0 0 12px rgba(63,209,206,.4);}
+  .neo-expbars button:hover i{filter:brightness(1.2);}
+  .neo-expbars small{font:600 9.5px 'JetBrains Mono',monospace;color:#7F9A9B;margin-bottom:3px;text-align:center;}
+  .neo-expbars span{font:600 10px 'JetBrains Mono',monospace;color:#7F9A9B;margin-top:5px;text-align:center;} .neo-expbars button.on span{color:#3FD1CE;}
+  .neo-expgrid .neo-donut{grid-template-columns:1fr;justify-items:center;gap:10px;} .neo-expgrid .neo-donut-leg{width:100%;}
+  @media (max-width: 1000px){ .neo-expgrid{grid-template-columns:1fr;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -819,7 +844,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.56";
+const APP_VERSION = "4.57";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -5009,73 +5034,118 @@ function App() {
   }
 
   /* ============================= INVESTIMENTOS =========================== */
+  const EXP_UI = { month: null, cat: "Todas", q: "" };
+  const ECAT_ICON = { Filamento: "🧵", Material: "🔩", Embalagem: "📦", Ferramenta: "🛠", "Manutenção": "🔧", Energia: "⚡", Equipamento: "🖨", Marketing: "📣", "Calibração": "🎯", Outro: "•" };
+  const ECAT_COLOR = { Filamento: "#3FD1CE", Material: "#A88AF0", Embalagem: "#F5821F", Ferramenta: "#6FA0EA", "Manutenção": "#9AF3EC", Energia: "#FFD166", Equipamento: "#FF6B6B", Marketing: "#FF8AC0", "Calibração": "#8FA0AC", Outro: "#7F9A9B" };
+  const STOCK_CATS = ["Filamento", "Material", "Embalagem"];
+  const InfoTip = ({ text }) => <span className="neo-info" tabIndex={0}>i<span className="neo-infobox">{text}</span></span>;
   function Expenses() {
     const ecats = data.settings.ecats || DEFAULT_ECATS;
-    const [month, setMonth] = useState(thisMonth);
-    const sExp = useSort("investimentos");
-    const list = data.expenses.filter((e) => monthKey(e.date) === month).sort((a, b) => (b.date > a.date ? 1 : -1));
-    const total = list.reduce((s, e) => s + num(e.value), 0);
-    const catNames = Array.from(new Set([...ecats, ...list.map((e) => e.category)]));
-    const byCat = catNames.map((c) => ({ name: c, value: +list.filter((e) => e.category === c).reduce((s, e) => s + num(e.value), 0).toFixed(2) })).filter((x) => x.value > 0);
+    const [month, setMonthS] = useState(EXP_UI.month || thisMonth);
+    const setMonth = (v) => { EXP_UI.month = v; setMonthS(v); };
+    const [cat, setCatS] = useState(EXP_UI.cat);
+    const setCat = (v) => { EXP_UI.cat = v; setCatS(v); };
+    const [q, setQS] = useState(EXP_UI.q);
+    const setQ = (v) => { EXP_UI.q = v; setQS(v); };
+    const [help, setHelp] = useState(false);
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
+    const shiftM = (d) => { const x = new Date(month + "-15T12:00:00"); x.setMonth(x.getMonth() + d); setMonth(x.toISOString().slice(0, 7)); };
+    const monthLabel = new Date(month + "-15T12:00:00").toLocaleDateString("pt-BR", { month: "long", year: "numeric" }).replace(" de ", " ");
+    const monthList = data.expenses.filter((e) => monthKey(e.date) === month);
+    const sumOf = (arr) => arr.reduce((s, e) => s + num(e.value), 0);
+    const total = sumOf(monthList);
+    const prevKey = (() => { const x = new Date(month + "-15T12:00:00"); x.setMonth(x.getMonth() - 1); return x.toISOString().slice(0, 7); })();
+    const prevTotal = sumOf(data.expenses.filter((e) => monthKey(e.date) === prevKey));
+    const delta = prevTotal > 0 ? ((total - prevTotal) / prevTotal) * 100 : null;
+    const stockSum = sumOf(monthList.filter((e) => STOCK_CATS.includes(e.category)));
+    const opSum = total - stockSum;
+    const months6 = Array.from({ length: 6 }).map((_, i) => { const x = new Date(month + "-15T12:00:00"); x.setMonth(x.getMonth() - (5 - i)); return x.toISOString().slice(0, 7); });
+    const m6 = months6.map((m) => ({ m, v: sumOf(data.expenses.filter((e) => monthKey(e.date) === m)) }));
+    const withData = m6.filter((x) => x.v > 0);
+    const avg = withData.length ? withData.reduce((s, x) => s + x.v, 0) / withData.length : 0;
+    const maxV = Math.max(1, ...m6.map((x) => x.v));
+    const catNames = Array.from(new Set([...ecats, ...monthList.map((e) => e.category)]));
+    const byCat = catNames.map((c, i) => ({ name: c, value: +sumOf(monthList.filter((e) => e.category === c)).toFixed(2), color: ECAT_COLOR[c] || CHART_COLORS[i % CHART_COLORS.length] })).filter((x) => x.value > 0).sort((a, b) => b.value - a.value);
+    const list = monthList.filter((e) => (cat === "Todas" || e.category === cat) && (!q || (e.desc || "").toLowerCase().includes(q.toLowerCase()))).sort((a, b) => (b.date > a.date ? 1 : b.date < a.date ? -1 : 0));
+    const days = []; list.forEach((e) => { const last = days[days.length - 1]; if (last && last.d === e.date) last.items.push(e); else days.push({ d: e.date, items: [e] }); });
     return (
-      <div>
-        <div style={{ font: "400 13px Inter,sans-serif", color: "#7E9191", background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", marginBottom: 14 }}>
-          💡 Esta é a porta de entrada de tudo que você compra: filamento, materiais, embalagens, energia, ferramentas… As categorias Filamento, Material e Embalagem alimentam o Estoque automaticamente.
+      <div className="neo-exp">
+        <div className="neo-pagehead">
+          <span className="neo-code">INVESTIMENTOS</span><h2>Compras e gastos</h2>
+          <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Como funciona">?</button>
+          <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+            <button className="neo-bg2 ic exp-prev" title="Mês anterior" onClick={() => shiftM(-1)}>‹</button>
+            <span className="neo-mlabel">{monthLabel}</span>
+            <button className="neo-bg2 ic exp-next" title="Próximo mês" onClick={() => shiftM(1)}>›</button>
+            <Btn onClick={() => setModal({ type: "expense" })}><Plus size={16} />Lançar gasto</Btn>
+          </div>
         </div>
-        <SectionHead title="Investimentos e gastos" count={list.length}>
-          <In type="month" value={month} onChange={(e) => setMonth(e.target.value)} style={{ width: 160 }} />
-          <Btn onClick={() => setModal({ type: "expense" })}><Plus size={16} />Lançar gasto</Btn>
-        </SectionHead>
-        <div style={{ display: "grid", gridTemplateColumns: byCat.length ? "2fr 1fr" : "1fr", gap: 14, alignItems: "start" }}>
-          <Card style={{ padding: 6 }}>
-            {list.length === 0 ? <Empty icon={Wallet} text="Nenhum gasto neste mês" hint="Lance filamento, materiais, embalagens, energia, ferramentas e equipamentos." /> : (
-              <div style={{ overflowX: "auto" }}>
-                <table>
-                  <thead><tr><Th s={sExp} col="date">Data</Th><Th s={sExp} col="category">Categoria</Th><Th s={sExp} col="desc">Descrição</Th><Th s={sExp} col="value">Valor</Th><Th s={sExp} col="units">Qtd</Th><Th s={sExp} col="unit">Custo/un</Th><th></th></tr></thead>
-                  <tbody>
-                    {sortRows(list, sExp, {
-                      date: (e) => e.date, category: (e) => e.category, desc: (e) => e.desc, value: (e) => num(e.value),
-                      units: (e) => (num(e.units) > 0 ? num(e.units) : null),
-                      unit: (e) => (num(e.units) > 0 ? (e.category === "Filamento" ? (num(e.value) / num(e.units)) * 1000 : num(e.value) / num(e.units)) : null),
-                    }).map((e) => {
-                      const isFil = e.category === "Filamento";
-                      const linked = (e.materialId && matMap[e.materialId]) || (e.filamentId && filMap[e.filamentId]);
-                      return (
-                        <tr key={e.id}>
-                          <td style={{ whiteSpace: "nowrap" }}>{fmtDate(e.date)}</td>
-                          <td>{e.category}</td>
-                          <td>{e.desc}{linked && <span style={{ font: "600 10.5px Inter,sans-serif", color: "#3FD1CE", marginLeft: 6 }}>→ estoque</span>}</td>
-                          <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600 }}>{fmt(e.value)}</td>
-                          <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{num(e.units) > 0 ? fmtN(e.units) + (isFil ? "g" : "") : "—"}</td>
-                          <td style={{ fontFamily: "'JetBrains Mono',monospace", color: "#7E9191" }}>{num(e.units) > 0 ? (isFil ? fmt((num(e.value) / num(e.units)) * 1000) + "/kg" : fmt(num(e.value) / num(e.units))) : "—"}</td>
-                          <td style={{ whiteSpace: "nowrap" }}>
-                            <Btn small kind="ghost" onClick={() => setModal({ type: "expense", item: e })}><Pencil size={13} /></Btn>{" "}
-                            <Btn small kind="danger" onClick={() => delItem("expenses", e.id)}><Trash2 size={13} /></Btn>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                    <tr><td colSpan={3} style={{ fontWeight: 700 }}>Total do mês</td>
-                      <td colSpan={4} style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: "#FFB067" }}>{fmt(total)}</td></tr>
-                  </tbody>
-                </table>
+        {help && <div className="neo-hud neo-helpbox">💡 Esta é a porta de entrada de tudo que você compra: filamento, materiais, embalagens, energia, ferramentas… As categorias Filamento, Material e Embalagem alimentam o Estoque automaticamente.</div>}
+        <div className="neo-ckpis">
+          <Reveal className="neo-hud neo-k or" delay={0}><div className="l">Gasto do mês</div><div className="v"><CountUp value={total} format={fmt} /></div>{delta == null ? <span className="neo-kd">sem base para comparar</span> : <span className={"neo-kd " + (delta > 0 ? "dn" : "up")}>{delta > 0 ? "▲" : "▼"} {fmtN(Math.abs(delta), 0)}% vs mês anterior</span>}</Reveal>
+          <Reveal className="neo-hud neo-k" delay={60}><div className="l">Virou estoque <InfoTip text="Compras de Filamento, Material e Embalagem. O dinheiro saiu do caixa, mas continua seu em forma de matéria-prima na prateleira — só vira custo quando você imprime e vende a peça (já entra no custo de cada pedido)." /></div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={stockSum} format={fmt} /></div><span className="neo-kd">{total > 0 ? `${fmtN((stockSum / total) * 100, 0)}% · ` : ""}filamento, material, embalagem</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={120}><div className="l">Custo operacional <InfoTip text="Gastos que não voltam como estoque: energia, ferramentas, manutenção, equipamentos, marketing, calibração e outros. É o dinheiro consumido para manter a produção funcionando — se crescer muito, vale olhar essas despesas." /></div><div className="v"><CountUp value={opSum} format={fmt} /></div><span className="neo-kd">energia, ferramentas, outros</span></Reveal>
+          <Reveal className="neo-hud neo-k" delay={180}><div className="l">Média mensal <InfoTip text="Média dos meses com gastos entre os últimos 6 meses (até o mês que você está vendo)." /></div><div className="v"><CountUp value={avg} format={fmt} /></div><span className="neo-kd">últimos 6 meses</span></Reveal>
+        </div>
+        <div className="neo-penbar">
+          <div className="neo-fchips">
+            <button className={"neo-fchip exp-cat" + (cat === "Todas" ? " on" : "")} data-c="Todas" onClick={() => setCat("Todas")}>Todas {monthList.length}</button>
+            {byCat.map((c) => <button key={c.name} className={"neo-fchip exp-cat" + (cat === c.name ? " on" : "")} data-c={c.name} onClick={() => setCat(c.name)}>{ECAT_ICON[c.name] || "•"} {c.name} {monthList.filter((e) => e.category === c.name).length}</button>)}
+          </div>
+          <div className="neo-search"><SearchIc size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Descrição…" />{q && <button onClick={() => setQ("")}>×</button>}</div>
+        </div>
+        <div className="neo-expgrid">
+          <div className="neo-hud">
+            <span className="neo-code">LANÇAMENTOS</span>
+            {list.length === 0 ? <Empty icon={Wallet} text={monthList.length ? "Nenhum gasto neste filtro" : "Nenhum gasto neste mês"} hint="Lance filamento, materiais, embalagens, energia, ferramentas e equipamentos." /> : days.map((g) => (
+              <React.Fragment key={g.d}>
+                <div className="neo-expday">{new Date(g.d + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", weekday: "short" }).replace(".", "").toUpperCase()}<span>{fmt(sumOf(g.items))}</span></div>
+                {g.items.map((e) => {
+                  const isFil = e.category === "Filamento";
+                  const linked = (e.materialId && matMap[e.materialId]) || (e.filamentId && filMap[e.filamentId]);
+                  const col = ECAT_COLOR[e.category] || "#7F9A9B";
+                  const units = num(e.units) > 0 ? `${fmtN(e.units)}${isFil ? " g" : " un"} · ${isFil ? fmt((num(e.value) / num(e.units)) * 1000) + "/kg" : fmt(num(e.value) / num(e.units)) + "/un"}` : "";
+                  return (
+                    <div key={e.id} className="neo-exrow" style={menu === e.id ? { zIndex: 30, position: "relative" } : undefined}>
+                      <span className="ic" style={{ color: col, boxShadow: `0 0 10px ${col}33` }}>{ECAT_ICON[e.category] || "•"}</span>
+                      <div style={{ minWidth: 0 }}><b>{e.desc || e.category}{linked && <span className="stk">→ ESTOQUE</span>}</b><small>{e.category}{units ? ` · ${units}` : ""}</small></div>
+                      <span className="v">{fmt(e.value)}</span>
+                      <div className="neo-oacts">
+                        <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "expense", item: e })}><Pencil size={13} /></button>
+                        <button className={"neo-bg2 ic neo-qmore" + (menu === e.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === e.id ? null : e.id)}>⋯</button>
+                        {menu === e.id && <div className="neo-qmenu"><button className="r exp-del" onClick={() => { setMenu(null); if (confirm(`Excluir o lançamento "${e.desc || e.category}" (${fmt(e.value)})?`)) delItem("expenses", e.id); }}><Trash2 size={13} />Excluir</button></div>}
+                      </div>
+                    </div>
+                  );
+                })}
+              </React.Fragment>
+            ))}
+            {list.length > 0 && <div className="neo-exptotal"><span>Total {cat !== "Todas" || q ? "do filtro" : "do mês"}</span><b>{fmt(sumOf(list))}</b></div>}
+          </div>
+          <div className="neo-col">
+            <Reveal className="neo-hud" delay={60}>
+              <span className="neo-code">POR CATEGORIA</span>
+              {byCat.length === 0 ? <div className="neo-empty">Sem gastos neste mês.</div> : <HoloDonut gid="exp" totalLabel="TOTAL" unit={(v) => fmt(v)} items={byCat} />}
+            </Reveal>
+            <Reveal className="neo-hud" delay={120}>
+              <span className="neo-code">ÚLTIMOS 6 MESES</span>
+              <div className="neo-expbars">
+                {m6.map((x) => (
+                  <button key={x.m} className={"exp-bar" + (x.m === month ? " on" : "")} title={`${fmt(x.v)} — clique para ver o mês`} onClick={() => setMonth(x.m)}>
+                    <small>{x.v > 0 ? fmtN(Math.round(x.v)) : ""}</small>
+                    <i style={{ height: Math.max(2, (x.v / maxV) * 100) + "%" }} />
+                    <span>{new Date(x.m + "-15T12:00:00").toLocaleDateString("pt-BR", { month: "short" }).replace(".", "")}</span>
+                  </button>
+                ))}
               </div>
-            )}
-          </Card>
-          {byCat.length > 0 && (
-            <Card>
-              <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 8 }}>Por categoria</div>
-              <ResponsiveContainer width="100%" height={220}>
-                <PieChart>
-                  <Pie data={byCat} dataKey="value" nameKey="name" innerRadius={45} outerRadius={75}>
-                    {byCat.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
-                  </Pie>
-                  <Tooltip formatter={(v) => fmt(v)} />
-                  <Legend wrapperStyle={{ fontSize: 11.5 }} />
-                </PieChart>
-              </ResponsiveContainer>
-            </Card>
-          )}
+            </Reveal>
+          </div>
         </div>
       </div>
     );

@@ -764,6 +764,40 @@
   .neo-resfoot{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font:600 11px Inter,sans-serif;color:#7F9A9B;}
   .res-patr .neo-finleg{float:none;position:absolute;top:14px;right:16px;}
   @media (max-width:700px){ .neo-wf,.neo-wfl{gap:6px;} .neo-wfl span{font-size:9px;} .neo-wf .wf-col b{font-size:9.5px;} }
+  /* v4.60 Relatórios */
+  .neo-rtiles{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+  .neo-rtile{all:unset;box-sizing:border-box;cursor:pointer;position:relative;border-radius:14px;border:1px solid rgba(63,209,206,.14);background:rgba(8,20,21,.75);padding:11px 12px;transition:border-color .15s,box-shadow .15s,transform .15s;}
+  .neo-rtile:hover{border-color:rgba(63,209,206,.4);transform:translateY(-1px);}
+  .neo-rtile.on{border-color:#3FD1CE;box-shadow:0 0 0 1px #3FD1CE,0 0 22px rgba(63,209,206,.22);}
+  .neo-rtile.dash{border-style:dashed;}
+  .neo-rtile .ic{font-size:18px;display:block;} .neo-rtile b{display:block;font:600 13px Inter,sans-serif;margin-top:6px;color:#F3F6F6;} .neo-rtile small{display:block;font:400 11px Inter,sans-serif;color:#7F9A9B;margin-top:2px;line-height:1.35;}
+  .neo-rtile .pdf{position:absolute;top:9px;right:9px;font:700 8.5px 'JetBrains Mono',monospace;color:#F5821F;border:1px solid rgba(245,130,31,.5);border-radius:4px;padding:0 4px;}
+  .neo-rband{display:flex;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:14px;padding:12px 16px;}
+  .neo-rband img{width:52px;height:52px;border-radius:50%;flex:none;box-shadow:0 0 14px rgba(63,209,206,.25);}
+  .neo-rband .k{font:700 10px 'JetBrains Mono',monospace;color:#7F9A9B;letter-spacing:.1em;} .neo-rband .t{font:700 20px 'Space Grotesk',sans-serif;color:#F3F6F6;text-transform:capitalize;} .neo-rband .s{font:500 11.5px Inter,sans-serif;color:#7F9A9B;}
+  .neo-rdl{font:600 11px 'JetBrains Mono',monospace;border-radius:6px;padding:1px 6px;color:#7F9A9B;} .neo-rdl.up{color:#3FD1CE;background:rgba(63,209,206,.1);} .neo-rdl.dn{color:#FF7A7E;background:rgba(255,107,107,.1);}
+  .neo-ckpis.neo-rk5{grid-template-columns:repeat(5,minmax(0,1fr));}
+  .neo-rstats{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px;margin-bottom:14px;}
+  .neo-rstats>div{border-radius:12px;border:1px solid rgba(63,209,206,.12);background:rgba(5,12,12,.55);padding:10px 12px;}
+  .neo-rstats small{display:block;font:600 10px Inter,sans-serif;color:#7F9A9B;text-transform:uppercase;letter-spacing:.06em;} .neo-rstats b{font:700 18px 'Space Grotesk',sans-serif;color:#E6F1F1;} .neo-rstats em{font-style:normal;display:block;font:500 10.5px Inter,sans-serif;color:#7F9A9B;}
+  .neo-rgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:start;}
+  .neo-rhb{display:grid;grid-template-columns:22px minmax(0,1fr) auto;gap:10px;align-items:center;margin:9px 0;}
+  .neo-rhb .n{font:700 12px 'JetBrains Mono',monospace;color:#7F9A9B;text-align:center;} .neo-rhb .nm{font:600 12.5px Inter,sans-serif;color:#E6F1F1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-rhb .tr{height:7px;border-radius:4px;background:rgba(127,154,155,.12);margin-top:5px;} .neo-rhb .tr i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#14B8B2,#3FD1CE);box-shadow:0 0 8px rgba(63,209,206,.35);}
+  .neo-rhb .v{font:700 12.5px 'JetBrains Mono',monospace;color:#3FD1CE;text-align:right;white-space:nowrap;} .neo-rhb .v small{display:block;font:500 10px Inter,sans-serif;color:#7F9A9B;}
+  .neo-rgrid .neo-donut{grid-template-columns:1fr;justify-items:center;gap:10px;} .neo-rgrid .neo-donut-leg{width:100%;}
+  .neo-rsub{font:700 9.5px 'JetBrains Mono',monospace;color:#7F9A9B;margin:14px 0 6px;letter-spacing:.06em;}
+  .neo-rcat{display:flex;height:12px;border-radius:7px;overflow:hidden;background:rgba(127,154,155,.12);} .neo-rcat i{display:block;}
+  .neo-rcatl{display:flex;flex-wrap:wrap;gap:4px 10px;font:600 10.5px Inter,sans-serif;color:#7F9A9B;margin-top:6px;}
+  .neo-rwa{white-space:pre-wrap;margin:10px 0 0;border-radius:14px;border:1px solid rgba(52,199,122,.35);background:rgba(52,199,122,.05);padding:14px 16px;font:500 13px/1.65 Inter,sans-serif;color:#DDEEE6;}
+  .neo-rprs{display:grid;grid-template-columns:repeat(auto-fit,minmax(380px,1fr));gap:14px;}
+  .neo-rpr .neo-finleg{position:absolute;top:14px;right:16px;float:none;}
+  .neo-rprg{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-top:12px;}
+  .neo-rprg>div{border-radius:12px;border:1px solid rgba(63,209,206,.14);background:rgba(5,12,12,.55);padding:10px;} .neo-rprg small{display:block;font:600 9.5px Inter,sans-serif;color:#7F9A9B;text-transform:uppercase;letter-spacing:.05em;} .neo-rprg b{font:700 16px 'Space Grotesk',sans-serif;color:#E6F1F1;}
+  .neo-rpb{margin-top:12px;font:600 11.5px Inter,sans-serif;color:#7F9A9B;} .neo-rpb b{color:#E6F1F1;}
+  .neo-bebar.sm{height:12px;margin:8px 0 2px;}
+  @media (max-width:1000px){ .neo-rtiles{grid-template-columns:repeat(3,minmax(0,1fr));} .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(3,minmax(0,1fr));} .neo-rgrid{grid-template-columns:1fr;} }
+  @media (max-width:700px){ .neo-rtiles{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-ckpis.neo-rk5,.neo-rstats{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-rprs{grid-template-columns:1fr;} .neo-rprg{grid-template-columns:repeat(2,minmax(0,1fr));} .neo-rpr .neo-finleg{position:static;display:block;margin-top:6px;} }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -906,7 +940,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.59";
+const APP_VERSION = "4.60";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -2280,6 +2314,7 @@ function stableComponent(name, fn) {
   return e.C;
 }
 /* estado de tela que continua igual ao trocar de aba */
+const REP_UI = { mode: "mensal", month: null, from: null, to: null, rep: "resumo" };
 const PJ_UI = { niche: "Todos", q: "", sort: "vendidos", help: false };
 const STK_UI = { view: "spools", type: "Todos", sort: "menos", mcat: "Todos", help: false };
 const PRD_UI = { f: "Todos", sort: "qtd", q: "" };
@@ -6522,19 +6557,100 @@ function App() {
   }
 
   /* =============================== RELATÓRIOS ============================= */
+  /* ===== v4.60: lucro real por período (igual ao Resultado) e uso por impressora ===== */
+  const monthsIn = (a, b) => { let m = 0, g = 0; const d = new Date(a + "T12:00:00"), e = new Date(b + "T12:00:00"); while (d <= e && g < 40000) { m += 1 / new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(d.getDate() + 1); g++; } return m; };
+  const dataStart = () => [...data.orders.map((o) => o.date), ...data.expenses.map((e) => e.date), ...data.printers.map((p) => p.date)].filter(Boolean).sort()[0] || todayISO();
+  const clampRange = (a, b) => [a < "1900" ? dataStart() : a, b > "9000" ? todayISO() : b];
+  const realProfit = (a0, b0) => {
+    const [a, b] = clampRange(a0, b0);
+    const inR = (d) => d && d >= a && d <= b;
+    const isEq = (e) => (e.category || e.cat) === "Equipamento";
+    const sales = salesOrders.filter((o) => inR(o.date));
+    const rev = sales.reduce((s, o) => s + num(o.price), 0);
+    const cpv = sales.reduce((s, o) => s + num(o.cost), 0);
+    const op = data.expenses.filter((e) => inR(e.date) && !isEq(e) && !STOCK_CATS.includes(e.category || e.cat)).reduce((s, e) => s + num(e.value), 0);
+    const months = a <= b ? monthsIn(a, b) : 0;
+    const fixed = monthFixedTotal * months;
+    const desg = (data.expenses.filter(isEq).reduce((s, e) => s + num(e.value), 0) / 36) * months;
+    return { rev, cpv, op, fixed, desg, profit: rev - cpv - op - fixed - desg, months };
+  };
+  const printerUsage = (a0, b0) => {
+    const [a, b] = clampRange(a0, b0);
+    const inR = (d) => d && d >= a && d <= b;
+    const m = {};
+    const add = (pid, h, v, q) => { const k = pid && printerMapById(pid) ? pid : "_"; const x = (m[k] = m[k] || { hours: 0, value: 0, pieces: 0, energy: 0 }); x.hours += h; x.value += v; x.pieces += q; };
+    data.orders.forEach((o) => {
+      const p = projMap[o.projectId]; if (!p) return;
+      const unit = isSale(o) ? (num(o.qty) > 0 ? num(o.price) / num(o.qty) : 0) : o.dest === "estoque" ? refPrice(p) : 0;
+      const prints = o.prints || [];
+      if (prints.length) {
+        prints.forEach((pr) => {
+          if (!inR(pr.date)) return;
+          if (pr.partId && isPartsProj(p)) {
+            const pt = p.parts.find((x) => x.id === pr.partId); if (!pt) return;
+            const tot = p.parts.reduce((s, x) => s + num(x.hours), 0) || 1;
+            add(pr.printerId || pt.printerId, num(pt.hours) * num(pr.qty), (unit * num(pr.qty) * num(pt.hours)) / tot, num(pr.qty) / p.parts.length);
+          } else add(pr.printerId || o.printerId, num(p.hours) * num(pr.qty), unit * num(pr.qty), num(pr.qty));
+        });
+      } else if (isDone(o) && !o.fromStock && inR(o.date)) add(o.printerId, num(p.hours) * num(o.qty), unit * num(o.qty), num(o.qty));
+    });
+    Object.entries(m).forEach(([k, x]) => { const pr = printerMapById(k); x.energy = ((pr ? num(pr.watts) : 0) / 1000) * x.hours * num(data.settings.kwhPrice); });
+    return m;
+  };
+  const printerMapById = (id) => data.printers.find((p) => p.id === id);
+  const printerPayback = (pr) => {
+    const all = printerUsage("0001-01-01", "9999-12-31")[pr.id] || { value: 0, energy: 0 };
+    const net = all.value - all.energy;
+    const price = num(pr.price);
+    const start = pr.date || dataStart();
+    const months = Math.max(1, monthsIn(start, todayISO()));
+    const perMonth = net / months;
+    const left = Math.max(0, price - net);
+    return { net, price, pct: price > 0 ? Math.min(1, Math.max(0, net / price)) : 0, done: price > 0 && net >= price, monthsLeft: perMonth > 0 ? Math.ceil(left / perMonth) : null, perMonth };
+  };
+  const copyText = (t) => {
+    const ok = () => notify("Resumo copiado ✓ — é só colar no WhatsApp");
+    try { if (navigator.clipboard && navigator.clipboard.writeText) { navigator.clipboard.writeText(t).then(ok, () => fallback()); return; } } catch (e) { /* segue */ }
+    function fallback() { const ta = document.createElement("textarea"); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand("copy"); ok(); } catch (e) { notify("Não deu para copiar — selecione o texto e copie"); } ta.remove(); }
+    fallback();
+  };
+  const REP_TILES = [
+    ["resumo", "📊", "Resumo do negócio", "Faturamento, lucro, produção e rankings", true],
+    ["pedidos", "🛒", "Pedidos e vendas", "Lista do período com pago / a receber", true],
+    ["orcamentos", "📝", "Orçamentos", "Enviados, aprovados e taxa de conversão", true],
+    ["projetos", "📦", "Projetos", "Catálogo com custo, preço e margem", true],
+    ["clientes", "👥", "Clientes", "Quem comprou, quanto e quando", true],
+    ["investimentos", "🧾", "Investimentos", "Compras e gastos por categoria", true],
+    ["brindes", "🎁", "Brindes e perdas", "Brindes, calibrações e o custo real", true],
+    ["itens", "🏷", "Desempenho por item", "Margem e giro de cada produto", true],
+    ["impressoras", "🖨", "Impressoras", "Horas, produção em R$, energia e retorno", true],
+    ["whats", "💬", "Resumo no WhatsApp", "Texto pronto com os números do período", false],
+  ];
+  const RDelta = ({ a, b, pts }) => {
+    if (pts) { const d = a - b; return <span className={"neo-rdl " + (d >= 0 ? "up" : "dn")}>{d >= 0 ? "▲" : "▼"} {fmtN(Math.abs(d), 0)} pts</span>; }
+    if (!b) return a > 0 ? <span className="neo-rdl up">novo</span> : <span className="neo-rdl">—</span>;
+    const d = ((a - b) / Math.abs(b)) * 100;
+    return <span className={"neo-rdl " + (d >= 0 ? "up" : "dn")}>{d >= 0 ? "▲" : "▼"} {fmtN(Math.abs(d), 0)}%</span>;
+  };
   function Reports() {
-    const [mode, setMode] = useState("mensal");
-    const [month, setMonth] = useState(thisMonth);
-    const [from, setFrom] = useState(addDays(todayISO(), -6));
-    const [to, setTo] = useState(todayISO());
-    const [rep, setRep] = useState("resumo");
+    const [mode, setModeS] = useState(REP_UI.mode);
+    const setMode = (v) => { REP_UI.mode = v; setModeS(v); };
+    const [month, setMonthS] = useState(REP_UI.month || thisMonth);
+    const setMonth = (v) => { REP_UI.month = v; setMonthS(v); };
+    const [from, setFromS] = useState(REP_UI.from || addDays(todayISO(), -6));
+    const setFrom = (v) => { REP_UI.from = v; setFromS(v); };
+    const [to, setToS] = useState(REP_UI.to || todayISO());
+    const setTo = (v) => { REP_UI.to = v; setToS(v); };
+    const [rep, setRepS] = useState(REP_UI.rep);
+    const setRep = (v) => { REP_UI.rep = v; setRepS(v); };
+    const [help, setHelp] = useState(false);
 
     let rFrom, rTo, label;
     if (mode === "mensal") {
       rFrom = month + "-01";
       const [y, m] = month.split("-").map(Number);
-      rTo = new Date(y, m, 0).toISOString().slice(0, 10);
-      label = new Date(y, m - 1, 1).toLocaleDateString("pt-BR", { month: "long", year: "numeric" });
+      rTo = `${month}-${String(new Date(y, m, 0).getDate()).padStart(2, "0")}`;
+      label = new Date(y, m - 1, 1).toLocaleDateString("pt-BR", { month: "long", year: "numeric" }).replace(" de ", " ");
     } else if (mode === "semanal") {
       rFrom = from; rTo = addDays(from, 6);
       label = `Semana de ${fmtDate(rFrom)} a ${fmtDate(rTo)}`;
@@ -6545,188 +6661,170 @@ function App() {
       rFrom = from; rTo = to;
       label = `${fmtDate(rFrom)} a ${fmtDate(rTo)}`;
     }
-    const days = Math.max(1, Math.round((new Date(rTo) - new Date(rFrom)) / 86400000) + 1);
-    const pFrom = addDays(rFrom, -days), pTo = addDays(rFrom, -1);
+    const [cFrom, cTo] = clampRange(rFrom, rTo);
+    const days = Math.max(1, Math.round((new Date(cTo) - new Date(cFrom)) / 86400000) + 1);
+    let pFrom, pTo;
+    if (mode === "mensal") { const x = new Date(month + "-15T12:00:00"); x.setMonth(x.getMonth() - 1); const pm = x.toISOString().slice(0, 7); pFrom = pm + "-01"; pTo = `${pm}-${String(monthDays(pm)).padStart(2, "0")}`; }
+    else { pFrom = addDays(cFrom, -days); pTo = addDays(cFrom, -1); }
+    const prevLabel = mode === "mensal" ? new Date(pFrom + "T12:00:00").toLocaleDateString("pt-BR", { month: "long" }) : mode === "tudo" ? "" : `${fmtDate(pFrom)} a ${fmtDate(pTo)}`;
+    const shift = (d) => {
+      if (mode === "mensal") { const x = new Date(month + "-15T12:00:00"); x.setMonth(x.getMonth() + d); setMonth(x.toISOString().slice(0, 7)); }
+      else if (mode === "semanal") setFrom(addDays(from, 7 * d));
+    };
 
-    const inR = (d, a, b) => d >= a && d <= b;
+    const inR = (d, a, b) => d && d >= a && d <= b;
     const calc = (a, b) => {
       const done = data.orders.filter((o) => isDone(o) && inR(o.date, a, b));
       const sales = done.filter((o) => isSale(o));
       const produced = done.filter((o) => !o.fromStock);
-      const all = data.orders.filter((o) => inR(o.date, a, b));
       const exp = data.expenses.filter((e) => inR(e.date, a, b));
-      const rev = sales.reduce((s, o) => s + num(o.price), 0);
-      const prodCost = sales.reduce((s, o) => s + num(o.cost), 0);
-      const expTotal = exp.reduce((s, e) => s + num(e.value), 0);
+      const rp = realProfit(a, b);
       const pieces = produced.reduce((s, o) => s + num(o.qty), 0);
       const hours = produced.reduce((s, o) => s + num(projMap[o.projectId] ? projMap[o.projectId].hours : 0) * num(o.qty), 0);
       const grams = produced.reduce((s, o) => s + num(projMap[o.projectId] ? projMap[o.projectId].grams : 0) * num(o.qty), 0);
-      const recebido = all.filter((o) => o.paid && isSale(o)).reduce((s, o) => s + num(o.price), 0);
-      const newClients = data.clients.filter((c) => c.createdAt && inR(c.createdAt, a, b)).length;
-      return { sales, produced, exp, rev, prodCost, expTotal, profit: rev - prodCost - expTotal, pieces, hours, grams, recebido, newClients, ticket: sales.length ? rev / sales.length : 0 };
+      const recebido = sales.filter((o) => o.paid).reduce((s, o) => s + num(o.price), 0);
+      const aReceber = sales.filter((o) => !o.paid).reduce((s, o) => s + num(o.price), 0);
+      const newClients = data.clients.filter((c) => c.createdAt && inR(c.createdAt.slice(0, 10), a, b)).length;
+      const qs = (data.quotes || []).filter((q) => inR(q.date, a, b));
+      const qOk = qs.filter((q) => q.status === "Aprovado").length;
+      return { sales, produced, exp, rev: rp.rev, rp, profit: rp.profit, margin: rp.rev > 0 ? (rp.profit / rp.rev) * 100 : 0, pieces, hours, grams, recebido, aReceber, newClients, qs: qs.length, qOk, ticket: sales.length ? rp.rev / sales.length : 0 };
     };
-    const cur = calc(rFrom, rTo);
+    const cur = calc(cFrom, cTo);
     const prev = calc(pFrom, pTo);
-    const delta = (a, b) => b === 0 ? (a > 0 ? "novo" : "—") : `${a - b >= 0 ? "+" : ""}${fmtN(((a - b) / Math.abs(b)) * 100, 0)}%`;
-
-    const topProjects = Object.values(cur.sales.reduce((m, o) => {
-      const k = o.projectId;
-      if (!m[k]) m[k] = { name: projMap[k] ? projMap[k].name : "—", qty: 0, rev: 0 };
-      m[k].qty += num(o.qty); m[k].rev += num(o.price);
-      return m;
-    }, {})).sort((a, b) => b.rev - a.rev).slice(0, 5);
-
-    const topClients = Object.values(cur.sales.reduce((m, o) => {
-      if (!o.clientId) return m;
-      if (!m[o.clientId]) m[o.clientId] = { name: cliMap[o.clientId] ? cliMap[o.clientId].name : "—", rev: 0, n: 0 };
-      m[o.clientId].rev += num(o.price); m[o.clientId].n += 1;
-      return m;
-    }, {})).sort((a, b) => b.rev - a.rev).slice(0, 5);
-
-    const byNiche = Object.entries(cur.sales.reduce((m, o) => {
-      const p = projMap[o.projectId];
-      const n = (p && p.niche) || "Sem nicho";
-      m[n] = (m[n] || 0) + num(o.price);
-      return m;
-    }, {})).map(([name, value]) => ({ name, value: +value.toFixed(2) })).filter((x) => x.value > 0);
-
-    const ecats = data.settings.ecats || DEFAULT_ECATS;
-    const catNames = Array.from(new Set([...ecats, ...cur.exp.map((e) => e.category)]));
-    const byCat = catNames.map((c) => ({ name: c, value: +cur.exp.filter((e) => e.category === c).reduce((s, e) => s + num(e.value), 0).toFixed(2) })).filter((x) => x.value > 0);
-
-    const D = ({ v, p }) => <span style={{ font: "600 11px 'JetBrains Mono',monospace", color: v >= p ? "#3FD1CE" : "#F0605F" }}>{delta(v, p)} vs período anterior</span>;
+    const topProjects = Object.values(cur.sales.reduce((m, o) => { const k = o.projectId; if (!m[k]) m[k] = { name: projMap[k] ? projMap[k].name : "—", qty: 0, rev: 0 }; m[k].qty += num(o.qty); m[k].rev += num(o.price); return m; }, {})).sort((a, b) => b.rev - a.rev).slice(0, 5);
+    const topClients = Object.values(cur.sales.reduce((m, o) => { if (!o.clientId) return m; if (!m[o.clientId]) m[o.clientId] = { name: cliMap[o.clientId] ? cliMap[o.clientId].name : "—", rev: 0, n: 0 }; m[o.clientId].rev += num(o.price); m[o.clientId].n += 1; return m; }, {})).sort((a, b) => b.rev - a.rev).slice(0, 5);
+    const byNiche = Object.entries(cur.sales.reduce((m, o) => { const p = projMap[o.projectId]; const n = (p && p.niche) || "Sem nicho"; m[n] = (m[n] || 0) + num(o.price); return m; }, {})).map(([name, value], i) => ({ name, value: +value.toFixed(2), color: CHART_COLORS[i % CHART_COLORS.length] })).filter((x) => x.value > 0).sort((a, b) => b.value - a.value);
+    const catTot = {}; cur.exp.forEach((e) => { const c = e.category || e.cat || "Outro"; catTot[c] = (catTot[c] || 0) + num(e.value); });
+    const byCat = Object.entries(catTot).map(([name, value]) => ({ name, value })).sort((a, b) => b.value - a.value);
+    const expSum = byCat.reduce((s, x) => s + x.value, 0);
+    const best = topProjects[0];
+    const waText = [
+      `📊 *PrintAR 3D — ${label}*`,
+      `💰 Faturamento: ${fmt(cur.rev)}${prev.rev > 0 ? ` (${cur.rev >= prev.rev ? "▲" : "▼"}${fmtN(Math.abs(((cur.rev - prev.rev) / prev.rev) * 100), 0)}% vs ${prevLabel || "período anterior"})` : ""}`,
+      `✅ Lucro real: ${fmt(cur.profit)}${cur.rev > 0 ? ` · margem ${fmtN(cur.margin, 0)}%` : ""}`,
+      `📥 Recebido: ${fmt(cur.recebido)}${cur.aReceber > 0 ? ` · a receber ${fmt(cur.aReceber)}` : ""}`,
+      `🖨 ${fmtN(cur.pieces)} peças · ${fmtN(cur.hours, 0)} h de impressão · ${fmtN(cur.grams / 1000, 1)} kg de filamento`,
+      best ? `🏆 Mais vendido: ${best.name} (${fmtN(best.qty)} peça${best.qty === 1 ? "" : "s"})` : null,
+      cur.newClients > 0 ? `👥 ${cur.newClients} cliente${cur.newClients > 1 ? "s" : ""} novo${cur.newClients > 1 ? "s" : ""}` : null,
+    ].filter(Boolean).join("\n");
+    const tile = REP_TILES.find((t) => t[0] === rep) || REP_TILES[0];
+    const usage = printerUsage(cFrom, cTo);
+    const hasPdf = !["brindes", "itens", "whats"].includes(rep);
+    const maxP = Math.max(1, ...topProjects.map((p) => p.rev)), maxC = Math.max(1, ...topClients.map((c) => c.rev));
 
     return (
-      <div>
-        <SectionHead title="Relatório analítico">
-          <div className="no-print" style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "flex-end" }}>
-            <div><L>Período</L>
-              <Sel value={mode} onChange={(e) => setMode(e.target.value)} style={{ width: 140 }}>
-                <option value="semanal">Semanal</option><option value="mensal">Mensal</option><option value="livre">Data específica</option><option value="tudo">Todo o período</option>
-              </Sel>
-            </div>
-            {mode === "mensal" && <div><L>Mês</L><In type="month" value={month} onChange={(e) => setMonth(e.target.value)} style={{ width: 160 }} /></div>}
-            {mode === "semanal" && <div><L>Início da semana</L><In type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ width: 160 }} /></div>}
-            {mode === "livre" && (
-              <React.Fragment>
-                <div><L>De</L><In type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ width: 150 }} /></div>
-                <div><L>Até</L><In type="date" value={to} onChange={(e) => setTo(e.target.value)} style={{ width: 150 }} /></div>
-              </React.Fragment>
-            )}
-            <div><L>Relatório</L>
-              <Sel value={rep} onChange={(e) => setRep(e.target.value)} style={{ width: 180 }}>
-                <option value="resumo">Resumo do negócio</option>
-                <option value="pedidos">Pedidos e vendas</option>
-                <option value="orcamentos">Orçamentos</option>
-                <option value="projetos">Projetos</option>
-                <option value="clientes">Clientes</option>
-                <option value="investimentos">Investimentos</option>
-                <option value="brindes">Brindes e perdas</option>
-                <option value="itens">Desempenho por item</option>
-              </Sel>
-            </div>
-            {rep !== "brindes" && rep !== "itens" && <Btn onClick={() => setModal({ type: "report", report: rep, from: rFrom, to: rTo, label })}><PrintIc size={15} />Gerar PDF</Btn>}
+      <div className="neo-rep">
+        <div className="neo-pagehead">
+          <span className="neo-code">RELATÓRIOS</span><h2>Relatórios e PDFs</h2>
+          <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Como funciona">?</button>
+          <div className="neo-oacts" style={{ marginLeft: "auto", flexWrap: "wrap" }}>
+            <div className="neo-seg rep-mode">{[["semanal", "Semana"], ["mensal", "Mês"], ["livre", "Período"], ["tudo", "Tudo"]].map(([k, l]) => <button key={k} className={mode === k ? "on" : ""} data-m={k} onClick={() => setMode(k)}>{l}</button>)}</div>
+            {(mode === "mensal" || mode === "semanal") && <React.Fragment><button className="neo-bg2 ic rep-prev" title="Anterior" onClick={() => shift(-1)}>‹</button><span className="neo-mlabel" style={{ minWidth: mode === "semanal" ? 0 : undefined }}>{mode === "mensal" ? label : `${fmtDate(rFrom).slice(0, 5)} – ${fmtDate(rTo).slice(0, 5)}`}</span><button className="neo-bg2 ic rep-next" title="Próximo" onClick={() => shift(1)}>›</button></React.Fragment>}
+            {mode === "livre" && <React.Fragment><In type="date" value={from} onChange={(e) => setFrom(e.target.value)} style={{ width: 150 }} /><span style={{ color: "#7F9A9B" }}>até</span><In type="date" value={to} onChange={(e) => setTo(e.target.value)} style={{ width: 150 }} /></React.Fragment>}
           </div>
-        </SectionHead>
-
-        <Card style={{ marginBottom: 14, background: "rgba(12,26,28,.72)", border: "none", display: "flex", alignItems: "center", gap: 18 }}>
-          <img src={LOGO_L} alt="PrintAR 3D" style={{ width: 76, height: 76, borderRadius: "50%", background: "rgba(12,26,28,.72)", flexShrink: 0, boxShadow: "0 2px 12px rgba(0,0,0,.35)" }} />
-          <div>
-            <div style={{ font: "500 11px Inter,sans-serif", color: "#5FA3A3", textTransform: "uppercase", letterSpacing: ".1em" }}>PrintAR 3D · Relatório do período</div>
-            <div style={{ font: "700 22px 'Space Grotesk',sans-serif", color: "#fff", textTransform: "capitalize" }}>{label}</div>
-            <div style={{ font: "400 12px Inter,sans-serif", color: "#5FA3A3", marginTop: 2 }}>suas ideias, impressas em 3D · comparado com {fmtDate(pFrom)} a {fmtDate(pTo)} · gerado em {fmtDate(todayISO())}</div>
+        </div>
+        {help && <div className="neo-hud neo-helpbox">💡 Escolha o período e o relatório. Todos (menos o resumo do WhatsApp) saem em PDF para guardar, imprimir ou mandar para alguém. O lucro aqui é o mesmo do Financeiro → Resultado.</div>}
+        <div className="neo-rtiles">
+          {REP_TILES.map(([k, ic, nm, ds, pdf]) => (
+            <button key={k} className={"neo-rtile rep-tile" + (rep === k ? " on" : "") + (k === "whats" ? " dash" : "")} data-r={k} onClick={() => setRep(k)}>
+              {pdf ? <span className="pdf">PDF</span> : null}
+              <span className="ic">{ic}</span><b>{nm}</b><small>{ds}</small>
+            </button>
+          ))}
+        </div>
+        <div className="neo-hud neo-rband">
+          <img src={LOGO_L} alt="" />
+          <div style={{ minWidth: 0 }}>
+            <div className="k">PRINTAR 3D · {tile[2].toUpperCase()}</div>
+            <div className="t">{label}</div>
+            <div className="s">{prevLabel ? `comparado com ${prevLabel} · ` : ""}gerado em {fmtDate(todayISO())}</div>
           </div>
-        </Card>
+          <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+            {rep !== "whats" && <button className="neo-bg2 wa rep-copy" onClick={() => copyText(waText)}><WhatsIc size={14} />Copiar resumo</button>}
+            {hasPdf && <Btn onClick={() => setModal({ type: "report", report: rep, from: rFrom, to: rTo, label })}><PrintIc size={15} />Gerar PDF</Btn>}
+          </div>
+        </div>
 
         {rep === "brindes" ? <GiftPanel from={rFrom} to={rTo} label={label} />
         : rep === "itens" ? <ItemPanel from={rFrom} to={rTo} label={label} />
+        : rep === "whats" ? (
+          <div className="neo-hud rep-wa">
+            <span className="neo-code">RESUMO NO WHATSAPP</span>
+            <pre className="neo-rwa">{waText}</pre>
+            <div className="neo-oacts" style={{ marginTop: 12 }}>
+              <button className="neo-bg2 wa rep-copy2" onClick={() => copyText(waText)}><WhatsIc size={14} />Copiar texto</button>
+              <button className="neo-bp rep-send" onClick={() => window.open("https://wa.me/?text=" + encodeURIComponent(waText), "_blank")}><WhatsIc size={14} />Abrir no WhatsApp</button>
+            </div>
+          </div>
+        )
+        : rep === "impressoras" ? (
+          <div className="neo-rprs">
+            {data.printers.length === 0 ? <div className="neo-hud"><Empty icon={PrinterIc} text="Nenhuma impressora cadastrada" hint="Cadastre as impressoras em Configurações → Impressoras, com valor e data de compra, para ver o retorno do investimento." /></div> : data.printers.map((pr) => {
+              const u = usage[pr.id] || { hours: 0, value: 0, pieces: 0, energy: 0 };
+              const pb = printerPayback(pr);
+              return (
+                <div key={pr.id} className="neo-hud neo-rpr rep-pr" data-pr={pr.id}>
+                  <span className="neo-code">{(pr.name || "Impressora").toUpperCase()}</span>
+                  <span className="neo-finleg">{pr.date ? `comprada em ${fmtDate(pr.date).slice(3)}` : "sem data de compra"}{num(pr.price) > 0 ? ` · ${fmt(pr.price)}` : ""}</span>
+                  <div className="neo-rprg">
+                    <div><small>Horas no período</small><b>{fmtN(u.hours, 1)} h</b></div>
+                    <div><small>Produziu <InfoTip text="Valor das peças impressas nela no período: preço de venda de cada peça (pedidos de venda) ou preço sugerido (peças que foram para o estoque). Brindes contam como zero. Em projetos por partes, o valor é dividido pelo tempo de cada parte." /></small><b style={{ color: "#3FD1CE" }}>{fmt(u.value)}</b></div>
+                    <div><small>Energia</small><b style={{ color: "#FFD166" }}>{fmt(u.energy)}</b></div>
+                    <div><small>Peças</small><b>{fmtN(Math.round(u.pieces))}</b></div>
+                  </div>
+                  {num(pr.price) > 0 ? <React.Fragment>
+                    <div className="neo-rpb">Retorno do investimento: <b>{fmt(Math.max(0, pb.net))} de {fmt(pb.price)}</b> · {pb.done ? <span style={{ color: "#3FD1CE" }}>✓ já se pagou</span> : pb.monthsLeft != null ? <span style={{ color: pb.monthsLeft <= 3 ? "#3FD1CE" : "#FFD166" }}>se paga em ~{pb.monthsLeft} {pb.monthsLeft === 1 ? "mês" : "meses"}</span> : <span>sem produção para calcular</span>}
+                      <InfoTip text="Soma de tudo que ela já produziu (desde a compra), menos a energia gasta, comparado com o valor pago na impressora. A previsão usa a média por mês desde a compra." /></div>
+                    <div className="neo-bebar sm"><i style={{ width: `${pb.pct * 100}%`, background: pb.done || pb.pct >= .5 ? "linear-gradient(90deg,#14B8B2,#3FD1CE)" : "linear-gradient(90deg,#F5821F,#FFD166)" }} /></div>
+                  </React.Fragment> : <div className="neo-rpb">Cadastre o <b>valor da impressora</b> em Configurações para ver em quanto tempo ela se paga.</div>}
+                </div>
+              );
+            })}
+            {usage._ && usage._.hours > 0 && <div className="neo-hud neo-rpr rep-pr" data-pr="_"><span className="neo-code">SEM IMPRESSORA DEFINIDA</span><div className="neo-rpb" style={{ marginTop: 8 }}>{fmtN(usage._.hours, 1)} h · {fmt(usage._.value)} produzidos em pedidos sem impressora escolhida.</div></div>}
+          </div>
+        )
         : (<React.Fragment>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 12, marginBottom: 14 }}>
-          <Card><div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase" }}>Faturamento</div>
-            <div style={{ font: "700 20px 'Space Grotesk',sans-serif", color: "#3FD1CE" }}>{fmt(cur.rev)}</div><D v={cur.rev} p={prev.rev} /></Card>
-          <Card><div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase" }}>Gastos (compras + custo das vendas)</div>
-            <div style={{ font: "700 20px 'Space Grotesk',sans-serif", color: "#FFB067" }}>{fmt(cur.prodCost + cur.expTotal)}</div><D v={-(cur.prodCost + cur.expTotal)} p={-(prev.prodCost + prev.expTotal)} /></Card>
-          <Card><div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase" }}>Lucro</div>
-            <div style={{ font: "700 20px 'Space Grotesk',sans-serif", color: cur.profit >= 0 ? "#3FD1CE" : "#F0605F" }}>{fmt(cur.profit)}</div><D v={cur.profit} p={prev.profit} /></Card>
-          <Card><div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase" }}>Recebido</div>
-            <div style={{ font: "700 20px 'Space Grotesk',sans-serif" }}>{fmt(cur.recebido)}</div><D v={cur.recebido} p={prev.recebido} /></Card>
-          <Card><div style={{ font: "600 11.5px Inter,sans-serif", color: "#7E9191", textTransform: "uppercase" }}>Ticket médio</div>
-            <div style={{ font: "700 20px 'Space Grotesk',sans-serif" }}>{fmt(cur.ticket)}</div><D v={cur.ticket} p={prev.ticket} /></Card>
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 12, marginBottom: 14 }}>
-          <Stat label="Vendas concluídas" value={fmtN(cur.sales.length)} sub={`${fmtN(cur.produced.length)} produções no período`} icon={ShoppingCart} />
-          <Stat label="Peças produzidas" value={fmtN(cur.pieces)} sub={`${fmtN(cur.hours, 1)}h de impressão`} icon={Boxes} accent="#6FA0EA" />
-          <Stat label="Filamento consumido" value={`${fmtN(cur.grams / 1000, 2)} kg`} sub="baseado nas produções concluídas" icon={Layers} accent="#A88AF0" />
-          <Stat label="Novos clientes" value={fmtN(cur.newClients)} sub={`base total: ${data.clients.length} clientes`} icon={UsersIc} accent="#5CD6C7" />
-        </div>
-
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(320px,1fr))", gap: 14 }}>
-          <Card style={{ padding: 6 }}>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", padding: "10px 12px 4px" }}>Top produtos do período</div>
-            {topProjects.length === 0 ? <div style={{ font: "400 13px Inter,sans-serif", color: "#93A6A6", padding: 12 }}>Sem vendas concluídas no período.</div> : (
-              <table>
-                <thead><tr><th>#</th><th>Produto</th><th>Peças</th><th>Faturamento</th></tr></thead>
-                <tbody>
-                  {topProjects.map((p, i) => (
-                    <tr key={i}><td>{i + 1}</td><td style={{ fontWeight: 600 }}>{p.name}</td>
-                      <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(p.qty)}</td>
-                      <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, color: "#3FD1CE" }}>{fmt(p.rev)}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </Card>
-          <Card style={{ padding: 6 }}>
-            <div style={{ font: "600 14px 'Space Grotesk',sans-serif", padding: "10px 12px 4px" }}>Top clientes do período</div>
-            {topClients.length === 0 ? <div style={{ font: "400 13px Inter,sans-serif", color: "#93A6A6", padding: 12 }}>Nenhuma venda concluída vinculada a clientes.</div> : (
-              <table>
-                <thead><tr><th>#</th><th>Cliente</th><th>Vendas</th><th>Faturamento</th></tr></thead>
-                <tbody>
-                  {topClients.map((c, i) => (
-                    <tr key={i}><td>{i + 1}</td><td style={{ fontWeight: 600 }}>{c.name}</td>
-                      <td style={{ fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(c.n)}</td>
-                      <td style={{ fontFamily: "'JetBrains Mono',monospace", fontWeight: 600, color: "#3FD1CE" }}>{fmt(c.rev)}</td></tr>
-                  ))}
-                </tbody>
-              </table>
-            )}
-          </Card>
-          {byNiche.length > 0 && (
-            <Card>
-              <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 10 }}>Faturamento por nicho</div>
-              <ResponsiveContainer width="100%" height={220}>
-                <PieChart>
-                  <Pie data={byNiche} dataKey="value" nameKey="name" innerRadius={45} outerRadius={75}>
-                    {byNiche.map((_, i) => <Cell key={i} fill={CHART_COLORS[i % CHART_COLORS.length]} />)}
-                  </Pie>
-                  <Tooltip formatter={(v) => fmt(v)} />
-                  <Legend wrapperStyle={{ fontSize: 11.5 }} />
-                </PieChart>
-              </ResponsiveContainer>
-            </Card>
-          )}
-          {byCat.length > 0 && (
-            <Card>
-              <div style={{ font: "600 14px 'Space Grotesk',sans-serif", marginBottom: 10 }}>Gastos por categoria</div>
-              <ResponsiveContainer width="100%" height={220}>
-                <BarChart data={byCat} layout="vertical">
-                  <CartesianGrid strokeDasharray="3 3" stroke="rgba(63,209,206,.14)" />
-                  <XAxis type="number" tick={{ fontSize: 11, fill: "#8FA3A3" }} />
-                  <YAxis type="category" dataKey="name" width={95} tick={{ fontSize: 11.5 }} />
-                  <Tooltip formatter={(v) => fmt(v)} />
-                  <Bar dataKey="value" fill="#F47A20" radius={[0, 4, 4, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </Card>
-          )}
-        </div>
+          <div className="neo-ckpis neo-rk5">
+            <Reveal className="neo-hud neo-k rep-k-rev" delay={0}><div className="l">Faturamento</div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={cur.rev} format={fmt} /></div><span className="neo-kd"><RDelta a={cur.rev} b={prev.rev} /></span></Reveal>
+            <Reveal className="neo-hud neo-k rep-k-profit" delay={50}><div className="l">Lucro real <InfoTip text="O mesmo cálculo do Financeiro → Resultado: vendas − custo das peças − custos fixos (proporcionais ao período) − gastos que não viram estoque − desgaste das impressoras. Compras de filamento, material e embalagem não descontam de novo." /></div><div className="v" style={{ color: cur.profit >= 0 ? "#3FD1CE" : "#FF6B6B" }}><CountUp value={cur.profit} format={fmt} /></div><span className="neo-kd"><RDelta a={cur.profit} b={prev.profit} /></span></Reveal>
+            <Reveal className="neo-hud neo-k rep-k-rec" delay={100}><div className="l">Recebido</div><div className="v"><CountUp value={cur.recebido} format={fmt} /></div><span className="neo-kd"><RDelta a={cur.recebido} b={prev.recebido} />{cur.aReceber > 0 ? <span style={{ color: "#FFAA5C" }}> {fmt(cur.aReceber)} a receber</span> : null}</span></Reveal>
+            <Reveal className="neo-hud neo-k" delay={150}><div className="l">Ticket médio</div><div className="v"><CountUp value={cur.ticket} format={fmt} /></div><span className="neo-kd"><RDelta a={cur.ticket} b={prev.ticket} /></span></Reveal>
+            <Reveal className="neo-hud neo-k rep-k-mg" delay={200}><div className="l">Margem</div><div className="v" style={{ color: cur.margin >= 0 ? "#3FD1CE" : "#FF6B6B" }}>{cur.rev > 0 ? `${fmtN(cur.margin, 0)}%` : "—"}</div><span className="neo-kd">{cur.rev > 0 && prev.rev > 0 ? <RDelta a={cur.margin} b={prev.margin} pts /> : "lucro ÷ faturamento"}</span></Reveal>
+          </div>
+          <div className="neo-rstats">
+            <div><small>Vendas</small><b>{fmtN(cur.sales.length)}</b><em>{fmtN(cur.produced.length)} produções</em></div>
+            <div><small>Peças</small><b>{fmtN(cur.pieces)}</b><em>{fmtN(cur.hours, 0)} h de impressão</em></div>
+            <div><small>Filamento</small><b>{fmtN(cur.grams / 1000, 2)} kg</b><em>produções concluídas</em></div>
+            <div><small>Novos clientes</small><b>{fmtN(cur.newClients)}</b><em>base: {data.clients.length} clientes</em></div>
+            <div><small>Orçamentos</small><b>{cur.qs ? `${fmtN((cur.qOk / cur.qs) * 100, 0)}%` : "—"}</b><em>{cur.qs ? `aprovados (${cur.qOk} de ${cur.qs})` : "nenhum no período"}</em></div>
+          </div>
+          <div className="neo-rgrid">
+            <Reveal className="neo-hud rep-top" delay={0}>
+              <span className="neo-code">TOP PRODUTOS</span>
+              {topProjects.length === 0 ? <div className="neo-empty">Sem vendas concluídas no período.</div> : topProjects.map((p, i) => (
+                <div key={i} className="neo-rhb"><span className="n">{i === 0 ? "🏆" : i + 1}</span><div style={{ minWidth: 0 }}><div className="nm">{p.name}</div><div className="tr"><i style={{ width: `${(p.rev / maxP) * 100}%` }} /></div></div><span className="v">{fmt(p.rev)}<small>{fmtN(p.qty)} peça{p.qty === 1 ? "" : "s"}</small></span></div>
+              ))}
+            </Reveal>
+            <Reveal className="neo-hud" delay={60}>
+              <span className="neo-code">TOP CLIENTES</span>
+              {topClients.length === 0 ? <div className="neo-empty">Nenhuma venda concluída ligada a clientes.</div> : topClients.map((c, i) => (
+                <div key={i} className="neo-rhb"><span className="n">{i === 0 ? "🏆" : i + 1}</span><div style={{ minWidth: 0 }}><div className="nm">{c.name}</div><div className="tr"><i style={{ width: `${(c.rev / maxC) * 100}%` }} /></div></div><span className="v">{fmt(c.rev)}<small>{c.n} venda{c.n === 1 ? "" : "s"}</small></span></div>
+              ))}
+            </Reveal>
+            <Reveal className="neo-hud" delay={120}>
+              <span className="neo-code">POR NICHO</span>
+              {byNiche.length === 0 ? <div className="neo-empty">Sem vendas no período.</div> : <HoloDonut gid="rep" totalLabel="VENDAS" unit={(v) => fmt(v)} items={byNiche} />}
+              {byCat.length > 0 && <React.Fragment>
+                <div className="neo-rsub">GASTOS POR CATEGORIA · {fmt(expSum)}</div>
+                <div className="neo-rcat">{byCat.map((c) => <i key={c.name} title={`${c.name}: ${fmt(c.value)}`} style={{ width: `${(c.value / expSum) * 100}%`, background: ECAT_COLOR[c.name] || "#7F9A9B" }} />)}</div>
+                <div className="neo-rcatl">{byCat.slice(0, 5).map((c) => <span key={c.name}>{ECAT_ICON[c.name] || "•"} {c.name} {fmtN((c.value / expSum) * 100, 0)}%</span>)}</div>
+              </React.Fragment>}
+            </Reveal>
+          </div>
         </React.Fragment>)}
       </div>
     );
   }
-
   /* ===================== PAINEIS: BRINDES E ITENS (v4.32) ===================== */
   const thR = { textAlign: "right" };
   const tdMono = { fontFamily: "'JetBrains Mono',monospace" };
@@ -8816,7 +8914,7 @@ SC,
   /* =========================== DOCUMENTOS (PDF) =========================== */
   function ReportDoc({ report, from, to, label, filters }) {
     const inR = (d) => d && d >= from && d <= to;
-    const TITLES = { resumo: "RESUMO DO NEGÓCIO", pedidos: "PEDIDOS E VENDAS", orcamentos: "ORÇAMENTOS", projetos: "PROJETOS", clientes: "CLIENTES", investimentos: "INVESTIMENTOS", brindes: "BRINDES E PERDAS", itens: "DESEMPENHO POR ITEM" };
+    const TITLES = { resumo: "RESUMO DO NEGÓCIO", pedidos: "PEDIDOS E VENDAS", orcamentos: "ORÇAMENTOS", projetos: "PROJETOS", clientes: "CLIENTES", investimentos: "INVESTIMENTOS", impressoras: "IMPRESSORAS", brindes: "BRINDES E PERDAS", itens: "DESEMPENHO POR ITEM" };
     const empty = <div style={{ padding: "22px 4px", font: "400 13px Inter,sans-serif", color: "#93A6A6", textAlign: "center" }}>Nenhum registro neste período.</div>;
     const kpi = (lab, val, color) => (
       <div style={{ border: "1px solid rgba(63,209,206,.14)", borderRadius: 10, padding: "10px 12px" }}>
@@ -8838,15 +8936,16 @@ SC,
       const pieces = produced.reduce((s, o) => s + num(o.qty), 0);
       const hours = produced.reduce((s, o) => s + num(projMap[o.projectId] ? projMap[o.projectId].hours : 0) * num(o.qty), 0);
       const recebido = data.orders.filter((o) => inR(o.date) && o.paid && isSale(o)).reduce((s, o) => s + num(o.price), 0);
-      const lucro = rev - pcost - expTotal;
+      const rpR = realProfit(from, to);
+      const lucro = rpR.profit;
       const top = Object.values(sales.reduce((m, o) => { const k = o.projectId; if (!m[k]) m[k] = { name: projMap[k] ? projMap[k].name : "—", qty: 0, rev: 0 }; m[k].qty += num(o.qty); m[k].rev += num(o.price); return m; }, {})).sort((a, b) => b.rev - a.rev).slice(0, 8);
       body = (
         <React.Fragment>
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 10, marginBottom: 18 }}>
             {kpi("Faturamento", fmt(rev), "#3FD1CE")}
             {kpi("Custo de produção", fmt(pcost), "#FFB067")}
-            {kpi("Investimentos", fmt(expTotal), "#F0605F")}
-            {kpi("Lucro do período", fmt(lucro), lucro >= 0 ? "#3FD1CE" : "#F0605F")}
+            {kpi("Fixos, gastos e desgaste", fmt(rpR.fixed + rpR.op + rpR.desg), "#F0605F")}
+            {kpi("Lucro real", fmt(lucro), lucro >= 0 ? "#3FD1CE" : "#F0605F")}
             {kpi("Recebido", fmt(recebido), "#6FA0EA")}
             {kpi("Vendas concluídas", fmtN(sales.length), "#F3F6F6")}
             {kpi("Peças produzidas", fmtN(pieces), "#F3F6F6")}
@@ -8999,6 +9098,25 @@ SC,
               </tbody>
             </table>
           )}
+        </React.Fragment>
+      );
+    } else if (report === "impressoras") {
+      const us = printerUsage(from, to);
+      body = (
+        <React.Fragment>
+          {data.printers.length === 0 ? empty : (
+            <table><thead><tr><th>Impressora</th><th style={{ textAlign: "right" }}>Horas</th><th style={{ textAlign: "right" }}>Peças</th><th style={{ textAlign: "right" }}>Produziu</th><th style={{ textAlign: "right" }}>Energia</th><th style={{ textAlign: "right" }}>Retorno</th></tr></thead>
+              <tbody>{data.printers.map((pr) => { const u = us[pr.id] || { hours: 0, value: 0, pieces: 0, energy: 0 }; const pb = printerPayback(pr); return (
+                <tr key={pr.id}><td style={{ fontWeight: 600 }}>{pr.name}{num(pr.price) > 0 ? <div style={{ font: "400 10.5px Inter,sans-serif", color: "#93A6A6" }}>{fmt(pr.price)}{pr.date ? ` · compra ${fmtDate(pr.date)}` : ""}</div> : null}</td>
+                  <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(u.hours, 1)} h</td>
+                  <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{fmtN(Math.round(u.pieces))}</td>
+                  <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#3FD1CE", fontWeight: 600 }}>{fmt(u.value)}</td>
+                  <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{fmt(u.energy)}</td>
+                  <td style={{ textAlign: "right", font: "600 11.5px Inter,sans-serif" }}>{num(pr.price) <= 0 ? "sem valor cadastrado" : pb.done ? "✓ já se pagou" : `${fmtN(pb.pct * 100, 0)}%${pb.monthsLeft != null ? ` · ~${pb.monthsLeft} ${pb.monthsLeft === 1 ? "mês" : "meses"}` : ""}`}</td></tr>
+              ); })}</tbody>
+            </table>
+          )}
+          <div style={{ font: "400 11px Inter,sans-serif", color: "#93A6A6", marginTop: 10 }}>Produziu = valor das peças impressas no período (preço de venda; peças para estoque pelo preço sugerido; brindes = zero). Retorno = tudo que já produziu desde a compra, menos energia, comparado com o valor da impressora.</div>
         </React.Fragment>
       );
     } else if (report === "investimentos") {

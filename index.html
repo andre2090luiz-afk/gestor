@@ -702,6 +702,54 @@
   .neo-expbars span{font:600 10px 'JetBrains Mono',monospace;color:#7F9A9B;margin-top:5px;text-align:center;} .neo-expbars button.on span{color:#3FD1CE;}
   .neo-expgrid .neo-donut{grid-template-columns:1fr;justify-items:center;gap:10px;} .neo-expgrid .neo-donut-leg{width:100%;}
   @media (max-width: 1000px){ .neo-expgrid{grid-template-columns:1fr;} }
+  /* v4.58 Financeiro */
+  .neo-kd .up{color:#3FD1CE;} .neo-kd .dn{color:#FF7A7E;}
+  .neo-finchart{margin-bottom:14px;}
+  .neo-finleg{float:right;font:600 11px Inter,sans-serif;color:#7F9A9B;} .neo-finleg b{color:#3FD1CE;}
+  .neo-finsvg{position:relative;height:150px;margin:10px 0 22px;}
+  .neo-finsvg svg{display:block;width:100%;height:100%;overflow:visible;}
+  .neo-findot{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;background:#F5821F;box-shadow:0 0 10px #F5821F;}
+  .neo-fintoday{position:absolute;top:0;margin-left:8px;font:700 10.5px 'JetBrains Mono',monospace;color:#F5821F;white-space:nowrap;}
+  .neo-finx{position:absolute;left:0;right:0;bottom:-18px;height:14px;} .neo-finx span{position:absolute;transform:translateX(-50%);font:600 9.5px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-finrow{display:grid;grid-template-columns:36px minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:8px 12px;border-radius:12px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.1);margin-bottom:6px;transition:border-color .15s;}
+  .neo-finrow:hover{border-color:rgba(63,209,206,.3);}
+  .neo-finrow .ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font:700 15px Inter,sans-serif;border:1px solid currentColor;background:rgba(5,12,12,.6);}
+  .neo-finrow b{font:600 13px Inter,sans-serif;color:#F3F6F6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;} .neo-finrow small{display:block;font:400 11.5px Inter,sans-serif;color:#7F9A9B;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-finrow .tag{font:700 9.5px 'JetBrains Mono',monospace;border:1px solid currentColor;border-radius:5px;padding:1px 6px;letter-spacing:.06em;white-space:nowrap;}
+  .neo-finrow .v{font:700 14px 'JetBrains Mono',monospace;white-space:nowrap;text-align:right;}
+  .neo-finsum{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:12px;padding:10px 12px;border-radius:12px;border:1px solid rgba(63,209,206,.3);font:700 13px Inter,sans-serif;color:#E6F1F1;} .neo-finsum b{font:700 13px 'JetBrains Mono',monospace;color:#7F9A9B;}
+  .neo-fincmp>div{margin:10px 0;} .neo-fincmp label{display:flex;justify-content:space-between;font:600 11px Inter,sans-serif;color:#7F9A9B;margin-bottom:5px;} .neo-fincmp label b{font:700 12px 'JetBrains Mono',monospace;}
+  .neo-fincmp .tr{height:12px;border-radius:7px;background:rgba(127,154,155,.12);overflow:hidden;} .neo-fincmp .tr i{display:block;height:100%;border-radius:7px;transition:width .8s cubic-bezier(.2,.8,.2,1);}
+  .neo-fincmp .mini{display:flex;justify-content:space-between;font:600 11.5px Inter,sans-serif;color:#7F9A9B;padding:6px 0;margin:0;border-bottom:1px dashed rgba(63,209,206,.1);} .neo-fincmp .mini b{font:600 12px 'JetBrains Mono',monospace;color:#E6F1F1;}
+  .neo-findue{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px dashed rgba(63,209,206,.1);font:600 12.5px Inter,sans-serif;color:#E6F1F1;}
+  .neo-findue .d{width:38px;height:38px;flex:none;border-radius:9px;border:1px solid rgba(255,209,102,.4);display:grid;place-content:center;text-align:center;font:700 14px 'Space Grotesk',sans-serif;color:#FFD166;line-height:1;} .neo-findue .d small{display:block;font:600 8px Inter,sans-serif;color:#7F9A9B;margin-top:2px;}
+  .neo-findue em{font-style:normal;font:600 10.5px Inter,sans-serif;color:#7F9A9B;display:block;} .neo-findue b{margin-left:auto;font:700 12.5px 'JetBrains Mono',monospace;}
+  .neo-expbars.fin-bars button.neg i{background:linear-gradient(180deg,#FF6B6B,rgba(255,107,107,.2));}
+  .neo-finbig{display:flex;align-items:baseline;flex-wrap:wrap;gap:10px;margin-top:10px;} .neo-finbig>span{font:700 28px 'Space Grotesk',sans-serif;} .neo-finbig small{font:600 12px Inter,sans-serif;color:#7F9A9B;}
+  .neo-finage{display:flex;height:16px;border-radius:9px;overflow:hidden;margin:12px 0 6px;background:rgba(127,154,155,.12);} .neo-finage i{display:block;transition:width .8s;}
+  .neo-finagel{display:flex;flex-wrap:wrap;gap:16px;font:600 11.5px Inter,sans-serif;color:#7F9A9B;margin-bottom:6px;} .neo-finagel span{display:flex;gap:6px;align-items:center;} .neo-finagel i{width:9px;height:9px;border-radius:3px;} .neo-finagel b{color:#E6F1F1;font:600 11.5px 'JetBrains Mono',monospace;}
+  .neo-finarrow{display:grid;grid-template-columns:46px minmax(0,1fr) auto;gap:12px;align-items:center;padding:10px 12px;border-radius:12px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.1);margin-top:8px;}
+  .neo-finarrow .dd{width:46px;height:46px;border-radius:50%;display:grid;place-content:center;text-align:center;font:700 13px 'JetBrains Mono',monospace;border:2px solid currentColor;line-height:1;} .neo-finarrow .dd small{display:block;font:600 7.5px Inter,sans-serif;margin-top:2px;}
+  .neo-finarrow b{font:600 13.5px Inter,sans-serif;color:#F3F6F6;display:block;} .neo-finarrow small{display:block;font:400 11.5px Inter,sans-serif;color:#7F9A9B;margin-top:2px;}
+  .neo-finarrow .rt{text-align:right;} .neo-finarrow .rt .v{font:700 16px 'JetBrains Mono',monospace;color:#FFAA5C;margin-bottom:6px;} .neo-finarrow .neo-oacts{justify-content:flex-end;}
+  .neo-fincal{display:grid;gap:3px;margin:12px 0 4px;} .neo-fincal span{height:24px;border-radius:5px;background:rgba(127,154,155,.1);font:600 9px 'JetBrains Mono',monospace;color:#7F9A9B;display:grid;place-items:center;border:1px solid transparent;}
+  .neo-fincal span.on{background:rgba(255,209,102,.2);color:#FFD166;border-color:rgba(255,209,102,.6);cursor:help;} .neo-fincal span.pd{background:rgba(63,209,206,.18);color:#3FD1CE;border-color:rgba(63,209,206,.5);cursor:help;} .neo-fincal span.td{outline:2px solid #F5821F;outline-offset:1px;}
+  .neo-fincalleg{font:600 10.5px Inter,sans-serif;color:#7F9A9B;margin-bottom:6px;}
+  .neo-finfc{display:grid;grid-template-columns:46px minmax(0,1fr) auto auto auto;gap:12px;align-items:center;padding:9px 12px;border-radius:12px;background:rgba(5,12,12,.55);border:1px solid rgba(63,209,206,.1);margin-top:7px;}
+  .neo-finfc.paid{border-color:rgba(63,209,206,.3);}
+  .neo-finfc .dd{width:46px;height:46px;border-radius:11px;border:1px solid rgba(255,209,102,.45);display:grid;place-content:center;text-align:center;font:700 17px 'Space Grotesk',sans-serif;color:#FFD166;line-height:1;} .neo-finfc .dd small{display:block;font:600 8px Inter,sans-serif;color:#7F9A9B;margin-top:2px;}
+  .neo-finfc.paid .dd{border-color:rgba(63,209,206,.5);color:#3FD1CE;}
+  .neo-finfc b{font:600 13.5px Inter,sans-serif;color:#F3F6F6;display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .neo-finfc .sh{height:5px;border-radius:3px;background:rgba(127,154,155,.15);margin-top:7px;max-width:220px;} .neo-finfc .sh i{display:block;height:100%;border-radius:3px;background:#FFD166;}
+  .neo-finfc .v{font:700 14px 'JetBrains Mono',monospace;color:#E6F1F1;white-space:nowrap;}
+  .neo-finfc .st{display:flex;align-items:center;gap:8px;justify-content:flex-end;min-width:150px;} .neo-finfc .st em{font-style:normal;font:600 11px Inter,sans-serif;white-space:nowrap;}
+  .neo-finfc .pill{font:700 10px Inter,sans-serif;border-radius:999px;padding:3px 9px;border:1px solid currentColor;color:#3FD1CE;}
+  @media (max-width:700px){
+    .neo-finrow{grid-template-columns:32px minmax(0,1fr) auto;} .neo-finrow .tag,.neo-finrow .neo-oacts{display:none;}
+    .neo-finarrow{grid-template-columns:42px minmax(0,1fr);} .neo-finarrow .rt{grid-column:1 / -1;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;} .neo-finarrow .rt .v{margin:0;}
+    .neo-finfc{grid-template-columns:42px minmax(0,1fr) auto;} .neo-finfc .st{grid-column:1 / 3;justify-content:flex-start;min-width:0;} .neo-finleg{float:none;display:block;margin-top:6px;}
+    .neo-fincal span{font-size:0;height:14px;}
+  }
   #boot { padding:40px; font:500 15px Inter,sans-serif; color:#7E9191; }
   @media print {
     * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -844,7 +892,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.57";
+const APP_VERSION = "4.58";
 const APP_UPDATED = "19/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -2217,6 +2265,17 @@ function stableComponent(name, fn) {
   e.holder.fn = fn;
   return e.C;
 }
+/* estado de tela que continua igual ao trocar de aba */
+const PJ_UI = { niche: "Todos", q: "", sort: "vendidos", help: false };
+const STK_UI = { view: "spools", type: "Todos", sort: "menos", mcat: "Todos", help: false };
+const PRD_UI = { f: "Todos", sort: "qtd", q: "" };
+const EXP_UI = { month: null, cat: "Todas", q: "" };
+const AG_UI = { ym: null, view: "mes", wk: null };
+const ORD_UI = { per: "mes", from: "", to: "", type: "todos", sit: "todos", q: "" };
+const CLI_UI = { seg: "todos", q: "", niche: "Todos", sort: "gasto" };
+const PEN_UI = { filter: "todos", q: "" };
+const Q_UI = { st: "Todos", q: "", month: "", open: null };
+const FIN_UI = { sub: "fluxo", month: null, src: "all", q: "" };
 function App() {
   const [data, setDataRaw] = useState(() => {
     try {
@@ -3527,7 +3586,6 @@ function App() {
   }
 
   /* =============================== PROJETOS ============================== */
-  const PJ_UI = { niche: "Todos", q: "", sort: "vendidos", help: false };
   const marginTone = (m) => (m == null ? "r" : m >= 50 ? "t" : m >= 30 ? "o" : "r");
   function Projects() {
     const [pq, setPqS] = useState(PJ_UI.q);
@@ -4185,7 +4243,6 @@ function App() {
   }
 
   /* ================================ ESTOQUE =============================== */
-  const STK_UI = { view: "spools", type: "Todos", sort: "menos", mcat: "Todos", help: false };
   function Stock() {
     const today = todayISO();
     const [view, setViewS] = useState(STK_UI.view);
@@ -4636,7 +4693,6 @@ function App() {
   }
 
   /* ========================== PRODUTOS (ACABADOS) ========================= */
-  const PRD_UI = { f: "Todos", sort: "qtd", q: "" };
   /* idade da peca mais antiga ainda no estoque (as saidas consomem primeiro as mais antigas) */
   const oldestStockDate = (projectId) => {
     const evs = prodHistory(projectId);
@@ -5034,7 +5090,6 @@ function App() {
   }
 
   /* ============================= INVESTIMENTOS =========================== */
-  const EXP_UI = { month: null, cat: "Todas", q: "" };
   const ECAT_ICON = { Filamento: "🧵", Material: "🔩", Embalagem: "📦", Ferramenta: "🛠", "Manutenção": "🔧", Energia: "⚡", Equipamento: "🖨", Marketing: "📣", "Calibração": "🎯", Outro: "•" };
   const ECAT_COLOR = { Filamento: "#3FD1CE", Material: "#A88AF0", Embalagem: "#F5821F", Ferramenta: "#6FA0EA", "Manutenção": "#9AF3EC", Energia: "#FFD166", Equipamento: "#FF6B6B", Marketing: "#FF8AC0", "Calibração": "#8FA0AC", Outro: "#7F9A9B" };
   const STOCK_CATS = ["Filamento", "Material", "Embalagem"];
@@ -5278,7 +5333,6 @@ function App() {
   }
 
   /* ================================ PEDIDOS =============================== */
-  const AG_UI = { ym: null, view: "mes", wk: null };
   const AG_DRAG = { id: null };
   function Agenda() {
     const today = todayISO();
@@ -5433,7 +5487,6 @@ function App() {
 
   /* linha de KIT: varios pedidos do mesmo orcamento mostrados como um so, com expandir */
   /* ---------- v4.50: Pedidos ---------- */
-  const ORD_UI = { per: "mes", from: "", to: "", type: "todos", sit: "todos", q: "" };
   const Switch = ({ on, onChange, title, mixed }) => (
     <button type="button" role="switch" aria-checked={!!on} title={title} className={"neo-sw" + (on ? " on" : "") + (mixed ? " mix" : "")} onClick={(e) => { e.stopPropagation(); onChange(!on); }}><i /></button>
   );
@@ -6189,7 +6242,6 @@ function App() {
   }
 
   /* ================================ CLIENTES =============================== */
-  const CLI_UI = { seg: "todos", q: "", niche: "Todos", sort: "gasto" };
   const comebackMsg = (c, lastProj) => {
     const si = data.storeInfo || {};
     return `Oi, ${firstName(c && c.name)}! Tudo bem? 😊\nAqui é da ${si.name || "PrintAR 3D"}. Faz um tempinho que a gente não se fala!${lastProj ? `\nLembrei de você — o ${lastProj} ficou bem bacana.` : ""}\nTemos novidades e posso fazer algo sob medida pra você. Quer ver umas ideias?${si.instagram ? `\n📸 ${String(si.instagram).startsWith("@") ? si.instagram : "@" + si.instagram}` : ""}`;
@@ -7133,6 +7185,8 @@ function App() {
     }
     const soon = openQuotes.filter((x) => x.validUntil && x.validUntil >= todayISO() && x.validUntil <= addDays(todayISO(), 3));
     if (soon.length) tips.push({ k: "orc", tone: "", text: <span>O orçamento <b>{soon[0].code}</b>{cliMap[soon[0].clientId] ? <> de <b>{cliMap[soon[0].clientId].name}</b></> : null} vence em <b>{fmtDM(soon[0].validUntil)}</b>.</span>, label: "Ver orçamentos", go: () => setTab("orc") });
+    const fxDue = upcomingFixed().filter((u) => u.days <= 3);
+    if (fxDue.length) { const u = fxDue[0]; tips.push({ k: "fix", tone: u.days < 0 ? "w" : "o", text: <span>A conta <b>{u.c.name}</b> ({fmt(u.c.value)}) {u.days < 0 ? <>venceu dia <b>{fmtDM(u.due)}</b></> : u.days === 0 ? <><b>vence hoje</b></> : <>vence em <b>{u.days} dia{u.days > 1 ? "s" : ""}</b> ({fmtDM(u.due)})</>} e ainda não está marcada como paga{fxDue.length > 1 ? ` (+${fxDue.length - 1} conta${fxDue.length > 2 ? "s" : ""})` : ""}.</span>, label: "Ver custos fixos", go: () => { FIN_UI.sub = "fixos"; FIN_UI.month = null; setTab("fin"); } }); }
     if (maintDue.length) tips.push({ k: "mnt", tone: "", text: <span>Manutenção recomendada na <b>{maintDue[0].name}</b>.</span>, label: "Ver impressoras", go: () => setTab("cfg") });
     return tips;
   };
@@ -7342,7 +7396,6 @@ function App() {
   const LayerBar = ({ pct, tone }) => (
     <div className={"neo-lay" + (tone === "o" ? " o" : "")}>{Array.from({ length: 10 }).map((_, i) => <i key={i} className={i < Math.round(pct / 10) ? "f" : ""} />)}</div>
   );
-  const PEN_UI = { filter: "todos", q: "" };
   const KANBAN_COLS = ["Orçamento", "Aprovado", "Em produção", "Concluído", "Entregue"];
   const PEN_DRAG = { id: null };
 
@@ -7716,7 +7769,6 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     return `Oi, ${firstName(c && c.name)}! Tudo bem? 😊\nPassando para saber se ficou alguma dúvida no orçamento ${q.code} (${fmt(quoteTotal(q))}).${q.validUntil ? `\nEle vale até ${fmtDate(q.validUntil)}.` : ""}\nSe quiser, posso ajustar quantidade, cores ou prazo. É só me chamar!${si.name ? `\n— ${si.name}` : ""}`;
   };
   const Q_EVENT_TXT = { created: "Orçamento criado", pdf: "PDF gerado", wa: "Enviado no WhatsApp", pix: "Arte do PIX gerada", reminder: "Lembrete enviado no WhatsApp", renewed: "Validade renovada", approved: "Aprovado — virou pedido", refused: "Recusado" };
-  const Q_UI = { st: "Todos", q: "", month: "", open: null };
   const Q_TONE = { Pendente: "#6FA0EA", Aprovado: "#3FD1CE", Recusado: "#FF6B6B", Expirado: "#FF8A8A" };
 
   function Quotes() {
@@ -8035,20 +8087,35 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
   }
 
   /* =============================== FINANCEIRO ============================== */
+  const FIN_SRC = { sale: { l: "VENDA", c: "#3FD1CE", ic: "↑" }, recv: { l: "A RECEBER", c: "#FFAA5C", ic: "↑" }, exp: { l: "GASTO", c: "#8FA0AC", ic: "↓" }, fix: { l: "FIXO", c: "#FFD166", ic: "🗓" }, man: { l: "AVULSO", c: "#A88AF0", ic: "✍" } };
+  const monthDays = (mk) => new Date(+mk.slice(0, 4), +mk.slice(5, 7), 0).getDate();
+  const fixDue = (c, mk) => `${mk}-${String(Math.min(monthDays(mk), num(c.day) || 1)).padStart(2, "0")}`;
+  const fixPaid = (c, mk) => (c.paidMonths || []).includes(mk);
+  const shiftMonth = (mk, d) => { const x = new Date(mk + "-15T12:00:00"); x.setMonth(x.getMonth() + d); return x.toISOString().slice(0, 7); };
+  /* contas fixas que ainda não foram marcadas como pagas, com o próximo vencimento (este mês ou o seguinte) */
+  const upcomingFixed = () => {
+    const t = todayISO(); const mk = t.slice(0, 7); const nx = shiftMonth(mk, 1);
+    return (data.fixedCosts || []).map((c) => {
+      const d1 = fixDue(c, mk);
+      if (!fixPaid(c, mk)) return { c, due: d1, mk, days: Math.round((new Date(d1 + "T12:00:00") - new Date(t + "T12:00:00")) / 86400000) };
+      const d2 = fixDue(c, nx);
+      return fixPaid(c, nx) ? null : { c, due: d2, mk: nx, days: Math.round((new Date(d2 + "T12:00:00") - new Date(t + "T12:00:00")) / 86400000) };
+    }).filter(Boolean).sort((a, b) => a.days - b.days);
+  };
   const monthStatement = (mk) => {
     const rows = [];
     salesOrders.filter((o) => monthKey(o.date) === mk).forEach((o) => {
-      const p = projMap[o.projectId];
-      rows.push({ date: o.date, kind: "in", desc: `Venda: ${projName(o)} × ${fmtN(o.qty)}${o.paid ? "" : " (a receber)"}`, value: num(o.price), cat: "Vendas" });
+      const c = cliMap[o.clientId];
+      rows.push({ date: o.date, kind: "in", desc: `Venda: ${projName(o)} × ${fmtN(o.qty)}${o.paid ? "" : " (a receber)"}`, value: num(o.price), cat: "Vendas", src: o.paid ? "sale" : "recv", sub: c ? c.name : "Venda sem cliente" });
     });
     data.expenses.filter((e) => monthKey(e.date) === mk).forEach((e) => {
-      rows.push({ date: e.date, kind: "out", desc: `${e.category || e.cat || "Gasto"}: ${e.desc || e.name || ""}`, value: num(e.value), cat: e.category || e.cat || "Gastos" });
+      rows.push({ date: e.date, kind: "out", desc: `${e.category || e.cat || "Gasto"}: ${e.desc || e.name || ""}`, value: num(e.value), cat: e.category || e.cat || "Gastos", src: "exp", title: e.desc || e.name || e.category || "Gasto", sub: `Investimentos · ${e.category || e.cat || "Gasto"}` });
     });
     (data.fixedCosts || []).forEach((c) => {
-      rows.push({ date: `${mk}-${String(Math.min(28, num(c.day) || 1)).padStart(2, "0")}`, kind: "out", desc: `Custo fixo: ${c.name}`, value: num(c.value), cat: "Custos fixos" });
+      rows.push({ date: fixDue(c, mk), kind: "out", desc: `Custo fixo: ${c.name}`, value: num(c.value), cat: "Custos fixos", src: "fix", title: c.name, sub: `Custo fixo · vence dia ${num(c.day) || 1}${fixPaid(c, mk) ? " · pago" : ""}` });
     });
     (data.cashflow || []).filter((e) => monthKey(e.date) === mk).forEach((e) => {
-      rows.push({ date: e.date, kind: e.kind, desc: e.desc, value: num(e.value), cat: e.cat || "Lançamento manual", manual: e });
+      rows.push({ date: e.date, kind: e.kind, desc: e.desc, value: num(e.value), cat: e.cat || "Lançamento manual", manual: e, src: "man", title: e.desc, sub: `Lançamento avulso${e.cat ? " · " + e.cat : ""}` });
     });
     rows.sort((a, b) => (a.date || "") < (b.date || "") ? -1 : 1);
     const inn = rows.filter((r) => r.kind === "in").reduce((s, r) => s + r.value, 0);
@@ -8056,124 +8123,248 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     return { rows, inn, out, saldo: inn - out };
   };
   function Financeiro() {
-    const [sub, setSub] = useState("fluxo");
-    const [mk, setMk] = useState(thisMonth);
-    const sFlux = useSort("fin-extrato");
-    const sAR = useSort("fin-receber");
-    const sFix = useSort("fin-fixos");
+    const [sub, setSubS] = useState(FIN_UI.sub);
+    const setSub = (v) => { FIN_UI.sub = v; setSubS(v); };
+    const [mk, setMkS] = useState(FIN_UI.month || thisMonth);
+    const setMk = (v) => { FIN_UI.month = v; setMkS(v); };
+    const [src, setSrcS] = useState(FIN_UI.src);
+    const setSrc = (v) => { FIN_UI.src = v; setSrcS(v); };
+    const [q, setQS] = useState(FIN_UI.q);
+    const setQ = (v) => { FIN_UI.q = v; setQS(v); };
+    const [help, setHelp] = useState(false);
+    const [menu, setMenu] = useState(null);
+    useEffect(() => {
+      if (!menu) return;
+      const close = (e) => { if (!(e.target.closest && e.target.closest(".neo-qmenu, .neo-qmore"))) setMenu(null); };
+      document.addEventListener("mousedown", close);
+      return () => document.removeEventListener("mousedown", close);
+    }, [menu]);
+    const today = todayISO();
+    const monthLabel = new Date(mk + "-15T12:00:00").toLocaleDateString("pt-BR", { month: "long", year: "numeric" }).replace(" de ", " ");
     const st = monthStatement(mk);
+    const prev = monthStatement(shiftMonth(mk, -1));
+    const dIn = prev.inn > 0 ? ((st.inn - prev.inn) / prev.inn) * 100 : null;
+    const recvMonth = st.rows.filter((r) => r.src === "recv").reduce((s, r) => s + r.value, 0);
+    const expOut = st.rows.filter((r) => r.src === "exp").reduce((s, r) => s + r.value, 0);
+    const fixOut = st.rows.filter((r) => r.src === "fix").reduce((s, r) => s + r.value, 0);
+    const manOut = st.rows.filter((r) => r.src === "man" && r.kind === "out").reduce((s, r) => s + r.value, 0);
+    const nDays = monthDays(mk);
+    const todayIdx = mk === thisMonth ? +today.slice(8, 10) : mk < thisMonth ? nDays : 0;
+    const daysElapsed = Math.max(1, todayIdx || nDays);
+    const perDay = st.inn / daysElapsed;
+    const fixDays = perDay > 0 && monthFixedTotal > 0 ? Math.ceil(monthFixedTotal / perDay) : null;
+    // saldo dia a dia
+    const cum = [0]; for (let d = 1; d <= nDays; d++) { const dk = `${mk}-${String(d).padStart(2, "0")}`; cum.push(cum[d - 1] + st.rows.filter((r) => r.date === dk).reduce((s, r) => s + (r.kind === "in" ? r.value : -r.value), 0)); }
+    const cMin = Math.min(0, ...cum), cMax = Math.max(0, ...cum); const span = Math.max(1, cMax - cMin);
+    const CW = 1000, CH = 150;
+    const cx = (d) => (d / nDays) * CW, cy = (v) => CH - 12 - ((v - cMin) / span) * (CH - 30);
+    const pathOf = (a, b) => cum.slice(a, b + 1).map((v, i) => `${i ? "L" : "M"}${cx(a + i).toFixed(1)},${cy(v).toFixed(1)}`).join(" ");
+    const realPath = todayIdx > 0 ? pathOf(0, todayIdx) : "";
+    const prevPath = todayIdx < nDays ? pathOf(todayIdx, nDays) : "";
+    // 6 meses
+    const m6 = Array.from({ length: 6 }).map((_, i) => { const m = shiftMonth(mk, i - 5); return { m, v: monthStatement(m).saldo }; });
+    const m6max = Math.max(1, ...m6.map((x) => Math.abs(x.v)));
+    // extrato
+    const srcCount = (k) => st.rows.filter((r) => (k === "sale" ? r.src === "sale" || r.src === "recv" : k === "in" ? r.kind === "in" : k === "out" ? r.kind === "out" : r.src === k)).length;
+    const rows = st.rows.filter((r) => (src === "all" || (src === "sale" ? r.src === "sale" || r.src === "recv" : src === "in" ? r.kind === "in" : src === "out" ? r.kind === "out" : r.src === src))
+      && (!q || `${r.desc} ${r.sub || ""}`.toLowerCase().includes(q.toLowerCase()))).slice().reverse();
+    const days = []; rows.forEach((r) => { const last = days[days.length - 1]; if (last && last.d === r.date) last.items.push(r); else days.push({ d: r.date, items: [r] }); });
+    const upc = upcomingFixed().slice(0, 4);
+    // a receber
     const arList = data.orders.filter((o) => isDone(o) && isSale(o) && !o.paid).sort((a, b) => (a.date < b.date ? -1 : 1));
     const arTotal = arList.reduce((s, o) => s + num(o.price), 0);
-    const arOld = arList.filter((o) => (Date.now() - new Date(o.date + "T12:00:00")) / 86400000 > 30);
-    const arOldTotal = arOld.reduce((s, o) => s + num(o.price), 0);
-    const arCobrar = (o) => { const c = cliMap[o.clientId]; const p = projMap[o.projectId]; if (!c || !c.phone) return; const ph = String(c.phone).replace(/[^0-9]/g, ""); const tel = ph.length >= 12 ? ph : "55" + ph; const msg = encodeURIComponent("Olá " + c.name + "! Passando para lembrar do valor de " + fmt(num(o.price)) + (projName(o) !== "—" ? " referente ao(à) " + projName(o) : "") + ". Qualquer coisa estou à disposição. 🙂"); window.open("https://wa.me/" + tel + "?text=" + msg, "_blank"); };
+    const ageOf = (o) => daysSince(o.date) || 0;
+    const bk = [[0, 15, "#3FD1CE", "até 15 dias"], [16, 30, "#FFD166", "16–30 dias"], [31, 1e9, "#FF6B6B", "+30 dias"]].map(([a, b, c, l]) => ({ c, l, v: arList.filter((o) => ageOf(o) >= a && ageOf(o) <= b).reduce((s, o) => s + num(o.price), 0) }));
+    const recebidoMes = data.orders.filter((o) => isSale(o) && o.paid && monthKey(o.date) === mk).reduce((s, o) => s + num(o.price), 0);
+    const ageColor = (d) => (d > 30 ? "#FF6B6B" : d > 15 ? "#FFD166" : "#3FD1CE");
+    // custos fixos
+    const fixed = (data.fixedCosts || []).slice().sort((a, b) => (num(a.day) || 1) - (num(b.day) || 1));
+    const paidSum = fixed.filter((c) => fixPaid(c, mk)).reduce((s, c) => s + num(c.value), 0);
+    const togglePaid = (c, v) => { const pm = (c.paidMonths || []).filter((m) => m !== mk); logAs(`${v ? "Marcou como pago" : "Desmarcou o pagamento de"}: ${c.name} (${monthLabel})`); saveItem("fixedCosts", { ...c, paidMonths: v ? [...pm, mk] : pm }); };
+    const dueByDay = {}; fixed.forEach((c) => { const d = +fixDue(c, mk).slice(8, 10); (dueByDay[d] = dueByDay[d] || []).push(c); });
+    const fixStatus = (c) => {
+      if (fixPaid(c, mk)) return null;
+      const dd = Math.round((new Date(fixDue(c, mk) + "T12:00:00") - new Date(today + "T12:00:00")) / 86400000);
+      if (mk > thisMonth) return { t: `em ${dd} dias`, c: "#7F9A9B" };
+      if (dd > 0) return { t: dd === 1 ? "amanhã" : `em ${dd} dias`, c: dd <= 3 ? "#FFD166" : "#7F9A9B" };
+      if (dd === 0) return { t: "vence hoje", c: "#FFD166" };
+      return { t: `venceu há ${-dd} dia${dd === -1 ? "" : "s"}`, c: "#FF6B6B" };
+    };
+    const sCode = (n) => (n >= 0 ? "+ " : "− ") + fmt(Math.abs(n));
     return (
-      <div>
-        <SectionHead title="Financeiro">
-          {sub === "fluxo" && <In type="month" value={mk} onChange={(e) => setMk(e.target.value)} style={{ width: 170 }} />}
-          {sub === "fluxo" && <Btn onClick={() => setModal({ type: "cashflow" })}><Plus size={16} />Lançamento</Btn>}
-          {sub === "fixos" && <Btn onClick={() => setModal({ type: "fixedCost" })}><Plus size={16} />Custo fixo</Btn>}
-        </SectionHead>
-        <SubTabs value={sub} onChange={setSub} tabs={[
-          { id: "fluxo", label: "Fluxo de caixa", icon: TrendingUp },
-          { id: "receber", label: "A receber", icon: CircleDollarSign, count: arList.length },
-          { id: "fixos", label: "Custos fixos mensais", icon: ClockIc, count: (data.fixedCosts || []).length },
-        ]} />
+      <div className="neo-finpage">
+        <div className="neo-pagehead">
+          <span className="neo-code">FINANCEIRO</span><h2>Dinheiro do negócio</h2>
+          <button className={"neo-help" + (help ? " on" : "")} onClick={() => setHelp(!help)} title="Como funciona">?</button>
+          <div className="neo-oacts" style={{ marginLeft: "auto" }}>
+            <button className="neo-bg2 ic fin-prev" title="Mês anterior" onClick={() => setMk(shiftMonth(mk, -1))}>‹</button>
+            <span className="neo-mlabel">{monthLabel}</span>
+            <button className="neo-bg2 ic fin-next" title="Próximo mês" onClick={() => setMk(shiftMonth(mk, 1))}>›</button>
+            {sub === "fixos" ? <Btn onClick={() => setModal({ type: "fixedCost" })}><Plus size={16} />Custo fixo</Btn> : <Btn onClick={() => setModal({ type: "cashflow" })}><Plus size={16} />Lançamento</Btn>}
+          </div>
+        </div>
+        {help && <div className="neo-hud neo-helpbox">💡 O Financeiro junta tudo sozinho: vendas concluídas (Pedidos), gastos (Investimentos) e custos fixos mensais. Use “Lançamento” só para entradas ou saídas que não passam por esses lugares — assim nada é contado duas vezes.</div>}
+        <div className="neo-seg fin-tabs" style={{ width: "max-content", maxWidth: "100%", marginBottom: 14, flexWrap: "wrap" }}>
+          {[["fluxo", "📈 Fluxo de caixa", null], ["receber", "💰 A receber", arList.length], ["fixos", "🗓 Custos fixos", fixed.length]].map(([k, l, n]) => <button key={k} className={"fin-tab" + (sub === k ? " on" : "")} data-t={k} onClick={() => setSub(k)}>{l}{n ? <i>{n}</i> : null}</button>)}
+        </div>
+
         {sub === "fluxo" && (
           <React.Fragment>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(190px,1fr))", gap: 14, marginBottom: 16 }}>
-              <Stat label="Entradas no mês" value={fmt(st.inn)} icon={ArrowUpIc} accent="#14A6A4" />
-              <Stat label="Saídas no mês" value={fmt(st.out)} icon={ArrowDownIc} accent="#F0605F" />
-              <Stat label="Saldo do mês" value={fmt(st.saldo)} icon={CircleDollarSign} accent={st.saldo >= 0 ? "#14A6A4" : "#F0605F"} />
-              <Stat label="Custos fixos/mês" value={fmt(monthFixedTotal)} sub={`${(data.fixedCosts || []).length} conta(s) cadastrada(s)`} icon={ClockIc} accent="#F47A20" />
+            <div className="neo-ckpis">
+              <Reveal className="neo-hud neo-k fin-k-in" delay={0}><div className="l">Entrou no mês</div><div className="v" style={{ color: "#3FD1CE" }}><CountUp value={st.inn} format={fmt} /></div><span className="neo-kd">{dIn == null ? "" : <span className={dIn >= 0 ? "up" : "dn"}>{dIn >= 0 ? "▲" : "▼"} {fmtN(Math.abs(dIn), 0)}% vs mês anterior{recvMonth > 0 ? " · " : ""}</span>}{recvMonth > 0 ? <span style={{ color: "#FFAA5C" }}>{fmt(recvMonth)} ainda a receber</span> : dIn == null ? "vendas e entradas avulsas" : ""}</span></Reveal>
+              <Reveal className="neo-hud neo-k fin-k-out" delay={60}><div className="l">Saiu no mês</div><div className="v" style={{ color: "#FF6B6B" }}><CountUp value={st.out} format={fmt} /></div><span className="neo-kd">gastos {fmt(expOut)} · fixos {fmt(fixOut)}{manOut > 0 ? ` · avulsos ${fmt(manOut)}` : ""}</span></Reveal>
+              <Reveal className="neo-hud neo-k fin-k-saldo" delay={120}><div className="l">Saldo do mês <InfoTip text="Tudo que entrou menos tudo que saiu no mês (vendas concluídas, gastos lançados em Investimentos, custos fixos e lançamentos avulsos). Vendas ainda não pagas já entram aqui, porque o dinheiro é seu — só falta receber." /></div><div className="v" style={{ color: st.saldo >= 0 ? "#3FD1CE" : "#FF6B6B" }}><CountUp value={st.saldo} format={(v) => sCode(v)} /></div><span className="neo-kd">{st.inn > 0 ? `de cada R$ 1 que entrou, ${st.saldo >= 0 ? "sobraram" : "faltaram"} ${fmt(Math.abs(st.saldo) / st.inn)}` : "sem entradas neste mês"}</span></Reveal>
+              <Reveal className="neo-hud neo-k fin-k-fix" delay={180}><div className="l">Custos fixos/mês <InfoTip text="Soma das contas que se repetem todo mês (internet, assinaturas, aluguel…). O número de dias é quanto tempo das vendas deste mês (na média por dia) é preciso para pagar essas contas." /></div><div className="v" style={{ color: "#FFD166" }}><CountUp value={monthFixedTotal} format={fmt} /></div><span className="neo-kd">{fixDays != null ? `≈ ${fixDays} dia${fixDays > 1 ? "s" : ""} de vendas para pagar` : `${fixed.length} conta(s) cadastrada(s)`}</span></Reveal>
             </div>
-            <Card style={{ padding: 0 }}>
-              {st.rows.length === 0 ? <Empty icon={BanknoteIc} text="Nenhuma movimentação neste mês" hint="Vendas, gastos e custos fixos entram aqui automaticamente. Use “Lançamento” para entradas/saídas avulsas." />
-              : <table>
-                  <thead><tr><Th s={sFlux} col="date">Data</Th><Th s={sFlux} col="desc">Descrição</Th><Th s={sFlux} col="cat">Origem</Th><Th s={sFlux} col="in" style={{ textAlign: "right" }}>Entrada</Th><Th s={sFlux} col="out" style={{ textAlign: "right" }}>Saída</Th><th /></tr></thead>
-                  <tbody>
-                    {sortRows(st.rows.map((r, i) => ({ ...r, _k: i })), sFlux, {
-                      date: (r) => r.date, desc: (r) => r.desc, cat: (r) => r.cat,
-                      in: (r) => (r.kind === "in" ? num(r.value) : null), out: (r) => (r.kind === "out" ? num(r.value) : null),
-                    }).map((r) => (
-                      <tr key={r._k}>
-                        <td style={{ whiteSpace: "nowrap" }}>{fmtDate(r.date)}</td>
-                        <td>{r.desc}</td>
-                        <td style={{ color: "#93A6A6", fontSize: 12 }}>{r.cat}</td>
-                        <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#3FD1CE", fontWeight: 600 }}>{r.kind === "in" ? fmt(r.value) : ""}</td>
-                        <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", color: "#F0605F", fontWeight: 600 }}>{r.kind === "out" ? fmt(r.value) : ""}</td>
-                        <td style={{ textAlign: "right" }}>{r.manual && <Btn small kind="danger" onClick={() => delItem("cashflow", r.manual.id)}><Trash2 size={12} /></Btn>}</td>
-                      </tr>
-                    ))}
-                    <tr>
-                      <td colSpan={3} style={{ fontWeight: 700 }}>Saldo do mês</td>
-                      <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: "#3FD1CE" }}>{fmt(st.inn)}</td>
-                      <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: "#F0605F" }}>{fmt(st.out)}</td>
-                      <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: st.saldo >= 0 ? "#3FD1CE" : "#F0605F", whiteSpace: "nowrap" }}>{fmt(st.saldo)}</td>
-                    </tr>
-                  </tbody>
-                </table>}
-            </Card>
-          </React.Fragment>
-        )}
-        {sub === "receber" && (
-          <React.Fragment>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(190px,1fr))", gap: 14, marginBottom: 16 }}>
-              <Stat label="Total a receber" value={fmt(arTotal)} sub={`${arList.length} venda(s) em aberto`} icon={CircleDollarSign} accent="#F47A20" />
-              <Stat label="Vencido +30 dias" value={fmt(arOldTotal)} sub={`${arOld.length} venda(s) atrasada(s)`} icon={ClockIc} accent="#F0605F" />
-              <Stat label="Recebido no mês" value={fmt(data.orders.filter((o) => isSale(o) && o.paid && monthKey(o.date) === mk).reduce((s, o) => s + num(o.price), 0))} sub="vendas marcadas como pagas" icon={CheckCircle2} accent="#14A6A4" />
+            <Reveal className="neo-hud neo-finchart" delay={80}>
+              <span className="neo-code">SALDO DIA A DIA</span>
+              <span className="neo-finleg"><b>━</b> real{todayIdx < nDays && <> &nbsp; <b style={{ opacity: .55 }}>┅</b> previsão (contas fixas que ainda vão vencer)</>}</span>
+              <div className="neo-finsvg">
+                <svg viewBox={`0 0 ${CW} ${CH}`} preserveAspectRatio="none">
+                  <defs><linearGradient id="fin-ga" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stopColor="#3FD1CE" stopOpacity=".35" /><stop offset="1" stopColor="#3FD1CE" stopOpacity="0" /></linearGradient></defs>
+                  <line x1="0" x2={CW} y1={cy(0)} y2={cy(0)} stroke="rgba(127,154,155,.35)" strokeDasharray="3 4" vectorEffect="non-scaling-stroke" />
+                  {realPath && <path d={`${realPath} L${cx(todayIdx)},${cy(0)} L0,${cy(0)} Z`} fill="url(#fin-ga)" />}
+                  {realPath && <path className="fin-real" d={realPath} fill="none" stroke="#3FD1CE" strokeWidth="2.5" vectorEffect="non-scaling-stroke" style={{ filter: "drop-shadow(0 0 4px #3FD1CE)" }} />}
+                  {prevPath && <path className="fin-prevline" d={prevPath} fill="none" stroke="#3FD1CE" strokeWidth="2" strokeDasharray="6 6" opacity=".5" vectorEffect="non-scaling-stroke" />}
+                  {todayIdx > 0 && todayIdx < nDays && <line x1={cx(todayIdx)} x2={cx(todayIdx)} y1="0" y2={CH} stroke="#F5821F" strokeDasharray="3 3" vectorEffect="non-scaling-stroke" />}
+                </svg>
+                {todayIdx > 0 && todayIdx < nDays && <React.Fragment><span className="neo-findot" style={{ left: `${(todayIdx / nDays) * 100}%`, top: cy(cum[todayIdx]) }} /><span className="neo-fintoday" style={{ left: `${(todayIdx / nDays) * 100}%` }}>HOJE · {fmt(cum[todayIdx])}</span></React.Fragment>}
+                <div className="neo-finx">{Array.from({ length: nDays }).map((_, i) => ((i + 1) % 4 === 1 ? <span key={i} style={{ left: `${((i + 1) / nDays) * 100}%` }}>{String(i + 1).padStart(2, "0")}</span> : null))}</div>
+              </div>
+            </Reveal>
+            <div className="neo-penbar">
+              <div className="neo-fchips">
+                {[["all", "Tudo"], ["sale", "🛒 Vendas"], ["exp", "🧾 Gastos"], ["fix", "🗓 Fixos"], ["man", "✍ Avulsos"], ["in", "↑ só entradas"], ["out", "↓ só saídas"]].map(([k, l]) => <button key={k} className={"neo-fchip fin-src" + (src === k ? " on" : "")} data-s={k} onClick={() => setSrc(k)}>{l}{k === "in" || k === "out" ? "" : ` ${k === "all" ? st.rows.length : srcCount(k)}`}</button>)}
+              </div>
+              <div className="neo-search"><SearchIc size={14} /><input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Descrição…" />{q && <button onClick={() => setQ("")}>×</button>}</div>
             </div>
-            <Card style={{ padding: 0 }}>
-              {arList.length === 0 ? <Empty icon={CheckCircle2} text="Tudo recebido!" hint="Nenhuma venda em aberto. Quando uma venda concluída não estiver marcada como paga, ela aparece aqui." />
-              : <table>
-                  <thead><tr><Th s={sAR} col="date">Venda</Th><Th s={sAR} col="client">Cliente</Th><Th s={sAR} col="project">Produto</Th><Th s={sAR} col="days" style={{ textAlign: "center" }}>Em aberto</Th><Th s={sAR} col="price" style={{ textAlign: "right" }}>Valor</Th><th style={{ textAlign: "right" }}>Ações</th></tr></thead>
-                  <tbody>
-                    {sortRows(arList, sAR, {
-                      date: (o) => o.date, client: (o) => (cliMap[o.clientId] ? cliMap[o.clientId].name : null), project: (o) => projName(o),
-                      days: (o) => Date.now() - new Date(o.date + "T12:00:00"), price: (o) => num(o.price),
-                    }).map((o) => { const c = cliMap[o.clientId]; const p = projMap[o.projectId]; const dias = Math.floor((Date.now() - new Date(o.date + "T12:00:00")) / 86400000); return (
-                      <tr key={o.id}>
-                        <td style={{ whiteSpace: "nowrap" }}>{fmtDate(o.date)}</td>
-                        <td style={{ fontWeight: 600 }}>{c ? c.name : "—"}</td>
-                        <td>{projName(o)} <span style={{ color: "#8FA3A3" }}>×{fmtN(o.qty)}</span></td>
-                        <td style={{ textAlign: "center", color: dias > 30 ? "#F0605F" : "#7E9191", fontWeight: 600 }}>{dias}d</td>
-                        <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 600 }}>{fmt(num(o.price))}</td>
-                        <td style={{ textAlign: "right", whiteSpace: "nowrap" }}>
-                          <Btn small kind="ghost" title="Imagem com QR e chave PIX" onClick={() => openPix(`Venda ${fmtDate(o.date)} · ${projName(o)}`, o.clientId)}>PIX</Btn>{" "}
-                          {c && c.phone && <React.Fragment><Btn small kind="ghost" style={{ color: "#34C77A", borderColor: "#16261C" }} onClick={() => arCobrar(o)} title="Cobrar no WhatsApp"><WhatsIc size={13} />Cobrar</Btn>{" "}</React.Fragment>}
-                          <Btn small onClick={() => { saveItem("orders", { ...o, paid: true }); notify("Recebimento registrado ✓"); }}><CheckCircle2 size={13} />Marcar pago</Btn>
-                        </td>
-                      </tr>
-                    ); })}
-                    <tr><td colSpan={4} style={{ fontWeight: 700 }}>Total a receber</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: "#F47A20" }}>{fmt(arTotal)}</td><td /></tr>
-                  </tbody>
-                </table>}
-            </Card>
-          </React.Fragment>
-        )}
-        {sub === "fixos" && (
-          <Card style={{ padding: 0 }}>
-            {(data.fixedCosts || []).length === 0 ? <Empty icon={ClockIc} text="Nenhum custo fixo cadastrado" hint="Internet, energia base, assinaturas, aluguel… tudo que se repete todo mês. Eles entram sozinhos no fluxo de caixa e na contabilidade." />
-            : <table>
-                <thead><tr><Th s={sFix} col="name">Conta</Th><Th s={sFix} col="day">Vence dia</Th><Th s={sFix} col="value" style={{ textAlign: "right" }}>Valor mensal</Th><th /></tr></thead>
-                <tbody>
-                  {sortRows(data.fixedCosts || [], sFix, {
-                    name: (c) => c.name, day: (c) => (num(c.day) > 0 ? num(c.day) : null), value: (c) => num(c.value),
-                  }).map((c) => (
-                    <tr key={c.id}>
-                      <td style={{ fontWeight: 600 }}>{c.name}</td>
-                      <td>{c.day || "—"}</td>
-                      <td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 600 }}>{fmt(c.value)}</td>
-                      <td style={{ textAlign: "right" }}>
-                        <Btn small kind="ghost" onClick={() => setModal({ type: "fixedCost", item: c })}><Pencil size={13} /></Btn>{" "}
-                        <Btn small kind="danger" onClick={() => { if (confirm(`Remover o custo fixo "${c.name}"?`)) delItem("fixedCosts", c.id); }}><Trash2 size={13} /></Btn>
-                      </td>
-                    </tr>
+            <div className="neo-expgrid">
+              <div className="neo-hud">
+                <span className="neo-code">EXTRATO</span>
+                {rows.length === 0 ? <Empty icon={BanknoteIc} text={st.rows.length ? "Nada neste filtro" : "Nenhuma movimentação neste mês"} hint="Vendas, gastos e custos fixos entram aqui automaticamente. Use “Lançamento” para entradas/saídas avulsas." /> : days.map((g) => {
+                  const ds = g.items.reduce((s, r) => s + (r.kind === "in" ? r.value : -r.value), 0);
+                  return (
+                    <React.Fragment key={g.d}>
+                      <div className="neo-expday">{new Date(g.d + "T12:00:00").toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", weekday: "short" }).replace(".", "").toUpperCase()}<span style={{ color: ds >= 0 ? "#3FD1CE" : "#FF6B6B" }}>{sCode(ds)}</span></div>
+                      {g.items.map((r, i) => {
+                        const S = FIN_SRC[r.src] || FIN_SRC.man;
+                        const icCol = r.src === "sale" || r.src === "recv" ? "#3FD1CE" : r.src === "exp" ? "#FF6B6B" : S.c;
+                        const id = r.manual ? r.manual.id : `${g.d}-${i}`;
+                        return (
+                          <div key={id} className="neo-finrow" data-src={r.src} style={menu === id ? { zIndex: 30, position: "relative" } : undefined}>
+                            <span className="ic" style={{ color: icCol }}>{r.src === "man" ? (r.kind === "in" ? "↑" : "↓") : S.ic}</span>
+                            <div style={{ minWidth: 0 }}><b>{r.title || r.desc.replace(" (a receber)", "")}</b><small>{r.sub}</small></div>
+                            <span className="tag" style={{ color: S.c }}>{S.l}</span>
+                            <span className="v" style={{ color: r.kind === "in" ? "#3FD1CE" : "#FF6B6B", opacity: r.src === "recv" ? .75 : 1 }}>{r.kind === "in" ? "+ " : "− "}{fmt(r.value)}</span>
+                            <div className="neo-oacts">{r.manual ? <React.Fragment>
+                              <button className={"neo-bg2 ic neo-qmore" + (menu === id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === id ? null : id)}>⋯</button>
+                              {menu === id && <div className="neo-qmenu"><button onClick={() => { setMenu(null); setModal({ type: "cashflow", item: r.manual }); }}><Pencil size={13} />Editar</button><button className="r fin-del" onClick={() => { setMenu(null); if (confirm(`Excluir o lançamento "${r.desc}" (${fmt(r.value)})?`)) delItem("cashflow", r.manual.id); }}><Trash2 size={13} />Excluir</button></div>}
+                            </React.Fragment> : <span style={{ width: 30 }} />}</div>
+                          </div>
+                        );
+                      })}
+                    </React.Fragment>
+                  );
+                })}
+                {st.rows.length > 0 && <div className="neo-finsum"><span>Saldo do mês</span><b><span style={{ color: "#3FD1CE" }}>{fmt(st.inn)}</span> − <span style={{ color: "#FF6B6B" }}>{fmt(st.out)}</span> = <span style={{ color: st.saldo >= 0 ? "#3FD1CE" : "#FF6B6B" }}>{fmt(st.saldo)}</span></b></div>}
+              </div>
+              <div className="neo-col">
+                <Reveal className="neo-hud neo-fincmp" delay={60}>
+                  <span className="neo-code">ENTROU × SAIU</span>
+                  <div><label>Entrou <b style={{ color: "#3FD1CE" }}>{fmt(st.inn)}</b></label><div className="tr"><i style={{ width: `${(st.inn / Math.max(1, st.inn, st.out)) * 100}%`, background: "linear-gradient(90deg,#14B8B2,#3FD1CE)" }} /></div></div>
+                  <div><label>Saiu <b style={{ color: "#FF6B6B" }}>{fmt(st.out)}</b></label><div className="tr"><i style={{ width: `${(st.out / Math.max(1, st.inn, st.out)) * 100}%`, background: "linear-gradient(90deg,#c44,#FF6B6B)" }} /></div></div>
+                  <div className="mini"><span>Gastos (Investimentos)</span><b>{fmt(expOut)}</b></div>
+                  <div className="mini"><span>Custos fixos</span><b>{fmt(fixOut)}</b></div>
+                  <div className="mini" style={{ border: 0 }}><span>Saídas avulsas</span><b>{fmt(manOut)}</b></div>
+                </Reveal>
+                <Reveal className="neo-hud" delay={120}>
+                  <span className="neo-code">PRÓXIMOS VENCIMENTOS</span>
+                  {upc.length === 0 ? <div className="neo-empty">{fixed.length ? "Todas as contas fixas estão pagas. 👌" : "Nenhum custo fixo cadastrado."}</div> : upc.map((u) => (
+                    <div key={u.c.id} className="neo-findue">
+                      <span className="d">{u.due.slice(8, 10)}<small>{new Date(u.due + "T12:00:00").toLocaleDateString("pt-BR", { month: "short" }).replace(".", "").toUpperCase()}</small></span>
+                      <div>{u.c.name}<em style={{ color: u.days < 0 ? "#FF6B6B" : u.days <= 3 ? "#FFD166" : undefined }}>{u.days < 0 ? `venceu há ${-u.days} dia(s)` : u.days === 0 ? "vence hoje" : u.days === 1 ? "vence amanhã" : `vence em ${u.days} dias`}</em></div>
+                      <b>{fmt(u.c.value)}</b>
+                    </div>
                   ))}
-                  <tr><td colSpan={2} style={{ fontWeight: 700 }}>Total mensal</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace", fontWeight: 700, color: "#FFB067" }}>{fmt(monthFixedTotal)}</td><td /></tr>
-                </tbody>
-              </table>}
-          </Card>
+                  {upc.length > 0 && <button className="neo-go" style={{ marginTop: 8 }} onClick={() => setSub("fixos")}>Ver custos fixos</button>}
+                </Reveal>
+                <Reveal className="neo-hud" delay={180}>
+                  <span className="neo-code">ÚLTIMOS 6 MESES · SALDO</span>
+                  <div className="neo-expbars fin-bars" style={{ height: 120 }}>
+                    {m6.map((x) => (
+                      <button key={x.m} className={"exp-bar" + (x.m === mk ? " on" : "") + (x.v < 0 ? " neg" : "")} title={`Saldo ${sCode(x.v)} — clique para ver o mês`} onClick={() => setMk(x.m)}>
+                        <small>{x.v !== 0 ? (x.v < 0 ? "−" : "") + fmtN(Math.round(Math.abs(x.v))) : ""}</small>
+                        <i style={{ height: Math.max(2, (Math.abs(x.v) / m6max) * 100) + "%" }} />
+                        <span>{new Date(x.m + "-15T12:00:00").toLocaleDateString("pt-BR", { month: "short" }).replace(".", "")}</span>
+                      </button>
+                    ))}
+                  </div>
+                </Reveal>
+              </div>
+            </div>
+          </React.Fragment>
+        )}
+
+        {sub === "receber" && (
+          <div className="neo-hud neo-finar">
+            <span className="neo-code">QUEM ME DEVE</span>
+            <div className="neo-finbig"><span style={{ color: "#FFAA5C" }}><CountUp value={arTotal} format={fmt} /></span><small>{arList.length} venda(s) em aberto · recebido em {monthLabel.split(" ")[0]}: {fmt(recebidoMes)}</small></div>
+            {arTotal > 0 && <React.Fragment>
+              <div className="neo-finage">{bk.filter((b) => b.v > 0).map((b) => <i key={b.l} style={{ width: `${(b.v / arTotal) * 100}%`, background: b.c }} title={`${b.l}: ${fmt(b.v)}`} />)}</div>
+              <div className="neo-finagel">{bk.map((b) => <span key={b.l}><i style={{ background: b.c }} />{b.l} <b>{fmt(b.v)}</b></span>)}</div>
+            </React.Fragment>}
+            {arList.length === 0 ? <Empty icon={CheckCircle2} text="Tudo recebido!" hint="Nenhuma venda em aberto. Quando uma venda concluída não estiver marcada como paga, ela aparece aqui." /> : arList.map((o) => {
+              const c = cliMap[o.clientId]; const d = ageOf(o); const col = ageColor(d);
+              return (
+                <div key={o.id} className="neo-finarrow" data-id={o.id}>
+                  <span className="dd" style={{ color: col, boxShadow: `0 0 12px ${col}33` }}>{d}<small>{d === 1 ? "DIA" : "DIAS"}</small></span>
+                  <div style={{ minWidth: 0 }}><b>{c ? c.name : "Venda sem cliente"}</b><small>{projName(o)} × {fmtN(o.qty)} · venda {fmtDate(o.date)}</small></div>
+                  <div className="rt">
+                    <div className="v">{fmt(num(o.price))}</div>
+                    <div className="neo-oacts">
+                      <button className="neo-bg2" title="Imagem com QR e chave PIX" onClick={() => openPix(`Venda ${fmtDate(o.date)} · ${projName(o)}`, o.clientId)}>PIX</button>
+                      {c && c.phone && <button className="neo-bg2 wa fin-wa" title="Cobrar no WhatsApp" onClick={() => waOpen(c.phone, cobrarMsg(c, [o]))}><WhatsIc size={13} />Cobrar</button>}
+                      <button className="neo-bp fin-recv" onClick={() => { saveItem("orders", { ...o, paid: true }); notify("Recebimento registrado ✓"); }}><CheckCircle2 size={13} />Recebi</button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        )}
+
+        {sub === "fixos" && (
+          <div className="neo-hud neo-finfix">
+            <span className="neo-code">CUSTOS FIXOS</span>
+            <div className="neo-finbig"><span style={{ color: "#FFD166" }}><CountUp value={monthFixedTotal} format={fmt} /></span><small>por mês · {fixed.length} conta(s) · pago em {monthLabel.split(" ")[0]}: <b style={{ color: "#3FD1CE" }}>{fmt(paidSum)}</b></small></div>
+            {fixed.length > 0 && <React.Fragment>
+              <div className="neo-fincal" style={{ gridTemplateColumns: `repeat(${nDays},1fr)` }}>
+                {Array.from({ length: nDays }).map((_, i) => {
+                  const d = i + 1; const cs = dueByDay[d] || [];
+                  const cls = cs.length ? (cs.every((c) => fixPaid(c, mk)) ? " pd" : " on") : "";
+                  return <span key={d} className={cls + (mk === thisMonth && d === +today.slice(8, 10) ? " td" : "")} title={cs.length ? cs.map((c) => `${c.name} — ${fmt(c.value)}${fixPaid(c, mk) ? " (pago)" : ""}`).join("\n") : undefined}>{d}</span>;
+                })}
+              </div>
+              <div className="neo-fincalleg">Régua do mês: <b style={{ color: "#FFD166" }}>■</b> vence &nbsp;<b style={{ color: "#3FD1CE" }}>■</b> pago{mk === thisMonth && <> &nbsp;<b style={{ color: "#F5821F" }}>▢</b> hoje</>}</div>
+            </React.Fragment>}
+            {fixed.length === 0 ? <Empty icon={ClockIc} text="Nenhum custo fixo cadastrado" hint="Internet, energia base, assinaturas, aluguel… tudo que se repete todo mês. Eles entram sozinhos no fluxo de caixa e na contabilidade." /> : fixed.map((c) => {
+              const s = fixStatus(c); const paid = fixPaid(c, mk);
+              return (
+                <div key={c.id} className={"neo-finfc" + (paid ? " paid" : "")} data-id={c.id} style={menu === c.id ? { zIndex: 30, position: "relative" } : undefined}>
+                  <span className="dd">{num(c.day) || 1}<small>DIA</small></span>
+                  <div style={{ minWidth: 0 }}><b>{c.name}</b><div className="sh" title={`${fmtN((num(c.value) / Math.max(1, monthFixedTotal)) * 100, 0)}% do total`}><i style={{ width: `${(num(c.value) / Math.max(1, monthFixedTotal)) * 100}%` }} /></div></div>
+                  <span className="v">{fmt(c.value)}</span>
+                  <span className="st">{paid ? <span className="pill">✓ PAGO</span> : <em style={{ color: s.c }}>{s.t}</em>}<Switch on={paid} title={paid ? "Pago neste mês — clique para desmarcar" : "Marcar como pago neste mês"} onChange={(v) => togglePaid(c, v)} /></span>
+                  <div className="neo-oacts">
+                    <button className="neo-bg2 ic" title="Editar" onClick={() => setModal({ type: "fixedCost", item: c })}><Pencil size={13} /></button>
+                    <button className={"neo-bg2 ic neo-qmore" + (menu === c.id ? " on" : "")} title="Mais opções" onClick={() => setMenu(menu === c.id ? null : c.id)}>⋯</button>
+                    {menu === c.id && <div className="neo-qmenu"><button className="r fix-del" onClick={() => { setMenu(null); if (confirm(`Remover o custo fixo "${c.name}"?`)) delItem("fixedCosts", c.id); }}><Trash2 size={13} />Excluir</button></div>}
+                  </div>
+                </div>
+              );
+            })}
+            {fixed.length > 0 && <div className="neo-exptotal"><span>Total mensal</span><b style={{ color: "#FFD166" }}>{fmt(monthFixedTotal)}</b></div>}
+          </div>
         )}
       </div>
     );

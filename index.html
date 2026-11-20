@@ -1023,7 +1023,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.63";
+const APP_VERSION = "4.64";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -2883,6 +2883,23 @@ function App() {
   const backlogHours = pendingOrdersList.filter((o) => !o.fromStock)
     .reduce((s, o) => s + (projMap[o.projectId] ? projWallHours(projMap[o.projectId], o.partPrinters) : 0) * num(o.qty), 0);
   const monthFixedTotal = (data.fixedCosts || []).reduce((s, c) => s + num(c.value), 0);
+  const RP_STOCK_CATS = ["Filamento", "Material", "Embalagem"];
+  const monthsIn = (a, b) => { let m = 0, g = 0; const d = new Date(a + "T12:00:00"), e = new Date(b + "T12:00:00"); while (d <= e && g < 40000) { m += 1 / new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(d.getDate() + 1); g++; } return m; };
+  const dataStart = () => [...data.orders.map((o) => o.date), ...data.expenses.map((e) => e.date), ...data.printers.map((p) => p.date)].filter(Boolean).sort()[0] || todayISO();
+  const clampRange = (a, b) => [a < "1900" ? dataStart() : a, b > "9000" ? todayISO() : b];
+  const realProfit = (a0, b0) => {
+    const [a, b] = clampRange(a0, b0);
+    const inR = (d) => d && d >= a && d <= b;
+    const isEq = (e) => (e.category || e.cat) === "Equipamento";
+    const sales = salesOrders.filter((o) => inR(o.date));
+    const rev = sales.reduce((s, o) => s + num(o.price), 0);
+    const cpv = sales.reduce((s, o) => s + num(o.cost), 0);
+    const op = data.expenses.filter((e) => inR(e.date) && !isEq(e) && !RP_STOCK_CATS.includes(e.category || e.cat)).reduce((s, e) => s + num(e.value), 0);
+    const months = a <= b ? monthsIn(a, b) : 0;
+    const fixed = monthFixedTotal * months;
+    const desg = (data.expenses.filter(isEq).reduce((s, e) => s + num(e.value), 0) / 36) * months;
+    return { rev, cpv, op, fixed, desg, profit: rev - cpv - op - fixed - desg, months };
+  };
   const openQuotes = (data.quotes || []).filter((q) => q.status === "Pendente");
 
   const last6 = useMemo(() => {
@@ -2894,8 +2911,9 @@ function App() {
       const label = dt.toLocaleDateString("pt-BR", { month: "short" });
       const rev = salesOrders.filter((o) => monthKey(o.date) === k).reduce((s, o) => s + num(o.price), 0);
       const cost = salesOrders.filter((o) => monthKey(o.date) === k).reduce((s, o) => s + num(o.cost), 0);
-      const exp = data.expenses.filter((e) => monthKey(e.date) === k).reduce((s, e) => s + num(e.value), 0);
-      out.push({ mes: label, Faturamento: +rev.toFixed(2), Gastos: +(cost + exp).toFixed(2), Lucro: +(rev - cost - exp).toFixed(2) });
+      const last = new Date(dt.getFullYear(), dt.getMonth() + 1, 0).getDate();
+      const rp = realProfit(k + "-01", `${k}-${String(last).padStart(2, "0")}`);
+      out.push({ mes: label, Faturamento: +rev.toFixed(2), Gastos: +(rp.rev - rp.profit).toFixed(2), Lucro: +rp.profit.toFixed(2) });
     }
     return out;
   }, [data]);
@@ -3314,7 +3332,7 @@ function App() {
     { group: "Sistema", items: [
       { id: "acoes", label: "Ações", icon: ClockIc },
       { id: "cfg", label: "Configurações", icon: SettingsIc },
-      { id: "backup", label: "Backup", icon: DownloadIc, action: () => exportBackup(), dot: needBackup, hint: needBackup ? "Faz mais de 7 dias (ou nunca) que você não exporta um backup — clique para baixar" : "Baixar uma cópia de todos os dados" },
+      { id: "backup", label: "Backup", icon: DownloadIc, action: () => setModal({ type: "backupAsk" }), dot: needBackup, hint: needBackup ? "Faz mais de 7 dias (ou nunca) que você não exporta um backup — clique para baixar" : "Baixar uma cópia de todos os dados" },
     ]},
   ];
 
@@ -3484,8 +3502,11 @@ function App() {
       const produced = done.filter((o) => !o.fromStock);
       const rev = sales.reduce((s, o) => s + num(o.price), 0);
       const cost = sales.reduce((s, o) => s + num(o.cost), 0);
-      const exp = data.expenses.filter((e) => inR(e.date)).reduce((s, e) => s + num(e.value), 0);
-      const profit = rev - cost - exp;
+      /* mês atual: custos fixos do mês inteiro, igual ao Financeiro → Resultado */
+      const fullMonth = from === thisMonth + "-01" && to === today;
+      const rp = realProfit(from, fullMonth ? `${thisMonth}-${String(new Date(+thisMonth.slice(0, 4), +thisMonth.slice(5, 7), 0).getDate()).padStart(2, "0")}` : to);
+      const exp = rp.op + rp.fixed + rp.desg;
+      const profit = rp.profit;
       return { sales, produced, rev, cost, exp, profit, margin: rev > 0 ? (profit / rev) * 100 : null, ticket: sales.length ? rev / sales.length : 0,
         pieces: produced.reduce((s, o) => s + num(o.qty), 0), hours: produced.reduce((s, o) => s + num(projMap[o.projectId] ? projMap[o.projectId].hours : 0) * num(o.qty), 0) };
     };
@@ -3603,7 +3624,7 @@ function App() {
 
         <div className="neo-kpis">
           {kpi(0, "Faturamento", cur.rev, fmt, <Delta a={cur.rev} b={prev && prev.rev} />, { spark: last6.map((x) => x.Faturamento), tab: "fin" })}
-          {kpi(1, "Lucro líquido", cur.profit, fmt, <Delta a={cur.profit} b={prev && prev.profit} />, { color: cur.profit >= 0 ? "#5CE0D4" : "#FF8A8A", spark: last6.map((x) => x.Lucro), sparkColor: "#9AF3EC" })}
+          {kpi(1, "Lucro real", cur.profit, fmt, <Delta a={cur.profit} b={prev && prev.profit} />, { color: cur.profit >= 0 ? "#5CE0D4" : "#FF8A8A", spark: last6.map((x) => x.Lucro), sparkColor: "#9AF3EC" })}
           {kpi(2, "Margem", cur.margin, (v) => fmtN(v, 1) + "%", <Delta a={cur.margin} b={prev && prev.margin} pp />)}
           {kpi(3, "Ticket médio", cur.ticket, fmt, <span className="neo-kd">{fmtN(cur.sales.length)} venda{cur.sales.length === 1 ? "" : "s"}</span>)}
           {kpi(4, "Peças produzidas", cur.pieces, (v) => fmtN(Math.round(v)), <span className="neo-kd">{fmtN(cur.hours, 1)} h de máquina</span>, { tab: "ped" })}
@@ -6644,22 +6665,6 @@ function App() {
 
   /* =============================== RELATÓRIOS ============================= */
   /* ===== v4.60: lucro real por período (igual ao Resultado) e uso por impressora ===== */
-  const monthsIn = (a, b) => { let m = 0, g = 0; const d = new Date(a + "T12:00:00"), e = new Date(b + "T12:00:00"); while (d <= e && g < 40000) { m += 1 / new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate(); d.setDate(d.getDate() + 1); g++; } return m; };
-  const dataStart = () => [...data.orders.map((o) => o.date), ...data.expenses.map((e) => e.date), ...data.printers.map((p) => p.date)].filter(Boolean).sort()[0] || todayISO();
-  const clampRange = (a, b) => [a < "1900" ? dataStart() : a, b > "9000" ? todayISO() : b];
-  const realProfit = (a0, b0) => {
-    const [a, b] = clampRange(a0, b0);
-    const inR = (d) => d && d >= a && d <= b;
-    const isEq = (e) => (e.category || e.cat) === "Equipamento";
-    const sales = salesOrders.filter((o) => inR(o.date));
-    const rev = sales.reduce((s, o) => s + num(o.price), 0);
-    const cpv = sales.reduce((s, o) => s + num(o.cost), 0);
-    const op = data.expenses.filter((e) => inR(e.date) && !isEq(e) && !STOCK_CATS.includes(e.category || e.cat)).reduce((s, e) => s + num(e.value), 0);
-    const months = a <= b ? monthsIn(a, b) : 0;
-    const fixed = monthFixedTotal * months;
-    const desg = (data.expenses.filter(isEq).reduce((s, e) => s + num(e.value), 0) / 36) * months;
-    return { rev, cpv, op, fixed, desg, profit: rev - cpv - op - fixed - desg, months };
-  };
   const printerUsage = (a0, b0) => {
     const [a, b] = clampRange(a0, b0);
     const inR = (d) => d && d >= a && d <= b;
@@ -6819,7 +6824,7 @@ function App() {
             <div className="s">{prevLabel ? `comparado com ${prevLabel} · ` : ""}gerado em {fmtDate(todayISO())}</div>
           </div>
           <div className="neo-oacts" style={{ marginLeft: "auto" }}>
-            {hasPdf && <Btn onClick={() => setModal({ type: "report", report: rep, from: rFrom, to: rTo, label })}><PrintIc size={15} />Gerar PDF</Btn>}
+            {hasPdf && <Btn onClick={() => setModal({ type: "report", report: rep, from: rFrom, to: rTo, label, filters: ["pedidos", "orcamentos", "projetos", "clientes", "investimentos"].includes(rep) ? { vf: vfAll[rep] || "all", q: vq } : undefined })}><PrintIc size={15} />Gerar PDF</Btn>}
           </div>
         </div>
 
@@ -9166,6 +9171,13 @@ SC,
   /* =========================== DOCUMENTOS (PDF) =========================== */
   function ReportDoc({ report, from, to, label, filters }) {
     const inR = (d) => d && d >= from && d <= to;
+    /* v4.64: o PDF segue o filtro e a busca escolhidos na tela */
+    const VF_LABEL = { venda: "Vendas", estoque: "Estoque", brinde: "Brindes", pago: "Pagos", receber: "A receber", aberto: "Em aberto", Pendente: "Pendentes", Aprovado: "Aprovados", Recusado: "Recusados", vendidos: "Vendidos", parados: "Sem venda", baixa: "Margem < 30%", inativos: "Inativos", compraram: "Compraram", novos: "Novos", devendo: "Devendo", semcompra: "Sem compra no período" };
+    const vf = (filters && filters.vf) || "all";
+    const fq = String((filters && filters.q) || "").trim().toLowerCase();
+    const hasTxt = (t) => !fq || String(t || "").toLowerCase().includes(fq);
+    const viewRep = ["pedidos", "orcamentos", "projetos", "clientes", "investimentos"].includes(report);
+    const filterNote = viewRep && (vf !== "all" || fq) ? <div className="rep-pdf-filter" style={{ font: "600 11.5px Inter,sans-serif", color: "#14A6A4", border: "1px solid rgba(20,166,164,.4)", borderRadius: 8, padding: "6px 10px", marginBottom: 12, display: "inline-block" }}>Filtro: {vf !== "all" ? (VF_LABEL[vf] || vf) : "todos"}{fq ? ` · busca “${filters.q.trim()}”` : ""}</div> : null;
     const TITLES = { resumo: "RESUMO DO NEGÓCIO", pedidos: "PEDIDOS E VENDAS", orcamentos: "ORÇAMENTOS", projetos: "PROJETOS", clientes: "CLIENTES", investimentos: "INVESTIMENTOS", impressoras: "IMPRESSORAS", brindes: "BRINDES E PERDAS", itens: "DESEMPENHO POR ITEM" };
     const empty = <div style={{ padding: "22px 4px", font: "400 13px Inter,sans-serif", color: "#93A6A6", textAlign: "center" }}>Nenhum registro neste período.</div>;
     const kpi = (lab, val, color) => (
@@ -9212,7 +9224,8 @@ SC,
         </React.Fragment>
       );
     } else if (report === "pedidos") {
-      const list = data.orders.filter((o) => inR(o.date)).sort((a, b) => (a.date < b.date ? -1 : 1));
+      const PF = { all: () => true, venda: (o) => isSale(o), estoque: (o) => o.dest === "estoque", brinde: (o) => o.dest === "brinde", pago: (o) => isSale(o) && o.paid, receber: (o) => isSale(o) && !o.paid && isDone(o), aberto: (o) => !isDone(o) };
+      const list = data.orders.filter((o) => inR(o.date)).filter(PF[vf] || PF.all).filter((o) => hasTxt(`${projName(o)} ${(cliMap[o.clientId] || {}).name || ""}`)).sort((a, b) => (a.date < b.date ? -1 : 1));
       const rev = list.filter(isSale).reduce((s, o) => s + num(o.price), 0);
       const cost = list.filter(isSale).reduce((s, o) => s + num(o.cost), 0);
       body = (
@@ -9229,7 +9242,7 @@ SC,
       );
     } else if (report === "orcamentos") {
       const QST = { "Pendente": { bg: "#2E2413", fg: "#FFB067" }, "Aprovado": { bg: "rgba(63,209,206,.1)", fg: "#3FD1CE" }, "Recusado": { bg: "#331A1A", fg: "#F0605F" } };
-      const list = (data.quotes || []).filter((q) => inR(q.date)).sort((a, b) => (a.date < b.date ? -1 : 1));
+      const list = (data.quotes || []).filter((q) => inR(q.date)).filter((q) => vf === "all" || q.status === vf).filter((q) => hasTxt(`${q.code} ${(cliMap[q.clientId] || {}).name || q.clientName || ""}`)).sort((a, b) => (a.date < b.date ? -1 : 1));
       const tot = list.reduce((s, q) => s + quoteTotal(q), 0);
       const aprov = list.filter((q) => q.status === "Aprovado");
       const totAprov = aprov.reduce((s, q) => s + quoteTotal(q), 0);
@@ -9249,7 +9262,9 @@ SC,
       );
     } else if (report === "projetos") {
       const soldInR = {}; data.orders.filter((o) => inR(o.date) && isSale(o) && isDone(o)).forEach((o) => { soldInR[o.projectId] = (soldInR[o.projectId] || 0) + num(o.qty); });
-      const list = data.projects.slice().sort((a, b) => (a.name || "").localeCompare(b.name || ""));
+      const margOf = (p) => (num(p.salePrice) > 0 ? ((num(p.salePrice) - num(p.cost)) / num(p.salePrice)) * 100 : null);
+      const JF = { all: () => true, vendidos: (p) => (soldInR[p.id] || 0) > 0, parados: (p) => !(soldInR[p.id] || 0) && p.active !== false, baixa: (p) => margOf(p) != null && margOf(p) < 30, inativos: (p) => p.active === false };
+      const list = data.projects.filter(JF[vf] || JF.all).filter((p) => hasTxt(p.name)).sort((a, b) => (a.name || "").localeCompare(b.name || ""));
       body = (
         <React.Fragment>
           {list.length === 0 ? empty : (
@@ -9263,7 +9278,9 @@ SC,
         </React.Fragment>
       );
     } else if (report === "clientes") {
-      const rows = data.clients.map((c) => { const ords = clientOrders(c.id).filter((o) => inR(o.date) && isSale(o) && isDone(o)); return { c, n: ords.length, total: ords.reduce((s, o) => s + num(o.price), 0) }; }).sort((a, b) => b.total - a.total);
+      const owes = (c) => data.orders.some((o) => o.clientId === c.id && isSale(o) && isDone(o) && !o.paid);
+      const CF = { all: () => true, compraram: (r) => r.n > 0, novos: (r) => r.c.createdAt && inR(String(r.c.createdAt).slice(0, 10)), devendo: (r) => owes(r.c), semcompra: (r) => r.n === 0 };
+      const rows = data.clients.map((c) => { const ords = clientOrders(c.id).filter((o) => inR(o.date) && isSale(o) && isDone(o)); return { c, n: ords.length, total: ords.reduce((s, o) => s + num(o.price), 0) }; }).filter(CF[vf] || CF.all).filter((r) => hasTxt(r.c.name)).sort((a, b) => b.total - a.total);
       const totRev = rows.reduce((s, r) => s + r.total, 0);
       body = (
         <React.Fragment>
@@ -9372,7 +9389,7 @@ SC,
         </React.Fragment>
       );
     } else if (report === "investimentos") {
-      const list = data.expenses.filter((e) => inR(e.date)).sort((a, b) => (a.date < b.date ? -1 : 1));
+      const list = data.expenses.filter((e) => inR(e.date)).filter((e) => vf === "all" || (e.category || e.cat || "Outro") === vf).filter((e) => hasTxt(e.desc || e.name)).sort((a, b) => (a.date < b.date ? -1 : 1));
       const tot = list.reduce((s, e) => s + num(e.value), 0);
       const byCat = {}; list.forEach((e) => { const k = e.category || "Outros"; byCat[k] = (byCat[k] || 0) + num(e.value); });
       body = (
@@ -9398,6 +9415,7 @@ SC,
     return (
       <PrintFrame title={"Relatório — " + (TITLES[report] || "")} onClose={() => setModal(null)}>
         <DocHeader docTitle={TITLES[report] || "RELATÓRIO"} docCode={label} />
+        {filterNote}
         {body}
         <DocFooter />
       </PrintFrame>
@@ -10456,6 +10474,22 @@ SC,
       {modal && modal.type === "cashflow" && <CashflowModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "catalog" && <CatalogModal key={modalKey} />}
       {modal && modal.type === "printQuote" && <PrintQuoteDoc key={modalKey} quote={modal.quote} />}
+      {modal && modal.type === "backupAsk" && (() => {
+        let lb = 0; try { lb = +(localStorage.getItem(LAST_BACKUP_KEY) || 0); } catch (e) { /* sem acesso */ }
+        const dd = lb ? Math.floor((Date.now() - lb) / 86400000) : null;
+        return (
+          <Modal key={modalKey} code="BACKUP" title="Fazer backup agora?" onClose={() => setModal(null)}>
+            <div className="bk-ask" style={{ font: "500 13.5px/1.6 Inter,sans-serif", color: "#D6E2E2" }}>
+              <div style={{ font: "700 14px Inter,sans-serif", color: dd == null || dd > 7 ? "#FFAA5C" : "#3FD1CE", marginBottom: 6 }}>{dd == null ? "Você ainda não fez nenhum backup." : dd === 0 ? "Último backup: hoje." : `Último backup: há ${dd} dia${dd > 1 ? "s" : ""}.`}</div>
+              O app vai baixar um arquivo com <b>todos os seus dados</b> (pedidos, clientes, projetos, estoque, financeiro). Guarde no Google Drive ou num pen drive — se trocar de computador ou limpar o navegador, é só importar de volta em Configurações → Backup.
+            </div>
+            <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", marginTop: 18 }}>
+              <Btn kind="ghost" onClick={() => setModal(null)}>Agora não</Btn>
+              <Btn className="bk-ok" onClick={() => { setModal(null); exportBackup(); }}><DownloadIc size={15} />Confirmar backup</Btn>
+            </div>
+          </Modal>
+        );
+      })()}
       {modal && modal.type === "pix" && <PixModal key={modalKey} refTxt={modal.ref} clientId={modal.clientId} />}
       {modal && modal.type === "report" && <ReportDoc key={modalKey} report={modal.report} from={modal.from} to={modal.to} label={modal.label} filters={modal.filters} />}
       {modal && modal.type === "printCatalog" && <PrintCatalogDoc key={modalKey} ids={modal.ids} />}

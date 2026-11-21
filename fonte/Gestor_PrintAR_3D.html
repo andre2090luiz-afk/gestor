@@ -115,7 +115,15 @@
   .neo-holo .bar{height:3px;border-radius:2px;background:rgba(127,154,155,.2);margin-top:5px;overflow:hidden;}
   .neo-holo .bar i{display:block;height:100%;background:#3FD1CE;box-shadow:0 0 8px #3FD1CE;}
   .neo-holo.o .bar i{background:#F5821F;box-shadow:0 0 8px #F5821F;}
-  .neo-pr-foot{display:flex;justify-content:space-between;align-items:center;gap:6px;margin-top:-4px;}
+  .neo-pr-foot{display:flex;justify-content:space-between;align-items:center;gap:4px 6px;margin-top:-4px;flex-wrap:wrap;}
+  .neo-holo .r3{display:flex;gap:6px;flex-wrap:wrap;align-items:center;font:500 10.5px Inter,sans-serif;color:#9DB3B3;margin-top:3px;}
+  .neo-holo .r3 i{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:3px;vertical-align:-1px;border:1px solid rgba(255,255,255,.25);}
+  .neo-tag.wait{color:#FFD166;background:rgba(255,209,102,.1);} .neo-tag.wait i{background:#FFD166;}
+  .prt-go{white-space:nowrap;height:32px;border-radius:999px;padding:0 10px;font:700 11px Inter,sans-serif;cursor:pointer;border:1px dashed rgba(63,209,206,.5);background:transparent;color:#3FD1CE;}
+  .prt-go:disabled{opacity:.4;cursor:not-allowed;}
+  .prt-go.on{border:1px solid #F5821F;background:rgba(245,130,31,.14);color:#FFAA5C;}
+  .part-reg{grid-template-columns:minmax(150px,1.3fr) 64px minmax(120px,1fr) 64px 150px;}
+  @media (max-width:640px){ .part-reg{grid-template-columns:minmax(0,1fr) 56px !important;} .part-reg .part-printer{grid-column:1;} .part-reg .prt-go{grid-column:1 / -1;} }
   .neo-tag{white-space:nowrap;display:inline-flex;align-items:center;gap:5px;font:600 10.5px Inter,sans-serif;padding:2px 8px;border-radius:999px;color:#7F9A9B;background:rgba(127,154,155,.12);}
   .neo-tag i{width:6px;height:6px;border-radius:50%;background:#7F9A9B;}
   .neo-tag.on{color:#3FD1CE;background:rgba(20,184,178,.12);} .neo-tag.on i{background:#3FD1CE;box-shadow:0 0 8px #3FD1CE;animation:neoBlink 1.4s infinite;}
@@ -1051,7 +1059,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "4.66";
+const APP_VERSION = "4.67";
 const APP_UPDATED = "20/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -1680,14 +1688,40 @@ const LayerA = ({ size = 74, fill = 1, tone = "t", animate = false, gid = "la" }
   );
 };
 
-/* impressora isometrica com as pecas do pedido na mesa.
-   job = { color, pieces, done, active } — pieces/done em quantidade de "blocos" (max 9) */
+/* v4.67: formato do objeto na mesa conforme o nicho do projeto */
+const isoShapeOf = (p) => {
+  const t = (projNiches(p).join(" ") + " " + ((p && p.name) || "")).toLowerCase();
+  const n = projNiches(p).join(" ").toLowerCase();
+  const has = (txt, re) => re.test(txt);
+  for (const src of [n, t]) {
+    if (has(src, /chaveir/)) return "discos";
+    if (has(src, /relig|cruz|santo|ter[çc]o/)) return "cruz";
+    if (has(src, /time|futebol/)) return "bola";
+    if (has(src, /personaliz|natal/)) return "estatua";
+    if (has(src, /decora|utilidad/)) return "vaso";
+  }
+  return "vaso";
+};
+/* camadas de cada formato: devolve as secoes (octogono "o" ou caixa "b") na altura t (0..1) */
+const ISO_SHAPES = {
+  vaso: { H: 92, at: (t) => [{ id: "v", k: "o", x: 0, y: 0, r: t < 0.06 ? 20 : 19 + Math.sin(Math.min(1, (t - 0.04) / 0.9) * Math.PI) * 15 - (t > 0.9 ? 4 : 0) }] },
+  estatua: { H: 104, at: (t) => t < 0.14 ? [{ id: "pe", k: "b", x: 0, y: 0, hw: 23, hd: 20 }]
+    : t < 0.66 ? [{ id: "co", k: "o", x: 0, y: 0, r: 17 - (t - 0.14) * 12 }]
+    : t < 0.72 ? [{ id: "pc", k: "o", x: 0, y: 0, r: 8 }]
+    : [{ id: "ca", k: "o", x: 0, y: 0, r: Math.max(5, 15 * Math.sqrt(Math.max(0, 1 - Math.pow((t - 0.86) / 0.14, 2)))) }] },
+  cruz: { H: 112, at: (t) => t < 0.12 ? [{ id: "pe", k: "b", x: 0, y: 0, hw: 26, hd: 18 }]
+    : t >= 0.6 && t < 0.75 ? [{ id: "br", k: "b", x: 0, y: 0, hw: 30, hd: 7 }]
+    : [{ id: "po", k: "b", x: 0, y: 0, hw: 8, hd: 7 }] },
+  bola: { H: 70, at: (t) => [{ id: "bo", k: "o", x: 0, y: 0, r: Math.max(7, 35 * Math.sqrt(Math.max(0, 1 - Math.pow(2 * t - 1, 2)))) }] },
+  discos: { H: 14, at: () => [[-1, -1], [0, -1], [1, -1], [-1, 1], [0, 1], [1, 1]].map(([i, j], k) => ({ id: "d" + k, k: "o", x: i * 38, y: j * 24, r: 14 })) },
+};
+/* impressora isometrica. job = { colors: [hex], pct: 0..1, shape } — sem job = mesa vazia */
 const IsoPrinter = ({ job }) => {
   const s = 0.78, cx = 130, cy = 205;
   const P = (x, y, z) => [cx + (x - y) * 0.866 * s, cy + (x + y) * 0.5 * s - z * s];
   const pts = (arr) => arr.map((p) => P(...p).map((v) => v.toFixed(1)).join(",")).join(" ");
-  const poly = (key, arr, fill, stroke) => <polygon key={key} points={pts(arr)} fill={fill} stroke={stroke || "none"} strokeWidth={stroke ? 1 : 0} />;
-  const on = !!(job && job.active);
+  const poly = (key, arr, fill, stroke, extra) => <polygon key={key} points={pts(arr)} fill={fill} stroke={stroke || "none"} strokeWidth={stroke ? (extra && extra.w) || 1 : 0} strokeDasharray={extra && extra.dash} />;
+  const on = !!job;
   const els = [];
   els.push(poly("b1", [[-80, -80, -10], [80, -80, -10], [80, 80, -10], [-80, 80, -10]], "#0A2224"));
   els.push(poly("b2", [[-80, 80, -10], [80, 80, -10], [80, 80, 0], [-80, 80, 0]], "#0B2F31"));
@@ -1702,48 +1736,63 @@ const IsoPrinter = ({ job }) => {
   els.push(poly("c2", [[82, -90, 0], [90, -90, 0], [90, -90, 170], [82, -90, 170]], "#173F41"));
   els.push(poly("c3", [[-90, -90, 170], [90, -90, 170], [90, -82, 170], [-90, -82, 170]], "#1E4C4E"));
   let noz = null;
-  if (job && job.pieces > 0) {
-    const base = job.color || "#14B8B2";
-    const dark = isDarkHex(base);
-    const top = dark ? hexShade(base, 0.22) : base, alt = dark ? hexShade(base, 0.32) : hexShade(base, 0.18);
-    const side1 = hexShade(base, dark ? 0.08 : -0.3), side2 = hexShade(base, dark ? 0.02 : -0.45);
-    const edge = dark ? "rgba(255,255,255,.22)" : null;
-    const n = Math.min(9, job.pieces);
-    const cols = n <= 1 ? 1 : n <= 4 ? 2 : 3;
-    const gap = cols === 1 ? 0 : 46;
-    const spots = Array.from({ length: n }).map((_, k) => {
-      const i = k % cols, j = Math.floor(k / cols);
-      const rows = Math.ceil(n / cols);
-      return [(i - (cols - 1) / 2) * gap, (j - (rows - 1) / 2) * 42];
-    });
-    const big = cols === 1;
-    const hw = big ? 30 : 14, hd = big ? 24 : 11, L = 7, lh = big ? 6 : 4.4, th = big ? 5.2 : 3.8;
-    const doneN = Math.min(n, job.done);
-    spots.forEach(([x, y], k) => {
-      const full = k < doneN, cur = !full && k === doneN && on;
-      const lays = full ? L : cur ? 3 : 0;
-      for (let l = 0; l < lays; l++) {
-        const z = l * lh;
-        els.push(poly(`p${k}t${l}`, [[x - hw, y - hd, z + th], [x + hw, y - hd, z + th], [x + hw, y + hd, z + th], [x - hw, y + hd, z + th]], l % 2 ? alt : top, edge));
-        els.push(poly(`p${k}f${l}`, [[x - hw, y + hd, z], [x + hw, y + hd, z], [x + hw, y + hd, z + th], [x - hw, y + hd, z + th]], side1, edge));
-        els.push(poly(`p${k}s${l}`, [[x + hw, y - hd, z], [x + hw, y + hd, z], [x + hw, y + hd, z + th], [x + hw, y - hd, z + th]], side2, edge));
-      }
-      if (!full && !cur) els.push(poly(`p${k}g`, [[x - hw, y - hd, 0.5], [x + hw, y - hd, 0.5], [x + hw, y + hd, 0.5], [x - hw, y + hd, 0.5]], "none", "rgba(63,209,206,.3)"));
-      if (cur) {
-        const nz = 3 * lh + 8;
-        els.push(poly("rail", [[-90, y - 5, nz + 34], [90, y - 5, nz + 34], [90, y + 5, nz + 34], [-90, y + 5, nz + 34]], "#2A6567"));
-        const t = P(x, y, nz);
-        noz = (
-          <g className="neo-noz" key="noz">
-            {poly("n1", [[x - 9, y - 9, nz + 12], [x + 9, y - 9, nz + 12], [x + 9, y + 9, nz + 12], [x - 9, y + 9, nz + 12]], "#F5821F")}
-            {poly("n2", [[x - 9, y + 9, nz + 12], [x + 9, y + 9, nz + 12], [x + 9, y + 9, nz + 34], [x - 9, y + 9, nz + 34]], "#D96B10")}
-            {poly("n3", [[x + 9, y - 9, nz + 12], [x + 9, y + 9, nz + 12], [x + 9, y + 9, nz + 34], [x + 9, y - 9, nz + 34]], "#B9590B")}
-            <circle className="neo-glow" cx={t[0]} cy={t[1]} r="12" fill="#F5821F" opacity=".3" />
-            <circle cx={t[0]} cy={t[1]} r="4.5" fill="#FFD2A3" />
-          </g>
-        );
-      }
-    });
+  if (job) {
+    const sh = ISO_SHAPES[job.shape] || ISO_SHAPES.vaso;
+    const cols = (job.colors || []).filter(Boolean);
+    if (!cols.length) cols.push("#14B8B2");
+    const K = job.shape === "discos" ? 1.12 : 1.4; /* escala do objeto na mesa */
+    const N = job.shape === "discos" ? 4 : Math.round(sh.H / 4.6), lh = (sh.H * K) / N, th = lh * 0.96;
+    const doneL = Math.max(job.pct > 0 ? 1 : 0, Math.min(N, Math.round(N * Math.max(0, Math.min(1, job.pct)))));
+    const tone = (base) => {
+      const dark = isDarkHex(base);
+      return { dark, top: hexShade(base, dark ? 0.26 : 0.06), aL: dark ? 0.14 : -0.12, aR: dark ? 0.04 : -0.42, edge: dark ? "rgba(255,255,255,.2)" : "rgba(0,0,0,.12)", base };
+    };
+    const tones = cols.map(tone);
+    const ring = (p0, z) => { const pr = { ...p0, x: p0.x * K, y: p0.y * K, r: p0.r * K, hw: p0.hw * K, hd: p0.hd * K }; return ring0(pr, z); };
+    const ring0 = (pr, z) => pr.k === "b"
+      ? [[pr.x - pr.hw, pr.y - pr.hd, z], [pr.x + pr.hw, pr.y - pr.hd, z], [pr.x + pr.hw, pr.y + pr.hd, z], [pr.x - pr.hw, pr.y + pr.hd, z]]
+      : Array.from({ length: 8 }).map((_, i) => { const a = Math.PI / 8 + i * Math.PI / 4; return [pr.x + Math.cos(a) * pr.r, pr.y + Math.sin(a) * pr.r, z]; });
+    let topZ = 0, topPr = null;
+    for (let l = 0; l < N; l++) {
+      const z = l * lh;
+      const prims = sh.at((l + 0.5) / N).slice().sort((a, b) => (a.x + a.y) - (b.x + b.y));
+      const tn = tones[Math.min(tones.length - 1, Math.floor((l / N) * tones.length))];
+      prims.forEach((pr) => {
+        const bot = ring(pr, z), top = ring(pr, z + th);
+        if (l < doneL) {
+          const n = bot.length;
+          for (let i = 0; i < n; i++) {
+            const j = (i + 1) % n;
+            const ang = pr.k === "b" ? [-Math.PI / 2, 0, Math.PI / 2, Math.PI][i] : (i + 1) * Math.PI / 4;
+            if (Math.cos(ang) + Math.sin(ang) <= 0.01) continue;
+            const w = (Math.sin(ang) - Math.cos(ang) + 1) / 2; /* 1 = face da frente-esquerda (mais clara) */
+            els.push(poly(`L${l}${pr.id}f${i}`, [bot[i], bot[j], top[j], top[i]], hexShade(tn.base, tn.aR + (tn.aL - tn.aR) * w), tn.edge, { w: 0.5 }));
+          }
+          els.push(poly(`L${l}${pr.id}t`, top, l === doneL - 1 ? hexShade(tn.base, tn.dark ? 0.32 : 0.14) : tn.top, tn.edge, { w: 0.5 }));
+          if (job.shape === "discos" && l === N - 1 && l < doneL) {
+            const h = P((pr.x - pr.r * 0.55) * K, (pr.y - pr.r * 0.1) * K, z + th);
+            els.push(<ellipse key={`hole${pr.id}`} cx={h[0]} cy={h[1]} rx={3.2} ry={1.9} fill="#0A2224" />);
+          }
+          if (l === doneL - 1) { topZ = z + th; topPr = pr; }
+        } else if ((l - doneL) % 3 === 2 || l === N - 1) {
+          els.push(poly(`G${l}${pr.id}`, top, "rgba(63,209,206,.035)", "rgba(63,209,206,.42)", { w: 0.8, dash: "3 2.5" }));
+        }
+      });
+    }
+    if (job.pct < 1) {
+      const x = topPr ? topPr.x * K : 0, y = topPr ? topPr.y * K : 0, nz = topZ + 7;
+      els.push(poly("rail", [[-90, y - 5, nz + 34], [90, y - 5, nz + 34], [90, y + 5, nz + 34], [-90, y + 5, nz + 34]], "#2A6567"));
+      const t = P(x, y, nz);
+      noz = (
+        <g className="neo-noz" key="noz">
+          {poly("n1", [[x - 9, y - 9, nz + 12], [x + 9, y - 9, nz + 12], [x + 9, y + 9, nz + 12], [x - 9, y + 9, nz + 12]], "#F5821F")}
+          {poly("n2", [[x - 9, y + 9, nz + 12], [x + 9, y + 9, nz + 12], [x + 9, y + 9, nz + 34], [x - 9, y + 9, nz + 34]], "#D96B10")}
+          {poly("n3", [[x + 9, y - 9, nz + 12], [x + 9, y + 9, nz + 12], [x + 9, y + 9, nz + 34], [x + 9, y - 9, nz + 34]], "#B9590B")}
+          <circle className="neo-glow" cx={t[0]} cy={t[1]} r="12" fill={cols[Math.min(cols.length - 1, Math.floor(job.pct * cols.length))]} opacity=".35" />
+          <circle cx={t[0]} cy={t[1]} r="4.5" fill="#FFD2A3" />
+        </g>
+      );
+    }
   }
   return <svg viewBox="0 0 260 290" className="neo-iso" aria-hidden="true">{els}{noz}</svg>;
 };
@@ -3194,6 +3243,47 @@ function App() {
     return (part.fils || []).filter((x) => x.filamentId && num(x.grams) > 0).map((x) => ({ filamentId: map[x.filamentId] || x.filamentId, grams: num(x.grams) }));
   };
   const partPrinterOf = (order, part) => ((order && order.partPrinters) || {})[part.id] || part.printerId || "";
+  /* v4.67: o que esta imprimindo AGORA em cada impressora (marcado em "Comecei a imprimir") */
+  const fmtDur = (m) => { m = Math.max(0, Math.round(m)); return m < 60 ? `${m} min` : `${Math.floor(m / 60)}h${m % 60 ? " " + String(m % 60).padStart(2, "0") : ""}`; };
+  const printingJob = (prId) => {
+    for (const o of data.orders) {
+      if (isDone(o)) continue;
+      for (const x of o.printing || []) {
+        if (x.printerId !== prId) continue;
+        const p = projMap[o.projectId]; if (!p) continue;
+        const pt = x.partId ? (p.parts || []).find((y) => y.id === x.partId) : null;
+        if (x.partId && !pt) continue;
+        const qty = Math.max(1, Math.round(num(x.qty)) || 1);
+        const hours = (pt ? num(pt.hours) : isPartsProj(p) ? partsHours(p.parts) : num(p.hours)) * qty;
+        const fls = (pt ? partFils(p, o, pt).map((y) => filMap[y.filamentId]) : itemColors(p, o.filChoices).map((c) => c.fil)).filter(Boolean);
+        const uniq = fls.filter((fl, k) => fls.findIndex((z) => z.id === fl.id) === k);
+        const mins = Math.max(0, (Date.now() - new Date(x.at).getTime()) / 60000);
+        const pct = hours > 0 ? Math.min(1, mins / (hours * 60)) : 0;
+        return { o, p, pt, x, qty, hours, fils: uniq, colors: uniq.map((fl) => fl.colorHex).filter(Boolean), mins, pct, left: hours * 60 - mins, shape: isoShapeOf(p) };
+      }
+    }
+    return null;
+  };
+  const isPrintingNow = (o, partId) => (o.printing || []).find((x) => (x.partId || "") === (partId || ""));
+  const startPrinting = (order, { partId, printerId, qty }) => {
+    const p = projMap[order.projectId]; if (!p || !printerId) return;
+    const pt = partId ? (p.parts || []).find((y) => y.id === partId) : null;
+    const pr = data.printers.find((x) => x.id === printerId);
+    logAs(`Começou a imprimir: ${pt ? (pt.name || "parte") + " de " : ""}${p.name}${num(qty) > 1 ? ` (${fmtN(qty)}×)` : ""} na ${pr ? pr.name : "impressora"}`);
+    const at = new Date().toISOString();
+    setData((d) => ({ ...d, orders: d.orders.map((o) => {
+      const keep = (o.printing || []).filter((x) => x.printerId !== printerId && !(o.id === order.id && (x.partId || "") === (partId || "")));
+      if (o.id === order.id) return { ...o, printing: [...keep, { partId: partId || "", printerId, qty: Math.max(1, Math.round(num(qty)) || 1), at }], ...(["Orçamento", "Aprovado"].includes(o.status) ? { status: "Em produção" } : {}) };
+      return (o.printing || []).length !== keep.length ? { ...o, printing: keep } : o;
+    }) }));
+    notify(`Comando avisado: ${pt ? pt.name || "parte" : p.name} imprimindo na ${pr ? pr.name : "impressora"}`);
+  };
+  const stopPrinting = (order, partId) => {
+    const p = projMap[order.projectId];
+    const pt = partId && p ? (p.parts || []).find((y) => y.id === partId) : null;
+    logAs(`Parou de imprimir: ${pt ? (pt.name || "parte") + " de " : ""}${p ? p.name : projName(order)}`);
+    setData((d) => ({ ...d, orders: d.orders.map((o) => o.id === order.id ? { ...o, printing: (o.printing || []).filter((x) => (x.partId || "") !== (partId || "")) } : o) }));
+  };
   const consumePartIn = (d, p, order, part, pieces, printerId, sign = 1) => {
     const q = num(pieces);
     const out = { filaments: d.filaments, printers: d.printers, grams: 0, hours: 0 };
@@ -3300,6 +3390,7 @@ function App() {
       const q = regs ? 0 : Math.max(0, Math.round(num(qty)));
       let dd = d;
       let o = { ...cur };
+      if (o.printing && o.printing.length) o.printing = regs ? o.printing.filter((x) => !regs.some((r) => r.partId === x.partId)) : q > 0 || finishShort ? [] : o.printing;
       if (regs && regs.length) {
         o = ensurePartDone(o, p);
         const pd = { ...o.partDone }; let g = 0, h = 0;
@@ -7444,7 +7535,7 @@ function App() {
               const r = regs[pt.id] || {}; const n = partPrinted(o, pt.id);
               const fs = partFils(p, o, pt);
               return (
-                <div key={pt.id} className="part-reg" data-part={pt.id} style={{ display: "grid", gridTemplateColumns: "minmax(150px,1.3fr) 70px minmax(130px,1fr) 70px", gap: 10, alignItems: "center", padding: "7px 0", borderTop: "1px dashed rgba(63,209,206,.14)" }}>
+                <div key={pt.id} className="part-reg" data-part={pt.id} style={{ display: "grid", gap: 10, alignItems: "center", padding: "7px 0", borderTop: "1px dashed rgba(63,209,206,.14)" }}>
                   <label style={{ display: "flex", gap: 8, alignItems: "center", cursor: "pointer", minWidth: 0 }}>
                     <input className="part-on" type="checkbox" checked={!!r.on} onChange={(e) => setReg(pt.id, { on: e.target.checked })} style={{ width: 16, height: 16, accentColor: "#14A6A4", flexShrink: 0 }} />
                     <span style={{ minWidth: 0 }}>
@@ -7454,16 +7545,19 @@ function App() {
                       </span>
                     </span>
                   </label>
-                  <In className="part-qty" type="number" min="1" value={r.qty} disabled={!r.on} onChange={(e) => setReg(pt.id, { qty: e.target.value })} title="Quantas desta parte" />
-                  <select className="part-printer" value={r.printerId || ""} disabled={!r.on} onChange={(e) => setReg(pt.id, { printerId: e.target.value })} style={{ ...inputStyle, height: 36, padding: "0 8px" }}>
+                  <In className="part-qty" type="number" min="1" value={r.qty} onChange={(e) => setReg(pt.id, { qty: e.target.value })} title="Quantas desta parte" />
+                  <select className="part-printer" value={r.printerId || ""} onChange={(e) => setReg(pt.id, { printerId: e.target.value })} style={{ ...inputStyle, height: 36, padding: "0 8px" }}>
                     <option value="">— impressora —</option>
                     {data.printers.map((x) => <option key={x.id} value={x.id}>{x.name}</option>)}
                   </select>
                   <span style={{ font: "600 12px 'JetBrains Mono',monospace", color: n >= total ? "#3FD1CE" : "#93A6A6", textAlign: "right" }}>{fmtN(n)}/{fmtN(total)}{n >= total ? " ✔" : ""}</span>
+                  {(() => { const pn = isPrintingNow(o, pt.id); const mins = pn ? (Date.now() - new Date(pn.at).getTime()) / 60000 : 0;
+                    return <button type="button" className={"prt-go" + (pn ? " on" : "")} disabled={!pn && !r.printerId} title={pn ? "Toque para desmarcar" : r.printerId ? "Avisa o Comando que esta parte começou a imprimir (não dá baixa)" : "Escolha a impressora"} onClick={() => pn ? stopPrinting(o, pt.id) : startPrinting(o, { partId: pt.id, printerId: r.printerId, qty: r.qty })}>{pn ? `● IMPRIMINDO · ${fmtDur(mins)}` : "▶ Comecei a imprimir"}</button>; })()}
                 </div>
               );
             })}
           </div>
+          <div className="prt-hint" style={{ font: "400 11.5px Inter,sans-serif", color: "#8FA3A3", margin: "-4px 0 12px" }}>✓ marcar = <b style={{ color: "#D6E2E2" }}>saiu da impressora</b> (dá baixa) · ▶ = <b style={{ color: "#D6E2E2" }}>começou agora</b> (só avisa o Comando)</div>
           <Row cols={3}><div><L>Data</L><In type="date" value={f.date} onChange={(e) => setF({ ...f, date: e.target.value })} /></div><div /><div /></Row>
           <div className="print-preview" style={{ background: "rgba(5,12,12,.55)", border: "1px solid rgba(63,209,206,.1)", borderRadius: 10, padding: "10px 14px", font: "400 13px Inter,sans-serif", color: "#D6E2E2", marginBottom: 12 }}>
             {!chosen.length ? "Marque a parte que você imprimiu." : piecesAfter < total
@@ -7520,7 +7614,9 @@ function App() {
             {f.extraDest === "brinde" && <div style={{ font: "400 11.5px Inter,sans-serif", color: "#B5A58A", marginTop: 6 }}>Entra no relatório de Brindes e perdas como perda.</div>}
           </div>
         )}
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
+        <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, flexWrap: "wrap" }}>
+          {!parts && (() => { const pn = isPrintingNow(o, ""); const mins = pn ? (Date.now() - new Date(pn.at).getTime()) / 60000 : 0;
+            return <button type="button" className={"prt-go" + (pn ? " on" : "")} style={{ height: 38, marginRight: "auto" }} disabled={!pn && (!f.printerId || q <= 0)} title={pn ? "Toque para desmarcar" : "Avisa o Comando que começou a imprimir (não dá baixa)"} onClick={() => pn ? stopPrinting(o, "") : startPrinting(o, { partId: "", printerId: f.printerId, qty: q })}>{pn ? `● IMPRIMINDO · ${fmtDur(mins)}` : "▶ Comecei a imprimir"}</button>; })()}
           <Btn kind="ghost" onClick={() => setModal(null)}>Cancelar</Btn>
           <Btn disabled={q <= 0 || (!parts && !f.printerId)} onClick={() => { registerPrint(o, { qty: q, printerId: parts ? "" : f.printerId, date: f.date, extraDest: f.extraDest }); setModal(null); }}>Registrar impressão</Btn>
         </div>
@@ -7664,7 +7760,9 @@ function App() {
     const W = winDays * hpd;
     const dayLabel = (d) => d === 0 ? "hoje" : d === 1 ? "amanhã" : new Date(addDays(todayISO(), d) + "T12:00:00").toLocaleDateString("pt-BR", { weekday: "short", day: "2-digit", month: "2-digit" }).replace(".", "");
     const [overLane, setOverLane] = useState(null);
-    const activeN = q.cols.filter((c) => c.hours > 0).length;
+    const activeN = q.cols.filter((c) => printingJob(c.pr.id)).length;
+    const [, setTick] = useState(0);
+    useEffect(() => { const t = setInterval(() => setTick((x) => x + 1), 60000); return () => clearInterval(t); }, []);
     return (
       <div className="neo-cc">
         <div className="neo-hud neo-hero">
@@ -7686,25 +7784,39 @@ function App() {
 
         <div className="neo-mid">
           <div className="neo-hud">
-            <div className="neo-ttl"><span className="neo-code">OFICINA</span><b>Impressoras agora</b><small>{data.printers.length ? `${activeN}/${data.printers.length} com trabalho · clique para registrar impressão` : ""}</small></div>
+            <div className="neo-ttl"><span className="neo-code">OFICINA</span><b>Impressoras agora</b><small>{data.printers.length ? `${activeN}/${data.printers.length} imprimindo · clique para registrar impressão` : ""}</small></div>
             {data.printers.length === 0 ? (
               <div className="neo-empty">Cadastre suas impressoras em <a onClick={() => setTab("cfg")}>Configurações</a> para ver a oficina ao vivo.</div>
             ) : (
               <div className="neo-printers">
                 {q.cols.map((c) => {
                   const j = printerJob(c);
-                  const tone = j && c.pr && q.cols.indexOf(c) % 2 === 1 ? "o" : "t";
+                  const pj = printingJob(c.pr.id);
+                  const tone = q.cols.indexOf(c) % 2 === 1 ? "o" : "t";
+                  const go = pj ? pj.o : j ? j.o : null;
+                  const finD = pj ? new Date(Date.now() + Math.max(0, pj.left) * 60000) : null;
+                  const fin = finD ? (finD.toDateString() === new Date().toDateString() ? "" : finD.toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit" }) + " ") + finD.toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" }) : "";
                   return (
-                    <div key={c.pr.id} className={"neo-pr" + (j ? " on" : "")} data-pr={c.pr.id} title={j ? "Registrar impressão" : ""} onClick={j ? () => setModal({ type: "print", orderId: j.o.id }) : undefined}>
-                      <div className={"neo-holo" + (j ? " " + tone : "")}>
-                        <div className="r1"><span>{c.pr.name}</span><b>{j ? fmtN(j.pct * 100, 0) + "%" : "LIVRE"}</b></div>
-                        <div className="r2" title={j ? projName(j.o) + (j.it.parts ? " · " + j.it.parts.join(", ") : "") : ""}>{j ? `${projName(j.o)}${j.it.parts ? " · " + j.it.parts.join(", ") : ""} · ${fmtN(j.done)}/${fmtN(j.qty)} · ~${fmtN(j.it.hours, 1)}h` : "pronta para a fila"}</div>
-                        {j && <div className="bar"><i style={{ width: (j.pct * 100) + "%" }} /></div>}
+                    <div key={c.pr.id} className={"neo-pr" + (go ? " on" : "")} data-pr={c.pr.id} data-st={pj ? "printing" : j ? "wait" : "free"} title={go ? "Registrar impressão" : ""} onClick={go ? () => setModal({ type: "print", orderId: go.id }) : undefined}>
+                      <div className={"neo-holo" + (pj ? " " + tone : "")}>
+                        <div className="r1"><span>{c.pr.name}</span><b>{pj ? fmtN(pj.pct * 100, 0) + "%" : j ? "EM ESPERA" : "LIVRE"}</b></div>
+                        {pj ? (<>
+                          <div className="r2" title={projName(pj.o) + (pj.pt ? " · " + pj.pt.name : "")}>{projName(pj.o)}{pj.pt ? ` · ${pj.pt.name || "Parte"}` : ""}{pj.qty > 1 ? ` · ${fmtN(pj.qty)}×` : ""} · ~{fmtN(pj.hours, 1)}h</div>
+                          {pj.fils.length > 0 && <div className="r3">{pj.fils.slice(0, 3).map((fl) => <span key={fl.id}><i style={{ background: fl.colorHex || "#7F9A9B" }} />{colorName(fl)}</span>)}</div>}
+                          <div className="bar"><i style={{ width: (pj.pct * 100) + "%" }} /></div>
+                        </>) : (
+                          <div className="r2" title={j ? projName(j.o) : ""}>{j ? `próxima: ${projName(j.o)}${j.it.parts ? " · " + j.it.parts.join(", ") : ""} · ~${fmtN(j.it.hours, 1)}h` : "pronta para a fila"}</div>
+                        )}
                       </div>
-                      <IsoPrinter job={j ? { color: j.color, pieces: j.blocks, done: j.blocksDone, active: true } : null} />
+                      <IsoPrinter job={pj ? { colors: pj.colors, pct: pj.pct, shape: pj.shape } : null} />
                       <div className="neo-pr-foot">
-                        <span className={"neo-tag" + (j ? " on" : "")}><i />{j ? "em produção" : "livre"}</span>
-                        {j && j.it.finish && <span className={"neo-fin" + (j.it.late ? " late" : "")}>pronto ~{fmtDM(j.it.finish)}</span>}
+                        {pj ? (<>
+                          <span className="neo-tag on"><i />imprimindo há {fmtDur(pj.mins)}</span>
+                          <span className="neo-fin">{pj.hours <= 0 ? "sem tempo na parte" : pj.left > 0 ? `faltam ~${fmtDur(pj.left)} · pronto ${fin}` : "deve ter terminado — registre"}</span>
+                        </>) : j ? (<>
+                          <span className="neo-tag wait"><i />parada · na fila</span>
+                          {j.it.finish && <span className={"neo-fin" + (j.it.late ? " late" : "")}>pronto ~{fmtDM(j.it.finish)}</span>}
+                        </>) : <span className="neo-tag"><i />livre</span>}
                       </div>
                     </div>
                   );

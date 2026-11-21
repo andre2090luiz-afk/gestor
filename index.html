@@ -1142,8 +1142,8 @@ const addDays = (iso, n) => {
   d.setDate(d.getDate() + n);
   return d.toISOString().slice(0, 10);
 };
-const APP_VERSION = "4.67";
-const APP_UPDATED = "20/11/2026";
+const APP_VERSION = "4.68";
+const APP_UPDATED = "21/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";
 const BACKUP_STAMP = "gestor3d-data-v1__bakts";
@@ -1880,6 +1880,10 @@ function normalizeData(parsed) {
     ...DEFAULTS,
     ...parsed,
     projects: syncNiches(foldPurge(stripSlotColors(parsed.projects))),
+    orders: (parsed.orders || []).map(o => o && o.quick && !(o.printing || []).length && ["Orçamento", "Aprovado", "Em produção"].includes(o.status) ? {
+      ...o,
+      status: "Entregue"
+    } : o),
     settings: {
       ...DEFAULTS.settings,
       ...ps,
@@ -2188,6 +2192,67 @@ const In = props => React.createElement("input", _extends({}, props, {
     ...props.style
   }
 }));
+const HMIn = ({
+  value,
+  onChange,
+  cls
+}) => {
+  const empty = value === "" || value == null;
+  const t = Math.round(num(value) * 60),
+    hh = Math.floor(t / 60),
+    mm = t % 60;
+  const setHM = (h, m) => onChange(h === "" && m === "" ? "" : Math.max(0, num(h)) + Math.max(0, Math.min(59, num(m))) / 60);
+  const unit = {
+    position: "absolute",
+    right: 12,
+    top: "50%",
+    transform: "translateY(-50%)",
+    font: "600 12px Inter,sans-serif",
+    color: "#8FA3A3",
+    pointerEvents: "none"
+  };
+  return React.createElement("div", {
+    className: "hm-in" + (cls ? " " + cls : ""),
+    style: {
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      gap: 8
+    }
+  }, React.createElement("div", {
+    style: {
+      position: "relative"
+    }
+  }, React.createElement(In, {
+    className: "hm-h",
+    type: "number",
+    min: "0",
+    value: empty ? "" : hh,
+    onChange: e => setHM(e.target.value, empty ? "" : mm),
+    placeholder: "0",
+    style: {
+      paddingRight: 30
+    }
+  }), React.createElement("span", {
+    style: unit
+  }, "h")), React.createElement("div", {
+    style: {
+      position: "relative"
+    }
+  }, React.createElement(In, {
+    className: "hm-m",
+    type: "number",
+    min: "0",
+    max: "59",
+    value: empty ? "" : mm,
+    onChange: e => setHM(empty ? "" : hh, e.target.value),
+    placeholder: "0",
+    style: {
+      paddingRight: 40
+    }
+  }), React.createElement("span", {
+    style: unit
+  }, "min")));
+};
 const Sel = props => React.createElement("select", _extends({}, props, {
   style: {
     ...inputStyle,
@@ -5940,6 +6005,36 @@ function App() {
       if (isDone(o)) continue;
       for (const x of o.printing || []) {
         if (x.printerId !== prId) continue;
+        if (o.quick) {
+          const qp = x.partId ? (o.quickParts || [])[num(String(x.partId).slice(1))] : null;
+          const hours = qp ? num(qp.hours) : num(o.quickHours);
+          const fls = (o.quickFils || []).map(y => filMap[y.filamentId]).filter(Boolean);
+          const uniq = fls.filter((fl, k) => fls.findIndex(z => z.id === fl.id) === k);
+          const mins = Math.max(0, (Date.now() - new Date(x.at).getTime()) / 60000);
+          const pct = hours > 0 ? Math.min(1, mins / (hours * 60)) : 0;
+          return {
+            o,
+            p: {
+              name: o.projectName
+            },
+            pt: qp ? {
+              name: qp.name
+            } : null,
+            x,
+            qty: num(o.qty) || 1,
+            hours,
+            fils: uniq,
+            colors: uniq.map(fl => fl.colorHex).filter(Boolean),
+            mins,
+            pct,
+            left: hours * 60 - mins,
+            shape: isoShapeOf({
+              name: o.projectName,
+              niches: []
+            }),
+            quick: true
+          };
+        }
         const p = projMap[o.projectId];
         if (!p) continue;
         const pt = x.partId ? (p.parts || []).find(y => y.id === x.partId) : null;
@@ -5967,6 +6062,28 @@ function App() {
       }
     }
     return null;
+  };
+  const finishQuick = (order, prId, cancel) => {
+    logAs(`${cancel ? "Cancelou" : "Terminou"} impressão avulsa: ${order.projectName || "—"}`);
+    setData(d => ({
+      ...d,
+      orders: d.orders.map(o => {
+        if (o.id !== order.id) return o;
+        const keep = (o.printing || []).filter(x => x.printerId !== prId);
+        return {
+          ...o,
+          printing: keep,
+          ...(keep.length ? {} : {
+            status: "Entregue"
+          }),
+          ...(cancel ? {
+            note: [o.note, "impressão cancelada no meio (material contado como perda)"].filter(Boolean).join(" · ")
+          } : {})
+        };
+      })
+    }));
+    setModal(null);
+    notify(cancel ? "Impressão cancelada — o material fica como perda" : "Impressão avulsa concluída");
   };
   const isPrintingNow = (o, partId) => (o.printing || []).find(x => (x.partId || "") === (partId || ""));
   const startPrinting = (order, {
@@ -5998,7 +6115,10 @@ function App() {
         };
         return (o.printing || []).length !== keep.length ? {
           ...o,
-          printing: keep
+          printing: keep,
+          ...(o.quick && !keep.length ? {
+            status: "Entregue"
+          } : {})
         } : o;
       })
     }));
@@ -13910,6 +14030,78 @@ function App() {
       }
     }, "Salvar pedido")));
   }
+  function QuickDoneModal() {
+    const o = data.orders.find(x => x.id === modal.orderId);
+    const pj = o ? printingJob(modal.printerId) : null;
+    if (!o || !pj || pj.o.id !== o.id) return React.createElement(Modal, {
+      title: "Impress\xE3o avulsa",
+      onClose: () => setModal(null)
+    }, React.createElement("div", {
+      style: {
+        color: "#93A6A6"
+      }
+    }, "Esta impress\xE3o n\xE3o est\xE1 mais na impressora."));
+    const pr = data.printers.find(x => x.id === modal.printerId);
+    return React.createElement(Modal, {
+      title: `Impressão avulsa — ${o.projectName || "—"}`,
+      code: "PRODU\xC7\xC3O",
+      onClose: () => setModal(null)
+    }, React.createElement("div", {
+      style: {
+        font: "500 13px Inter,sans-serif",
+        color: "#9DB3B3"
+      }
+    }, pr ? pr.name : "Impressora", pj.pt ? ` · ${pj.pt.name}` : "", pj.fils.map(fl => React.createElement("span", {
+      key: fl.id
+    }, " \xB7 ", React.createElement("span", {
+      style: {
+        color: fl.colorHex || "#7F9A9B"
+      }
+    }, "\u25CF"), " ", fl.name)), " \xB7 come\xE7ou ", new Date(pj.x.at).toLocaleTimeString("pt-BR", {
+      hour: "2-digit",
+      minute: "2-digit"
+    }), " \xB7 ~", fmtDur(pj.hours * 60)), React.createElement("div", {
+      style: {
+        height: 6,
+        borderRadius: 4,
+        background: "rgba(127,154,155,.2)",
+        margin: "14px 0 8px"
+      }
+    }, React.createElement("div", {
+      style: {
+        width: pj.pct * 100 + "%",
+        height: "100%",
+        borderRadius: 4,
+        background: "#3FD1CE"
+      }
+    })), React.createElement("div", {
+      style: {
+        font: "500 12.5px Inter,sans-serif",
+        color: "#9DB3B3",
+        marginBottom: 16
+      }
+    }, fmtN(pj.pct * 100, 0), "% \xB7 ", pj.left > 0 ? `faltam ~${fmtDur(pj.left)}` : "já passou do tempo previsto", " \xB7 o material j\xE1 foi baixado quando voc\xEA lan\xE7ou."), React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 10,
+        justifyContent: "flex-end",
+        flexWrap: "wrap"
+      }
+    }, React.createElement(Btn, {
+      kind: "ghost",
+      className: "qd-cancel",
+      onClick: async () => {
+        if (await askConfirm(`Cancelar a impressão de ${o.projectName}?\n\nA impressora fica livre e o material já baixado conta como perda.`, {
+          ok: "Cancelar impressão"
+        })) finishQuick(o, modal.printerId, true);
+      }
+    }, "Cancelar impress\xE3o"), React.createElement(Btn, {
+      className: "qd-done",
+      onClick: () => finishQuick(o, modal.printerId, false)
+    }, React.createElement(CheckCircle2, {
+      size: 15
+    }), "Terminou")));
+  }
   function QuickPrintModal() {
     const [f, setF] = useState({
       date: todayISO(),
@@ -13928,7 +14120,9 @@ function App() {
       clientId: "",
       note: "",
       print: "unica",
-      parts: [newPart(data.printers, data.filaments, 1)]
+      parts: [newPart(data.printers, data.filaments, 1)],
+      now: false,
+      startAt: new Date().toTimeString().slice(0, 5)
     });
     const set = k => e => setF({
       ...f,
@@ -14017,9 +14211,35 @@ function App() {
         notify("Informe os gramas de pelo menos um filamento.");
         return;
       }
+      if (f.now && !(horasPeca > 0)) {
+        notify("Informe o tempo para acompanhar a impressão no Comando.");
+        return;
+      }
+      if (f.now && !emPartes && !f.printerId) {
+        notify("Escolha a impressora.");
+        return;
+      }
       const cli = cliMap[f.clientId];
+      const startISO = (() => {
+        const [hh, mi] = String(f.startAt || "").split(":").map(Number);
+        const d0 = new Date();
+        if (isFinite(hh)) d0.setHours(hh, isFinite(mi) ? mi : 0, 0, 0);
+        if (d0 > new Date()) d0.setDate(d0.getDate() - 1);
+        return d0.toISOString();
+      })();
+      const printing = !f.now ? undefined : emPartes ? f.parts.map((pt, i) => ({
+        partId: "q" + i,
+        printerId: pt.printerId,
+        qty: q,
+        at: startISO
+      })).filter((x, i, a) => x.printerId && a.findIndex(y => y.printerId === x.printerId) === i) : [{
+        partId: "",
+        printerId: f.printerId,
+        qty: q,
+        at: startISO
+      }];
       const resumoFil = linhas.filter(l => l.filamentId && num(l.grams) > 0).map(l => `${filMap[l.filamentId] ? filMap[l.filamentId].name : "—"}: ${fmtN(num(l.grams) * q)}g`).join("\n");
-      const txt = `CONFIRMAR IMPRESSÃO AVULSA\n\n${f.name.trim()} · ${fmtN(q)} un\n` + `${resumoFil}\nTotal: ${fmtN(gramasTotais * q)}g · ${fmtN(horasPeca * q, 1)}h${emPartes ? ` de máquina (${f.parts.length} partes)` : ""}\n\n` + `Custo total: ${fmt(custoTotal)}\n` + (receita > 0 ? `Venda: ${fmt(receita)}${cli ? ` · ${cli.name}` : ""}\nLucro: ${fmt(receita - custoTotal)}\n` : `Sem venda registrada.\n`) + `\nO material será baixado do estoque. Confirmar?`;
+      const txt = `CONFIRMAR IMPRESSÃO AVULSA\n\n${f.name.trim()} · ${fmtN(q)} un\n` + `${resumoFil}\nTotal: ${fmtN(gramasTotais * q)}g · ${fmtN(horasPeca * q, 1)}h${emPartes ? ` de máquina (${f.parts.length} partes)` : ""}\n\n` + `Custo total: ${fmt(custoTotal)}\n` + (receita > 0 ? `Venda: ${fmt(receita)}${cli ? ` · ${cli.name}` : ""}\nLucro: ${fmt(receita - custoTotal)}\n` : `Sem venda registrada.\n`) + (f.now ? `\nVai aparecer imprimindo no Comando desde ${f.startAt}.` : "") + `\nO material será baixado do estoque. Confirmar?`;
       if (!(await askConfirm(txt))) return;
       setData(d => {
         const materials = d.materials.map(m => {
@@ -14038,6 +14258,18 @@ function App() {
             }, ...(m.movements || [])]
           };
         });
+        const freed = new Set((printing || []).map(x => x.printerId));
+        const others = !printing ? d.orders : d.orders.map(o => {
+          const keep = (o.printing || []).filter(x => !freed.has(x.printerId));
+          if (keep.length === (o.printing || []).length) return o;
+          return {
+            ...o,
+            printing: keep,
+            ...(o.quick && !keep.length ? {
+              status: "Entregue"
+            } : {})
+          };
+        });
         return {
           ...d,
           filaments: d.filaments.map(x => usoPorFil[x.id] ? {
@@ -14052,7 +14284,7 @@ function App() {
             } : x;
           }),
           materials,
-          orders: [...d.orders, {
+          orders: [...others, {
             id: uid(),
             projectId: "",
             projectName: f.name.trim(),
@@ -14062,7 +14294,11 @@ function App() {
             dueDate: "",
             price: receita > 0 ? receita.toFixed(2) : "",
             cost: custoTotal.toFixed(2),
-            status: "Entregue",
+            status: f.now ? "Em produção" : "Entregue",
+            quickHours: horasPeca * q,
+            ...(printing ? {
+              printing
+            } : {}),
             printerId: emPartes ? "" : f.printerId,
             paid: receita > 0 ? !!f.paid : false,
             processed: true,
@@ -14086,7 +14322,7 @@ function App() {
         };
       });
       setModal(null);
-      notify(`Impressão avulsa registrada: -${fmtN(gramasTotais * q)}g em ${Object.keys(usoPorFil).length} filamento(s)${receita > 0 ? ` · venda de ${fmt(receita)}` : ""}`);
+      notify(`Impressão avulsa ${f.now ? "imprimindo no Comando" : "registrada"}: -${fmtN(gramasTotais * q)}g em ${Object.keys(usoPorFil).length} filamento(s)${receita > 0 ? ` · venda de ${fmt(receita)}` : ""}`);
     };
     return React.createElement(Modal, {
       title: "Impress\xE3o avulsa (sem projeto)",
@@ -14113,7 +14349,64 @@ function App() {
       type: "date",
       value: f.date,
       onChange: set("date")
-    }))), React.createElement("div", {
+    }))), React.createElement(L, null, "Situa\xE7\xE3o"), React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 8,
+        marginBottom: 6
+      }
+    }, React.createElement("button", {
+      className: "qp-done",
+      onClick: () => setF({
+        ...f,
+        now: false
+      }),
+      style: toggleBtn(!f.now)
+    }, "\u2713 J\xE1 terminou"), React.createElement("button", {
+      className: "qp-now",
+      onClick: () => setF({
+        ...f,
+        now: true,
+        date: todayISO()
+      }),
+      style: {
+        ...toggleBtn(f.now),
+        ...(f.now ? {
+          border: "1.5px solid #F5821F",
+          background: "rgba(245,130,31,.12)",
+          color: "#FFAA5C"
+        } : {})
+      }
+    }, "\u25CF Est\xE1 imprimindo agora")), f.now ? React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 12,
+        alignItems: "end",
+        flexWrap: "wrap",
+        marginBottom: 12
+      }
+    }, React.createElement("div", {
+      style: {
+        width: 150
+      }
+    }, React.createElement(L, null, "Come\xE7ou \xE0s"), React.createElement(In, {
+      className: "qp-start",
+      type: "time",
+      value: f.startAt,
+      onChange: set("startAt")
+    })), React.createElement("div", {
+      style: {
+        flex: 1,
+        minWidth: 200,
+        font: "400 12px Inter,sans-serif",
+        color: "#8FA3A3",
+        paddingBottom: 10
+      }
+    }, "Aparece na impressora do Comando com a cor do filamento e o tempo correndo. O material \xE9 baixado agora, como sempre.")) : React.createElement("div", {
+      style: {
+        height: 8
+      }
+    }), React.createElement("div", {
       style: {
         display: "flex",
         gap: 8,
@@ -14244,12 +14537,13 @@ function App() {
       })));
     })), React.createElement(Row, {
       cols: 2
-    }, React.createElement("div", null, React.createElement(L, null, "Tempo por pe\xE7a (h)"), React.createElement(In, {
-      type: "number",
-      step: "0.1",
+    }, React.createElement("div", null, React.createElement(L, null, "Tempo por pe\xE7a"), React.createElement(HMIn, {
       value: f.hours,
-      onChange: set("hours"),
-      placeholder: "ex: 2.5"
+      onChange: v => setF({
+        ...f,
+        hours: v
+      }),
+      cls: "qp-hours"
     })), React.createElement("div", null)), React.createElement(Row, {
       cols: 2
     }, React.createElement("div", null, React.createElement(L, null, "Impressora"), React.createElement(Combo, {
@@ -14559,12 +14853,13 @@ function App() {
       value: f.grams,
       onChange: set("grams"),
       placeholder: "ex: 45"
-    })), React.createElement("div", null, React.createElement(L, null, "Tempo de impressora (h)"), React.createElement(In, {
-      type: "number",
-      step: "0.1",
+    })), React.createElement("div", null, React.createElement(L, null, "Tempo de impressora"), React.createElement(HMIn, {
       value: f.hours,
-      onChange: set("hours"),
-      placeholder: "ex: 1.5"
+      onChange: v => setF({
+        ...f,
+        hours: v
+      }),
+      cls: "cal-hours"
     }))), React.createElement(Row, {
       cols: 1
     }, React.createElement("div", null, React.createElement(L, null, "Observa\xE7\xE3o (opcional)"), React.createElement(In, {
@@ -17996,7 +18291,11 @@ function App() {
         "data-pr": c.pr.id,
         "data-st": pj ? "printing" : j ? "wait" : "free",
         title: go ? "Registrar impressão" : "",
-        onClick: go ? () => setModal({
+        onClick: go ? () => setModal(pj && pj.quick ? {
+          type: "quickDone",
+          orderId: go.id,
+          printerId: c.pr.id
+        } : {
           type: "print",
           orderId: go.id
         }) : undefined
@@ -18007,7 +18306,7 @@ function App() {
       }, React.createElement("span", null, c.pr.name), React.createElement("b", null, pj ? fmtN(pj.pct * 100, 0) + "%" : j ? "EM ESPERA" : "LIVRE")), pj ? React.createElement(React.Fragment, null, React.createElement("div", {
         className: "r2",
         title: projName(pj.o) + (pj.pt ? " · " + pj.pt.name : "")
-      }, projName(pj.o), pj.pt ? ` · ${pj.pt.name || "Parte"}` : "", pj.qty > 1 ? ` · ${fmtN(pj.qty)}×` : "", " \xB7 ~", fmtN(pj.hours, 1), "h"), pj.fils.length > 0 && React.createElement("div", {
+      }, projName(pj.o), pj.pt ? ` · ${pj.pt.name || "Parte"}` : "", pj.qty > 1 ? ` · ${fmtN(pj.qty)}×` : "", " \xB7 ~", fmtDur(pj.hours * 60)), pj.fils.length > 0 && React.createElement("div", {
         className: "r3"
       }, pj.fils.slice(0, 3).map(fl => React.createElement("span", {
         key: fl.id
@@ -18609,7 +18908,7 @@ function App() {
         className: "neo-pchip"
       }, p.parts.length, " PARTES"))), !o.fromStock ? progress(o) : React.createElement("div", {
         className: "neo-prog-t mut"
-      }, "Sai do estoque de produtos"), dueBox(o), React.createElement("div", {
+      }, o.quick ? (o.printing || []).length ? `Impressão avulsa · imprimindo na ${(data.printers.find(x => x.id === o.printing[0].printerId) || {}).name || "impressora"} · material já baixado` : "Impressão avulsa · material já baixado" : "Sai do estoque de produtos"), dueBox(o), React.createElement("div", {
         className: "neo-oacts",
         onClick: e => e.stopPropagation()
       }, !o.fromStock && React.createElement("button", {
@@ -25211,6 +25510,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
   Orders = stableComponent("Orders", Orders);
   OrderModal = stableComponent("OrderModal", OrderModal);
   QuickPrintModal = stableComponent("QuickPrintModal", QuickPrintModal);
+  QuickDoneModal = stableComponent("QuickDoneModal", QuickDoneModal);
   CalibrationModal = stableComponent("CalibrationModal", CalibrationModal);
   Clients = stableComponent("Clients", Clients);
   ClientModal = stableComponent("ClientModal", ClientModal);
@@ -25506,6 +25806,8 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
   }), modal && modal.type === "calib" && React.createElement(CalibrationModal, {
     key: modalKey
   }), modal && modal.type === "quick" && React.createElement(QuickPrintModal, {
+    key: modalKey
+  }), modal && modal.type === "quickDone" && React.createElement(QuickDoneModal, {
     key: modalKey
   }), modal && modal.type === "client" && React.createElement(ClientModal, {
     key: modalKey,

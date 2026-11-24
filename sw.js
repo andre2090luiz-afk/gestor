@@ -2,7 +2,7 @@
    - index.html: tenta a internet primeiro (pega a versão nova) e usa a cópia guardada se estiver offline.
    - bibliotecas e fontes: usa a cópia guardada e atualiza por trás.
    - nuvem (Supabase): nunca guarda, sempre direto. */
-const CACHE = "printar-4.72";
+const CACHE = "printar-5.0";
 const CORE = ["./", "index.html", "manifest.webmanifest", "icons/icon-192.png", "icons/icon-512.png"];
 
 self.addEventListener("install", (e) => {

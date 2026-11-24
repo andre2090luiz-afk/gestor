@@ -1327,7 +1327,7 @@ const addDays = (iso, n) => {
   d.setDate(d.getDate() + n);
   return d.toISOString().slice(0, 10);
 };
-const APP_VERSION = "5.0";
+const APP_VERSION = "5.1";
 const APP_UPDATED = "24/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";
@@ -18907,12 +18907,16 @@ function App() {
         p.parts.forEach(pt => {
           const lp = Math.max(0, num(o.qty) - partPrinted(o, pt.id));
           if (lp <= 0) return;
-          const pid = (o.partPrinters || {})[pt.id] || pt.printerId || "";
+          const run = isPrintingNow(o, pt.id);
+          const runPid = run && data.printers.some(x => x.id === run.printerId) ? run.printerId : "";
+          const pid = runPid || (o.partPrinters || {})[pt.id] || pt.printerId || "";
           byPid[pid] = byPid[pid] || {
             hours: 0,
             parts: [],
-            pids: []
+            pids: [],
+            run: false
           };
+          if (runPid) byPid[pid].run = true;
           byPid[pid].hours += num(pt.hours) * lp;
           byPid[pid].parts.push(pt.name || "Parte");
           byPid[pid].pids.push(pt.id);
@@ -18922,15 +18926,21 @@ function App() {
           p,
           hours: x.hours,
           parts: x.parts,
-          pids: x.pids
+          pids: x.pids,
+          run: x.run
         }));
-      } else colOf(o.printerId).items.push({
-        o,
-        p,
-        hours: (p ? num(p.hours) : 0) * left
-      });
+      } else {
+        const run = (o.printing || []).find(x => data.printers.some(y => y.id === x.printerId));
+        colOf(run ? run.printerId : o.printerId).items.push({
+          o,
+          p,
+          hours: (p ? num(p.hours) : 0) * left,
+          run: !!run
+        });
+      }
     });
     [...cols, none].forEach(c => {
+      c.items = [...c.items.filter(it => it.run), ...c.items.filter(it => !it.run)];
       let cum = 0;
       c.items.forEach(it => {
         cum += it.hours;

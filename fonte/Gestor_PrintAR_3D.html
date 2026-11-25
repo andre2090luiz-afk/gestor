@@ -574,6 +574,9 @@
   .neo-qtbl .hd{font:600 10px Inter,sans-serif;color:var(--t18);letter-spacing:.1em;text-transform:uppercase;}
   .neo-qtbl .tt{border:0;font-weight:700;color:var(--t37);} .neo-qtbl .tt span:last-child{color:var(--t7);}
   .neo-qnote{font:400 12px Inter,sans-serif;color:var(--t18);margin-top:8px;}
+  .neo-held{margin-top:5px;font:500 11.5px Inter,sans-serif;color:var(--t86);}
+  .neo-heldnote{margin:0 0 12px;padding:9px 13px;border:1px dashed var(--t31);border-radius:10px;background:var(--t72);font:400 12.5px Inter,sans-serif;color:var(--t243);}
+  .neo-heldnote b{color:var(--t86);}
   .neo-tline .print-row.fail-row:before{background:#F0605F;box-shadow:0 0 8px rgba(240,96,95,.45);}
   .neo-tline .print-row .fx{color:#F0605F;font:700 11px 'JetBrains Mono',monospace;letter-spacing:.04em;}
   .fail-bar{display:flex;justify-content:flex-end;margin-top:10px;}
@@ -1265,7 +1268,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "5.2";
+const APP_VERSION = "5.3";
 const APP_UPDATED = "24/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -3612,7 +3615,14 @@ function App() {
     ...(((p && p.moreFils) || []).filter((x) => x.filamentId).map((x) => ({ filamentId: x.filamentId, grams: num(x.grams) }))),
   ];
   const pendingOrdersList = data.orders.filter((o) => !isDone(o));
-  const unpaidSales = data.orders.filter((o) => isDone(o) && isSale(o) && !o.paid);
+  /* v5.3: pedidos que nasceram juntos (mesmo orcamento ou pedido dividido) — a cobranca espera a producao do grupo inteiro */
+  const groupKey = (o) => (o.quoteCode ? "q:" + o.quoteCode : o.groupId ? "g:" + o.groupId : "");
+  const pendGroups = {};
+  data.orders.forEach((o) => { const k = groupKey(o); if (k && !o.fromStock && !o.quick && !isDone(o)) (pendGroups[k] = pendGroups[k] || []).push(o); });
+  const isHeld = (o) => !!(isDone(o) && !o.paid && !o.quick && groupKey(o) && pendGroups[groupKey(o)]);
+  const heldFor = (o) => { const k = groupKey(o); return k && !o.fromStock && !isDone(o) ? data.orders.filter((x) => groupKey(x) === k && isHeld(x)) : []; };
+  const heldSales = data.orders.filter((o) => isSale(o) && isHeld(o));
+  const unpaidSales = data.orders.filter((o) => isDone(o) && isSale(o) && !o.paid && !isHeld(o));
   const backlogHours = pendingOrdersList.filter((o) => !o.fromStock)
     .reduce((s, o) => s + (projMap[o.projectId] ? projWallHours(projMap[o.projectId], o.partPrinters) : 0) * num(o.qty), 0);
   const monthFixedTotal = (data.fixedCosts || []).reduce((s, c) => s + num(c.value), 0);
@@ -6914,7 +6924,7 @@ function App() {
               const q = Math.max(0, num(f.qty)), take = Math.min(q, availableQty(p.id)), rest = q - take;
               if (take > 0) {
                 const unitP = q > 0 ? num(f.price) / q : 0, unitC = orderUnitCost(p, f.filChoices);
-                const base = { ...f, projectName: p.name, clientId: f.clientId };
+                const base = { ...f, projectName: p.name, clientId: f.clientId, groupId: rest > 0 ? uid() : undefined };
                 delete base.useStock;
                 const stk = { ...base, id: uid(), qty: take, price: f.price === "" ? "" : (unitP * take).toFixed(2), cost: (unitC * take).toFixed(2), status: "Concluído", dueDate: f.dueDate || todayISO(), printerId: "", partPrinters: {}, processed: true, fromStock: true, ts: nowStamp() };
                 const prod = rest > 0 ? { ...base, qty: rest, price: f.price === "" ? "" : (num(f.price) - unitP * take).toFixed(2), cost: (unitC * rest).toFixed(2), processed: false } : null;
@@ -7360,7 +7370,7 @@ function App() {
       const spent = sales.reduce((s, o) => s + num(o.price), 0);
       const dates = ords.map((o) => o.date).filter(Boolean).sort();
       const last = ords.slice().sort((a, b) => (b.date > a.date ? 1 : -1))[0];
-      const debt = sales.filter((o) => !o.paid);
+      const debt = sales.filter((o) => !o.paid && !isHeld(o));
       const bars = months6.map((m) => sales.filter((o) => monthKey(o.date) === m).reduce((s, o) => s + num(o.price), 0));
       stats[c.id] = { n: ords.length, spent, ticket: sales.length ? spent / sales.length : 0, first: dates[0] || null, last, lastDays: last ? daysSince(last.date) : null, debt: debt.reduce((s, o) => s + num(o.price), 0), debtSince: debt.length ? debt.map((o) => o.date).sort()[0] : null, bars };
     });
@@ -7428,7 +7438,7 @@ function App() {
               const mx = Math.max(...s.bars, 0);
               const lastName = s.last ? projName(s.last) : "";
               const waBtn = g.devendo
-                ? { label: "Cobrar", msg: () => cobrarMsg(c, clientOrders(c.id).filter((o) => isSale(o) && isDone(o) && !o.paid)), tip: "Mensagem de cobrança pronta" }
+                ? { label: "Cobrar", msg: () => cobrarMsg(c, clientOrders(c.id).filter((o) => isSale(o) && isDone(o) && !o.paid && !isHeld(o))), tip: "Mensagem de cobrança pronta" }
                 : g.sumido ? { label: "Chamar de volta", msg: () => comebackMsg(c, lastName), tip: "Mensagem simpática para quem sumiu" }
                 : { label: "WhatsApp", msg: () => `Oi, ${firstName(c.name)}! Tudo bem? 😊`, tip: "Abrir conversa" };
               return (
@@ -8772,6 +8782,7 @@ function App() {
                       {!o.fromStock && (prs && prs.length ? [...new Set(prs)].map((n) => <span key={n} className="neo-pchip">{n}</span>) : noPr.has(o.id) ? <span className="neo-pchip none">sem impressora</span> : null)}
                       {p && isPartsProj(p) && <span className="neo-pchip">{p.parts.length} PARTES</span>}
                     </div>
+                    {(() => { const hl = heldFor(o); return hl.length > 0 && <div className="neo-held" title="Peças do mesmo pedido que já saíram do estoque — a cobrança espera esta produção">+ {hl.length} {hl.length > 1 ? "itens prontos" : "item pronto"} do mesmo pedido aguardando: {hl.map((x) => `${projName(x)}${num(x.qty) > 1 ? " ×" + fmtN(x.qty) : ""}`).join(", ")}</div>; })()}
                   </div>
                   {!o.fromStock ? progress(o) : <div className="neo-prog-t mut">{o.quick ? ((o.printing || []).length ? `Impressão avulsa · imprimindo na ${(data.printers.find((x) => x.id === o.printing[0].printerId) || {}).name || "impressora"} · material já baixado` : "Impressão avulsa · material já baixado") : "Sai do estoque de produtos"}</div>}
                   {dueBox(o)}
@@ -8861,6 +8872,7 @@ function App() {
           </div>
         )}
 
+        {sub === "fin" && (() => { if (!heldSales.length) return null; const by = {}; heldSales.forEach((o) => { const k = o.clientId || "_"; (by[k] = by[k] || { v: 0, c: cliMap[o.clientId] }).v += num(o.price); }); return <div className="neo-heldnote">⏳ <b>{fmt(heldSales.reduce((s, o) => s + num(o.price), 0))}</b> aguardando produção ({Object.values(by).map((x) => `${x.c ? x.c.name : "sem cliente"} ${fmt(x.v)}`).join(" · ")}) — entra aqui quando o resto do pedido ficar pronto.</div>; })()}
         {sub === "fin" && (unpaidSales.length === 0
           ? <Card><Empty icon={CheckCircle2} text="Nenhum recebimento pendente" hint="Todas as vendas concluídas já foram pagas." /></Card>
           : <div className="neo-fin">
@@ -9514,7 +9526,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     const days = []; rows.forEach((r) => { const last = days[days.length - 1]; if (last && last.d === r.date) last.items.push(r); else days.push({ d: r.date, items: [r] }); });
     const upc = upcomingFixed().slice(0, 4);
     // a receber
-    const arList = data.orders.filter((o) => isDone(o) && isSale(o) && !o.paid).sort((a, b) => (a.date < b.date ? -1 : 1));
+    const arList = unpaidSales.slice().sort((a, b) => (a.date < b.date ? -1 : 1));
     const arTotal = arList.reduce((s, o) => s + num(o.price), 0);
     const ageOf = (o) => daysSince(o.date) || 0;
     const bk = [[0, 15, "#3FD1CE", "até 15 dias"], [16, 30, "#FFD166", "16–30 dias"], [31, 1e9, "#FF6B6B", "+30 dias"]].map(([a, b, c, l]) => ({ c, l, v: arList.filter((o) => ageOf(o) >= a && ageOf(o) <= b).reduce((s, o) => s + num(o.price), 0) }));
@@ -9744,6 +9756,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
               <div className="neo-finage">{bk.filter((b) => b.v > 0).map((b) => <i key={b.l} style={{ width: `${(b.v / arTotal) * 100}%`, background: b.c }} title={`${b.l}: ${fmt(b.v)}`} />)}</div>
               <div className="neo-finagel">{bk.map((b) => <span key={b.l}><i style={{ background: b.c }} />{b.l} <b>{fmt(b.v)}</b></span>)}</div>
             </React.Fragment>}
+            {(() => { if (!heldSales.length) return null; const by = {}; heldSales.forEach((o) => { const k = o.clientId || "_"; (by[k] = by[k] || { v: 0, c: cliMap[o.clientId] }).v += num(o.price); }); return <div className="neo-heldnote">⏳ <b>{fmt(heldSales.reduce((s, o) => s + num(o.price), 0))}</b> aguardando produção ({Object.values(by).map((x) => `${x.c ? x.c.name : "sem cliente"} ${fmt(x.v)}`).join(" · ")}) — entra aqui quando o resto do pedido ficar pronto.</div>; })()}
             {arList.length === 0 ? <Empty icon={CheckCircle2} text="Tudo recebido!" hint="Nenhuma venda em aberto. Quando uma venda concluída não estiver marcada como paga, ela aparece aqui." /> : arList.map((o) => {
               const c = cliMap[o.clientId]; const d = ageOf(o); const col = ageColor(d);
               return (
@@ -10269,7 +10282,7 @@ SC,
         </React.Fragment>
       );
     } else if (report === "clientes") {
-      const owes = (c) => data.orders.some((o) => o.clientId === c.id && isSale(o) && isDone(o) && !o.paid);
+      const owes = (c) => data.orders.some((o) => o.clientId === c.id && isSale(o) && isDone(o) && !o.paid && !isHeld(o));
       const CF = { all: () => true, compraram: (r) => r.n > 0, novos: (r) => r.c.createdAt && inR(String(r.c.createdAt).slice(0, 10)), devendo: (r) => owes(r.c), semcompra: (r) => r.n === 0 };
       const rows = data.clients.map((c) => { const ords = clientOrders(c.id).filter((o) => inR(o.date) && isSale(o) && isDone(o)); return { c, n: ords.length, total: ords.reduce((s, o) => s + num(o.price), 0) }; }).filter(CF[vf] || CF.all).filter((r) => hasTxt(r.c.name)).sort((a, b) => b.total - a.total);
       const totRev = rows.reduce((s, r) => s + r.total, 0);

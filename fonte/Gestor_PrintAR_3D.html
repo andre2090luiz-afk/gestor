@@ -574,6 +574,12 @@
   .neo-qtbl .hd{font:600 10px Inter,sans-serif;color:var(--t18);letter-spacing:.1em;text-transform:uppercase;}
   .neo-qtbl .tt{border:0;font-weight:700;color:var(--t37);} .neo-qtbl .tt span:last-child{color:var(--t7);}
   .neo-qnote{font:400 12px Inter,sans-serif;color:var(--t18);margin-top:8px;}
+  .neo-tline .print-row.fail-row:before{background:#F0605F;box-shadow:0 0 8px rgba(240,96,95,.45);}
+  .neo-tline .print-row .fx{color:#F0605F;font:700 11px 'JetBrains Mono',monospace;letter-spacing:.04em;}
+  .fail-bar{display:flex;justify-content:flex-end;margin-top:10px;}
+  .neo-bfail{display:inline-flex;align-items:center;gap:6px;background:rgba(240,96,95,.08);border:1px solid rgba(240,96,95,.45);color:#F0605F;border-radius:10px;padding:7px 12px;font:600 12.5px Inter,sans-serif;cursor:pointer;}
+  .neo-bfail:hover{background:rgba(240,96,95,.16);}
+  html[data-theme=light] .neo-bfail, html[data-theme=light] .neo-tline .print-row .fx{color:#C93434;border-color:rgba(201,52,52,.45);}
   .neo-tline .print-row.fut:before{background:transparent;border:2px dashed var(--t151);box-shadow:none;width:6px;height:6px;}
   @media (max-width: 1100px){ .neo-qtop{grid-template-columns:repeat(2,1fr);} .neo-qtop .neo-funnel{grid-column:1 / -1;} .neo-qline{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;} .neo-qitems{grid-column:1 / -1;order:5;} .neo-qexp{grid-template-columns:1fr;} }
   @media (max-width: 620px){ .neo-qline{grid-template-columns:1fr;} .neo-qtot{text-align:left;} .neo-oacts{justify-content:flex-start;} }
@@ -1259,7 +1265,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "5.1";
+const APP_VERSION = "5.2";
 const APP_UPDATED = "24/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -3531,10 +3537,16 @@ function App() {
 
   // nome do projeto do pedido; se o projeto foi excluido, usa o nome gravado no pedido
   const projName = (o) => { const p = projMap[o.projectId]; return (p && p.name) || o.projectName || "—"; };
+  /* v5.2: item do orcamento pode usar parte do estoque (stockQty) e produzir o resto */
+  const stockPart = (it) => Math.min(num(it.qty), it.stockQty != null && it.stockQty !== "" ? num(it.stockQty) : num(it.qty));
+  const stockTxt = (it) => { const sq = stockPart(it), q = num(it.qty); return sq < q ? `${fmtN(sq)} pronta entrega + ${fmtN(q - sq)} sob encomenda` : "pronta entrega"; };
+  /* v5.2: falhas de impressao (gramas pesadas na balanca) — baixam do filamento ao concluir o pedido */
+  const failCostOf = (o) => ((o && o.fails) || []).filter((x) => x.applied).reduce((s, x) => s + num(x.cost), 0);
+  const filPerG = (fl) => (fl ? num(fl.price) / Math.max(1, num(fl.qtyG)) : 0);
   const prodQty = (projectId) => { const e = data.products.find((x) => x.projectId === projectId); return e ? num(e.qty) : 0; };
   const reservedQty = (projectId, exceptQuoteId) => (data.quotes || [])
     .filter((q) => q.status === "Pendente" && (!q.validUntil || q.validUntil >= todayISO()) && q.id !== exceptQuoteId)
-    .reduce((s, q) => s + (q.items || []).filter((it) => it.fromStock && it.projectId === projectId).reduce((a, it) => a + num(it.qty), 0), 0);
+    .reduce((s, q) => s + (q.items || []).filter((it) => it.fromStock && it.projectId === projectId).reduce((a, it) => a + stockPart(it), 0), 0);
   const availableQty = (projectId, exceptQuoteId) => Math.max(0, prodQty(projectId) - reservedQty(projectId, exceptQuoteId));
   const prodHistory = (projectId, from, to) => {
     const evs = [];
@@ -3862,6 +3874,14 @@ function App() {
           }
           o.processed = true;
         }
+        /* v5.2: falhas lancadas — saem do estoque de filamento e entram no custo do pedido */
+        const fl = (order.fails || []).filter((x) => !x.applied && num(x.grams) > 0);
+        if (fl.length) {
+          filaments = filaments.map((f) => { const g = fl.filter((x) => x.filamentId === f.id).reduce((s, x) => s + num(x.grams), 0); return g > 0 ? { ...f, stockG: Math.max(0, +(num(f.stockG) - g).toFixed(2)) } : f; });
+          o.fails = (order.fails || []).map((x) => (fl.includes(x) ? { ...x, applied: true } : x));
+          o.cost = (num(o.cost) + fl.reduce((s, x) => s + num(x.cost), 0)).toFixed(2);
+          o.processed = true;
+        }
       }
       return { ...d, filaments, printers, materials, products, cashflow, orders: d.orders.map((x) => (x.id === order.id ? o : x)) };
     }
@@ -3957,6 +3977,19 @@ function App() {
     setTimeout(() => { if (msg) notify(msg); }, 0);
   };
   /* apaga um registro de impressao (antes de concluir) e devolve filamento/horas/materiais */
+  const addFails = (order, list) => {
+    const rows = list.filter((x) => x.filamentId && num(x.grams) > 0).map((x) => ({ id: uid(), date: todayISO(), filamentId: x.filamentId, grams: +num(x.grams).toFixed(1), partId: x.partId || "", cost: +(num(x.grams) * filPerG(filMap[x.filamentId])).toFixed(2) }));
+    if (!rows.length) return false;
+    const g = rows.reduce((s, x) => s + x.grams, 0);
+    logAs(`Lançou falha: ${projName(order)} — ${rows.map((x) => `${fmtN(x.grams)}g ${(filMap[x.filamentId] || {}).name || "filamento"}`).join(", ")}`);
+    setData((d) => ({ ...d, orders: d.orders.map((o) => (o.id === order.id ? { ...o, fails: [...(o.fails || []), ...rows] } : o)) }));
+    notify(`Falha lançada: ${fmtN(g)}g — sai do estoque de filamento quando concluir o pedido`);
+    return true;
+  };
+  const removeFail = (order, failId) => {
+    logAs(`Apagou falha lançada: ${projName(order)}`);
+    setData((d) => ({ ...d, orders: d.orders.map((o) => (o.id === order.id ? { ...o, fails: (o.fails || []).filter((x) => x.id !== failId) } : o)) }));
+  };
   const removePrint = (order, printId) => {
     const p = projMap[order.projectId];
     { const pr = (order.prints || []).find((x) => x.id === printId); const pt = pr && pr.partId && p && isPartsProj(p) ? p.parts.find((x) => x.id === pr.partId) : null; logAs(`Apagou registro de impressão: ${pr ? fmtN(pr.qty) : ""}${pt ? `× ${pt.name || "parte"}` : ""} de ${projName(order)} × ${fmtN(order.qty)}`); }
@@ -4052,7 +4085,7 @@ function App() {
           const mk = (qty, fromStock) => ({
             id: uid(), projectId: it.projectId, clientId: quote.clientId || "", qty,
             date: todayISO(), dueDate: fromStock ? todayISO() : (quote.deadline || ""), price: (qty * unitPrice).toFixed(2),
-            cost: (orderUnitCost(p, it.filChoices) * qty).toFixed(2), status: "Aprovado", printerId: "", paid: false,
+            cost: (orderUnitCost(p, it.filChoices) * qty).toFixed(2), status: fromStock ? "Concluído" : "Aprovado", printerId: "", paid: false,
             processed: fromStock, fromStock, dest: "venda", quoteCode: quote.code, ts: fromStock ? nowStamp() : undefined,
             ...(it.filChoices && Object.keys(it.filChoices).length ? { filChoices: { ...it.filChoices } } : {}),
           });
@@ -4083,7 +4116,7 @@ function App() {
         return { ...d, products, orders: [...d.orders, ...newOrders], quotes: d.quotes.map((q) => q.id === quote.id ? { ...q, status, events: [...(q.events || []), { d: todayISO(), t: "approved" }] } : q) };
       });
       const reservedCount = (quote.items || []).filter((it) => it.fromStock).length;
-      notify(`Orçamento aprovado — pedido(s) criado(s)${reservedCount > 0 ? " · itens de pronta entrega já saíram do estoque" : ""}`);
+      notify(`Orçamento aprovado — pedido(s) criado(s)${reservedCount > 0 ? " · itens de pronta entrega já saíram do estoque e estão em A receber" : ""}`);
     } else {
       setData((d) => ({ ...d, quotes: d.quotes.map((q) => q.id === quote.id ? { ...q, status, ...(status === "Recusado" ? { events: [...(q.events || []), { d: todayISO(), t: "refused" }] } : null) } : q) }));
       if (status === "Recusado") notify("Orçamento recusado — reservas de estoque liberadas");
@@ -4148,6 +4181,19 @@ function App() {
         niche: (p && p.niche) || "Sem nicho", motivo: (o.giftNote || "").trim() || "Sem motivo",
         qty: num(o.qty), cost: num(o.cost), lost: num(o.qty) * refSalePrice(p) });
     });
+    /* v5.2: falhas de impressao lancadas (ja baixadas ao concluir) */
+    if (f.fails !== false) data.orders.filter((o) => isDone(o) && (o.fails || []).some((x) => x.applied)).forEach((o) => {
+      const p = projMap[o.projectId]; const c = cliMap[o.clientId];
+      if (f.clientId && o.clientId !== f.clientId) return;
+      if (f.projectId && o.projectId !== f.projectId) return;
+      if (f.niche && !hasNiche(p, f.niche)) return;
+      o.fails.filter((x) => x.applied && inR(x.date)).forEach((x) => {
+        const fl = filMap[x.filamentId];
+        const motivo = `Falha de impressão — ${fmtN(x.grams)} g ${fl ? fl.name : "filamento"}`;
+        if (mq && !motivo.toLowerCase().includes(mq)) return;
+        rows.push({ id: x.id, kind: "falha", date: x.date, product: projName(o), client: c ? c.name : "Sem cliente", niche: (p && p.niche) || "Sem nicho", motivo, qty: 0, cost: num(x.cost), lost: 0 });
+      });
+    });
     /* calibracao nao tem cliente/produto/motivo: some quando um desses filtros esta ativo */
     const filtering = !!(f.clientId || f.projectId || f.niche || mq);
     const calibOn = f.calib !== false && !filtering;
@@ -4173,6 +4219,7 @@ function App() {
       cost: rows.reduce((s, r) => s + r.cost, 0),
       giftCost: gifts.reduce((s, r) => s + r.cost, 0),
       calibCost: rows.filter((r) => r.kind === "calib").reduce((s, r) => s + r.cost, 0),
+      failCost: rows.filter((r) => r.kind === "falha").reduce((s, r) => s + r.cost, 0),
       lost: gifts.reduce((s, r) => s + r.lost, 0),
       qty: gifts.reduce((s, r) => s + r.qty, 0),
       gifts: gifts.length, calibs: rows.length - gifts.length,
@@ -6750,6 +6797,20 @@ function App() {
           <div><L>Data do pedido</L><In type="date" value={f.date} onChange={set("date")} /></div>
           <div><L>Entrega prevista</L><In type="date" value={f.dueDate} onChange={set("dueDate")} /></div>
         </Row>
+        {!item && f.dest === "venda" && p && availableQty(p.id) > 0 && (() => {
+          const avail = availableQty(p.id), q = Math.max(0, num(f.qty)), take = Math.min(q, avail);
+          return (
+            <div className="ord-stk" style={{ background: f.useStock ? "var(--t90)" : "var(--t72)", border: `1px dashed ${f.useStock ? "var(--t173)" : "var(--t31)"}`, borderRadius: 10, padding: "8px 11px", marginBottom: 12 }}>
+              <label style={{ display: "flex", gap: 8, alignItems: "flex-start", cursor: "pointer" }}>
+                <input type="checkbox" className="ord-stk-chk" checked={!!f.useStock} onChange={(e) => setF({ ...f, useStock: e.target.checked })} style={{ marginTop: 2 }} />
+                <span style={{ font: "400 12px Inter,sans-serif", color: "var(--t69)" }}>
+                  ✔ Você tem <b>{fmtN(avail)} un disponível em estoque</b>. <b style={{ color: "var(--t86)" }}>Usar do estoque (pronta entrega)?</b>
+                  {f.useStock && q > 0 && <span style={{ display: "block", marginTop: 4, color: "var(--t6)" }}>→ <b>{fmtN(take)} sai do estoque</b> e vai direto para A receber{q > take ? <> + <b>{fmtN(q - take)} vai para produção</b></> : ""}</span>}
+                </span>
+              </label>
+            </div>
+          );
+        })()}
         <Row cols={3}>
           {!noSale ? <div><L>Valor cobrado (R$)</L><In type="number" value={f.price} onChange={set("price")} placeholder={p ? (num(p.cost) * (1 + num(data.settings.defaultMargin) / 100) * Math.max(1, num(f.qty))).toFixed(2) : ""} /></div> : <div><L>Valor cobrado</L><In disabled value={isBrinde ? "— (brinde / teste)" : "— (sem venda)"} style={{ background: "var(--t100)" }} /></div>}
           <div><L>Custo estimado (R$)</L><In disabled title="Calculado automaticamente a partir do projeto e do filamento escolhido" value={autoCost ? fmt(autoCost) : "—"} style={{ background: "var(--t100)", color: "var(--t243)" }} /></div>
@@ -6848,7 +6909,23 @@ function App() {
           <Btn kind="ghost" onClick={() => setModal(null)}>Cancelar</Btn>
           <Btn disabled={!f.projectId} onClick={() => {
             const isNew = !item;
-            const rec = { ...f, cost: autoCost || f.cost, price: noSale ? "" : f.price, clientId: isStk ? "" : f.clientId, paid: noSale ? false : f.paid, projectName: (projMap[f.projectId] || {}).name || f.projectName || "" };
+            /* v5.2: pedido novo usando o estoque — a parte do estoque ja nasce Concluida (A receber), o resto vai para producao */
+            if (isNew && f.useStock && f.dest === "venda" && p) {
+              const q = Math.max(0, num(f.qty)), take = Math.min(q, availableQty(p.id)), rest = q - take;
+              if (take > 0) {
+                const unitP = q > 0 ? num(f.price) / q : 0, unitC = orderUnitCost(p, f.filChoices);
+                const base = { ...f, projectName: p.name, clientId: f.clientId };
+                delete base.useStock;
+                const stk = { ...base, id: uid(), qty: take, price: f.price === "" ? "" : (unitP * take).toFixed(2), cost: (unitC * take).toFixed(2), status: "Concluído", dueDate: f.dueDate || todayISO(), printerId: "", partPrinters: {}, processed: true, fromStock: true, ts: nowStamp() };
+                const prod = rest > 0 ? { ...base, qty: rest, price: f.price === "" ? "" : (num(f.price) - unitP * take).toFixed(2), cost: (unitC * rest).toFixed(2), processed: false } : null;
+                logAs(`Criou pedido: ${p.name} — ${fmtN(take)} do estoque${rest > 0 ? ` + ${fmtN(rest)} para produzir` : ""}`);
+                setData((d) => ({ ...d, products: changeProductStock(d.products, p.id, -take), orders: [...d.orders, stk, ...(prod ? [prod] : [])] }));
+                if (prod && ["Concluído", "Entregue"].includes(prod.status)) setOrderStatus(prod, prod.status);
+                setModal(null); notify(`Pedido criado — ${fmtN(take)} saiu do estoque (A receber)${rest > 0 ? ` · ${fmtN(rest)} para produção` : ""}`);
+                return;
+              }
+            }
+            const rec = { ...f, useStock: undefined, cost: (autoCost ? (num(autoCost) + failCostOf(f)).toFixed(2) : "") || f.cost, price: noSale ? "" : f.price, clientId: isStk ? "" : f.clientId, paid: noSale ? false : f.paid, projectName: (projMap[f.projectId] || {}).name || f.projectName || "" };
             saveItem("orders", rec);
             if (["Concluído", "Entregue"].includes(rec.status) && !rec.processed) {
               setOrderStatus(rec, rec.status);
@@ -6861,6 +6938,39 @@ function App() {
   }
 
   /* v4.68: impressao avulsa que esta na impressora — Terminou / Cancelar */
+  /* v5.2: lancar falha de impressao (pesada na balanca) */
+  function FailModal() {
+    const o = data.orders.find((x) => x.id === modal.orderId);
+    const p = o ? projMap[o.projectId] : null;
+    const first = p ? ((p.parts && p.parts[0] && isPartsProj(p) ? partFils(p, o, p.parts[0]) : orderFilaments(p, o))[0] || {}).filamentId : "";
+    const [rows, setRows] = useState([{ id: uid(), filamentId: first || (data.filaments[0] || {}).id || "", grams: "", partId: "" }]);
+    if (!o) return null;
+    const setRow = (i, patch) => setRows(rows.map((r, k) => (k === i ? { ...r, ...patch } : r)));
+    const total = rows.reduce((s, r) => s + num(r.grams) * filPerG(filMap[r.filamentId]), 0);
+    const ok = rows.some((r) => r.filamentId && num(r.grams) > 0);
+    return (
+      <Modal title={`Lançar falha — ${projName(o)}`} code="PRODUÇÃO" onClose={() => setModal(null)}>
+        <div style={{ font: "400 12.5px Inter,sans-serif", color: "var(--t243)", marginBottom: 12 }}>Pese na balança o que foi perdido. As gramas saem do estoque de filamento quando você <b>concluir</b> o pedido e o custo entra no pedido. A peça continua faltando.</div>
+        {rows.map((r, i) => (
+          <div key={r.id} className="fail-in" style={{ display: "grid", gridTemplateColumns: isPartsProj(p) ? "minmax(0,1.6fr) 90px minmax(0,1fr) 28px" : "minmax(0,1.6fr) 90px 28px", gap: 8, alignItems: "end", marginBottom: 8 }}>
+            <div><L>Filamento</L><Combo value={r.filamentId} onChange={(v) => setRow(i, { filamentId: v })} placeholder="— selecionar —"
+              options={data.filaments.map((x) => ({ value: x.id, label: x.name, sub: (x.color || "sem cor") + " · " + fmtN(x.stockG) + "g" }))} /></div>
+            <div><L>Gramas</L><In type="number" className="fail-g" value={r.grams} onChange={(e) => setRow(i, { grams: e.target.value })} placeholder="0" /></div>
+            {isPartsProj(p) && <div><L>Parte (opcional)</L><Sel value={r.partId} onChange={(e) => setRow(i, { partId: e.target.value })}><option value="">—</option>{p.parts.map((pt) => <option key={pt.id} value={pt.id}>{pt.name || "Parte"}</option>)}</Sel></div>}
+            <button title="Tirar" onClick={() => setRows(rows.length > 1 ? rows.filter((_, k) => k !== i) : rows)} style={{ height: 38, background: "none", border: 0, color: "var(--t243)", cursor: rows.length > 1 ? "pointer" : "default", opacity: rows.length > 1 ? 1 : .3 }}><Trash2 size={14} /></button>
+          </div>
+        ))}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", margin: "6px 0 16px", font: "500 12.5px Inter,sans-serif", color: "var(--t243)" }}>
+          <a className="fail-add" onClick={() => setRows([...rows, { id: uid(), filamentId: (data.filaments[0] || {}).id || "", grams: "", partId: "" }])} style={{ color: "#14A6A4", cursor: "pointer", fontWeight: 600 }}>+ outra cor</a>
+          <span>custo da falha: <b style={{ color: "var(--t102)" }}>{fmt(total)}</b></span>
+        </div>
+        <div style={{ display: "flex", gap: 10, justifyContent: "flex-end" }}>
+          <Btn kind="ghost" onClick={() => setModal(null)}>Cancelar</Btn>
+          <Btn disabled={!ok} className="fail-save" onClick={() => { if (addFails(o, rows)) setModal(null); }}><AlertTriangle size={15} />Lançar falha</Btn>
+        </div>
+      </Modal>
+    );
+  }
   function QuickDoneModal() {
     const o = data.orders.find((x) => x.id === modal.orderId);
     const pj = o ? printingJob(modal.printerId) : null;
@@ -7834,7 +7944,7 @@ function App() {
         {hasFilter && <div style={{ font: "400 12px Inter,sans-serif", color: "var(--t53)", margin: "-6px 0 12px" }}>Calibrações não têm cliente, produto ou motivo — ficam de fora enquanto um desses filtros estiver ativo.</div>}
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 12, marginBottom: 14 }}>
-          <Stat label="Perda real (custo)" value={fmt(r.total.cost)} sub={r.calibOn ? `${fmt(r.total.giftCost)} brindes · ${fmt(r.total.calibCost)} calibrações` : "custo dos brindes entregues"} icon={GiftIc} accent="#F0605F" />
+          <Stat label="Perda real (custo)" value={fmt(r.total.cost)} sub={(r.calibOn ? `${fmt(r.total.giftCost)} brindes · ${fmt(r.total.calibCost)} calibrações` : "custo dos brindes entregues") + (r.total.failCost > 0 ? ` · ${fmt(r.total.failCost)} falhas` : "")} icon={GiftIc} accent="#F0605F" />
           <Stat label="Deixou de faturar" value={fmt(r.total.lost)} sub="se os brindes tivessem sido vendidos" icon={CircleDollarSign} accent="#F47A20" />
           <Stat label="Peças dadas" value={fmtN(r.total.qty)} sub={`${fmtN(r.total.gifts)} brinde(s) no período`} icon={BoxSellIc} accent="#A88AF0" />
           <Stat label="Calibrações" value={r.calibOn ? fmtN(r.total.calibs) : "—"} sub={r.calibOn ? fmt(r.total.calibCost) + " de gasto" : "fora do cálculo"} icon={WrenchIc} accent="#6FA0EA" />
@@ -7875,7 +7985,7 @@ function App() {
                 <thead><tr><Th s={sGL} col="date">Data</Th><Th s={sGL} col="kind">Tipo</Th><Th s={sGL} col="product">Produto</Th><Th s={sGL} col="client">Cliente</Th><Th s={sGL} col="motivo">Motivo</Th><Th s={sGL} col="qty" style={thR}>Qtd</Th><Th s={sGL} col="cost" style={thR}>Custo</Th><Th s={sGL} col="lost" style={thR}>Deixou de faturar</Th></tr></thead>
                 <tbody>
                   {sortRows(r.rows, sGL, {
-                    date: (x) => x.date, kind: (x) => (x.kind === "brinde" ? "Brinde" : "Calibração"), product: (x) => (x.kind === "calib" ? x.desc : x.product),
+                    date: (x) => x.date, kind: (x) => (x.kind === "brinde" ? "Brinde" : x.kind === "falha" ? "Falha" : "Calibração"), product: (x) => (x.kind === "calib" ? x.desc : x.product),
                     client: (x) => (x.kind === "calib" ? null : x.client), motivo: (x) => (x.kind === "calib" ? null : x.motivo),
                     qty: (x) => (x.qty > 0 ? x.qty : null), cost: (x) => x.cost, lost: (x) => (x.lost > 0 ? x.lost : null),
                   }).map((x) => (
@@ -7883,6 +7993,7 @@ function App() {
                       <td style={{ whiteSpace: "nowrap" }}>{fmtDate(x.date)}</td>
                       <td>{x.kind === "brinde"
                         ? <span style={{ background: "var(--t254)", color: "var(--t251)", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>Brinde</span>
+                        : x.kind === "falha" ? <span style={{ background: "var(--t254)", color: "var(--t102)", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>Falha</span>
                         : <span style={{ background: "var(--t237)", color: "var(--t216)", borderRadius: 999, padding: "2px 9px", font: "600 11px Inter,sans-serif" }}>Calibração</span>}</td>
                       <td style={{ fontWeight: 600 }}>{x.kind === "calib" ? <span style={{ fontWeight: 400, color: "var(--t243)", fontSize: 12 }}>{x.desc}</span> : x.product}</td>
                       <td>{x.client}</td>
@@ -8699,7 +8810,16 @@ function App() {
                               <button title="Apagar este registro (devolve filamento e horas)" onClick={async () => { if (await askConfirm(`Apagar o registro de ${fmtN(pr.qty)} peça(s) de ${fmtDate(pr.date)}?\nO filamento e as horas voltam.`)) removePrint(o, pr.id); }}><Trash2 size={12} /></button>
                             </div>
                           ))}
+                          {(o.fails || []).map((x) => { const fl = filMap[x.filamentId]; const pt = x.partId && p && isPartsProj(p) ? p.parts.find((y) => y.id === x.partId) : null; return (
+                            <div key={x.id} className="print-row fail-row">
+                              <span className="d">{fmtDate(x.date).slice(0, 5)}</span>
+                              <b className="fx">✕ FALHA</b>
+                              <span className="pr"><i style={{ color: (fl && fl.colorHex) || "var(--t18)", fontStyle: "normal" }}>●</i> {fl ? fl.name : "filamento"} · <b>{fmtN(x.grams)} g</b>{pt ? ` · ${pt.name}` : ""} · {fmt(x.cost)}{x.applied ? "" : " · baixa ao concluir"}</span>
+                              {!x.applied && <button title="Apagar esta falha" onClick={async () => { if (await askConfirm(`Apagar a falha de ${fmtN(x.grams)} g?`)) removeFail(o, x.id); }}><Trash2 size={12} /></button>}
+                            </div>
+                          ); })}
                         </div>
+                        <div className="fail-bar"><button className="neo-bfail" onClick={() => setModal({ type: "fail", orderId: o.id })}><AlertTriangle size={13} />Lançar falha</button></div>
                       </div>
                     )}
                   </div>
@@ -8957,7 +9077,7 @@ function App() {
     const first = c && c.name ? c.name.trim().split(" ")[0] : "";
     const items = (quote.items || []).map((it) => {
       const p = projMap[it.projectId];
-      return `🔹 ${fmtN(it.qty)}× ${it.desc || (p ? p.name : "Item")}${p && itemColors(p, it.filChoices).length ? ` (${itemColorsText(p, it.filChoices)})` : ""} — ${fmt(num(it.qty) * num(it.unitPrice))}${it.fromStock ? " ⚡ *PRONTA ENTREGA*" : ""}`;
+      return `🔹 ${fmtN(it.qty)}× ${it.desc || (p ? p.name : "Item")}${p && itemColors(p, it.filChoices).length ? ` (${itemColorsText(p, it.filChoices)})` : ""} — ${fmt(num(it.qty) * num(it.unitPrice))}${it.fromStock ? ` ⚡ *${stockTxt(it).toUpperCase()}*` : ""}`;
     }).join("\n");
     const insta = si.instagram ? String(si.instagram).replace("@", "") : "";
     const contact = [si.phone ? `📱 ${si.phone}` : "", insta ? `📸 Instagram: @${insta}` : ""].filter(Boolean).join(" · ");
@@ -9143,7 +9263,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
                         <div className="neo-qtbl">
                           <div className="hd"><span>Produto</span><span>Qtd</span><span>Unit.</span><span>Total</span></div>
                           {(q.items || []).map((it) => { const p = projMap[it.projectId]; return (
-                            <div key={it.id}><span>{it.desc || (p ? p.name : "Item")}{p && itemColors(p, it.filChoices).length ? <em> · {itemColorsText(p, it.filChoices)}</em> : null}{it.fromStock ? <em> · pronta entrega</em> : null}</span><span>{fmtN(it.qty)}</span><span>{fmtN(num(it.unitPrice), 2)}</span><span>{fmtN(num(it.qty) * num(it.unitPrice), 2)}</span></div>
+                            <div key={it.id}><span>{it.desc || (p ? p.name : "Item")}{p && itemColors(p, it.filChoices).length ? <em> · {itemColorsText(p, it.filChoices)}</em> : null}{it.fromStock ? <em> · {stockTxt(it)}</em> : null}</span><span>{fmtN(it.qty)}</span><span>{fmtN(num(it.unitPrice), 2)}</span><span>{fmtN(num(it.qty) * num(it.unitPrice), 2)}</span></div>
                           ); })}
                           {disc > 0 && <div><span>Desconto</span><span /><span /><span className="o">−{fmtN(disc, 2)}</span></div>}
                           <div className="tt"><span>Total</span><span /><span /><span>{fmtN(quoteTotal(q), 2)}</span></div>
@@ -9257,13 +9377,15 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
               {p && prodQty(p.id) > 0 && (() => {
                 const avail = availableQty(p.id, f.id);
                 const enough = num(it.qty) <= avail;
+                const can = avail > 0;
                 return (
                   <div style={{ gridColumn: "1 / -1", background: it.fromStock ? "var(--t90)" : "var(--t72)", border: `1px dashed ${it.fromStock ? "var(--t173)" : "var(--t31)"}`, borderRadius: 10, padding: "8px 11px", marginTop: -2 }}>
-                    <label style={{ display: "flex", gap: 8, alignItems: "center", cursor: enough ? "pointer" : "default", opacity: enough || it.fromStock ? 1 : .75 }}>
-                      <input type="checkbox" checked={!!it.fromStock} disabled={!enough && !it.fromStock} onChange={(e) => setItem(i, { fromStock: e.target.checked })} />
+                    <label style={{ display: "flex", gap: 8, alignItems: "center", cursor: can ? "pointer" : "default", opacity: can || it.fromStock ? 1 : .75 }}>
+                      <input type="checkbox" className="stk-chk" checked={!!it.fromStock} disabled={!can && !it.fromStock} onChange={(e) => setItem(i, { fromStock: e.target.checked })} />
                       <span style={{ font: "400 12px Inter,sans-serif", color: "var(--t69)" }}>
                         ✔ Você tem <b>{fmtN(prodQty(p.id))} un em estoque</b>{reservedQty(p.id, f.id) > 0 ? ` (${fmtN(avail)} disponível — o restante já está reservado em outros orçamentos)` : ""}. <b style={{ color: "var(--t86)" }}>Reservar do estoque (pronta entrega)?</b>
-                        {!enough && <span style={{ color: "var(--t251)" }}> — quantidade maior que o disponível</span>}
+                        {!can && <span style={{ color: "var(--t251)" }}> — nada disponível agora</span>}
+                        {can && !enough && <span className="stk-split" style={{ display: "block", marginTop: 4, color: it.fromStock ? "var(--t6)" : "var(--t243)" }}>→ <b>{fmtN(avail)} sai do estoque</b> (pronta entrega) + <b>{fmtN(num(it.qty) - avail)} vai para produção</b></span>}
                       </span>
                     </label>
                   </div>
@@ -9297,7 +9419,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
         <div style={{ display: "flex", justifyContent: "flex-end", gap: 10, marginTop: 6 }}>
           <Btn kind="ghost" onClick={() => setModal(null)}>Cancelar</Btn>
           <Btn disabled={f.items.length === 0} onClick={() => {
-            const items = f.items.map((it) => it.fromStock && num(it.qty) <= availableQty(it.projectId, f.id) ? it : { ...it, fromStock: false });
+            const items = f.items.map((it) => { const av = it.fromStock ? availableQty(it.projectId, f.id) : 0; const { stockQty, ...rest } = it; return it.fromStock && av > 0 ? { ...rest, stockQty: Math.min(num(it.qty), av) } : { ...rest, fromStock: false }; });
             saveItem("quotes", { ...f, items, deadline: f.deadline || est.date });
             setModal(null); notify(item ? "Orçamento atualizado" : `Orçamento ${f.code} criado`);
           }}>Salvar orçamento</Btn>
@@ -10194,7 +10316,7 @@ SC,
               <div style={{ font: "700 13px 'Space Grotesk',sans-serif", color: ink, margin: "18px 0 8px" }}>Lançamentos</div>
               <table><thead><tr><th>Data</th><th>Tipo</th><th>Produto / descrição</th><th>Cliente</th><th>Motivo</th><th style={{ textAlign: "center" }}>Qtd</th><th style={{ textAlign: "right" }}>Custo</th><th style={{ textAlign: "right" }}>Deixou de faturar</th></tr></thead>
                 <tbody>{r.rows.map((x) => (
-                  <tr key={x.kind + x.id}><td style={{ whiteSpace: "nowrap" }}>{fmtDate(x.date)}</td><td>{x.kind === "brinde" ? "Brinde" : "Calibração"}</td><td style={{ fontWeight: x.kind === "brinde" ? 600 : 400 }}>{x.kind === "calib" ? x.desc : x.product}</td><td>{x.client}</td><td>{x.kind === "calib" ? "—" : x.motivo}</td><td style={{ textAlign: "center" }}>{x.qty > 0 ? fmtN(x.qty) : "—"}</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{fmt(x.cost)}</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{x.lost > 0 ? fmt(x.lost) : "—"}</td></tr>
+                  <tr key={x.kind + x.id}><td style={{ whiteSpace: "nowrap" }}>{fmtDate(x.date)}</td><td>{x.kind === "brinde" ? "Brinde" : x.kind === "falha" ? "Falha" : "Calibração"}</td><td style={{ fontWeight: x.kind === "brinde" ? 600 : 400 }}>{x.kind === "calib" ? x.desc : x.product}</td><td>{x.client}</td><td>{x.kind === "calib" ? "—" : x.motivo}</td><td style={{ textAlign: "center" }}>{x.qty > 0 ? fmtN(x.qty) : "—"}</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{fmt(x.cost)}</td><td style={{ textAlign: "right", fontFamily: "'JetBrains Mono',monospace" }}>{x.lost > 0 ? fmt(x.lost) : "—"}</td></tr>
                 ))}</tbody>
               </table>
             </React.Fragment>
@@ -10419,7 +10541,7 @@ SC,
                           ? <img src={p.image} alt="" style={{ width: 46, height: 46, objectFit: "cover", borderRadius: 7, border: "1px solid #D3DEDE", flexShrink: 0, display: "block" }} />
                           : <span style={{ width: 46, height: 46, borderRadius: 7, border: "1px solid #E3EAEA", background: "#F2F7F7", flexShrink: 0, display: "block" }} />
                       )}
-                      <div><span>{it.desc || (p ? p.name : "Item")}{it.kitName && <span style={{ font: "500 10.5px Inter,sans-serif", color: "var(--t257)" }}> · Kit {it.kitName}</span>}{it.fromStock && <span style={{ background: "#F47A20", color: "#fff", borderRadius: 999, padding: "1.5px 8px", font: "700 9.5px Inter,sans-serif", marginLeft: 7, letterSpacing: ".04em", verticalAlign: "middle" }}>PRONTA ENTREGA</span>}</span>
+                      <div><span>{it.desc || (p ? p.name : "Item")}{it.kitName && <span style={{ font: "500 10.5px Inter,sans-serif", color: "var(--t257)" }}> · Kit {it.kitName}</span>}{it.fromStock && <span style={{ background: "#F47A20", color: "#fff", borderRadius: 999, padding: "1.5px 8px", font: "700 9.5px Inter,sans-serif", marginLeft: 7, letterSpacing: ".04em", verticalAlign: "middle" }}>{stockTxt(it).toUpperCase()}</span>}</span>
                         {p && itemColorsLine(p, it.filChoices, true)}
                       </div>
                     </div>
@@ -11232,6 +11354,7 @@ SC,
   OrderModal = stableComponent("OrderModal", OrderModal);
   QuickPrintModal = stableComponent("QuickPrintModal", QuickPrintModal);
   QuickDoneModal = stableComponent("QuickDoneModal", QuickDoneModal);
+  FailModal = stableComponent("FailModal", FailModal);
   CalibrationModal = stableComponent("CalibrationModal", CalibrationModal);
   Clients = stableComponent("Clients", Clients);
   ClientModal = stableComponent("ClientModal", ClientModal);
@@ -11404,6 +11527,7 @@ SC,
       {modal && modal.type === "calib" && <CalibrationModal key={modalKey} />}
       {modal && modal.type === "quick" && <QuickPrintModal key={modalKey} />}
       {modal && modal.type === "quickDone" && <QuickDoneModal key={modalKey} />}
+      {modal && modal.type === "fail" && <FailModal key={modalKey} />}
       {modal && modal.type === "client" && <ClientModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "clientDetail" && <ClientDetailModal key={modalKey} item={modal.item} />}
       {modal && modal.type === "quote" && <QuoteModal key={modalKey} item={modal.item} presetClient={modal.clientId} presetProject={modal.projectId} />}

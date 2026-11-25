@@ -573,6 +573,12 @@
   .neo-qtbl .hd{font:600 10px Inter,sans-serif;color:var(--t18);letter-spacing:.1em;text-transform:uppercase;}
   .neo-qtbl .tt{border:0;font-weight:700;color:var(--t37);} .neo-qtbl .tt span:last-child{color:var(--t7);}
   .neo-qnote{font:400 12px Inter,sans-serif;color:var(--t18);margin-top:8px;}
+  .neo-tline .print-row.fail-row:before{background:#F0605F;box-shadow:0 0 8px rgba(240,96,95,.45);}
+  .neo-tline .print-row .fx{color:#F0605F;font:700 11px 'JetBrains Mono',monospace;letter-spacing:.04em;}
+  .fail-bar{display:flex;justify-content:flex-end;margin-top:10px;}
+  .neo-bfail{display:inline-flex;align-items:center;gap:6px;background:rgba(240,96,95,.08);border:1px solid rgba(240,96,95,.45);color:#F0605F;border-radius:10px;padding:7px 12px;font:600 12.5px Inter,sans-serif;cursor:pointer;}
+  .neo-bfail:hover{background:rgba(240,96,95,.16);}
+  html[data-theme=light] .neo-bfail, html[data-theme=light] .neo-tline .print-row .fx{color:#C93434;border-color:rgba(201,52,52,.45);}
   .neo-tline .print-row.fut:before{background:transparent;border:2px dashed var(--t151);box-shadow:none;width:6px;height:6px;}
   @media (max-width: 1100px){ .neo-qtop{grid-template-columns:repeat(2,1fr);} .neo-qtop .neo-funnel{grid-column:1 / -1;} .neo-qline{grid-template-columns:minmax(0,1fr) minmax(0,1fr) auto;} .neo-qitems{grid-column:1 / -1;order:5;} .neo-qexp{grid-template-columns:1fr;} }
   @media (max-width: 620px){ .neo-qline{grid-template-columns:1fr;} .neo-qtot{text-align:left;} .neo-oacts{justify-content:flex-start;} }
@@ -1327,7 +1333,7 @@ const addDays = (iso, n) => {
   d.setDate(d.getDate() + n);
   return d.toISOString().slice(0, 10);
 };
-const APP_VERSION = "5.1";
+const APP_VERSION = "5.2";
 const APP_UPDATED = "24/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";
@@ -6610,11 +6616,19 @@ function App() {
     const p = projMap[o.projectId];
     return p && p.name || o.projectName || "—";
   };
+  const stockPart = it => Math.min(num(it.qty), it.stockQty != null && it.stockQty !== "" ? num(it.stockQty) : num(it.qty));
+  const stockTxt = it => {
+    const sq = stockPart(it),
+      q = num(it.qty);
+    return sq < q ? `${fmtN(sq)} pronta entrega + ${fmtN(q - sq)} sob encomenda` : "pronta entrega";
+  };
+  const failCostOf = o => (o && o.fails || []).filter(x => x.applied).reduce((s, x) => s + num(x.cost), 0);
+  const filPerG = fl => fl ? num(fl.price) / Math.max(1, num(fl.qtyG)) : 0;
   const prodQty = projectId => {
     const e = data.products.find(x => x.projectId === projectId);
     return e ? num(e.qty) : 0;
   };
-  const reservedQty = (projectId, exceptQuoteId) => (data.quotes || []).filter(q => q.status === "Pendente" && (!q.validUntil || q.validUntil >= todayISO()) && q.id !== exceptQuoteId).reduce((s, q) => s + (q.items || []).filter(it => it.fromStock && it.projectId === projectId).reduce((a, it) => a + num(it.qty), 0), 0);
+  const reservedQty = (projectId, exceptQuoteId) => (data.quotes || []).filter(q => q.status === "Pendente" && (!q.validUntil || q.validUntil >= todayISO()) && q.id !== exceptQuoteId).reduce((s, q) => s + (q.items || []).filter(it => it.fromStock && it.projectId === projectId).reduce((a, it) => a + stockPart(it), 0), 0);
   const availableQty = (projectId, exceptQuoteId) => Math.max(0, prodQty(projectId) - reservedQty(projectId, exceptQuoteId));
   const prodHistory = (projectId, from, to) => {
     const evs = [];
@@ -7211,6 +7225,22 @@ function App() {
           }
           o.processed = true;
         }
+        const fl = (order.fails || []).filter(x => !x.applied && num(x.grams) > 0);
+        if (fl.length) {
+          filaments = filaments.map(f => {
+            const g = fl.filter(x => x.filamentId === f.id).reduce((s, x) => s + num(x.grams), 0);
+            return g > 0 ? {
+              ...f,
+              stockG: Math.max(0, +(num(f.stockG) - g).toFixed(2))
+            } : f;
+          });
+          o.fails = (order.fails || []).map(x => fl.includes(x) ? {
+            ...x,
+            applied: true
+          } : x);
+          o.cost = (num(o.cost) + fl.reduce((s, x) => s + num(x.cost), 0)).toFixed(2);
+          o.processed = true;
+        }
       }
       return {
         ...d,
@@ -7397,6 +7427,38 @@ function App() {
       if (msg) notify(msg);
     }, 0);
   };
+  const addFails = (order, list) => {
+    const rows = list.filter(x => x.filamentId && num(x.grams) > 0).map(x => ({
+      id: uid(),
+      date: todayISO(),
+      filamentId: x.filamentId,
+      grams: +num(x.grams).toFixed(1),
+      partId: x.partId || "",
+      cost: +(num(x.grams) * filPerG(filMap[x.filamentId])).toFixed(2)
+    }));
+    if (!rows.length) return false;
+    const g = rows.reduce((s, x) => s + x.grams, 0);
+    logAs(`Lançou falha: ${projName(order)} — ${rows.map(x => `${fmtN(x.grams)}g ${(filMap[x.filamentId] || {}).name || "filamento"}`).join(", ")}`);
+    setData(d => ({
+      ...d,
+      orders: d.orders.map(o => o.id === order.id ? {
+        ...o,
+        fails: [...(o.fails || []), ...rows]
+      } : o)
+    }));
+    notify(`Falha lançada: ${fmtN(g)}g — sai do estoque de filamento quando concluir o pedido`);
+    return true;
+  };
+  const removeFail = (order, failId) => {
+    logAs(`Apagou falha lançada: ${projName(order)}`);
+    setData(d => ({
+      ...d,
+      orders: d.orders.map(o => o.id === order.id ? {
+        ...o,
+        fails: (o.fails || []).filter(x => x.id !== failId)
+      } : o)
+    }));
+  };
   const removePrint = (order, printId) => {
     const p = projMap[order.projectId];
     {
@@ -7542,7 +7604,7 @@ function App() {
             dueDate: fromStock ? todayISO() : quote.deadline || "",
             price: (qty * unitPrice).toFixed(2),
             cost: (orderUnitCost(p, it.filChoices) * qty).toFixed(2),
-            status: "Aprovado",
+            status: fromStock ? "Concluído" : "Aprovado",
             printerId: "",
             paid: false,
             processed: fromStock,
@@ -7597,7 +7659,7 @@ function App() {
         };
       });
       const reservedCount = (quote.items || []).filter(it => it.fromStock).length;
-      notify(`Orçamento aprovado — pedido(s) criado(s)${reservedCount > 0 ? " · itens de pronta entrega já saíram do estoque" : ""}`);
+      notify(`Orçamento aprovado — pedido(s) criado(s)${reservedCount > 0 ? " · itens de pronta entrega já saíram do estoque e estão em A receber" : ""}`);
     } else {
       setData(d => ({
         ...d,
@@ -7739,6 +7801,30 @@ function App() {
         lost: num(o.qty) * refSalePrice(p)
       });
     });
+    if (f.fails !== false) data.orders.filter(o => isDone(o) && (o.fails || []).some(x => x.applied)).forEach(o => {
+      const p = projMap[o.projectId];
+      const c = cliMap[o.clientId];
+      if (f.clientId && o.clientId !== f.clientId) return;
+      if (f.projectId && o.projectId !== f.projectId) return;
+      if (f.niche && !hasNiche(p, f.niche)) return;
+      o.fails.filter(x => x.applied && inR(x.date)).forEach(x => {
+        const fl = filMap[x.filamentId];
+        const motivo = `Falha de impressão — ${fmtN(x.grams)} g ${fl ? fl.name : "filamento"}`;
+        if (mq && !motivo.toLowerCase().includes(mq)) return;
+        rows.push({
+          id: x.id,
+          kind: "falha",
+          date: x.date,
+          product: projName(o),
+          client: c ? c.name : "Sem cliente",
+          niche: p && p.niche || "Sem nicho",
+          motivo,
+          qty: 0,
+          cost: num(x.cost),
+          lost: 0
+        });
+      });
+    });
     const filtering = !!(f.clientId || f.projectId || f.niche || mq);
     const calibOn = f.calib !== false && !filtering;
     if (calibOn) (data.cashflow || []).filter(e => e.cat === "Calibração" && e.kind === "out" && inR(e.date)).forEach(e => {
@@ -7789,6 +7875,7 @@ function App() {
       cost: rows.reduce((s, r) => s + r.cost, 0),
       giftCost: gifts.reduce((s, r) => s + r.cost, 0),
       calibCost: rows.filter(r => r.kind === "calib").reduce((s, r) => s + r.cost, 0),
+      failCost: rows.filter(r => r.kind === "falha").reduce((s, r) => s + r.cost, 0),
       lost: gifts.reduce((s, r) => s + r.lost, 0),
       qty: gifts.reduce((s, r) => s + r.qty, 0),
       gifts: gifts.length,
@@ -14646,7 +14733,54 @@ function App() {
       type: "date",
       value: f.dueDate,
       onChange: set("dueDate")
-    }))), React.createElement(Row, {
+    }))), !item && f.dest === "venda" && p && availableQty(p.id) > 0 && (() => {
+      const avail = availableQty(p.id),
+        q = Math.max(0, num(f.qty)),
+        take = Math.min(q, avail);
+      return React.createElement("div", {
+        className: "ord-stk",
+        style: {
+          background: f.useStock ? "var(--t90)" : "var(--t72)",
+          border: `1px dashed ${f.useStock ? "var(--t173)" : "var(--t31)"}`,
+          borderRadius: 10,
+          padding: "8px 11px",
+          marginBottom: 12
+        }
+      }, React.createElement("label", {
+        style: {
+          display: "flex",
+          gap: 8,
+          alignItems: "flex-start",
+          cursor: "pointer"
+        }
+      }, React.createElement("input", {
+        type: "checkbox",
+        className: "ord-stk-chk",
+        checked: !!f.useStock,
+        onChange: e => setF({
+          ...f,
+          useStock: e.target.checked
+        }),
+        style: {
+          marginTop: 2
+        }
+      }), React.createElement("span", {
+        style: {
+          font: "400 12px Inter,sans-serif",
+          color: "var(--t69)"
+        }
+      }, "\u2714 Voc\xEA tem ", React.createElement("b", null, fmtN(avail), " un dispon\xEDvel em estoque"), ". ", React.createElement("b", {
+        style: {
+          color: "var(--t86)"
+        }
+      }, "Usar do estoque (pronta entrega)?"), f.useStock && q > 0 && React.createElement("span", {
+        style: {
+          display: "block",
+          marginTop: 4,
+          color: "var(--t6)"
+        }
+      }, "\u2192 ", React.createElement("b", null, fmtN(take), " sai do estoque"), " e vai direto para A receber", q > take ? React.createElement(React.Fragment, null, " + ", React.createElement("b", null, fmtN(q - take), " vai para produ\xE7\xE3o")) : ""))));
+    })(), React.createElement(Row, {
       cols: 3
     }, !noSale ? React.createElement("div", null, React.createElement(L, null, "Valor cobrado (R$)"), React.createElement(In, {
       type: "number",
@@ -14919,9 +15053,56 @@ function App() {
       disabled: !f.projectId,
       onClick: () => {
         const isNew = !item;
+        if (isNew && f.useStock && f.dest === "venda" && p) {
+          const q = Math.max(0, num(f.qty)),
+            take = Math.min(q, availableQty(p.id)),
+            rest = q - take;
+          if (take > 0) {
+            const unitP = q > 0 ? num(f.price) / q : 0,
+              unitC = orderUnitCost(p, f.filChoices);
+            const base = {
+              ...f,
+              projectName: p.name,
+              clientId: f.clientId
+            };
+            delete base.useStock;
+            const stk = {
+              ...base,
+              id: uid(),
+              qty: take,
+              price: f.price === "" ? "" : (unitP * take).toFixed(2),
+              cost: (unitC * take).toFixed(2),
+              status: "Concluído",
+              dueDate: f.dueDate || todayISO(),
+              printerId: "",
+              partPrinters: {},
+              processed: true,
+              fromStock: true,
+              ts: nowStamp()
+            };
+            const prod = rest > 0 ? {
+              ...base,
+              qty: rest,
+              price: f.price === "" ? "" : (num(f.price) - unitP * take).toFixed(2),
+              cost: (unitC * rest).toFixed(2),
+              processed: false
+            } : null;
+            logAs(`Criou pedido: ${p.name} — ${fmtN(take)} do estoque${rest > 0 ? ` + ${fmtN(rest)} para produzir` : ""}`);
+            setData(d => ({
+              ...d,
+              products: changeProductStock(d.products, p.id, -take),
+              orders: [...d.orders, stk, ...(prod ? [prod] : [])]
+            }));
+            if (prod && ["Concluído", "Entregue"].includes(prod.status)) setOrderStatus(prod, prod.status);
+            setModal(null);
+            notify(`Pedido criado — ${fmtN(take)} saiu do estoque (A receber)${rest > 0 ? ` · ${fmtN(rest)} para produção` : ""}`);
+            return;
+          }
+        }
         const rec = {
           ...f,
-          cost: autoCost || f.cost,
+          useStock: undefined,
+          cost: (autoCost ? (num(autoCost) + failCostOf(f)).toFixed(2) : "") || f.cost,
           price: noSale ? "" : f.price,
           clientId: isStk ? "" : f.clientId,
           paid: noSale ? false : f.paid,
@@ -14935,6 +15116,130 @@ function App() {
         notify(isNew ? "Pedido criado" : "Pedido atualizado");
       }
     }, "Salvar pedido")));
+  }
+  function FailModal() {
+    const o = data.orders.find(x => x.id === modal.orderId);
+    const p = o ? projMap[o.projectId] : null;
+    const first = p ? ((p.parts && p.parts[0] && isPartsProj(p) ? partFils(p, o, p.parts[0]) : orderFilaments(p, o))[0] || {}).filamentId : "";
+    const [rows, setRows] = useState([{
+      id: uid(),
+      filamentId: first || (data.filaments[0] || {}).id || "",
+      grams: "",
+      partId: ""
+    }]);
+    if (!o) return null;
+    const setRow = (i, patch) => setRows(rows.map((r, k) => k === i ? {
+      ...r,
+      ...patch
+    } : r));
+    const total = rows.reduce((s, r) => s + num(r.grams) * filPerG(filMap[r.filamentId]), 0);
+    const ok = rows.some(r => r.filamentId && num(r.grams) > 0);
+    return React.createElement(Modal, {
+      title: `Lançar falha — ${projName(o)}`,
+      code: "PRODU\xC7\xC3O",
+      onClose: () => setModal(null)
+    }, React.createElement("div", {
+      style: {
+        font: "400 12.5px Inter,sans-serif",
+        color: "var(--t243)",
+        marginBottom: 12
+      }
+    }, "Pese na balan\xE7a o que foi perdido. As gramas saem do estoque de filamento quando voc\xEA ", React.createElement("b", null, "concluir"), " o pedido e o custo entra no pedido. A pe\xE7a continua faltando."), rows.map((r, i) => React.createElement("div", {
+      key: r.id,
+      className: "fail-in",
+      style: {
+        display: "grid",
+        gridTemplateColumns: isPartsProj(p) ? "minmax(0,1.6fr) 90px minmax(0,1fr) 28px" : "minmax(0,1.6fr) 90px 28px",
+        gap: 8,
+        alignItems: "end",
+        marginBottom: 8
+      }
+    }, React.createElement("div", null, React.createElement(L, null, "Filamento"), React.createElement(Combo, {
+      value: r.filamentId,
+      onChange: v => setRow(i, {
+        filamentId: v
+      }),
+      placeholder: "\u2014 selecionar \u2014",
+      options: data.filaments.map(x => ({
+        value: x.id,
+        label: x.name,
+        sub: (x.color || "sem cor") + " · " + fmtN(x.stockG) + "g"
+      }))
+    })), React.createElement("div", null, React.createElement(L, null, "Gramas"), React.createElement(In, {
+      type: "number",
+      className: "fail-g",
+      value: r.grams,
+      onChange: e => setRow(i, {
+        grams: e.target.value
+      }),
+      placeholder: "0"
+    })), isPartsProj(p) && React.createElement("div", null, React.createElement(L, null, "Parte (opcional)"), React.createElement(Sel, {
+      value: r.partId,
+      onChange: e => setRow(i, {
+        partId: e.target.value
+      })
+    }, React.createElement("option", {
+      value: ""
+    }, "\u2014"), p.parts.map(pt => React.createElement("option", {
+      key: pt.id,
+      value: pt.id
+    }, pt.name || "Parte")))), React.createElement("button", {
+      title: "Tirar",
+      onClick: () => setRows(rows.length > 1 ? rows.filter((_, k) => k !== i) : rows),
+      style: {
+        height: 38,
+        background: "none",
+        border: 0,
+        color: "var(--t243)",
+        cursor: rows.length > 1 ? "pointer" : "default",
+        opacity: rows.length > 1 ? 1 : .3
+      }
+    }, React.createElement(Trash2, {
+      size: 14
+    })))), React.createElement("div", {
+      style: {
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        margin: "6px 0 16px",
+        font: "500 12.5px Inter,sans-serif",
+        color: "var(--t243)"
+      }
+    }, React.createElement("a", {
+      className: "fail-add",
+      onClick: () => setRows([...rows, {
+        id: uid(),
+        filamentId: (data.filaments[0] || {}).id || "",
+        grams: "",
+        partId: ""
+      }]),
+      style: {
+        color: "#14A6A4",
+        cursor: "pointer",
+        fontWeight: 600
+      }
+    }, "+ outra cor"), React.createElement("span", null, "custo da falha: ", React.createElement("b", {
+      style: {
+        color: "var(--t102)"
+      }
+    }, fmt(total)))), React.createElement("div", {
+      style: {
+        display: "flex",
+        gap: 10,
+        justifyContent: "flex-end"
+      }
+    }, React.createElement(Btn, {
+      kind: "ghost",
+      onClick: () => setModal(null)
+    }, "Cancelar"), React.createElement(Btn, {
+      disabled: !ok,
+      className: "fail-save",
+      onClick: () => {
+        if (addFails(o, rows)) setModal(null);
+      }
+    }, React.createElement(AlertTriangle, {
+      size: 15
+    }), "Lan\xE7ar falha")));
   }
   function QuickDoneModal() {
     const o = data.orders.find(x => x.id === modal.orderId);
@@ -17632,7 +17937,7 @@ function App() {
     }, React.createElement(Stat, {
       label: "Perda real (custo)",
       value: fmt(r.total.cost),
-      sub: r.calibOn ? `${fmt(r.total.giftCost)} brindes · ${fmt(r.total.calibCost)} calibrações` : "custo dos brindes entregues",
+      sub: (r.calibOn ? `${fmt(r.total.giftCost)} brindes · ${fmt(r.total.calibCost)} calibrações` : "custo dos brindes entregues") + (r.total.failCost > 0 ? ` · ${fmt(r.total.failCost)} falhas` : ""),
       icon: GiftIc,
       accent: "#F0605F"
     }), React.createElement(Stat, {
@@ -17827,7 +18132,7 @@ function App() {
       style: thR
     }, "Deixou de faturar"))), React.createElement("tbody", null, sortRows(r.rows, sGL, {
       date: x => x.date,
-      kind: x => x.kind === "brinde" ? "Brinde" : "Calibração",
+      kind: x => x.kind === "brinde" ? "Brinde" : x.kind === "falha" ? "Falha" : "Calibração",
       product: x => x.kind === "calib" ? x.desc : x.product,
       client: x => x.kind === "calib" ? null : x.client,
       motivo: x => x.kind === "calib" ? null : x.motivo,
@@ -17848,7 +18153,15 @@ function App() {
         padding: "2px 9px",
         font: "600 11px Inter,sans-serif"
       }
-    }, "Brinde") : React.createElement("span", {
+    }, "Brinde") : x.kind === "falha" ? React.createElement("span", {
+      style: {
+        background: "var(--t254)",
+        color: "var(--t102)",
+        borderRadius: 999,
+        padding: "2px 9px",
+        font: "600 11px Inter,sans-serif"
+      }
+    }, "Falha") : React.createElement("span", {
       style: {
         background: "var(--t237)",
         color: "var(--t216)",
@@ -19900,7 +20213,42 @@ function App() {
         }
       }, React.createElement(Trash2, {
         size: 12
-      })))))))));
+      })))), (o.fails || []).map(x => {
+        const fl = filMap[x.filamentId];
+        const pt = x.partId && p && isPartsProj(p) ? p.parts.find(y => y.id === x.partId) : null;
+        return React.createElement("div", {
+          key: x.id,
+          className: "print-row fail-row"
+        }, React.createElement("span", {
+          className: "d"
+        }, fmtDate(x.date).slice(0, 5)), React.createElement("b", {
+          className: "fx"
+        }, "\u2715 FALHA"), React.createElement("span", {
+          className: "pr"
+        }, React.createElement("i", {
+          style: {
+            color: fl && fl.colorHex || "var(--t18)",
+            fontStyle: "normal"
+          }
+        }, "\u25CF"), " ", fl ? fl.name : "filamento", " \xB7 ", React.createElement("b", null, fmtN(x.grams), " g"), pt ? ` · ${pt.name}` : "", " \xB7 ", fmt(x.cost), x.applied ? "" : " · baixa ao concluir"), !x.applied && React.createElement("button", {
+          title: "Apagar esta falha",
+          onClick: async () => {
+            if (await askConfirm(`Apagar a falha de ${fmtN(x.grams)} g?`)) removeFail(o, x.id);
+          }
+        }, React.createElement(Trash2, {
+          size: 12
+        })));
+      })), React.createElement("div", {
+        className: "fail-bar"
+      }, React.createElement("button", {
+        className: "neo-bfail",
+        onClick: () => setModal({
+          type: "fail",
+          orderId: o.id
+        })
+      }, React.createElement(AlertTriangle, {
+        size: 13
+      }), "Lan\xE7ar falha"))))));
     }), sub === "prod" && all.length > 0 && view === "quadro" && prodList.length > 0 && React.createElement("div", {
       className: "neo-kanban"
     }, KANBAN_COLS.filter(s => s !== "Orçamento" || prodList.some(o => o.status === "Orçamento")).map(s => {
@@ -20506,7 +20854,7 @@ function App() {
     const first = c && c.name ? c.name.trim().split(" ")[0] : "";
     const items = (quote.items || []).map(it => {
       const p = projMap[it.projectId];
-      return `🔹 ${fmtN(it.qty)}× ${it.desc || (p ? p.name : "Item")}${p && itemColors(p, it.filChoices).length ? ` (${itemColorsText(p, it.filChoices)})` : ""} — ${fmt(num(it.qty) * num(it.unitPrice))}${it.fromStock ? " ⚡ *PRONTA ENTREGA*" : ""}`;
+      return `🔹 ${fmtN(it.qty)}× ${it.desc || (p ? p.name : "Item")}${p && itemColors(p, it.filChoices).length ? ` (${itemColorsText(p, it.filChoices)})` : ""} — ${fmt(num(it.qty) * num(it.unitPrice))}${it.fromStock ? ` ⚡ *${stockTxt(it).toUpperCase()}*` : ""}`;
     }).join("\n");
     const insta = si.instagram ? String(si.instagram).replace("@", "") : "";
     const contact = [si.phone ? `📱 ${si.phone}` : "", insta ? `📸 Instagram: @${insta}` : ""].filter(Boolean).join(" · ");
@@ -21043,7 +21391,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
         const p = projMap[it.projectId];
         return React.createElement("div", {
           key: it.id
-        }, React.createElement("span", null, it.desc || (p ? p.name : "Item"), p && itemColors(p, it.filChoices).length ? React.createElement("em", null, " \xB7 ", itemColorsText(p, it.filChoices)) : null, it.fromStock ? React.createElement("em", null, " \xB7 pronta entrega") : null), React.createElement("span", null, fmtN(it.qty)), React.createElement("span", null, fmtN(num(it.unitPrice), 2)), React.createElement("span", null, fmtN(num(it.qty) * num(it.unitPrice), 2)));
+        }, React.createElement("span", null, it.desc || (p ? p.name : "Item"), p && itemColors(p, it.filChoices).length ? React.createElement("em", null, " \xB7 ", itemColorsText(p, it.filChoices)) : null, it.fromStock ? React.createElement("em", null, " \xB7 ", stockTxt(it)) : null), React.createElement("span", null, fmtN(it.qty)), React.createElement("span", null, fmtN(num(it.unitPrice), 2)), React.createElement("span", null, fmtN(num(it.qty) * num(it.unitPrice), 2)));
       }), disc > 0 && React.createElement("div", null, React.createElement("span", null, "Desconto"), React.createElement("span", null), React.createElement("span", null), React.createElement("span", {
         className: "o"
       }, "\u2212", fmtN(disc, 2))), React.createElement("div", {
@@ -21419,6 +21767,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
       })(), p && prodQty(p.id) > 0 && (() => {
         const avail = availableQty(p.id, f.id);
         const enough = num(it.qty) <= avail;
+        const can = avail > 0;
         return React.createElement("div", {
           style: {
             gridColumn: "1 / -1",
@@ -21433,13 +21782,14 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
             display: "flex",
             gap: 8,
             alignItems: "center",
-            cursor: enough ? "pointer" : "default",
-            opacity: enough || it.fromStock ? 1 : .75
+            cursor: can ? "pointer" : "default",
+            opacity: can || it.fromStock ? 1 : .75
           }
         }, React.createElement("input", {
           type: "checkbox",
+          className: "stk-chk",
           checked: !!it.fromStock,
-          disabled: !enough && !it.fromStock,
+          disabled: !can && !it.fromStock,
           onChange: e => setItem(i, {
             fromStock: e.target.checked
           })
@@ -21452,11 +21802,18 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
           style: {
             color: "var(--t86)"
           }
-        }, "Reservar do estoque (pronta entrega)?"), !enough && React.createElement("span", {
+        }, "Reservar do estoque (pronta entrega)?"), !can && React.createElement("span", {
           style: {
             color: "var(--t251)"
           }
-        }, " \u2014 quantidade maior que o dispon\xEDvel"))));
+        }, " \u2014 nada dispon\xEDvel agora"), can && !enough && React.createElement("span", {
+          className: "stk-split",
+          style: {
+            display: "block",
+            marginTop: 4,
+            color: it.fromStock ? "var(--t6)" : "var(--t243)"
+          }
+        }, "\u2192 ", React.createElement("b", null, fmtN(avail), " sai do estoque"), " (pronta entrega) + ", React.createElement("b", null, fmtN(num(it.qty) - avail), " vai para produ\xE7\xE3o")))));
       })());
     }), React.createElement("div", {
       style: {
@@ -21568,9 +21925,19 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
     }, "Cancelar"), React.createElement(Btn, {
       disabled: f.items.length === 0,
       onClick: () => {
-        const items = f.items.map(it => it.fromStock && num(it.qty) <= availableQty(it.projectId, f.id) ? it : {
-          ...it,
-          fromStock: false
+        const items = f.items.map(it => {
+          const av = it.fromStock ? availableQty(it.projectId, f.id) : 0;
+          const {
+            stockQty,
+            ...rest
+          } = it;
+          return it.fromStock && av > 0 ? {
+            ...rest,
+            stockQty: Math.min(num(it.qty), av)
+          } : {
+            ...rest,
+            fromStock: false
+          };
         });
         saveItem("quotes", {
           ...f,
@@ -23697,7 +24064,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
         style: {
           whiteSpace: "nowrap"
         }
-      }, fmtDate(x.date)), React.createElement("td", null, x.kind === "brinde" ? "Brinde" : "Calibração"), React.createElement("td", {
+      }, fmtDate(x.date)), React.createElement("td", null, x.kind === "brinde" ? "Brinde" : x.kind === "falha" ? "Falha" : "Calibração"), React.createElement("td", {
         style: {
           fontWeight: x.kind === "brinde" ? 600 : 400
         }
@@ -24414,7 +24781,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
           letterSpacing: ".04em",
           verticalAlign: "middle"
         }
-      }, "PRONTA ENTREGA")), p && itemColorsLine(p, it.filChoices, true)))), React.createElement("td", {
+      }, stockTxt(it).toUpperCase())), p && itemColorsLine(p, it.filChoices, true)))), React.createElement("td", {
         style: {
           textAlign: "center"
         }
@@ -26588,6 +26955,7 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
   OrderModal = stableComponent("OrderModal", OrderModal);
   QuickPrintModal = stableComponent("QuickPrintModal", QuickPrintModal);
   QuickDoneModal = stableComponent("QuickDoneModal", QuickDoneModal);
+  FailModal = stableComponent("FailModal", FailModal);
   CalibrationModal = stableComponent("CalibrationModal", CalibrationModal);
   Clients = stableComponent("Clients", Clients);
   ClientModal = stableComponent("ClientModal", ClientModal);
@@ -26989,6 +27357,8 @@ Vamos tirar essa ideia da tela? 🚀${contact ? `\n${contact}` : ""}`;
   }), modal && modal.type === "quick" && React.createElement(QuickPrintModal, {
     key: modalKey
   }), modal && modal.type === "quickDone" && React.createElement(QuickDoneModal, {
+    key: modalKey
+  }), modal && modal.type === "fail" && React.createElement(FailModal, {
     key: modalKey
   }), modal && modal.type === "client" && React.createElement(ClientModal, {
     key: modalKey,

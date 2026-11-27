@@ -1268,7 +1268,7 @@ const fmtDate = (iso) => { if (!iso) return "—"; const [y, m, d] = iso.split("
 const num = (v) => { const n = parseFloat(String(v).replace(",", ".")); return isNaN(n) ? 0 : n; };
 const addDays = (iso, n) => { const d = new Date(iso + "T12:00:00"); d.setDate(d.getDate() + n); return d.toISOString().slice(0, 10); };
 
-const APP_VERSION = "5.3";
+const APP_VERSION = "5.4";
 const APP_UPDATED = "24/11/2026";
 const STORAGE_KEY = "gestor3d-data-v1";
 const BACKUP_KEY = "gestor3d-data-v1__bak";        // copia de seguranca interna (so rotaciona de vez em quando)
@@ -1606,7 +1606,7 @@ function normalizeData(parsed) {
     ...DEFAULTS, ...parsed,
     projects: syncNiches(foldPurge(stripSlotColors(parsed.projects))),
     /* v4.68: impressao avulsa so fica "em producao" enquanto esta imprimindo */
-    orders: (parsed.orders || []).map((o) => o && o.quick && !(o.printing || []).length && ["Orçamento", "Aprovado", "Em produção"].includes(o.status) ? { ...o, status: "Entregue" } : o),
+    orders: (parsed.orders || []).map((o) => o && o.quick && !o.quickQ && !(o.printing || []).length && ["Orçamento", "Aprovado", "Em produção"].includes(o.status) ? { ...o, status: "Entregue" } : o),
     settings: { ...DEFAULTS.settings, ...ps, niches: ps.niches || DEFAULTS.settings.niches, ecats: mergeCats(ps.ecats, DEFAULT_ECATS), ftypes: ps.ftypes || DEFAULT_FTYPES },
     materials: parsed.materials || [], clients: parsed.clients || [], products: parsed.products || [],
     quotes: parsed.quotes || [], kits: parsed.kits || [], cashflow: parsed.cashflow || [], fixedCosts: parsed.fixedCosts || [], prodMoves: parsed.prodMoves || [],
@@ -3781,6 +3781,18 @@ function App() {
   };
   const finishQuick = (order, prId, cancel) => {
     logAs(`${cancel ? "Cancelou" : "Terminou"} impressão avulsa: ${order.projectName || "—"}`);
+    if (order.quickQ) {
+      const rest = prId ? (order.printing || []).filter((x) => x.printerId !== prId) : [];
+      setData((d) => {
+        const cur = d.orders.find((x) => x.id === order.id) || order;
+        if (rest.length && !cancel) return { ...d, orders: d.orders.map((o) => (o.id === order.id ? { ...o, printing: rest } : o)) };
+        const base = cancel ? { ...cur, note: [cur.note, "impressão cancelada no meio (material contado como perda)"].filter(Boolean).join(" · ") } : cur;
+        return applyOrderStatus(d, base, "Concluído");
+      });
+      setModal(null);
+      notify(cancel ? "Impressão cancelada — o material foi baixado como perda" : rest.length ? "Parte terminada — falta a outra impressora" : "Impressão avulsa concluída — material baixado do estoque");
+      return;
+    }
     setData((d) => ({ ...d, orders: d.orders.map((o) => {
       if (o.id !== order.id) return o;
       const keep = (o.printing || []).filter((x) => x.printerId !== prId);
@@ -3788,6 +3800,19 @@ function App() {
     }) }));
     setModal(null);
     notify(cancel ? "Impressão cancelada — o material fica como perda" : "Impressão avulsa concluída");
+  };
+  const startQuick = (order) => {
+    const at = new Date().toISOString();
+    const pl = (order.quickParts || []).length ? order.quickParts.map((pt, i) => ({ partId: "q" + i, printerId: pt.printerId, qty: num(order.qty) || 1, at })).filter((x, i, a) => x.printerId && a.findIndex((y) => y.printerId === x.printerId) === i) : order.printerId ? [{ partId: "", printerId: order.printerId, qty: num(order.qty) || 1, at }] : [];
+    if (!pl.length) { notify("Escolha a impressora da impressão avulsa (edite o pedido)."); return; }
+    const freed = new Set(pl.map((x) => x.printerId));
+    logAs(`Começou a imprimir: ${order.projectName || "avulsa"} (avulsa)`);
+    setData((d) => ({ ...d, orders: d.orders.map((o) => {
+      if (o.id === order.id) return { ...o, printing: pl, status: "Em produção" };
+      const keep = (o.printing || []).filter((x) => !freed.has(x.printerId));
+      return keep.length !== (o.printing || []).length ? { ...o, printing: keep, ...(o.quick && !o.quickQ && !keep.length ? { status: "Entregue" } : {}) } : o;
+    }) }));
+    notify(`Comando avisado: ${order.projectName} imprimindo`);
   };
   const isPrintingNow = (o, partId) => (o.printing || []).find((x) => (x.partId || "") === (partId || ""));
   const startPrinting = (order, { partId, printerId, qty }) => {
@@ -3799,7 +3824,7 @@ function App() {
     setData((d) => ({ ...d, orders: d.orders.map((o) => {
       const keep = (o.printing || []).filter((x) => x.printerId !== printerId && !(o.id === order.id && (x.partId || "") === (partId || "")));
       if (o.id === order.id) return { ...o, printing: [...keep, { partId: partId || "", printerId, qty: Math.max(1, Math.round(num(qty)) || 1), at }], ...(["Orçamento", "Aprovado"].includes(o.status) ? { status: "Em produção" } : {}) };
-      return (o.printing || []).length !== keep.length ? { ...o, printing: keep, ...(o.quick && !keep.length ? { status: "Entregue" } : {}) } : o;
+      return (o.printing || []).length !== keep.length ? { ...o, printing: keep, ...(o.quick && !o.quickQ && !keep.length ? { status: "Entregue" } : {}) } : o;
     }) }));
     notify(`Comando avisado: ${pt ? pt.name || "parte" : p.name} imprimindo na ${pr ? pr.name : "impressora"}`);
   };
@@ -3882,6 +3907,16 @@ function App() {
           } else if (!order.fromStock) {
             notify(`Baixa automática: -${fmtN(gramsUsed)}g de filamento${(p.extras && p.extras.length) ? " · materiais extras" : ""}${hoursUsed > 0 ? ` · +${fmtN(hoursUsed, 1)}h ${prHours.length > 1 ? "nas impressoras" : "na impressora"}` : ""}`);
           }
+          o.processed = true;
+        }
+        /* v5.4: avulsa que foi para a producao — material, horas e extras baixam so ao concluir */
+        if (order.quickQ) {
+          const qf = order.quickFils || [];
+          filaments = filaments.map((x) => { const g = qf.filter((y) => y.filamentId === x.id).reduce((a, y) => a + num(y.grams), 0); return g > 0 ? { ...x, stockG: Math.max(0, +(num(x.stockG) - g).toFixed(2)) } : x; });
+          const hb = {}; if ((order.quickParts || []).length) order.quickParts.forEach((pt) => { if (pt.printerId) hb[pt.printerId] = (hb[pt.printerId] || 0) + num(pt.hours); }); else if (order.printerId) hb[order.printerId] = num(order.quickHours);
+          printers = printers.map((x) => (hb[x.id] > 0 ? { ...x, hoursUsed: num(x.hoursUsed) + hb[x.id] } : x));
+          materials = materials.map((m) => { const ex = (order.quickExtras || []).find((e) => e.materialId === m.id); if (!ex || !(num(ex.qty) > 0)) return m; return { ...m, stock: Math.max(0, num(m.stock) - num(ex.qty)), movements: [{ id: uid(), date: todayISO(), type: "saida", qty: num(ex.qty), note: `Impressão avulsa: ${order.projectName || ""}` }, ...(m.movements || [])] }; });
+          o.printing = [];
           o.processed = true;
         }
         /* v5.2: falhas lancadas — saem do estoque de filamento e entram no custo do pedido */
@@ -6992,7 +7027,7 @@ function App() {
           {pr ? pr.name : "Impressora"}{pj.pt ? ` · ${pj.pt.name}` : ""}{pj.fils.map((fl) => <span key={fl.id}> · <span style={{ color: fl.colorHex || "var(--t18)" }}>●</span> {fl.name}</span>)} · começou {new Date(pj.x.at).toLocaleTimeString("pt-BR", { hour: "2-digit", minute: "2-digit" })} · ~{fmtDur(pj.hours * 60)}
         </div>
         <div style={{ height: 6, borderRadius: 4, background: "var(--t49)", margin: "14px 0 8px" }}><div style={{ width: pj.pct * 100 + "%", height: "100%", borderRadius: 4, background: "#3FD1CE" }} /></div>
-        <div style={{ font: "500 12.5px Inter,sans-serif", color: "var(--t54)", marginBottom: 16 }}>{fmtN(pj.pct * 100, 0)}% · {pj.left > 0 ? `faltam ~${fmtDur(pj.left)}` : "já passou do tempo previsto"} · o material já foi baixado quando você lançou.</div>
+        <div style={{ font: "500 12.5px Inter,sans-serif", color: "var(--t54)", marginBottom: 16 }}>{fmtN(pj.pct * 100, 0)}% · {pj.left > 0 ? `faltam ~${fmtDur(pj.left)}` : "já passou do tempo previsto"} · {o.quickQ ? "o material é baixado quando terminar (ou cancelar)." : "o material já foi baixado quando você lançou."}</div>
         <div style={{ display: "flex", gap: 10, justifyContent: "flex-end", flexWrap: "wrap" }}>
           <Btn kind="ghost" className="qd-cancel" onClick={async () => { if (await askConfirm(`Cancelar a impressão de ${o.projectName}?\n\nA impressora fica livre e o material já baixado conta como perda.`, { ok: "Cancelar impressão" })) finishQuick(o, modal.printerId, true); }}>Cancelar impressão</Btn>
           <Btn className="qd-done" onClick={() => finishQuick(o, modal.printerId, false)}><CheckCircle2 size={15} />Terminou</Btn>
@@ -7055,81 +7090,47 @@ function App() {
     const salvar = async () => {
       if (!f.name.trim()) { notify("Dê um nome para a impressão."); return; }
       if (!(gramasTotais > 0)) { notify("Informe os gramas de pelo menos um filamento."); return; }
-      if (f.now && !(horasPeca > 0)) { notify("Informe o tempo para acompanhar a impressão no Comando."); return; }
-      if (f.now && !emPartes && !f.printerId) { notify("Escolha a impressora."); return; }
+      if (!(horasPeca > 0)) { notify("Informe o tempo para entrar na fila da impressora."); return; }
+      if (!emPartes && !f.printerId) { notify("Escolha a impressora."); return; }
       const cli = cliMap[f.clientId];
-      const startISO = (() => { const [hh, mi] = String(f.startAt || "").split(":").map(Number); const d0 = new Date(); if (isFinite(hh)) d0.setHours(hh, isFinite(mi) ? mi : 0, 0, 0); if (d0 > new Date()) d0.setDate(d0.getDate() - 1); return d0.toISOString(); })();
-      const printing = !f.now ? undefined : emPartes
-        ? f.parts.map((pt, i) => ({ partId: "q" + i, printerId: pt.printerId, qty: q, at: startISO })).filter((x, i, a) => x.printerId && a.findIndex((y) => y.printerId === x.printerId) === i)
-        : [{ partId: "", printerId: f.printerId, qty: q, at: startISO }];
       const resumoFil = linhas.filter((l) => l.filamentId && num(l.grams) > 0)
         .map((l) => `${filMap[l.filamentId] ? filMap[l.filamentId].name : "—"}: ${fmtN(num(l.grams) * q)}g`).join("\n");
-      const txt = `CONFIRMAR IMPRESSÃO AVULSA\n\n${f.name.trim()} · ${fmtN(q)} un\n`
+      const txt = `MANDAR IMPRESSÃO AVULSA PARA A PRODUÇÃO\n\n${f.name.trim()} · ${fmtN(q)} un\n`
         + `${resumoFil}\nTotal: ${fmtN(gramasTotais * q)}g · ${fmtN(horasPeca * q, 1)}h${emPartes ? ` de máquina (${f.parts.length} partes)` : ""}\n\n`
         + `Custo total: ${fmt(custoTotal)}\n`
         + (receita > 0 ? `Venda: ${fmt(receita)}${cli ? ` · ${cli.name}` : ""}\nLucro: ${fmt(receita - custoTotal)}\n` : `Sem venda registrada.\n`)
-        + (f.now ? `\nVai aparecer imprimindo no Comando desde ${f.startAt}.` : "")
-        + `\nO material será baixado do estoque. Confirmar?`;
+        + `\nVai para Pendências → Produção e para a fila da impressora. O material é baixado quando você marcar Terminou. Confirmar?`;
       if (!await askConfirm(txt)) return;
-      setData((d) => {
-        const materials = d.materials.map((m) => {
-          const ex = (f.extras || []).find((e) => e.materialId === m.id);
-          if (!ex) return m;
-          const usado = num(ex.qty) * q;
-          return { ...m, stock: Math.max(0, num(m.stock) - usado),
-            movements: [{ id: uid(), date: f.date, type: "saida", qty: usado, note: `Impressão avulsa: ${f.name.trim()}` }, ...(m.movements || [])] };
-        });
-        const freed = new Set((printing || []).map((x) => x.printerId));
-        const others = !printing ? d.orders : d.orders.map((o) => {
-          const keep = (o.printing || []).filter((x) => !freed.has(x.printerId));
-          if (keep.length === (o.printing || []).length) return o;
-          return { ...o, printing: keep, ...(o.quick && !keep.length ? { status: "Entregue" } : {}) };
-        });
-        return { ...d,
-          filaments: d.filaments.map((x) => usoPorFil[x.id] ? { ...x, stockG: Math.max(0, num(x.stockG) - usoPorFil[x.id]) } : x),
-          printers: d.printers.map((x) => {
-            const h = emPartes ? (partsByPrinter(f.parts)[x.id] || 0) * q : (x.id === f.printerId ? num(f.hours) * q : 0);
-            return h > 0 ? { ...x, hoursUsed: num(x.hoursUsed) + h } : x;
-          }),
-          materials,
-          orders: [...others, {
-            id: uid(), projectId: "", projectName: f.name.trim(), clientId: f.clientId || "", qty: q,
-            date: f.date, dueDate: "", price: receita > 0 ? receita.toFixed(2) : "", cost: custoTotal.toFixed(2),
-            status: f.now ? "Em produção" : "Entregue", quickHours: horasPeca * q, ...(printing ? { printing } : {}), printerId: emPartes ? "" : f.printerId, paid: receita > 0 ? !!f.paid : false,
-            processed: true, fromStock: true, dest: receita > 0 ? "venda" : "avulso",
-            note: f.note, quick: true,
-            ...(emPartes ? { quickParts: f.parts.map((pt) => ({ name: pt.name, printerId: pt.printerId, hours: num(pt.hours) * q })) } : {}),
-            quickFils: linhas.filter((l) => l.filamentId && num(l.grams) > 0)
-              .map((l) => ({ filamentId: l.filamentId, grams: num(l.grams) * q })),
-            ts: nowStamp(),
-          }],
-        };
-      });
+      logAs(`Impressão avulsa para a produção: ${f.name.trim()}`);
+      setData((d) => ({ ...d, orders: [...d.orders, {
+        id: uid(), projectId: "", projectName: f.name.trim(), clientId: f.clientId || "", qty: q,
+        date: f.date, dueDate: f.dueDate || "", price: receita > 0 ? receita.toFixed(2) : "", cost: custoTotal.toFixed(2),
+        status: "Aprovado", quickHours: horasPeca * q, printerId: emPartes ? "" : f.printerId, paid: receita > 0 ? !!f.paid : false,
+        processed: false, fromStock: true, dest: receita > 0 ? "venda" : "avulso",
+        note: f.note, quick: true, quickQ: true,
+        ...(emPartes ? { quickParts: f.parts.map((pt) => ({ name: pt.name, printerId: pt.printerId, hours: num(pt.hours) * q })) } : {}),
+        quickFils: linhas.filter((l) => l.filamentId && num(l.grams) > 0).map((l) => ({ filamentId: l.filamentId, grams: num(l.grams) * q })),
+        quickExtras: (f.extras || []).filter((ex) => ex.materialId && num(ex.qty) > 0).map((ex) => ({ materialId: ex.materialId, qty: num(ex.qty) * q })),
+        ts: nowStamp(),
+      }] }));
       setModal(null);
-      notify(`Impressão avulsa ${f.now ? "imprimindo no Comando" : "registrada"}: -${fmtN(gramasTotais * q)}g em ${Object.keys(usoPorFil).length} filamento(s)${receita > 0 ? ` · venda de ${fmt(receita)}` : ""}`);
+      notify(`Impressão avulsa na produção: ${f.name.trim()} — material baixa quando terminar`);
     };
 
     return (
       <Modal title="Impressão avulsa (sem projeto)" onClose={() => setModal(null)} wide>
         <div style={{ font: "400 12.5px Inter,sans-serif", color: "var(--t4)", marginBottom: 14 }}>
-          Para peças que você imprime uma vez só e não vale cadastrar como projeto. Baixa o material do estoque; o valor de venda é opcional.
+          Para peças que você imprime uma vez só e não vale cadastrar como projeto (ou cliente sem orçamento). Entra na produção; o valor de venda é opcional.
         </div>
         <Row cols={3}>
-          <div><L>O que foi impresso</L><In value={f.name} onChange={set("name")} placeholder="ex: suporte sob medida" /></div>
+          <div><L>O que vai imprimir</L><In value={f.name} onChange={set("name")} placeholder="ex: suporte sob medida" /></div>
           <div><L>Quantidade</L><In type="number" min="1" value={f.qty} onChange={set("qty")} /></div>
           <div><L>Data</L><In type="date" value={f.date} onChange={set("date")} /></div>
         </Row>
-        <L>Situação</L>
-        <div style={{ display: "flex", gap: 8, marginBottom: 6 }}>
-          <button className="qp-done" onClick={() => setF({ ...f, now: false })} style={toggleBtn(!f.now)}>✓ Já terminou</button>
-          <button className="qp-now" onClick={() => setF({ ...f, now: true, date: todayISO() })} style={{ ...toggleBtn(f.now), ...(f.now ? { border: "1.5px solid var(--t58)", background: "var(--t274)", color: "var(--t48)" } : {}) }}>● Está imprimindo agora</button>
+        <div className="qp-prod" style={{ display: "flex", gap: 12, alignItems: "end", flexWrap: "wrap", marginBottom: 12 }}>
+          <div style={{ width: 170 }}><L>Entregar até (opcional)</L><In type="date" value={f.dueDate || ""} onChange={set("dueDate")} /></div>
+          <div style={{ flex: 1, minWidth: 220, font: "400 12px Inter,sans-serif", color: "var(--t53)", paddingBottom: 10 }}>⏳ Vai para <b>Pendências → Produção</b> e para a fila da impressora. Lá você marca <b>Comecei a imprimir</b> e <b>Terminou</b> — o material é baixado ao terminar.</div>
         </div>
-        {f.now ? (
-          <div style={{ display: "flex", gap: 12, alignItems: "end", flexWrap: "wrap", marginBottom: 12 }}>
-            <div style={{ width: 150 }}><L>Começou às</L><In className="qp-start" type="time" value={f.startAt} onChange={set("startAt")} /></div>
-            <div style={{ flex: 1, minWidth: 200, font: "400 12px Inter,sans-serif", color: "var(--t53)", paddingBottom: 10 }}>Aparece na impressora do Comando com a cor do filamento e o tempo correndo. O material é baixado agora, como sempre.</div>
-          </div>
-        ) : <div style={{ height: 8 }} />}
         <div style={{ display: "flex", gap: 8, marginBottom: 12 }}>
           <button onClick={() => setF({ ...f, print: "unica" })} style={toggleBtn(!emPartes)}>Peça única</button>
           <button onClick={() => setF({ ...f, print: "partes" })} style={toggleBtn(emPartes)}>Em partes (cada parte na sua impressora)</button>
@@ -7226,7 +7227,7 @@ function App() {
         </div>
         <div style={{ display: "flex", justifyContent: "flex-end", gap: 10 }}>
           <Btn kind="ghost" onClick={() => setModal(null)}>Cancelar</Btn>
-          <Btn onClick={salvar} disabled={!f.name.trim() || !(gramasTotais > 0)}>Registrar impressão</Btn>
+          <Btn className="qp-save" onClick={salvar} disabled={!f.name.trim() || !(gramasTotais > 0)}>Mandar para a produção</Btn>
         </div>
       </Modal>
     );
@@ -8295,7 +8296,7 @@ function App() {
     const cols = data.printers.map((pr) => ({ pr, items: [], hours: 0 }));
     const none = { pr: null, items: [], hours: 0 };
     const colOf = (pid) => cols.find((c) => c.pr.id === pid) || none;
-    pendingOrdersList.filter((o) => !o.fromStock)
+    pendingOrdersList.filter((o) => !o.fromStock || o.quickQ)
       .slice().sort((a, b) => ((a.dueDate || "9999") + a.date < (b.dueDate || "9999") + b.date ? -1 : 1))
       .forEach((o) => {
         const p = projMap[o.projectId];
@@ -8315,6 +8316,11 @@ function App() {
             byPid[pid].hours += num(pt.hours) * lp; byPid[pid].parts.push(pt.name || "Parte"); byPid[pid].pids.push(pt.id);
           });
           Object.entries(byPid).forEach(([pid, x]) => colOf(pid).items.push({ o, p, hours: x.hours, parts: x.parts, pids: x.pids, run: x.run }));
+        } else if (o.quickQ) {
+          /* v5.4: avulsa na fila — horas por impressora (em partes: cada parte na sua) */
+          const run = (o.printing || []).length > 0;
+          if ((o.quickParts || []).length) { const hb = {}; o.quickParts.forEach((pt) => { hb[pt.printerId || ""] = (hb[pt.printerId || ""] || 0) + num(pt.hours); }); Object.entries(hb).forEach(([pid, h]) => colOf(pid).items.push({ o, p, hours: h, run })); }
+          else colOf(o.printerId).items.push({ o, p, hours: num(o.quickHours), run });
         } else {
           const run = (o.printing || []).find((x) => data.printers.some((y) => y.id === x.printerId));
           colOf(run ? run.printerId : o.printerId).items.push({ o, p, hours: (p ? num(p.hours) : 0) * left, run: !!run });
@@ -8784,10 +8790,12 @@ function App() {
                     </div>
                     {(() => { const hl = heldFor(o); return hl.length > 0 && <div className="neo-held" title="Peças do mesmo pedido que já saíram do estoque — a cobrança espera esta produção">+ {hl.length} {hl.length > 1 ? "itens prontos" : "item pronto"} do mesmo pedido aguardando: {hl.map((x) => `${projName(x)}${num(x.qty) > 1 ? " ×" + fmtN(x.qty) : ""}`).join(", ")}</div>; })()}
                   </div>
-                  {!o.fromStock ? progress(o) : <div className="neo-prog-t mut">{o.quick ? ((o.printing || []).length ? `Impressão avulsa · imprimindo na ${(data.printers.find((x) => x.id === o.printing[0].printerId) || {}).name || "impressora"} · material já baixado` : "Impressão avulsa · material já baixado") : "Sai do estoque de produtos"}</div>}
+                  {!o.fromStock ? progress(o) : o.quickQ ? <div className="neo-prog-t mut qq-info">Impressão avulsa · ~{fmtDur(num(o.quickHours) * 60)} · {(o.printing || []).length ? `imprimindo na ${(data.printers.find((x) => x.id === o.printing[0].printerId) || {}).name || "impressora"}` : `na fila${o.printerId ? " da " + ((data.printers.find((x) => x.id === o.printerId) || {}).name || "impressora") : ""}`} · material baixa ao terminar</div> : <div className="neo-prog-t mut">{o.quick ? ((o.printing || []).length ? `Impressão avulsa · imprimindo na ${(data.printers.find((x) => x.id === o.printing[0].printerId) || {}).name || "impressora"} · material já baixado` : "Impressão avulsa · material já baixado") : "Sai do estoque de produtos"}</div>}
                   {dueBox(o)}
                   <div className="neo-oacts" onClick={(e) => e.stopPropagation()}>
                     {!o.fromStock && <button className="neo-bp" onClick={() => setModal({ type: "print", orderId: o.id })}><Plus size={13} />Registrar impressão</button>}
+                    {o.quickQ && !(o.printing || []).length && <button className="neo-bg2 qq-start" onClick={() => startQuick(o)}>▶ Comecei a imprimir</button>}
+                    {o.quickQ && <button className="neo-bp qq-done" onClick={async () => { if (await askConfirm(`Terminou a impressão avulsa ${o.projectName}?\n\nO material é baixado do estoque e o pedido vai para Concluído.`, { ok: "Terminou" })) finishQuick(o, null, false); }}><CheckCircle2 size={13} />Terminou</button>}
                     <button className="neo-bg2" title={open === o.id ? "Fechar" : "Abrir detalhes"} onClick={() => setOpen(open === o.id ? null : o.id)}>{open === o.id ? "▴" : "⋯"}</button>
                   </div>
                 </div>
@@ -8801,6 +8809,7 @@ function App() {
                         {p && <span>Tempo total <b>{fmtN(projWallHours(p, o.partPrinters) * num(o.qty), 1)} h</b>{isPartsProj(p) ? " (em partes)" : ""}</span>}
                       </div>
                       <div className="neo-oacts left">
+                        {o.quickQ && <button className="neo-bg2 qq-cancel" onClick={async () => { if (await askConfirm(`Cancelar a impressão avulsa ${o.projectName}?\n\nO material previsto é baixado como perda e o pedido vai para Concluído. (Para apagar sem baixar nada, exclua o pedido.)`, { ok: "Cancelar impressão" })) finishQuick(o, null, true); }}>Cancelar impressão</button>}
                         {!o.fromStock && printedOf(o) > 0 && printedOf(o) < num(o.qty) && (
                           <button className="neo-bg2" onClick={async () => { if (await askConfirm(`Concluir o pedido com ${fmtN(printedOf(o))} de ${fmtN(o.qty)} peça(s)?\n\nA quantidade e o custo passam para ${fmtN(printedOf(o))} peça(s). O valor de venda fica como está (edite o pedido se precisar).`)) registerPrint(o, { qty: 0, finishShort: true }); }}>Concluir com {fmtN(printedOf(o))}</button>
                         )}
